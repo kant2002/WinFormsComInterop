@@ -82,15 +82,15 @@ namespace WinFormsComInterop
 
         protected override unsafe ComInterfaceEntry* ComputeVtables(object obj, CreateComInterfaceFlags flags, out int count)
         {
-            count = 0;
-            return null;
+            // count = 0;
+            // return null;
             count = 1;
             return wrapperEntry;
         }
 
         protected override object CreateObject(IntPtr externalComObject, CreateObjectFlags flags)
         {
-            return null;
+            // return null;
             return new IExternalObject(externalComObject);
         }
 

@@ -3,7 +3,8 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFrameworks>net472;netcoreapp3.1;netcoreapp5.0</TargetFrameworks>
+    <!--<TargetFrameworks>net472;netcoreapp3.1;netcoreapp5.0</TargetFrameworks>-->
+    <TargetFramework>netcoreapp5.0</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
 
     <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
@@ -15,17 +16,21 @@
     <!--<IlcDisableReflection>true</IlcDisableReflection>-->
   </PropertyGroup>
 
-  <ItemGroup>
+  <!--<ItemGroup>
     <AppContextSwitchOverrides Include="Switch.System.Reflection.Assembly.SimulatedLocationInBaseDirectory" />
   </ItemGroup>
 
    <ItemGroup>
     <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="1.0.0-alpha-*" />
-  </ItemGroup>
+  </ItemGroup>-->
 
-   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp5.0'">
+   <ItemGroup>
      <ProjectReference Include="..\WinFormsComInterop\WinFormsComInterop.csproj" />
-   </ItemGroup> 
+   </ItemGroup>
+
+  <!--<ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp5.0'">
+    <ProjectReference Include="..\WinFormsComInterop\WinFormsComInterop.csproj" />
+  </ItemGroup>-->
 
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
