@@ -1,14 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <!--<Import Project="$(MSBuildSDKsPath)\Microsoft.NET.Sdk.WindowsDesktop\Sdk\Sdk.props" />-->
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFrameworks>net472;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net472;netcoreapp3.1;netcoreapp5.0</TargetFrameworks>
     <UseWindowsForms>true</UseWindowsForms>
 
     <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
     <IlcInvariantGlobalization>true</IlcInvariantGlobalization>
     <IlcFoldIdenticalMethodBodies>true</IlcFoldIdenticalMethodBodies>
     <IlcOptimizationPreference>Size</IlcOptimizationPreference>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <!--<ApplicationManifest>app.manifest</ApplicationManifest>-->
     <!--<IlcDisableReflection>true</IlcDisableReflection>-->
   </PropertyGroup>
@@ -17,9 +19,13 @@
     <AppContextSwitchOverrides Include="Switch.System.Reflection.Assembly.SimulatedLocationInBaseDirectory" />
   </ItemGroup>
 
-  <ItemGroup>
+   <ItemGroup>
     <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="1.0.0-alpha-*" />
   </ItemGroup>
+
+   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp5.0'">
+     <ProjectReference Include="..\WinFormsComInterop\WinFormsComInterop.csproj" />
+   </ItemGroup> 
 
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
@@ -36,4 +42,6 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <!--<Import Project="$(MSBuildSDKsPath)\Microsoft.NET.Sdk.WindowsDesktop\Sdk\Sdk.targets" />
+  <Import Project="$(IlcPath)\build\Microsoft.NETCore.Native.targets" Condition="'$(IlcPath)' != ''"/>-->
 </Project>

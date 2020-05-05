@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp5.0</TargetFramework>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Accessibility">
+      <HintPath>C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\5.0.0-preview.4.20251.1\Accessibility.dll</HintPath>
+      <EmbedInteropTypes>false</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System.Windows.Forms.Primitives">
+      <HintPath>D:\d\kant\GitHub\CoreRTWinFormsTestBed\System.Windows.Forms.Primitives\bin\Debug\netcoreapp5.0\System.Windows.Forms.Primitives.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+</Project>
