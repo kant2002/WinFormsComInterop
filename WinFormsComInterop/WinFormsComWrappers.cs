@@ -13,9 +13,9 @@ namespace WinFormsComInterop
 
     public unsafe class WinFormsComWrappers : ComWrappers
     {
-        static volatile ComWrappers.ComInterfaceEntry* wrapperEntry;
-        static readonly ComWrappers.ComInterfaceEntry* wrapperEntry2;
-        static int x;
+        static ComWrappers.ComInterfaceEntry* wrapperEntry;
+
+        internal static Guid IRawElementProviderSimple_GUID = typeof(IRawElementProviderSimple).GUID;
 
         // This class only exposes IDispatch and the vtable is always the same.
         // The below isn't the most efficient but it is reasonable for prototyping.
@@ -45,13 +45,13 @@ namespace WinFormsComInterop
 
             var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(IRawElementProviderSimpleVtbl), sizeof(ComInterfaceEntry));
             entry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
-            entry->IID = typeof(IRawElementProviderSimple).GUID;
+            entry->IID = IRawElementProviderSimple_GUID;
             entry->Vtable = vtblRaw;
 
             wrapperEntry = entry;
-            wrapperEntry2 = entry;
-            x = 5;
         }
+
+        public static WinFormsComWrappers Instance { get; } = new WinFormsComWrappers();
 
         private static ComWrappers.ComInterfaceEntry* EnsureInit()
         {
