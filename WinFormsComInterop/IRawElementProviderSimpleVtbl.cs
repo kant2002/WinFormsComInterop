@@ -18,7 +18,7 @@ namespace WinFormsComInterop
         public delegate int _GetPropertyValue(IntPtr thisPtr, UIA patternId, out object i);
         public delegate int _HostRawElementProvider(
             IntPtr thisPtr,
-            [MarshalAs(UnmanagedType.IUnknown)]out IRawElementProviderSimple i);
+            out IRawElementProviderSimple i);
         
         public static _GetProviderOptions pGetProviderOptions = new _GetProviderOptions(GetProviderOptionsInternal);
         public static _GetPatternProvider pGetPatternProvider = new _GetPatternProvider(GetPatternProviderInternal);
