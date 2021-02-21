@@ -94,7 +94,7 @@ namespace WinFormsComInterop
             //return null;
 
             // Return object does not works yet.
-            return new IMyExternalObject(externalComObject);
+            return new IExternalObject(externalComObject);
         }
 
         protected override void ReleaseObjects(System.Collections.IEnumerable objects)

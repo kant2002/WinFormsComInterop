@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 public partial class Interop
 {
-    public static partial class OleAut32
+    public static partial class Oleaut32
     {
         [ComImport]
         [Guid("00020404-0000-0000-C000-000000000046")]
@@ -29,7 +29,7 @@ public partial class Interop
 
             [PreserveSig]
             HRESULT Clone(
-                [Out, MarshalAs(UnmanagedType.LPArray)] IEnumVariant[] ppEnum);
+                [Out, MarshalAs(UnmanagedType.LPArray)] IEnumVariant[]? ppEnum);
         }
     }
 }

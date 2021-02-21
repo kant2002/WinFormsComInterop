@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using static Interop;
-using static Interop.OleAut32;
+using static Interop.Oleaut32;
 
 namespace WinFormsComInterop
 {
-    class IMyExternalObject : Accessibility.IAccessible, Interop.OleAut32.IEnumVariant
+    class IExternalObject : Accessibility.IAccessible, Interop.Oleaut32.IEnumVariant, Interop.Ole32.IOleWindow
     {
         private struct IExternalObjectVftbl
         {
@@ -20,14 +20,14 @@ namespace WinFormsComInterop
         private readonly IntPtr instance;
         private readonly IExternalObjectVftbl vtable;
 
-        public IMyExternalObject(IntPtr instance)
+        public IExternalObject(IntPtr instance)
         {
             var inst = Marshal.PtrToStructure<VtblPtr>(instance);
             this.vtable = Marshal.PtrToStructure<IExternalObjectVftbl>(inst.Vtbl);
             this.instance = instance;
         }
 
-        ~IMyExternalObject()
+        ~IExternalObject()
         {
             if (this.instance != IntPtr.Zero)
             {
@@ -104,6 +104,16 @@ namespace WinFormsComInterop
         }
 
         HRESULT IEnumVariant.Clone(IEnumVariant[] ppEnum)
+        {
+            throw new NotImplementedException();
+        }
+
+        unsafe HRESULT Ole32.IOleWindow.GetWindow(IntPtr* phwnd)
+        {
+            throw new NotImplementedException();
+        }
+
+        HRESULT Ole32.IOleWindow.ContextSensitiveHelp(BOOL fEnterMode)
         {
             throw new NotImplementedException();
         }
