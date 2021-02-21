@@ -5,9 +5,14 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsFormsApp1", "WindowsFormsApp1\WindowsFormsApp1.csproj", "{AE64F765-CE4C-4093-8075-270C5CC614B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsComInterop", "WinFormsComInterop\WinFormsComInterop.csproj", "{A61968A4-0EEF-4A41-966B-78332F57E5BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinFormsComInterop", "WinFormsComInterop\WinFormsComInterop.csproj", "{A61968A4-0EEF-4A41-966B-78332F57E5BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Windows.Forms.Primitives", "System.Windows.Forms.Primitives\System.Windows.Forms.Primitives.csproj", "{148A75CD-A816-4AAE-9F4F-7AF2A272585A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Windows.Forms.Primitives", "System.Windows.Forms.Primitives\System.Windows.Forms.Primitives.csproj", "{148A75CD-A816-4AAE-9F4F-7AF2A272585A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{84110EEC-FD63-40B3-B97C-DBA1AFE8848B}"
+	ProjectSection(SolutionItems) = preProject
+		nuget.config = nuget.config
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

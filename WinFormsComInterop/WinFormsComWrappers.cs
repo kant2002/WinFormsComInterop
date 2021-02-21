@@ -22,7 +22,7 @@ namespace WinFormsComInterop
         // If additional interfaces want to be exposed, add them here.
         static WinFormsComWrappers()
         {
-            var entry = EnsureInit();
+            //var entry = EnsureInit();
 
 
             GetIUnknownImpl(out IntPtr fpQueryInteface, out IntPtr fpAddRef, out IntPtr fpRelease);
@@ -44,11 +44,11 @@ namespace WinFormsComInterop
             Marshal.StructureToPtr(vtbl, vtblRaw, false);
 
             var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(IRawElementProviderSimpleVtbl), sizeof(ComInterfaceEntry));
-            entry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
-            entry->IID = IRawElementProviderSimple_GUID;
-            entry->Vtable = vtblRaw;
+            wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
+            wrapperEntry->IID = IRawElementProviderSimple_GUID;
+            wrapperEntry->Vtable = vtblRaw;
 
-            wrapperEntry = entry;
+            //wrapperEntry = entry;
         }
 
         public static WinFormsComWrappers Instance { get; } = new WinFormsComWrappers();
@@ -90,8 +90,11 @@ namespace WinFormsComInterop
 
         protected override object CreateObject(IntPtr externalComObject, CreateObjectFlags flags)
         {
-            // return null;
-            return new IExternalObject(externalComObject);
+            // Return NULL works,
+            //return null;
+
+            // Return object does not works yet.
+            return new IMyExternalObject(externalComObject);
         }
 
         protected override void ReleaseObjects(System.Collections.IEnumerable objects)

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using System.Runtime.Serialization.Formatters;
 using static Interop.UiaCore;
 using static System.Runtime.InteropServices.ComWrappers;
 

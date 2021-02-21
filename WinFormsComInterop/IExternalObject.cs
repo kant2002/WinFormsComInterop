@@ -5,7 +5,7 @@ using static Interop.OleAut32;
 
 namespace WinFormsComInterop
 {
-    class IExternalObject : Accessibility.IAccessible, Interop.OleAut32.IEnumVariant
+    class IMyExternalObject : Accessibility.IAccessible, Interop.OleAut32.IEnumVariant
     {
         private struct IExternalObjectVftbl
         {
@@ -20,14 +20,14 @@ namespace WinFormsComInterop
         private readonly IntPtr instance;
         private readonly IExternalObjectVftbl vtable;
 
-        public IExternalObject(IntPtr instance)
+        public IMyExternalObject(IntPtr instance)
         {
             var inst = Marshal.PtrToStructure<VtblPtr>(instance);
             this.vtable = Marshal.PtrToStructure<IExternalObjectVftbl>(inst.Vtbl);
             this.instance = instance;
         }
 
-        ~IExternalObject()
+        ~IMyExternalObject()
         {
             if (this.instance != IntPtr.Zero)
             {

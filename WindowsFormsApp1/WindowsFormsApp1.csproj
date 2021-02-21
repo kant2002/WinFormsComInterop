@@ -1,11 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <!--<Import Project="$(MSBuildSDKsPath)\Microsoft.NET.Sdk.WindowsDesktop\Sdk\Sdk.props" />-->
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <!--<TargetFrameworks>net472;netcoreapp3.1;netcoreapp5.0</TargetFrameworks>-->
-    <TargetFramework>netcoreapp5.0</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <!--<RuntimeFrameworkVersion>5.0.0-dev</RuntimeFrameworkVersion>-->
 
     <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
     <IlcInvariantGlobalization>true</IlcInvariantGlobalization>
@@ -16,11 +18,22 @@
     <!--<IlcDisableReflection>true</IlcDisableReflection>-->
   </PropertyGroup>
 
-  <!--<ItemGroup>
+  <ItemGroup>
     <AppContextSwitchOverrides Include="Switch.System.Reflection.Assembly.SimulatedLocationInBaseDirectory" />
   </ItemGroup>
+  <!--<ItemGroup>
+    <KnownFrameworkReference Update="Microsoft.NETCore.App"
+                              DefaultRuntimeFrameworkVersion="5.0.0-dev"
+                              LatestRuntimeFrameworkVersion="5.0.0-dev"
+                              TargetingPackVersion="5.0.0-dev"
+                              />
+  </ItemGroup>-->
 
-   <ItemGroup>
+  <!--<ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.App.Runtime.win-x64" Version="5.0.0-dev" />
+  </ItemGroup>-->
+
+   <!--<ItemGroup>
     <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="1.0.0-alpha-*" />
   </ItemGroup>-->
 
