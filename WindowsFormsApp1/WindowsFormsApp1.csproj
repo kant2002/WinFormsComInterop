@@ -33,9 +33,9 @@
     <PackageReference Include="Microsoft.NETCore.App.Runtime.win-x64" Version="5.0.0-dev" />
   </ItemGroup>-->
 
-   <!--<ItemGroup>
-    <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="1.0.0-alpha-*" />
-  </ItemGroup>-->
+   <ItemGroup>
+    <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="6.0.0-*" />
+  </ItemGroup>
 
    <ItemGroup>
      <ProjectReference Include="..\WinFormsComInterop\WinFormsComInterop.csproj" />
