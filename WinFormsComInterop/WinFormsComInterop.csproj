@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <Reference Include="Accessibility">
-      <HintPath>C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\5.0.3\Accessibility.dll</HintPath>
+      <HintPath>C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\5.0.5\Accessibility.dll</HintPath>
       <EmbedInteropTypes>false</EmbedInteropTypes>
     </Reference>
 	  <!--<Reference Include="System.Windows.Forms.Primitives">
