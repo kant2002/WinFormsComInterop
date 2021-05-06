@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <FileVersion>5.0.321.7302</FileVersion>
-    <AssemblyVersion>5.0.3.0</AssemblyVersion>
+    <FileVersion>6.0.21.22207</FileVersion>
+    <AssemblyVersion>6.0.0.0</AssemblyVersion>
     <!--<RuntimeFrameworkVersion>5.0.0-dev</RuntimeFrameworkVersion>-->
   </PropertyGroup>
 
