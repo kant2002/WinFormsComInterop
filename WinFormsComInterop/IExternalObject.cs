@@ -7,31 +7,20 @@ namespace WinFormsComInterop
 {
     class IExternalObject : Accessibility.IAccessible, Interop.Oleaut32.IEnumVariant, Interop.Ole32.IOleWindow
     {
-        private struct IExternalObjectVftbl
-        {
-            public IntPtr QueryInterface;
-            public _AddRef AddRef;
-            public _Release Release;
-        }
-
-        private delegate int _AddRef(IntPtr This);
-        private delegate int _Release(IntPtr This);
-
         private readonly IntPtr instance;
-        private readonly IExternalObjectVftbl vtable;
 
         public IExternalObject(IntPtr instance)
         {
-            var inst = Marshal.PtrToStructure<VtblPtr>(instance);
-            this.vtable = Marshal.PtrToStructure<IExternalObjectVftbl>(inst.Vtbl);
-            this.instance = instance;
+            //var inst = Marshal.PtrToStructure<VtblPtr>(instance);
+            //this.vtable = Marshal.PtrToStructure<IExternalObjectVftbl>(inst.Vtbl);
+            //this.instance = instance;
         }
 
         ~IExternalObject()
         {
-            if (this.instance != IntPtr.Zero)
+            //if (this.instance != IntPtr.Zero)
             {
-                this.vtable.Release(this.instance);
+                //this.vtable.Release(this.instance);
             }
         }
 
