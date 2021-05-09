@@ -14,8 +14,8 @@ namespace WinFormsComInterop
         public IntPtr HostRawElementProvider;
 
         public delegate int _GetProviderOptions(IntPtr thisPtr, out ProviderOptions i);
-        public delegate int _GetPatternProvider(IntPtr thisPtr, UIA patternId, [MarshalAs(UnmanagedType.IUnknown)]out object i);
-        public delegate int _GetPropertyValue(IntPtr thisPtr, UIA patternId, out object i);
+        public delegate int _GetPatternProvider(IntPtr thisPtr, UIA patternId, IntPtr *i);
+        public delegate int _GetPropertyValue(IntPtr thisPtr, UIA patternId, IntPtr *i);
         public delegate int _HostRawElementProvider(
             IntPtr thisPtr,
             IntPtr* i);
@@ -41,7 +41,7 @@ namespace WinFormsComInterop
         }
         public static int HostRawElementProviderInternal(IntPtr thisPtr, IntPtr* i)
         {
-            i = null;
+            *i = IntPtr.Zero;
             try
             {
                 var inst = ComInterfaceDispatch.GetInstance<IRawElementProviderSimple>((ComInterfaceDispatch*)thisPtr);
@@ -56,13 +56,17 @@ namespace WinFormsComInterop
                 return e.HResult;
             }
         }
-        public static int GetPatternProviderInternal(IntPtr thisPtr, UIA patternId, out object i)
+        public static int GetPatternProviderInternal(IntPtr thisPtr, UIA patternId, IntPtr *i)
         {
-            i = 0;
+            *i = IntPtr.Zero;
             try
             {
                 var inst = ComInterfaceDispatch.GetInstance<IRawElementProviderSimple>((ComInterfaceDispatch*)thisPtr);
-                i = inst.GetPatternProvider(patternId);
+                var target = inst.GetPatternProvider(patternId);
+                IntPtr pUnk = WinFormsComWrappers.Instance.GetOrCreateComInterfaceForObject(target, CreateComInterfaceFlags.None);
+                Guid targetInterface = WinFormsComWrappers.IRawElementProviderSimple_GUID;
+                int result = Marshal.QueryInterface(pUnk, ref targetInterface, out *i);
+                Marshal.Release(pUnk);
             }
             catch (Exception e)
             {
@@ -70,13 +74,17 @@ namespace WinFormsComInterop
             }
             return 0; // S_OK;
         }
-        public static int GetPropertyValueInternal(IntPtr thisPtr, UIA patternId, out object i)
+        public static int GetPropertyValueInternal(IntPtr thisPtr, UIA patternId, IntPtr *i)
         {
-            i = 0;
+            *i = IntPtr.Zero;
             try
             {
                 var inst = ComInterfaceDispatch.GetInstance<IRawElementProviderSimple>((ComInterfaceDispatch*)thisPtr);
-                i = inst.GetPropertyValue(patternId);
+                var target = inst.GetPropertyValue(patternId);
+                IntPtr pUnk = WinFormsComWrappers.Instance.GetOrCreateComInterfaceForObject(target, CreateComInterfaceFlags.None);
+                Guid targetInterface = WinFormsComWrappers.IRawElementProviderSimple_GUID;
+                int result = Marshal.QueryInterface(pUnk, ref targetInterface, out *i);
+                Marshal.Release(pUnk);
             }
             catch (Exception e)
             {

@@ -7,20 +7,18 @@ namespace WinFormsComInterop
 {
     class IExternalObject : Accessibility.IAccessible, Interop.Oleaut32.IEnumVariant, Interop.Ole32.IOleWindow
     {
+        private static Guid IID_IAccessible = new Guid("618736E0-3C3D-11CF-810C-00AA00389B71");
         private readonly IntPtr instance;
+        private readonly IntPtr accessible;
 
         public IExternalObject(IntPtr instance)
         {
             //var inst = Marshal.PtrToStructure<VtblPtr>(instance);
             //this.vtable = Marshal.PtrToStructure<IExternalObjectVftbl>(inst.Vtbl);
-            //this.instance = instance;
-        }
-
-        ~IExternalObject()
-        {
-            //if (this.instance != IntPtr.Zero)
+            this.instance = instance;
+            if (Marshal.QueryInterface(instance, ref IID_IAccessible, out var pAccessible) == 0)
             {
-                //this.vtable.Release(this.instance);
+                accessible = pAccessible;
             }
         }
 
@@ -31,7 +29,14 @@ namespace WinFormsComInterop
 
         public void accLocation(out int pxLeft, out int pyTop, out int pcxWidth, out int pcyHeight, object varChild)
         {
-            throw new NotImplementedException();
+            pxLeft = 0;
+            pyTop = 0;
+            pcxWidth = 0;
+            pcyHeight = 0;
+            if (varChild != null)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public object accNavigate(int navDir, object varStart)
