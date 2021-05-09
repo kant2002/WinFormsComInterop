@@ -5,12 +5,6 @@ using static Interop.UiaCore;
 
 namespace WinFormsComInterop
 {
-    struct VtblPtr
-    {
-        public IntPtr Vtbl;
-    }
-
-
     public unsafe class WinFormsComWrappers : ComWrappers
     {
         static ComWrappers.ComInterfaceEntry* wrapperEntry;
@@ -22,9 +16,6 @@ namespace WinFormsComInterop
         // If additional interfaces want to be exposed, add them here.
         static WinFormsComWrappers()
         {
-            //var entry = EnsureInit();
-
-
             GetIUnknownImpl(out IntPtr fpQueryInteface, out IntPtr fpAddRef, out IntPtr fpRelease);
 
             var vtbl = new IRawElementProviderSimpleVtbl()
@@ -47,38 +38,9 @@ namespace WinFormsComInterop
             wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
             wrapperEntry->IID = IRawElementProviderSimple_GUID;
             wrapperEntry->Vtable = vtblRaw;
-
-            //wrapperEntry = entry;
         }
 
         public static WinFormsComWrappers Instance { get; } = new WinFormsComWrappers();
-
-        private static ComWrappers.ComInterfaceEntry* EnsureInit()
-        {
-            GetIUnknownImpl(out IntPtr fpQueryInteface, out IntPtr fpAddRef, out IntPtr fpRelease);
-
-            var vtbl = new IRawElementProviderSimpleVtbl()
-            {
-                IUnknownImpl = new IUnknownVtbl()
-                {
-                    QueryInterface = fpQueryInteface,
-                    AddRef = fpAddRef,
-                    Release = fpRelease
-                },
-                ProviderOptions = Marshal.GetFunctionPointerForDelegate(IRawElementProviderSimpleVtbl.pGetProviderOptions),
-                GetPatternProvider = Marshal.GetFunctionPointerForDelegate(IRawElementProviderSimpleVtbl.pGetPatternProvider),
-                GetPropertyValue = Marshal.GetFunctionPointerForDelegate(IRawElementProviderSimpleVtbl.pGetPropertyValue),
-                HostRawElementProvider = Marshal.GetFunctionPointerForDelegate(IRawElementProviderSimpleVtbl.pHostRawElementProvider)
-            };
-            var vtblRaw = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(IRawElementProviderSimpleVtbl), sizeof(IRawElementProviderSimpleVtbl));
-            Marshal.StructureToPtr(vtbl, vtblRaw, false);
-
-            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(IRawElementProviderSimpleVtbl), sizeof(ComInterfaceEntry));
-            var entry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
-            entry->IID = typeof(IRawElementProviderSimple).GUID;
-            entry->Vtable = vtblRaw;
-            return entry;
-        }
 
         protected override unsafe ComInterfaceEntry* ComputeVtables(object obj, CreateComInterfaceFlags flags, out int count)
         {
