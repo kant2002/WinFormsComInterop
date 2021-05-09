@@ -1,37 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <!--<Import Project="$(MSBuildSDKsPath)\Microsoft.NET.Sdk.WindowsDesktop\Sdk\Sdk.props" />-->
+  <!--<Import Project="$(MSBuildSDKsPath)\Microsoft.NET.Sdk\Sdk\Sdk.props" />-->
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <!--<TargetFrameworks>net472;netcoreapp3.1;netcoreapp5.0</TargetFrameworks>-->
     <TargetFramework>net6.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
-    <!--<RuntimeIdentifier>win-x64</RuntimeIdentifier>-->
-    <!--<RuntimeFrameworkVersion>5.0.0-dev</RuntimeFrameworkVersion>-->
 
     <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
     <IlcInvariantGlobalization>true</IlcInvariantGlobalization>
     <IlcFoldIdenticalMethodBodies>true</IlcFoldIdenticalMethodBodies>
     <IlcOptimizationPreference>Size</IlcOptimizationPreference>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <!--<ApplicationManifest>app.manifest</ApplicationManifest>-->
-    <!--<IlcDisableReflection>true</IlcDisableReflection>-->
   </PropertyGroup>
 
   <ItemGroup>
     <AppContextSwitchOverrides Include="Switch.System.Reflection.Assembly.SimulatedLocationInBaseDirectory" />
   </ItemGroup>
-  <!--<ItemGroup>
-    <KnownFrameworkReference Update="Microsoft.NETCore.App"
-                              DefaultRuntimeFrameworkVersion="5.0.0-dev"
-                              LatestRuntimeFrameworkVersion="5.0.0-dev"
-                              TargetingPackVersion="5.0.0-dev"
-                              />
-  </ItemGroup>-->
-
-  <!--<ItemGroup>
-    <PackageReference Include="Microsoft.NETCore.App.Runtime.win-x64" Version="5.0.0-dev" />
-  </ItemGroup>-->
 
    <ItemGroup>
     <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="6.0.0-*" />
@@ -40,10 +24,6 @@
    <ItemGroup>
      <ProjectReference Include="..\WinFormsComInterop\WinFormsComInterop.csproj" />
    </ItemGroup>
-
-  <!--<ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp5.0'">
-    <ProjectReference Include="..\WinFormsComInterop\WinFormsComInterop.csproj" />
-  </ItemGroup>-->
 
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
@@ -60,6 +40,6 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <!--<Import Project="$(MSBuildSDKsPath)\Microsoft.NET.Sdk.WindowsDesktop\Sdk\Sdk.targets" />
+  <!--<Import Project="$(MSBuildSDKsPath)\Microsoft.NET.Sdk\Sdk\Sdk.targets" />
   <Import Project="$(IlcPath)\build\Microsoft.NETCore.Native.targets" Condition="'$(IlcPath)' != ''"/>-->
 </Project>
