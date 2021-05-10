@@ -32,11 +32,7 @@ namespace WindowsFormsApp1
                     System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
             //field.SetValue(null, IntPtr.Zero);
 #endif
-//#if NETCOREAPP5_0
-            // See https://github.com/dotnet/corert/issues/4219#issuecomment-623159691
-            //new WinFormsComInterop.WinFormsComWrappers().RegisterAsGlobalInstance();
             ComWrappers.RegisterForMarshalling(WinFormsComInterop.WinFormsComWrappers.Instance);
-//#endif
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());

@@ -16,10 +16,10 @@ namespace WinFormsComInterop
             //var inst = Marshal.PtrToStructure<VtblPtr>(instance);
             //this.vtable = Marshal.PtrToStructure<IExternalObjectVftbl>(inst.Vtbl);
             this.instance = instance;
-            if (Marshal.QueryInterface(instance, ref IID_IAccessible, out var pAccessible) == 0)
-            {
-                accessible = pAccessible;
-            }
+            //if (Marshal.QueryInterface(instance, ref IID_IAccessible, out var pAccessible) == 0)
+            //{
+            //    accessible = pAccessible;
+            //}
         }
 
         public void accSelect(int flagsSelect, object varChild)
@@ -27,15 +27,26 @@ namespace WinFormsComInterop
             throw new NotImplementedException();
         }
 
-        public void accLocation(out int pxLeft, out int pyTop, out int pcxWidth, out int pcyHeight, object varChild)
+        public unsafe void accLocation(out int pxLeft, out int pyTop, out int pcxWidth, out int pcyHeight, object varChild)
         {
+            // This is breaks accessibility, but at least it do not crash application.
             pxLeft = 0;
             pyTop = 0;
             pcxWidth = 0;
             pcyHeight = 0;
+            // 3 slots in IUnknown
+            // 4 slots in IDispatch
+            // 16 index in IAccessible
+            // See https://github.com/Alexpux/mingw-w64/blob/master/mingw-w64-headers/include/oleacc.h for layout.
+            //IntPtr* comDispatch = (IntPtr*)instance;
+            //IntPtr* vtbl = (IntPtr*)comDispatch[0];
+            //var accessibility = ComWrappers.ComInterfaceDispatch.GetInstance<Accessibility.IAccessible>((ComWrappers.ComInterfaceDispatch*)instance);
+            //accessibility.accLocation(out pxLeft, out pyTop, out pcxWidth, out pcyHeight, varChild);
+            //((delegate* unmanaged<IntPtr, int*, int*, int*, int*, VARIANT, void>)vtbl[3])(accessible, &pxLeft, &pyTop, &pcxWidth, &pcyHeight, );
+
             if (varChild != null)
             {
-                throw new NotImplementedException();
+                //throw new NotImplementedException();
             }
         }
 

@@ -11,6 +11,8 @@ namespace WinFormsComInterop
 
         internal static Guid IRawElementProviderSimple_GUID = typeof(IRawElementProviderSimple).GUID;
 
+        internal static Guid IID_IOleWindow = new Guid("00000114-0000-0000-C000-000000000046");
+
         // This class only exposes IDispatch and the vtable is always the same.
         // The below isn't the most efficient but it is reasonable for prototyping.
         // If additional interfaces want to be exposed, add them here.
@@ -31,10 +33,10 @@ namespace WinFormsComInterop
                 GetPropertyValue = Marshal.GetFunctionPointerForDelegate(IRawElementProviderSimpleVtbl.pGetPropertyValue),
                 HostRawElementProvider = Marshal.GetFunctionPointerForDelegate(IRawElementProviderSimpleVtbl.pHostRawElementProvider)
             };
-            var vtblRaw = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(IRawElementProviderSimpleVtbl), sizeof(IRawElementProviderSimpleVtbl));
+            var vtblRaw = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(IRawElementProviderSimpleVtbl));
             Marshal.StructureToPtr(vtbl, vtblRaw, false);
 
-            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(IRawElementProviderSimpleVtbl), sizeof(ComInterfaceEntry));
+            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 2);
             wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
             wrapperEntry->IID = IRawElementProviderSimple_GUID;
             wrapperEntry->Vtable = vtblRaw;
@@ -54,6 +56,11 @@ namespace WinFormsComInterop
         {
             // Return NULL works,
             //return null;
+            GetIUnknownImpl(out IntPtr fpQueryInteface, out IntPtr fpAddRef, out IntPtr fpRelease);
+            if (((IntPtr*)((IntPtr*)externalComObject)[0])[0] == fpQueryInteface)
+            {
+                return ComWrappers.ComInterfaceDispatch.GetInstance<object>((ComWrappers.ComInterfaceDispatch*)externalComObject);
+            }
 
             // Return object does not works yet.
             return new IExternalObject(externalComObject);
