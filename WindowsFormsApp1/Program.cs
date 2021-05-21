@@ -7,10 +7,6 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApp1
 {
-#if NETCOREAPP5_0
-    
-#endif
-
     static class Program
     {
         /// <summary>

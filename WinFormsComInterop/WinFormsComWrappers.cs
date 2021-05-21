@@ -18,28 +18,18 @@ namespace WinFormsComInterop
         // If additional interfaces want to be exposed, add them here.
         static WinFormsComWrappers()
         {
-            GetIUnknownImpl(out IntPtr fpQueryInteface, out IntPtr fpAddRef, out IntPtr fpRelease);
+            var vtblRaw = (IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(IntPtr) * 7);
+            GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
 
-            var vtbl = new IRawElementProviderSimpleVtbl()
-            {
-                IUnknownImpl = new IUnknownVtbl()
-                {
-                    QueryInterface = fpQueryInteface,
-                    AddRef = fpAddRef,
-                    Release = fpRelease
-                },
-                ProviderOptions = Marshal.GetFunctionPointerForDelegate(IRawElementProviderSimpleVtbl.pGetProviderOptions),
-                GetPatternProvider = Marshal.GetFunctionPointerForDelegate(IRawElementProviderSimpleVtbl.pGetPatternProvider),
-                GetPropertyValue = Marshal.GetFunctionPointerForDelegate(IRawElementProviderSimpleVtbl.pGetPropertyValue),
-                HostRawElementProvider = Marshal.GetFunctionPointerForDelegate(IRawElementProviderSimpleVtbl.pHostRawElementProvider)
-            };
-            var vtblRaw = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(IRawElementProviderSimpleVtbl));
-            Marshal.StructureToPtr(vtbl, vtblRaw, false);
+            vtblRaw[3] = Marshal.GetFunctionPointerForDelegate(IRawElementProviderSimpleVtbl.pGetProviderOptions);
+            vtblRaw[4] = Marshal.GetFunctionPointerForDelegate(IRawElementProviderSimpleVtbl.pGetPatternProvider);
+            vtblRaw[5] = Marshal.GetFunctionPointerForDelegate(IRawElementProviderSimpleVtbl.pGetPropertyValue);
+            vtblRaw[6] = Marshal.GetFunctionPointerForDelegate(IRawElementProviderSimpleVtbl.pHostRawElementProvider);
 
             var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 2);
             wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
             wrapperEntry->IID = IRawElementProviderSimple_GUID;
-            wrapperEntry->Vtable = vtblRaw;
+            wrapperEntry->Vtable = (IntPtr)vtblRaw;
         }
 
         public static WinFormsComWrappers Instance { get; } = new WinFormsComWrappers();

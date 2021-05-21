@@ -42,7 +42,7 @@ namespace WinFormsComInterop
             //IntPtr* vtbl = (IntPtr*)comDispatch[0];
             //var accessibility = ComWrappers.ComInterfaceDispatch.GetInstance<Accessibility.IAccessible>((ComWrappers.ComInterfaceDispatch*)instance);
             //accessibility.accLocation(out pxLeft, out pyTop, out pcxWidth, out pcyHeight, varChild);
-            //((delegate* unmanaged<IntPtr, int*, int*, int*, int*, VARIANT, void>)vtbl[3])(accessible, &pxLeft, &pyTop, &pcxWidth, &pcyHeight, );
+            //((delegate* unmanaged<IntPtr, int*, int*, int*, int*, VARIANT*, void>)vtbl[3 + 4 + 16])(accessible, &pxLeft, &pyTop, &pcxWidth, &pcyHeight, IntPtr.Zero);
 
             if (varChild != null)
             {

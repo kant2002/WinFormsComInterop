@@ -4,6 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <Description>ComWrappers implementation for WinForms.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,7 +14,7 @@
       <EmbedInteropTypes>false</EmbedInteropTypes>
     </Reference>
     <ProjectReference Include="..\System.Windows.Forms.Primitives\System.Windows.Forms.Primitives.csproj">
-      <PrivateAssets>True</PrivateAssets>
+      <PrivateAssets>All</PrivateAssets>
     </ProjectReference>
   </ItemGroup>
 

@@ -5,6 +5,8 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
+    <TrimMode>link</TrimMode>
+    <IlcGenerateDgmlFile>false</IlcGenerateDgmlFile>
 
     <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
     <IlcInvariantGlobalization>true</IlcInvariantGlobalization>
