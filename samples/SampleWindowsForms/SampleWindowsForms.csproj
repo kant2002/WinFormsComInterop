@@ -24,7 +24,7 @@
   </ItemGroup>
 
    <ItemGroup>
-     <ProjectReference Include="..\WinFormsComInterop\WinFormsComInterop.csproj" />
+     <ProjectReference Include="..\..\WinFormsComInterop\WinFormsComInterop.csproj" />
    </ItemGroup>
 
   <ItemGroup>

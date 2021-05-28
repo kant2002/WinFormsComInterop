@@ -1,0 +1,22 @@
+{
+  "profiles": {
+    "WindowsFormsApp1": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    },
+    "DebugClr": {
+      "commandName": "Executable",
+      "executablePath": "D:\\d\\kant\\GitHub\\dotnet\\runtime\\artifacts\\bin\\coreclr\\Windows_NT.x64.Debug\\CoreRun.exe",
+      "commandLineArgs": "D:\\d\\kant\\GitHub\\CoreRTWinFormsTestBed\\WindowsFormsApp1\\bin\\Debug\\net5.0-windows\\WindowsFormsApp1.dll",
+      "workingDirectory": "D:\\d\\kant\\GitHub\\dotnet\\runtime\\artifacts\\bin\\coreclr\\Windows_NT.x64.Debug\\",
+      "nativeDebugging": true
+    },
+    "DebugCoreRT": {
+      "commandName": "Executable",
+      "executablePath": "D:\\d\\kant\\GitHub\\dotnet\\runtime\\artifacts\\bin\\coreclr\\Windows_NT.x64.Debug\\CoreRun.exe",
+      "commandLineArgs": "D:\\d\\kant\\GitHub\\CoreRTWinFormsTestBed\\WindowsFormsApp1\\bin\\x64\\Debug\\net5.0-windows\\win-x64\\WindowsFormsApp1.dll",
+      "workingDirectory": "D:\\d\\kant\\GitHub\\dotnet\\runtime\\artifacts\\bin\\coreclr\\Windows_NT.x64.Debug\\",
+      "nativeDebugging": true
+    }
+  }
+}
