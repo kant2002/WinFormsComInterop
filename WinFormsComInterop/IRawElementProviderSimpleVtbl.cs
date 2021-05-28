@@ -45,10 +45,15 @@ namespace WinFormsComInterop
             try
             {
                 var inst = ComInterfaceDispatch.GetInstance<IRawElementProviderSimple>((ComInterfaceDispatch*)thisPtr);
-                IntPtr pUnk = WinFormsComWrappers.Instance.GetOrCreateComInterfaceForObject(inst.HostRawElementProvider, CreateComInterfaceFlags.None);
-                Guid targetInterface = WinFormsComWrappers.IRawElementProviderSimple_GUID;
-                int result = Marshal.QueryInterface(pUnk, ref targetInterface, out *i);
-                Marshal.Release(pUnk);
+                int result = 0;
+                if (inst.HostRawElementProvider != null)
+                {
+                    IntPtr pUnk = WinFormsComWrappers.Instance.GetOrCreateComInterfaceForObject(inst.HostRawElementProvider, CreateComInterfaceFlags.None);
+                    Guid targetInterface = WinFormsComWrappers.IRawElementProviderSimple_GUID;
+                    result = Marshal.QueryInterface(pUnk, ref targetInterface, out *i);
+                    Marshal.Release(pUnk);
+                }
+
                 return result;
             }
             catch (Exception e)
@@ -63,10 +68,13 @@ namespace WinFormsComInterop
             {
                 var inst = ComInterfaceDispatch.GetInstance<IRawElementProviderSimple>((ComInterfaceDispatch*)thisPtr);
                 var target = inst.GetPatternProvider(patternId);
-                IntPtr pUnk = WinFormsComWrappers.Instance.GetOrCreateComInterfaceForObject(target, CreateComInterfaceFlags.None);
-                Guid targetInterface = WinFormsComWrappers.IRawElementProviderSimple_GUID;
-                int result = Marshal.QueryInterface(pUnk, ref targetInterface, out *i);
-                Marshal.Release(pUnk);
+                if (target != null)
+                {
+                    IntPtr pUnk = WinFormsComWrappers.Instance.GetOrCreateComInterfaceForObject(target, CreateComInterfaceFlags.None);
+                    Guid targetInterface = WinFormsComWrappers.IRawElementProviderSimple_GUID;
+                    int result = Marshal.QueryInterface(pUnk, ref targetInterface, out *i);
+                    Marshal.Release(pUnk);
+                }
             }
             catch (Exception e)
             {
@@ -81,10 +89,13 @@ namespace WinFormsComInterop
             {
                 var inst = ComInterfaceDispatch.GetInstance<IRawElementProviderSimple>((ComInterfaceDispatch*)thisPtr);
                 var target = inst.GetPropertyValue(patternId);
-                IntPtr pUnk = WinFormsComWrappers.Instance.GetOrCreateComInterfaceForObject(target, CreateComInterfaceFlags.None);
-                Guid targetInterface = WinFormsComWrappers.IRawElementProviderSimple_GUID;
-                int result = Marshal.QueryInterface(pUnk, ref targetInterface, out *i);
-                Marshal.Release(pUnk);
+                if (target != null)
+                {
+                    IntPtr pUnk = WinFormsComWrappers.Instance.GetOrCreateComInterfaceForObject(target, CreateComInterfaceFlags.None);
+                    Guid targetInterface = WinFormsComWrappers.IRawElementProviderSimple_GUID;
+                    int result = Marshal.QueryInterface(pUnk, ref targetInterface, out *i);
+                    Marshal.Release(pUnk);
+                }
             }
             catch (Exception e)
             {
