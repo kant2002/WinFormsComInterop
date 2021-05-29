@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <Reference Include="Accessibility">
-      <HintPath>C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\6.0.0-preview.4.21223.2\Accessibility.dll</HintPath>
+      <HintPath>C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\6.0.0-preview.6.21278.1\Accessibility.dll</HintPath>
       <EmbedInteropTypes>false</EmbedInteropTypes>
     </Reference>
     <ProjectReference Include="..\System.Windows.Forms.Primitives\System.Windows.Forms.Primitives.csproj">

@@ -37,3 +37,23 @@ does not working due to this error
 ```
 experiments\WinUIUWP\WinUIUWP.csproj : error MSB4057: The target "Restore" does not exist in the project.
 ```
+
+## For brave souls
+
+Mostly notes for me, but maybe somebody would like to hack.
+
+Modify nuget.config
+```
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <packageSources>
+    <!--To inherit the global NuGet package sources remove the <clear/> line below -->
+    <clear />
+    <!--Locally built version of NativeAOT -->
+    <add key="ILC" value="c:\runtimelab\artifacts\packages\Debug\Shipping\" />
+    <!--To use daily builds of runtime -->
+    <add key="dotnet6" value="https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet6/nuget/v3/index.json" />
+  </packageSources>
+</configuration>
+
+```
