@@ -41,7 +41,23 @@
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.ssssToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.xxxxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.xxxxToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.xxxxToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.dddddToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.adasdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.adasdasdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.adsasdasdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.asdasdasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            this.menuStrip1.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // monthCalendar1
@@ -94,7 +110,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(18, 245);
+            this.button1.Location = new System.Drawing.Point(18, 229);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 6;
@@ -104,13 +120,112 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(100, 245);
+            this.button2.ContextMenuStrip = this.contextMenuStrip1;
+            this.button2.Location = new System.Drawing.Point(99, 229);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 7;
             this.button2.Text = "Font Dlg";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ssssToolStripMenuItem,
+            this.xxxxToolStripMenuItem1});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(800, 24);
+            this.menuStrip1.TabIndex = 8;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // ssssToolStripMenuItem
+            // 
+            this.ssssToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.xxxxToolStripMenuItem,
+            this.xxxxToolStripMenuItem2,
+            this.toolStripMenuItem1,
+            this.dddddToolStripMenuItem,
+            this.toolStripComboBox1,
+            this.toolStripTextBox1});
+            this.ssssToolStripMenuItem.Name = "ssssToolStripMenuItem";
+            this.ssssToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.ssssToolStripMenuItem.Text = "ssss";
+            // 
+            // xxxxToolStripMenuItem
+            // 
+            this.xxxxToolStripMenuItem.Name = "xxxxToolStripMenuItem";
+            this.xxxxToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.xxxxToolStripMenuItem.Text = "xxxx";
+            // 
+            // xxxxToolStripMenuItem1
+            // 
+            this.xxxxToolStripMenuItem1.Name = "xxxxToolStripMenuItem1";
+            this.xxxxToolStripMenuItem1.Size = new System.Drawing.Size(43, 20);
+            this.xxxxToolStripMenuItem1.Text = "xxxx";
+            // 
+            // xxxxToolStripMenuItem2
+            // 
+            this.xxxxToolStripMenuItem2.Name = "xxxxToolStripMenuItem2";
+            this.xxxxToolStripMenuItem2.Size = new System.Drawing.Size(181, 22);
+            this.xxxxToolStripMenuItem2.Text = "xxxx";
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(178, 6);
+            // 
+            // dddddToolStripMenuItem
+            // 
+            this.dddddToolStripMenuItem.Name = "dddddToolStripMenuItem";
+            this.dddddToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.dddddToolStripMenuItem.Text = "ddddd";
+            // 
+            // toolStripComboBox1
+            // 
+            this.toolStripComboBox1.Name = "toolStripComboBox1";
+            this.toolStripComboBox1.Size = new System.Drawing.Size(121, 23);
+            // 
+            // toolStripTextBox1
+            // 
+            this.toolStripTextBox1.Name = "toolStripTextBox1";
+            this.toolStripTextBox1.Size = new System.Drawing.Size(100, 23);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.adasdToolStripMenuItem,
+            this.adasdasdToolStripMenuItem,
+            this.adsasdasdToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(129, 70);
+            // 
+            // adasdToolStripMenuItem
+            // 
+            this.adasdToolStripMenuItem.Name = "adasdToolStripMenuItem";
+            this.adasdToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.adasdToolStripMenuItem.Text = "adasd";
+            // 
+            // adasdasdToolStripMenuItem
+            // 
+            this.adasdasdToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.asdasdasToolStripMenuItem});
+            this.adasdasdToolStripMenuItem.Name = "adasdasdToolStripMenuItem";
+            this.adasdasdToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.adasdasdToolStripMenuItem.Text = "adasdasd";
+            // 
+            // adsasdasdToolStripMenuItem
+            // 
+            this.adsasdasdToolStripMenuItem.Name = "adsasdasdToolStripMenuItem";
+            this.adsasdasdToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.adsasdasdToolStripMenuItem.Text = "adsasdasd";
+            // 
+            // asdasdasToolStripMenuItem
+            // 
+            this.asdasdasToolStripMenuItem.Name = "asdasdasToolStripMenuItem";
+            this.asdasdasToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.asdasdasToolStripMenuItem.Text = "asdasdas";
             // 
             // SecondaryForm
             // 
@@ -125,9 +240,14 @@
             this.Controls.Add(this.propertyGrid1);
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.monthCalendar1);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "SecondaryForm";
             this.Text = "SecodaryForm";
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -147,5 +267,19 @@
         private System.Windows.Forms.FontDialog fontDialog1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem ssssToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem xxxxToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem xxxxToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem dddddToolStripMenuItem;
+        private System.Windows.Forms.ToolStripComboBox toolStripComboBox1;
+        private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
+        private System.Windows.Forms.ToolStripMenuItem xxxxToolStripMenuItem1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem adasdToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem adasdasdToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem asdasdasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem adsasdasdToolStripMenuItem;
     }
 }
