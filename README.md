@@ -1,5 +1,8 @@
-TestBed for experimenting with WinForms and NativeAOT
+ComWrappers required to run NativeAOT and WinForms
 =====================================================
+
+This repository has ComWrappers implementation for WinForms.
+In additional to that, it allow use WinForms and NativeAOT together.
 
 Test that normal CoreCLR works
 
@@ -42,6 +45,8 @@ experiments\WinUIUWP\WinUIUWP.csproj : error MSB4057: The target "Restore" does 
 
 Mostly notes for me, but maybe somebody would like to hack.
 
+Build (NativeAOT)[https://github.com/dotnet/runtimelab/tree/feature/NativeAOT].
+
 Modify nuget.config
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -55,5 +60,10 @@ Modify nuget.config
     <add key="dotnet6" value="https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet6/nuget/v3/index.json" />
   </packageSources>
 </configuration>
-
 ```
+
+Restore packages to local folder to not pollute global Nuget cache. You will build NativAOT a lot.
+
+	dotnet restore -r win-x64 --packages packages
+
+Then publish applications using regular workflow described above.
