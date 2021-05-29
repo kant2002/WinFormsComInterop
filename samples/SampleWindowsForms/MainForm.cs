@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WindowsFormsApp1
+namespace SampleWindowsForms
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
@@ -29,13 +22,13 @@ namespace WindowsFormsApp1
 
         private void button5_Click(object sender, EventArgs e)
         {
-            var form = new Form2();
+            var form = new SecondaryForm();
             form.ShowDialog();
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
-            var form = new Form2();
+            var form = new SecondaryForm();
             form.Show();
         }
     }

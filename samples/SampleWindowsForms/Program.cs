@@ -1,11 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WindowsFormsApp1
+namespace SampleWindowsForms
 {
     static class Program
     {
@@ -15,23 +12,11 @@ namespace WindowsFormsApp1
         [STAThread]
         static void Main()
         {
-            // Reflection trick does not helps too much.
-#if NET472
-            var field = typeof(Control.ControlAccessibleObject)
-                .GetField("s_oleAccAvailable",
-                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-            field.SetValue(null, IntPtr.Zero);
-#else
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
-            var field = typeof(Control.ControlAccessibleObject)
-                .GetField("s_oleAccAvailable",
-                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-            //field.SetValue(null, IntPtr.Zero);
-#endif
             ComWrappers.RegisterForMarshalling(WinFormsComInterop.WinFormsComWrappers.Instance);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new MainForm());
         }
     }
 }
