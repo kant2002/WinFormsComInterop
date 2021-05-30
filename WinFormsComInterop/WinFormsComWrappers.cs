@@ -12,6 +12,8 @@ namespace WinFormsComInterop
         internal static Guid IRawElementProviderSimple_GUID = typeof(IRawElementProviderSimple).GUID;
 
         internal static Guid IID_IOleWindow = new Guid("00000114-0000-0000-C000-000000000046");
+        internal static Guid IID_IStream = new Guid("00000109-0000-0000-C000-000000000046");
+        internal static Guid IID_IPersistStream = new Guid("00000109-0000-0000-C000-000000000046");
 
         // This class only exposes IDispatch and the vtable is always the same.
         // The below isn't the most efficient but it is reasonable for prototyping.

@@ -41,23 +41,26 @@
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.adasdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.adasdasdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.asdasdasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.adsasdasdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.ssssToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.xxxxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.xxxxToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.xxxxToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.dddddToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.adasdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.adasdasdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.adsasdasdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.asdasdasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.xxxxToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
-            this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // monthCalendar1
@@ -129,6 +132,41 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.adasdToolStripMenuItem,
+            this.adasdasdToolStripMenuItem,
+            this.adsasdasdToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(129, 70);
+            // 
+            // adasdToolStripMenuItem
+            // 
+            this.adasdToolStripMenuItem.Name = "adasdToolStripMenuItem";
+            this.adasdToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.adasdToolStripMenuItem.Text = "adasd";
+            // 
+            // adasdasdToolStripMenuItem
+            // 
+            this.adasdasdToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.asdasdasToolStripMenuItem});
+            this.adasdasdToolStripMenuItem.Name = "adasdasdToolStripMenuItem";
+            this.adasdasdToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.adasdasdToolStripMenuItem.Text = "adasdasd";
+            // 
+            // asdasdasToolStripMenuItem
+            // 
+            this.asdasdasToolStripMenuItem.Name = "asdasdasToolStripMenuItem";
+            this.asdasdasToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.asdasdasToolStripMenuItem.Text = "asdasdas";
+            // 
+            // adsasdasdToolStripMenuItem
+            // 
+            this.adsasdasdToolStripMenuItem.Name = "adsasdasdToolStripMenuItem";
+            this.adsasdasdToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.adsasdasdToolStripMenuItem.Text = "adsasdasd";
+            // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -159,12 +197,6 @@
             this.xxxxToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.xxxxToolStripMenuItem.Text = "xxxx";
             // 
-            // xxxxToolStripMenuItem1
-            // 
-            this.xxxxToolStripMenuItem1.Name = "xxxxToolStripMenuItem1";
-            this.xxxxToolStripMenuItem1.Size = new System.Drawing.Size(43, 20);
-            this.xxxxToolStripMenuItem1.Text = "xxxx";
-            // 
             // xxxxToolStripMenuItem2
             // 
             this.xxxxToolStripMenuItem2.Name = "xxxxToolStripMenuItem2";
@@ -192,46 +224,25 @@
             this.toolStripTextBox1.Name = "toolStripTextBox1";
             this.toolStripTextBox1.Size = new System.Drawing.Size(100, 23);
             // 
-            // contextMenuStrip1
+            // xxxxToolStripMenuItem1
             // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.adasdToolStripMenuItem,
-            this.adasdasdToolStripMenuItem,
-            this.adsasdasdToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(129, 70);
+            this.xxxxToolStripMenuItem1.Name = "xxxxToolStripMenuItem1";
+            this.xxxxToolStripMenuItem1.Size = new System.Drawing.Size(43, 20);
+            this.xxxxToolStripMenuItem1.Text = "xxxx";
             // 
-            // adasdToolStripMenuItem
+            // splitContainer1
             // 
-            this.adasdToolStripMenuItem.Name = "adasdToolStripMenuItem";
-            this.adasdToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
-            this.adasdToolStripMenuItem.Text = "adasd";
-            // 
-            // adasdasdToolStripMenuItem
-            // 
-            this.adasdasdToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.asdasdasToolStripMenuItem});
-            this.adasdasdToolStripMenuItem.Name = "adasdasdToolStripMenuItem";
-            this.adasdasdToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
-            this.adasdasdToolStripMenuItem.Text = "adasdasd";
-            // 
-            // adsasdasdToolStripMenuItem
-            // 
-            this.adsasdasdToolStripMenuItem.Name = "adsasdasdToolStripMenuItem";
-            this.adsasdasdToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
-            this.adsasdasdToolStripMenuItem.Text = "adsasdasd";
-            // 
-            // asdasdasToolStripMenuItem
-            // 
-            this.asdasdasToolStripMenuItem.Name = "asdasdasToolStripMenuItem";
-            this.asdasdasToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.asdasdasToolStripMenuItem.Text = "asdasdas";
+            this.splitContainer1.Location = new System.Drawing.Point(18, 259);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Size = new System.Drawing.Size(150, 100);
+            this.splitContainer1.TabIndex = 9;
             // 
             // SecondaryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.richTextBox1);
@@ -245,9 +256,11 @@
             this.Name = "SecondaryForm";
             this.Text = "SecodaryForm";
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.contextMenuStrip1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -281,5 +294,6 @@
         private System.Windows.Forms.ToolStripMenuItem adasdasdToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem asdasdasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem adsasdasdToolStripMenuItem;
+        private System.Windows.Forms.SplitContainer splitContainer1;
     }
 }
