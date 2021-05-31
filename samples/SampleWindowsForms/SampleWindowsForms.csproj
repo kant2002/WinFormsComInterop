@@ -28,11 +28,6 @@
    </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="D:\d\kant\GitHub\dotnet\winforms\artifacts\bin\System.Windows.Forms\Release\net6.0\System.Windows.Forms.dll" />
-    <Reference Include="D:\d\kant\GitHub\dotnet\winforms\artifacts\bin\System.Windows.Forms\Release\net6.0\System.Windows.Forms.Primitives.dll" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
