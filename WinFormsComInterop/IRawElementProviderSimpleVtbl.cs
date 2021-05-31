@@ -5,33 +5,16 @@ using static System.Runtime.InteropServices.ComWrappers;
 
 namespace WinFormsComInterop
 {
-    public unsafe struct IRawElementProviderSimpleVtbl
+    public unsafe static class IRawElementProviderSimpleVtbl
     {
-        public IUnknownVtbl IUnknownImpl;
-        public IntPtr ProviderOptions;
-        public IntPtr GetPatternProvider;
-        public IntPtr GetPropertyValue;
-        public IntPtr HostRawElementProvider;
-
-        public delegate int _GetProviderOptions(IntPtr thisPtr, out ProviderOptions i);
-        public delegate int _GetPatternProvider(IntPtr thisPtr, UIA patternId, IntPtr *i);
-        public delegate int _GetPropertyValue(IntPtr thisPtr, UIA patternId, IntPtr *i);
-        public delegate int _HostRawElementProvider(
-            IntPtr thisPtr,
-            IntPtr* i);
-        
-        public static _GetProviderOptions pGetProviderOptions = new _GetProviderOptions(GetProviderOptionsInternal);
-        public static _GetPatternProvider pGetPatternProvider = new _GetPatternProvider(GetPatternProviderInternal);
-        public static _GetPropertyValue pGetPropertyValue = new _GetPropertyValue(GetPropertyValueInternal);
-        public static _HostRawElementProvider pHostRawElementProvider = new _HostRawElementProvider(HostRawElementProviderInternal);
-
-        public static int GetProviderOptionsInternal(IntPtr thisPtr, out ProviderOptions i)
+        [UnmanagedCallersOnly]
+        public static int GetProviderOptionsInternal(IntPtr thisPtr, ProviderOptions* i)
         {
-            i = 0;
+            *i = 0;
             try
             {
                 var inst = ComInterfaceDispatch.GetInstance<IRawElementProviderSimple>((ComInterfaceDispatch*)thisPtr);
-                i = inst.ProviderOptions;
+                *i = inst.ProviderOptions;
             }
             catch (Exception e)
             {
@@ -39,6 +22,8 @@ namespace WinFormsComInterop
             }
             return 0; // S_OK;
         }
+
+        [UnmanagedCallersOnly]
         public static int HostRawElementProviderInternal(IntPtr thisPtr, IntPtr* i)
         {
             *i = IntPtr.Zero;
@@ -61,6 +46,8 @@ namespace WinFormsComInterop
                 return e.HResult;
             }
         }
+
+        [UnmanagedCallersOnly]
         public static int GetPatternProviderInternal(IntPtr thisPtr, UIA patternId, IntPtr *i)
         {
             *i = IntPtr.Zero;
@@ -82,6 +69,8 @@ namespace WinFormsComInterop
             }
             return 0; // S_OK;
         }
+
+        [UnmanagedCallersOnly]
         public static int GetPropertyValueInternal(IntPtr thisPtr, UIA patternId, IntPtr *i)
         {
             *i = IntPtr.Zero;

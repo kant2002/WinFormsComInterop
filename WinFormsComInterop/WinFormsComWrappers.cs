@@ -23,10 +23,10 @@ namespace WinFormsComInterop
             var vtblRaw = (IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(IntPtr) * 7);
             GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
 
-            vtblRaw[3] = Marshal.GetFunctionPointerForDelegate(IRawElementProviderSimpleVtbl.pGetProviderOptions);
-            vtblRaw[4] = Marshal.GetFunctionPointerForDelegate(IRawElementProviderSimpleVtbl.pGetPatternProvider);
-            vtblRaw[5] = Marshal.GetFunctionPointerForDelegate(IRawElementProviderSimpleVtbl.pGetPropertyValue);
-            vtblRaw[6] = Marshal.GetFunctionPointerForDelegate(IRawElementProviderSimpleVtbl.pHostRawElementProvider);
+            vtblRaw[3] = (IntPtr)(delegate* unmanaged<IntPtr, ProviderOptions*, int>)&IRawElementProviderSimpleVtbl.GetProviderOptionsInternal;
+            vtblRaw[4] = (IntPtr)(delegate* unmanaged<IntPtr, UIA, IntPtr*, int>)&IRawElementProviderSimpleVtbl.GetPatternProviderInternal;
+            vtblRaw[5] = (IntPtr)(delegate* unmanaged<IntPtr, UIA, IntPtr*, int>)&IRawElementProviderSimpleVtbl.GetPropertyValueInternal;
+            vtblRaw[6] = (IntPtr)(delegate* unmanaged<IntPtr, IntPtr*, int>)&IRawElementProviderSimpleVtbl.HostRawElementProviderInternal;
 
             var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 2);
             wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
