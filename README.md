@@ -4,6 +4,20 @@ ComWrappers required to run NativeAOT and WinForms
 This repository has ComWrappers implementation for WinForms.
 In additional to that, it allow use WinForms and NativeAOT together.
 
+## Getting started
+
+Just add `WinFormsComInterop` to your project.
+
+	dotnet add package WinFormsComInterop
+
+Then to your Program.cs add following line
+
+	ComWrappers.RegisterForMarshalling(WinFormsComInterop.WinFormsComWrappers.Instance);
+
+If you application will works with this ComWrappers implementation, then most likely it would work with NativeAOT.
+
+## Testing technology
+
 Test that normal CoreCLR works
 
 	dotnet run --project samples\SampleWindowsForms\SampleWindowsForms.csproj
