@@ -1,6 +1,7 @@
-﻿using System;
+﻿extern alias primitives;
+using System;
 using System.Runtime.InteropServices;
-using static Interop.UiaCore;
+using static primitives::Interop.UiaCore;
 using static System.Runtime.InteropServices.ComWrappers;
 
 namespace WinFormsComInterop
@@ -34,7 +35,7 @@ namespace WinFormsComInterop
                 if (inst.HostRawElementProvider != null)
                 {
                     IntPtr pUnk = WinFormsComWrappers.Instance.GetOrCreateComInterfaceForObject(inst.HostRawElementProvider, CreateComInterfaceFlags.None);
-                    Guid targetInterface = WinFormsComWrappers.IRawElementProviderSimple_GUID;
+                    Guid targetInterface = WinFormsComWrappers.IID_IRawElementProviderSimple;
                     result = Marshal.QueryInterface(pUnk, ref targetInterface, out *i);
                     Marshal.Release(pUnk);
                 }
@@ -58,7 +59,7 @@ namespace WinFormsComInterop
                 if (target != null)
                 {
                     IntPtr pUnk = WinFormsComWrappers.Instance.GetOrCreateComInterfaceForObject(target, CreateComInterfaceFlags.None);
-                    Guid targetInterface = WinFormsComWrappers.IRawElementProviderSimple_GUID;
+                    Guid targetInterface = WinFormsComWrappers.IID_IRawElementProviderSimple;
                     int result = Marshal.QueryInterface(pUnk, ref targetInterface, out *i);
                     Marshal.Release(pUnk);
                 }
@@ -81,7 +82,7 @@ namespace WinFormsComInterop
                 if (target != null)
                 {
                     IntPtr pUnk = WinFormsComWrappers.Instance.GetOrCreateComInterfaceForObject(target, CreateComInterfaceFlags.None);
-                    Guid targetInterface = WinFormsComWrappers.IRawElementProviderSimple_GUID;
+                    Guid targetInterface = WinFormsComWrappers.IID_IRawElementProviderSimple;
                     int result = Marshal.QueryInterface(pUnk, ref targetInterface, out *i);
                     Marshal.Release(pUnk);
                 }

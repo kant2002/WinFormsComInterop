@@ -14,8 +14,13 @@
       <HintPath>C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\6.0.0-preview.6.21278.1\Accessibility.dll</HintPath>
       <EmbedInteropTypes>false</EmbedInteropTypes>
     </Reference>
+    <ProjectReference Include="..\System.Drawing.Common\System.Drawing.Common.csproj">
+      <PrivateAssets>All</PrivateAssets>
+      <Aliases>drawing</Aliases>
+    </ProjectReference>
     <ProjectReference Include="..\System.Windows.Forms.Primitives\System.Windows.Forms.Primitives.csproj">
       <PrivateAssets>All</PrivateAssets>
+      <Aliases>primitives</Aliases>
     </ProjectReference>
   </ItemGroup>
 
