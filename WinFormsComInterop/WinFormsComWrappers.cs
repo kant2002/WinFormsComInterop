@@ -33,7 +33,7 @@ namespace WinFormsComInterop
             CreateIRawElementProviderSimpleVtbl(out var vtbl);
 
             var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 2);
-            wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
+            var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
             wrapperEntry->IID = IID_IRawElementProviderSimple;
             wrapperEntry->Vtable = vtbl;
             return wrapperEntry;
@@ -44,7 +44,7 @@ namespace WinFormsComInterop
             CreateIStreamSimpleVtbl(out var vtbl);
 
             var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 2);
-            wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
+            var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
             wrapperEntry->IID = IID_IStream;
             wrapperEntry->Vtable = vtbl;
             return wrapperEntry;
@@ -70,7 +70,7 @@ namespace WinFormsComInterop
 
             vtblRaw[3] = (IntPtr)(delegate* unmanaged<IntPtr, byte*, uint, uint*, int>)&IStreamVtbl.Read;
             vtblRaw[4] = (IntPtr)(delegate* unmanaged<IntPtr, byte*, uint, uint*, int>)&IStreamVtbl.Write;
-            vtblRaw[5] = (IntPtr)(delegate* unmanaged<IntPtr, long, System.IO.SeekOrigin, ulong*, int>)&IStreamVtbl.Seek;
+            vtblRaw[5] = (IntPtr)(delegate* unmanaged<IntPtr, long, int, ulong*, int>)&IStreamVtbl.Seek;
             vtblRaw[6] = (IntPtr)(delegate* unmanaged<IntPtr, ulong, int>)&IStreamVtbl.SetSize;
             vtblRaw[7] = (IntPtr)(delegate* unmanaged<IntPtr, IntPtr, ulong, ulong*, ulong*, int>)&IStreamVtbl.CopyTo;
             vtblRaw[8] = (IntPtr)(delegate* unmanaged<IntPtr, uint, int>)&IStreamVtbl.Commit;

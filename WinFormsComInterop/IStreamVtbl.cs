@@ -42,12 +42,12 @@ namespace WinFormsComInterop
         }
 
         [UnmanagedCallersOnly]
-        public static int Seek(IntPtr thisPtr, long dlibMove, SeekOrigin dwOrigin, ulong* plibNewPosition)
+        public static int Seek(IntPtr thisPtr, long dlibMove, int dwOrigin, ulong* plibNewPosition)
         {
             try
             {
                 var inst = ComInterfaceDispatch.GetInstance<object>((ComInterfaceDispatch*)thisPtr);
-                ((Ole32.IStream)inst).Seek(dlibMove, dwOrigin, plibNewPosition);
+                ((Ole32.IStream)inst).Seek(dlibMove, (SeekOrigin)dwOrigin, plibNewPosition);
             }
             catch (Exception e)
             {
