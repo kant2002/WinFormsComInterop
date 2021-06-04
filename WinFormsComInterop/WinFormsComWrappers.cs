@@ -65,7 +65,7 @@ namespace WinFormsComInterop
 
         private static void CreateIStreamSimpleVtbl(out IntPtr vtbl)
         {
-            var vtblRaw = (IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(IntPtr) * 12);
+            var vtblRaw = (IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(IntPtr) * 14);
             GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
 
             vtblRaw[3] = (IntPtr)(delegate* unmanaged<IntPtr, byte*, uint, uint*, int>)&IStreamVtbl.Read;

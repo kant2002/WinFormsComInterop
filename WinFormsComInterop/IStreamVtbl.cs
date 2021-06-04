@@ -46,8 +46,8 @@ namespace WinFormsComInterop
         {
             try
             {
-                var inst = ComInterfaceDispatch.GetInstance<object>((ComInterfaceDispatch*)thisPtr);
-                ((Ole32.IStream)inst).Seek(dlibMove, (SeekOrigin)dwOrigin, plibNewPosition);
+                var inst = ComInterfaceDispatch.GetInstance<Ole32.IStream>((ComInterfaceDispatch*)thisPtr);
+                inst.Seek(dlibMove, (SeekOrigin)dwOrigin, plibNewPosition);
             }
             catch (Exception e)
             {
