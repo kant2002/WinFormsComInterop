@@ -6,6 +6,7 @@ using static System.Runtime.InteropServices.ComWrappers;
 
 namespace WinFormsComInterop
 {
+    //[ComProxy(typeof(IRawElementProviderSimple))]
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     public unsafe static class IRawElementProviderSimpleVtbl
     {

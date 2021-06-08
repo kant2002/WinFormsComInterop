@@ -22,6 +22,9 @@
       <PrivateAssets>All</PrivateAssets>
       <Aliases>primitives</Aliases>
     </ProjectReference>
+    <ProjectReference Include="..\WinFormsComInterop.SourceGenerator\WinFormsComInterop.SourceGenerator.csproj"
+                      ReferenceOutputAssembly="false"
+                      OutputItemType="Analyzer" />
   </ItemGroup>
 
 </Project>

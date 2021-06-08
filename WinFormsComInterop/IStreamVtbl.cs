@@ -7,6 +7,7 @@ using ComInterfaceDispatch = System.Runtime.InteropServices.ComWrappers.ComInter
 
 namespace WinFormsComInterop
 {
+    //[ComProxy(typeof(drawing::Interop.Ole32.IStream))]
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     public unsafe static class IStreamVtbl
     {
