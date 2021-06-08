@@ -8,6 +8,7 @@ using static primitives::Interop.UiaCore;
 
 namespace WinFormsComInterop
 {
+    [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     public unsafe class WinFormsComWrappers : ComWrappers
     {
         static ComWrappers.ComInterfaceEntry* wrapperEntry;

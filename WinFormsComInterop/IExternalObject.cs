@@ -8,6 +8,7 @@ using static primitives::Interop.Oleaut32;
 
 namespace WinFormsComInterop
 {
+    [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     class IExternalObject 
         : Accessibility.IAccessible, 
         primitives::Interop.Oleaut32.IEnumVariant, 

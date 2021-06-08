@@ -3,10 +3,11 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using static drawing::Interop;
-using static System.Runtime.InteropServices.ComWrappers;
+using ComInterfaceDispatch = System.Runtime.InteropServices.ComWrappers.ComInterfaceDispatch;
 
 namespace WinFormsComInterop
 {
+    [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     public unsafe static class IStreamVtbl
     {
         [UnmanagedCallersOnly]
