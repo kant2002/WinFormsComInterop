@@ -86,14 +86,26 @@ namespace {namespaceName}
                 source.AppendLine("[System.Runtime.Versioning.SupportedOSPlatform(\"windows\")]");
                 source.AppendLine($"partial unsafe class {overridenNameOpt.Name}Proxy");
                 source.AppendLine("{");
+                source.PushIndent();
                 foreach (var member in overridenNameOpt.GetMembers())
                 {
-                    var context = new MethodGenerationContext { Method = (IMethodSymbol)member, PreserveSignature = false };
-                    source.PushIndent();
-                    GenerateMethod(source, overridenNameOpt, "", context);
-                    source.PopIndent();
+                    var preserveSigAttribute = member.GetAttributes().FirstOrDefault(ad => ad.AttributeClass?.ToDisplayString() == "System.Runtime.InteropServices.PreserveSigAttribute");
+                    var preserveSignature = preserveSigAttribute != null;
+
+                    switch (member)
+                    {
+                        case IMethodSymbol methodSymbol:
+                            {
+                                var context = new MethodGenerationContext { Method = methodSymbol, PreserveSignature = preserveSignature };
+                                GenerateMethod(source, overridenNameOpt, "", context);
+                            }
+                            break;
+                        case IPropertySymbol propertySymbol:
+                            break;
+                    }
                 }
 
+                source.PopIndent();
                 source.AppendLine("}");
                 source.PopIndent();
             }
@@ -104,12 +116,22 @@ namespace {namespaceName}
 
         private Marshaller CreateMarshaller(IParameterSymbol parameterSymbol)
         {
-            if (parameterSymbol.Type.IsEnum())
+            Marshaller marshaller = CreateMarshaller(parameterSymbol.Type);
+            marshaller.Name = parameterSymbol.Name;
+            marshaller.Type = parameterSymbol.Type;
+            marshaller.RefKind = parameterSymbol.RefKind;
+            marshaller.Index = parameterSymbol.Ordinal;
+            return marshaller;
+        }
+
+        private Marshaller CreateMarshaller(ITypeSymbol parameterSymbol)
+        {
+            if (parameterSymbol.IsEnum())
             {
                 return new EnumMarshaller();
             }
 
-            if (parameterSymbol.Type.TypeKind == TypeKind.Interface)
+            if (parameterSymbol.TypeKind == TypeKind.Interface)
             {
                 return new ComInterfaceMarshaller();
             }
@@ -124,11 +146,9 @@ namespace {namespaceName}
             var marshallers = method.Parameters.Select(_ =>
             {
                 var marshaller = CreateMarshaller(_);
-                marshaller.ParameterSymbol = _;
                 return marshaller;
             });
-            var preserveSigAttribute = method.GetAttributes().FirstOrDefault(ad => ad.AttributeClass?.ToDisplayString() == "System.Runtime.InteropServices.PreserveSigAttribute");
-            var preserveSignature = preserveSigAttribute != null;
+            var preserveSignature = context.PreserveSignature;
             var parametersList = marshallers.Select(_ => _.GetParameterDeclaration()).ToList();
             parametersList.Insert(0, "System.IntPtr thisPtr");
             if (!preserveSignature)
@@ -163,7 +183,14 @@ namespace {namespaceName}
                 }
                 else
                 {
-                    source.AppendLine($"*retVal = Marshal.GetIUnknownForObject(inst.{method.Name}({parametersInvocationList}));");
+                    if (method.MethodKind == MethodKind.PropertyGet)
+                    {
+                        source.AppendLine($"*retVal = Marshal.GetIUnknownForObject(inst.{method.AssociatedSymbol.Name});");
+                    }
+                    else
+                    {
+                        source.AppendLine($"*retVal = Marshal.GetIUnknownForObject(inst.{method.Name}({parametersInvocationList}));");
+                    }
                 }
             }
             else

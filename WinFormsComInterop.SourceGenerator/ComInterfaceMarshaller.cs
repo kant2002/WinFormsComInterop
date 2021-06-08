@@ -7,7 +7,7 @@ namespace WinFormsComInterop.SourceGenerator
 {
     class ComInterfaceMarshaller : Marshaller
     {
-        public string LocalVariable => $"local_{ParameterSymbol.Ordinal}";
+        public string LocalVariable => $"local_{Index}";
         public override string GetParameterDeclaration()
         {
             return $"System.IntPtr {Name}";

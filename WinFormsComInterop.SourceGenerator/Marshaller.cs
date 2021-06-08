@@ -4,14 +4,16 @@ namespace WinFormsComInterop.SourceGenerator
 {
     abstract class Marshaller
     {
-        public IParameterSymbol ParameterSymbol { get; internal set; }
+        public string Name { get; set; }
+        public ITypeSymbol Type { get; set; }
 
-        public string Name => ParameterSymbol.Name;
-        public ITypeSymbol Type => ParameterSymbol.Type;
+        public int Index { get; set; }
+
+        public RefKind RefKind { get; set; }
 
         public virtual string GetParameterDeclaration()
         {
-            if (ParameterSymbol.RefKind != RefKind.None)
+            if (RefKind != RefKind.None)
             {
                 return $"{Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}* {Name}";
             }
@@ -25,7 +27,7 @@ namespace WinFormsComInterop.SourceGenerator
 
         public virtual string GetParameterInvocation()
         {
-            switch (ParameterSymbol.RefKind)
+            switch (RefKind)
             {
                 case RefKind.Out:
                     return $"out *{Name}";

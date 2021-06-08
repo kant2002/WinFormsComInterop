@@ -6,12 +6,12 @@ namespace WinFormsComInterop.SourceGenerator
     {
         public override string GetParameterDeclaration()
         {
-            return $"int {ParameterSymbol.Name}";
+            return $"int {Name}";
         }
 
         public override string GetParameterInvocation()
         {
-            return $"({ParameterSymbol.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}){ParameterSymbol.Name}";
+            return $"({Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}){Name}";
         }
     }
 }
