@@ -10,7 +10,7 @@ using static primitives::Interop.Oleaut32;
 namespace WinFormsComInterop
 {
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
-    class IExternalObject 
+    partial class IExternalObject 
         : Accessibility.IAccessible, 
         primitives::Interop.Oleaut32.IEnumVariant, 
         primitives::Interop.Ole32.IOleWindow, 
@@ -395,16 +395,6 @@ namespace WinFormsComInterop
             var ptr = ((delegate* unmanaged<IntPtr, IntPtr>)vtbl[13])(streamPtr);
             return (drawing::Interop.Ole32.IStream)Marshal.GetObjectForIUnknown(ptr);
         }
-
-        int Ole32.IPicture.Handle => throw new NotImplementedException();
-
-        int Ole32.IPicture.hPal => throw new NotImplementedException();
-
-        short Ole32.IPicture.Type => throw new NotImplementedException();
-
-        int Ole32.IPicture.Width => throw new NotImplementedException();
-
-        int Ole32.IPicture.Height => throw new NotImplementedException();
 
         unsafe HRESULT Ole32.IPersistStream.GetClassID(Guid* pClassID)
         {

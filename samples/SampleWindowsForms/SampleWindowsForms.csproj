@@ -15,6 +15,10 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
+  <ItemGroup>
+    <RdXmlFile Include="rd.xml" />
+  </ItemGroup>
+
   <!--<ItemGroup>
     <AppContextSwitchOverrides Include="Switch.System.Reflection.Assembly.SimulatedLocationInBaseDirectory" />
   </ItemGroup>-->

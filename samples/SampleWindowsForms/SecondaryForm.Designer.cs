@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SecondaryForm));
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -56,11 +57,54 @@
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.xxxxToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.accessibleDescriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.accessibleNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.accessibleRoleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.alignmentDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.autoSizeDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.autoToolTipDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.backgroundImageDataGridViewImageColumn = new System.Windows.Forms.DataGridViewImageColumn();
+            this.backgroundImageLayoutDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.backColorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.displayStyleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.doubleClickEnabledDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.enabledDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.foreColorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fontDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.imageAlignDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.imageDataGridViewImageColumn = new System.Windows.Forms.DataGridViewImageColumn();
+            this.imageTransparentColorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.imageScalingDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.marginDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mergeActionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mergeIndexDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.overflowDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.paddingDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.rightToLeftDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.rightToLeftAutoMirrorImageDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.sizeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tagDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.textDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.textAlignDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.textDirectionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.textImageRelationDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolTipTextDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.visibleDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // monthCalendar1
@@ -87,7 +131,7 @@
             // 
             // vScrollBar1
             // 
-            this.vScrollBar1.Location = new System.Drawing.Point(641, 229);
+            this.vScrollBar1.Location = new System.Drawing.Point(228, 229);
             this.vScrollBar1.Name = "vScrollBar1";
             this.vScrollBar1.Size = new System.Drawing.Size(17, 80);
             this.vScrollBar1.TabIndex = 3;
@@ -237,11 +281,284 @@
             this.splitContainer1.Size = new System.Drawing.Size(150, 100);
             this.splitContainer1.TabIndex = 9;
             // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Cursor = System.Windows.Forms.Cursors.VSplit;
+            this.splitContainer2.Location = new System.Drawing.Point(579, 209);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Size = new System.Drawing.Size(150, 100);
+            this.splitContainer2.TabIndex = 10;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AutoGenerateColumns = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.accessibleDescriptionDataGridViewTextBoxColumn,
+            this.accessibleNameDataGridViewTextBoxColumn,
+            this.accessibleRoleDataGridViewTextBoxColumn,
+            this.alignmentDataGridViewTextBoxColumn,
+            this.autoSizeDataGridViewCheckBoxColumn,
+            this.autoToolTipDataGridViewCheckBoxColumn,
+            this.backgroundImageDataGridViewImageColumn,
+            this.backgroundImageLayoutDataGridViewTextBoxColumn,
+            this.backColorDataGridViewTextBoxColumn,
+            this.displayStyleDataGridViewTextBoxColumn,
+            this.doubleClickEnabledDataGridViewCheckBoxColumn,
+            this.enabledDataGridViewCheckBoxColumn,
+            this.foreColorDataGridViewTextBoxColumn,
+            this.fontDataGridViewTextBoxColumn,
+            this.imageAlignDataGridViewTextBoxColumn,
+            this.imageDataGridViewImageColumn,
+            this.imageTransparentColorDataGridViewTextBoxColumn,
+            this.imageScalingDataGridViewTextBoxColumn,
+            this.marginDataGridViewTextBoxColumn,
+            this.mergeActionDataGridViewTextBoxColumn,
+            this.mergeIndexDataGridViewTextBoxColumn,
+            this.overflowDataGridViewTextBoxColumn,
+            this.paddingDataGridViewTextBoxColumn,
+            this.rightToLeftDataGridViewTextBoxColumn,
+            this.rightToLeftAutoMirrorImageDataGridViewCheckBoxColumn,
+            this.sizeDataGridViewTextBoxColumn,
+            this.tagDataGridViewTextBoxColumn,
+            this.textDataGridViewTextBoxColumn,
+            this.textAlignDataGridViewTextBoxColumn,
+            this.textDirectionDataGridViewTextBoxColumn,
+            this.textImageRelationDataGridViewTextBoxColumn,
+            this.toolTipTextDataGridViewTextBoxColumn,
+            this.visibleDataGridViewCheckBoxColumn});
+            this.dataGridView1.DataSource = this.menuStrip1.Items;
+            this.dataGridView1.Location = new System.Drawing.Point(589, 330);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 25;
+            this.dataGridView1.Size = new System.Drawing.Size(190, 89);
+            this.dataGridView1.TabIndex = 11;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::SampleWindowsForms.Properties.Resources.install_spinner;
+            this.pictureBox1.Location = new System.Drawing.Point(258, 317);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(100, 50);
+            this.pictureBox1.TabIndex = 12;
+            this.pictureBox1.TabStop = false;
+            // 
+            // accessibleDescriptionDataGridViewTextBoxColumn
+            // 
+            this.accessibleDescriptionDataGridViewTextBoxColumn.DataPropertyName = "AccessibleDescription";
+            this.accessibleDescriptionDataGridViewTextBoxColumn.HeaderText = "AccessibleDescription";
+            this.accessibleDescriptionDataGridViewTextBoxColumn.Name = "accessibleDescriptionDataGridViewTextBoxColumn";
+            // 
+            // accessibleNameDataGridViewTextBoxColumn
+            // 
+            this.accessibleNameDataGridViewTextBoxColumn.DataPropertyName = "AccessibleName";
+            this.accessibleNameDataGridViewTextBoxColumn.HeaderText = "AccessibleName";
+            this.accessibleNameDataGridViewTextBoxColumn.Name = "accessibleNameDataGridViewTextBoxColumn";
+            // 
+            // accessibleRoleDataGridViewTextBoxColumn
+            // 
+            this.accessibleRoleDataGridViewTextBoxColumn.DataPropertyName = "AccessibleRole";
+            this.accessibleRoleDataGridViewTextBoxColumn.HeaderText = "AccessibleRole";
+            this.accessibleRoleDataGridViewTextBoxColumn.Name = "accessibleRoleDataGridViewTextBoxColumn";
+            // 
+            // alignmentDataGridViewTextBoxColumn
+            // 
+            this.alignmentDataGridViewTextBoxColumn.DataPropertyName = "Alignment";
+            this.alignmentDataGridViewTextBoxColumn.HeaderText = "Alignment";
+            this.alignmentDataGridViewTextBoxColumn.Name = "alignmentDataGridViewTextBoxColumn";
+            // 
+            // autoSizeDataGridViewCheckBoxColumn
+            // 
+            this.autoSizeDataGridViewCheckBoxColumn.DataPropertyName = "AutoSize";
+            this.autoSizeDataGridViewCheckBoxColumn.HeaderText = "AutoSize";
+            this.autoSizeDataGridViewCheckBoxColumn.Name = "autoSizeDataGridViewCheckBoxColumn";
+            // 
+            // autoToolTipDataGridViewCheckBoxColumn
+            // 
+            this.autoToolTipDataGridViewCheckBoxColumn.DataPropertyName = "AutoToolTip";
+            this.autoToolTipDataGridViewCheckBoxColumn.HeaderText = "AutoToolTip";
+            this.autoToolTipDataGridViewCheckBoxColumn.Name = "autoToolTipDataGridViewCheckBoxColumn";
+            // 
+            // backgroundImageDataGridViewImageColumn
+            // 
+            this.backgroundImageDataGridViewImageColumn.DataPropertyName = "BackgroundImage";
+            this.backgroundImageDataGridViewImageColumn.HeaderText = "BackgroundImage";
+            this.backgroundImageDataGridViewImageColumn.Name = "backgroundImageDataGridViewImageColumn";
+            // 
+            // backgroundImageLayoutDataGridViewTextBoxColumn
+            // 
+            this.backgroundImageLayoutDataGridViewTextBoxColumn.DataPropertyName = "BackgroundImageLayout";
+            this.backgroundImageLayoutDataGridViewTextBoxColumn.HeaderText = "BackgroundImageLayout";
+            this.backgroundImageLayoutDataGridViewTextBoxColumn.Name = "backgroundImageLayoutDataGridViewTextBoxColumn";
+            // 
+            // backColorDataGridViewTextBoxColumn
+            // 
+            this.backColorDataGridViewTextBoxColumn.DataPropertyName = "BackColor";
+            this.backColorDataGridViewTextBoxColumn.HeaderText = "BackColor";
+            this.backColorDataGridViewTextBoxColumn.Name = "backColorDataGridViewTextBoxColumn";
+            // 
+            // displayStyleDataGridViewTextBoxColumn
+            // 
+            this.displayStyleDataGridViewTextBoxColumn.DataPropertyName = "DisplayStyle";
+            this.displayStyleDataGridViewTextBoxColumn.HeaderText = "DisplayStyle";
+            this.displayStyleDataGridViewTextBoxColumn.Name = "displayStyleDataGridViewTextBoxColumn";
+            // 
+            // doubleClickEnabledDataGridViewCheckBoxColumn
+            // 
+            this.doubleClickEnabledDataGridViewCheckBoxColumn.DataPropertyName = "DoubleClickEnabled";
+            this.doubleClickEnabledDataGridViewCheckBoxColumn.HeaderText = "DoubleClickEnabled";
+            this.doubleClickEnabledDataGridViewCheckBoxColumn.Name = "doubleClickEnabledDataGridViewCheckBoxColumn";
+            // 
+            // enabledDataGridViewCheckBoxColumn
+            // 
+            this.enabledDataGridViewCheckBoxColumn.DataPropertyName = "Enabled";
+            this.enabledDataGridViewCheckBoxColumn.HeaderText = "Enabled";
+            this.enabledDataGridViewCheckBoxColumn.Name = "enabledDataGridViewCheckBoxColumn";
+            // 
+            // foreColorDataGridViewTextBoxColumn
+            // 
+            this.foreColorDataGridViewTextBoxColumn.DataPropertyName = "ForeColor";
+            this.foreColorDataGridViewTextBoxColumn.HeaderText = "ForeColor";
+            this.foreColorDataGridViewTextBoxColumn.Name = "foreColorDataGridViewTextBoxColumn";
+            // 
+            // fontDataGridViewTextBoxColumn
+            // 
+            this.fontDataGridViewTextBoxColumn.DataPropertyName = "Font";
+            this.fontDataGridViewTextBoxColumn.HeaderText = "Font";
+            this.fontDataGridViewTextBoxColumn.Name = "fontDataGridViewTextBoxColumn";
+            // 
+            // imageAlignDataGridViewTextBoxColumn
+            // 
+            this.imageAlignDataGridViewTextBoxColumn.DataPropertyName = "ImageAlign";
+            this.imageAlignDataGridViewTextBoxColumn.HeaderText = "ImageAlign";
+            this.imageAlignDataGridViewTextBoxColumn.Name = "imageAlignDataGridViewTextBoxColumn";
+            // 
+            // imageDataGridViewImageColumn
+            // 
+            this.imageDataGridViewImageColumn.DataPropertyName = "Image";
+            this.imageDataGridViewImageColumn.HeaderText = "Image";
+            this.imageDataGridViewImageColumn.Name = "imageDataGridViewImageColumn";
+            // 
+            // imageTransparentColorDataGridViewTextBoxColumn
+            // 
+            this.imageTransparentColorDataGridViewTextBoxColumn.DataPropertyName = "ImageTransparentColor";
+            this.imageTransparentColorDataGridViewTextBoxColumn.HeaderText = "ImageTransparentColor";
+            this.imageTransparentColorDataGridViewTextBoxColumn.Name = "imageTransparentColorDataGridViewTextBoxColumn";
+            // 
+            // imageScalingDataGridViewTextBoxColumn
+            // 
+            this.imageScalingDataGridViewTextBoxColumn.DataPropertyName = "ImageScaling";
+            this.imageScalingDataGridViewTextBoxColumn.HeaderText = "ImageScaling";
+            this.imageScalingDataGridViewTextBoxColumn.Name = "imageScalingDataGridViewTextBoxColumn";
+            // 
+            // marginDataGridViewTextBoxColumn
+            // 
+            this.marginDataGridViewTextBoxColumn.DataPropertyName = "Margin";
+            this.marginDataGridViewTextBoxColumn.HeaderText = "Margin";
+            this.marginDataGridViewTextBoxColumn.Name = "marginDataGridViewTextBoxColumn";
+            // 
+            // mergeActionDataGridViewTextBoxColumn
+            // 
+            this.mergeActionDataGridViewTextBoxColumn.DataPropertyName = "MergeAction";
+            this.mergeActionDataGridViewTextBoxColumn.HeaderText = "MergeAction";
+            this.mergeActionDataGridViewTextBoxColumn.Name = "mergeActionDataGridViewTextBoxColumn";
+            // 
+            // mergeIndexDataGridViewTextBoxColumn
+            // 
+            this.mergeIndexDataGridViewTextBoxColumn.DataPropertyName = "MergeIndex";
+            this.mergeIndexDataGridViewTextBoxColumn.HeaderText = "MergeIndex";
+            this.mergeIndexDataGridViewTextBoxColumn.Name = "mergeIndexDataGridViewTextBoxColumn";
+            // 
+            // overflowDataGridViewTextBoxColumn
+            // 
+            this.overflowDataGridViewTextBoxColumn.DataPropertyName = "Overflow";
+            this.overflowDataGridViewTextBoxColumn.HeaderText = "Overflow";
+            this.overflowDataGridViewTextBoxColumn.Name = "overflowDataGridViewTextBoxColumn";
+            // 
+            // paddingDataGridViewTextBoxColumn
+            // 
+            this.paddingDataGridViewTextBoxColumn.DataPropertyName = "Padding";
+            this.paddingDataGridViewTextBoxColumn.HeaderText = "Padding";
+            this.paddingDataGridViewTextBoxColumn.Name = "paddingDataGridViewTextBoxColumn";
+            // 
+            // rightToLeftDataGridViewTextBoxColumn
+            // 
+            this.rightToLeftDataGridViewTextBoxColumn.DataPropertyName = "RightToLeft";
+            this.rightToLeftDataGridViewTextBoxColumn.HeaderText = "RightToLeft";
+            this.rightToLeftDataGridViewTextBoxColumn.Name = "rightToLeftDataGridViewTextBoxColumn";
+            // 
+            // rightToLeftAutoMirrorImageDataGridViewCheckBoxColumn
+            // 
+            this.rightToLeftAutoMirrorImageDataGridViewCheckBoxColumn.DataPropertyName = "RightToLeftAutoMirrorImage";
+            this.rightToLeftAutoMirrorImageDataGridViewCheckBoxColumn.HeaderText = "RightToLeftAutoMirrorImage";
+            this.rightToLeftAutoMirrorImageDataGridViewCheckBoxColumn.Name = "rightToLeftAutoMirrorImageDataGridViewCheckBoxColumn";
+            // 
+            // sizeDataGridViewTextBoxColumn
+            // 
+            this.sizeDataGridViewTextBoxColumn.DataPropertyName = "Size";
+            this.sizeDataGridViewTextBoxColumn.HeaderText = "Size";
+            this.sizeDataGridViewTextBoxColumn.Name = "sizeDataGridViewTextBoxColumn";
+            // 
+            // tagDataGridViewTextBoxColumn
+            // 
+            this.tagDataGridViewTextBoxColumn.DataPropertyName = "Tag";
+            this.tagDataGridViewTextBoxColumn.HeaderText = "Tag";
+            this.tagDataGridViewTextBoxColumn.Name = "tagDataGridViewTextBoxColumn";
+            // 
+            // textDataGridViewTextBoxColumn
+            // 
+            this.textDataGridViewTextBoxColumn.DataPropertyName = "Text";
+            this.textDataGridViewTextBoxColumn.HeaderText = "Text";
+            this.textDataGridViewTextBoxColumn.Name = "textDataGridViewTextBoxColumn";
+            // 
+            // textAlignDataGridViewTextBoxColumn
+            // 
+            this.textAlignDataGridViewTextBoxColumn.DataPropertyName = "TextAlign";
+            this.textAlignDataGridViewTextBoxColumn.HeaderText = "TextAlign";
+            this.textAlignDataGridViewTextBoxColumn.Name = "textAlignDataGridViewTextBoxColumn";
+            // 
+            // textDirectionDataGridViewTextBoxColumn
+            // 
+            this.textDirectionDataGridViewTextBoxColumn.DataPropertyName = "TextDirection";
+            this.textDirectionDataGridViewTextBoxColumn.HeaderText = "TextDirection";
+            this.textDirectionDataGridViewTextBoxColumn.Name = "textDirectionDataGridViewTextBoxColumn";
+            // 
+            // textImageRelationDataGridViewTextBoxColumn
+            // 
+            this.textImageRelationDataGridViewTextBoxColumn.DataPropertyName = "TextImageRelation";
+            this.textImageRelationDataGridViewTextBoxColumn.HeaderText = "TextImageRelation";
+            this.textImageRelationDataGridViewTextBoxColumn.Name = "textImageRelationDataGridViewTextBoxColumn";
+            // 
+            // toolTipTextDataGridViewTextBoxColumn
+            // 
+            this.toolTipTextDataGridViewTextBoxColumn.DataPropertyName = "ToolTipText";
+            this.toolTipTextDataGridViewTextBoxColumn.HeaderText = "ToolTipText";
+            this.toolTipTextDataGridViewTextBoxColumn.Name = "toolTipTextDataGridViewTextBoxColumn";
+            // 
+            // visibleDataGridViewCheckBoxColumn
+            // 
+            this.visibleDataGridViewCheckBoxColumn.DataPropertyName = "Visible";
+            this.visibleDataGridViewCheckBoxColumn.HeaderText = "Visible";
+            this.visibleDataGridViewCheckBoxColumn.Name = "visibleDataGridViewCheckBoxColumn";
+            // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Error;
+            this.notifyIcon1.BalloonTipText = "dasd asd asdas";
+            this.notifyIcon1.BalloonTipTitle = "1111";
+            this.notifyIcon1.ContextMenuStrip = this.contextMenuStrip1;
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "notifyIcon1";
+            this.notifyIcon1.Visible = true;
+            // 
             // SecondaryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.splitContainer2);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -261,6 +578,11 @@
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -295,5 +617,43 @@
         private System.Windows.Forms.ToolStripMenuItem asdasdasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem adsasdasdToolStripMenuItem;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.BindingSource bindingSource1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn accessibleDescriptionDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn accessibleNameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn accessibleRoleDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn alignmentDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn autoSizeDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn autoToolTipDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewImageColumn backgroundImageDataGridViewImageColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn backgroundImageLayoutDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn backColorDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn displayStyleDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn doubleClickEnabledDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn enabledDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn foreColorDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fontDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn imageAlignDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewImageColumn imageDataGridViewImageColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn imageTransparentColorDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn imageScalingDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn marginDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mergeActionDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mergeIndexDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn overflowDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn paddingDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn rightToLeftDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn rightToLeftAutoMirrorImageDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sizeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tagDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn textDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn textAlignDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn textDirectionDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn textImageRelationDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn toolTipTextDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn visibleDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
     }
 }

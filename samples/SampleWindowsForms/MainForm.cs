@@ -31,5 +31,23 @@ namespace SampleWindowsForms
             var form = new SecondaryForm();
             form.Show();
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            var openDialog = new OpenFileDialog();
+            openDialog.ShowDialog();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            var openDialog = new SaveFileDialog();
+            openDialog.ShowDialog();
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            var openDialog = new FolderBrowserDialog();
+            openDialog.ShowDialog();
+        }
     }
 }

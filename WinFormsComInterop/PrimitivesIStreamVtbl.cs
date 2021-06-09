@@ -1,15 +1,15 @@
-﻿extern alias drawing;
+﻿extern alias primitives;
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using static drawing::Interop;
+using static primitives::Interop;
 using ComInterfaceDispatch = System.Runtime.InteropServices.ComWrappers.ComInterfaceDispatch;
 
 namespace WinFormsComInterop
 {
     //[ComProxy(typeof(drawing::Interop.Ole32.IStream))]
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
-    public unsafe static class IStreamVtbl
+    public unsafe static class PrimitivesIStreamVtbl
     {
         [UnmanagedCallersOnly]
         public static int Read(IntPtr thisPtr, byte* pv, uint cb, uint* pcbRead)
@@ -98,7 +98,7 @@ namespace WinFormsComInterop
             try
             {
                 var inst = ComInterfaceDispatch.GetInstance<Ole32.IStream>((ComInterfaceDispatch*)thisPtr);
-                inst.Commit(grfCommitFlags);
+                inst.Commit((Ole32.STGC)grfCommitFlags);
             }
             catch (Exception e) { return e.HResult; }
             return 0;
