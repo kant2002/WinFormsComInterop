@@ -15,7 +15,7 @@ namespace WinFormsComInterop.SourceGenerator
 
         public override void DeclareLocalParameter(IndentedStringBuilder builder)
         {
-            builder.AppendLine($"var {LocalVariable} = ComInterfaceDispatch.GetInstance<{Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}>((ComInterfaceDispatch*)pstm);");
+            builder.AppendLine($"var {LocalVariable} = ComInterfaceDispatch.GetInstance<{Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}>((ComInterfaceDispatch*){Name});");
         }
 
         public override string GetParameterInvocation()

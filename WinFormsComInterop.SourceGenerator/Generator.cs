@@ -131,7 +131,7 @@ namespace {namespaceName}
                 return new EnumMarshaller();
             }
 
-            if (parameterSymbol.TypeKind == TypeKind.Interface)
+            if (parameterSymbol.TypeKind == TypeKind.Interface || parameterSymbol.SpecialType == SpecialType.System_Object)
             {
                 return new ComInterfaceMarshaller();
             }
