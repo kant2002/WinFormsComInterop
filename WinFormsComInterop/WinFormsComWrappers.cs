@@ -1,6 +1,8 @@
 ﻿extern alias primitives;
 extern alias drawing;
+#if USE_WPF
 extern alias winbase;
+#endif
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -33,8 +35,36 @@ namespace WinFormsComInterop
             wrapperEntry = CreateGenericEntry();
             drawingStreamEntry = CreateDrawingStreamEntry();
             primitivesStreamEntry = CreatePrimitivesStreamEntry();
+#if USE_WPF
             oleDropTargetEntry = CreateOleDropTargetEntry();
+#endif
         }
+
+#if USE_WPF
+        private static ComInterfaceEntry* CreateOleDropTargetEntry()
+        {
+            CreateIOleDropTargetVtbl(out var vtbl);
+
+            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 2);
+            var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
+            wrapperEntry->IID = IID_IOleDropTarget;
+            wrapperEntry->Vtable = vtbl;
+            return wrapperEntry;
+        }
+
+        private static void CreateIOleDropTargetVtbl(out IntPtr vtbl)
+        {
+            var vtblRaw = (IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(IntPtr) * 7);
+            GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
+
+            vtblRaw[3] = (IntPtr)(delegate* unmanaged<IntPtr, IntPtr, int, long, int*, int>)&WinBaseOleDropTarget.OleDragEnter;
+            vtblRaw[4] = (IntPtr)(delegate* unmanaged<IntPtr, int, long, int*, int>)&WinBaseOleDropTarget.OleDragOver;
+            vtblRaw[5] = (IntPtr)(delegate* unmanaged<IntPtr, int>)&WinBaseOleDropTarget.OleDragLeave;
+            vtblRaw[6] = (IntPtr)(delegate* unmanaged<IntPtr, IntPtr, int, long, int*, int>)&WinBaseOleDropTarget.OleDrop;
+
+            vtbl = (IntPtr)vtblRaw;
+        }
+#endif
 
         private static ComInterfaceEntry* CreateGenericEntry()
         {
@@ -65,17 +95,6 @@ namespace WinFormsComInterop
             var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 2);
             var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
             wrapperEntry->IID = IID_IStream;
-            wrapperEntry->Vtable = vtbl;
-            return wrapperEntry;
-        }
-
-        private static ComInterfaceEntry* CreateOleDropTargetEntry()
-        {
-            CreateIOleDropTargetVtbl(out var vtbl);
-
-            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 2);
-            var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
-            wrapperEntry->IID = IID_IOleDropTarget;
             wrapperEntry->Vtable = vtbl;
             return wrapperEntry;
         }
@@ -133,19 +152,6 @@ namespace WinFormsComInterop
             vtbl = (IntPtr)vtblRaw;
         }
 
-        private static void CreateIOleDropTargetVtbl(out IntPtr vtbl)
-        {
-            var vtblRaw = (IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(IntPtr) * 7);
-            GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
-
-            vtblRaw[3] = (IntPtr)(delegate* unmanaged<IntPtr, IntPtr, int, long, int*, int>)&WinBaseOleDropTarget.OleDragEnter;
-            vtblRaw[4] = (IntPtr)(delegate* unmanaged<IntPtr, int, long, int*, int>)&WinBaseOleDropTarget.OleDragOver;
-            vtblRaw[5] = (IntPtr)(delegate* unmanaged<IntPtr, int>)&WinBaseOleDropTarget.OleDragLeave;
-            vtblRaw[6] = (IntPtr)(delegate* unmanaged<IntPtr, IntPtr, int, long, int*, int>)&WinBaseOleDropTarget.OleDrop;
-
-            vtbl = (IntPtr)vtblRaw;
-        }
-
         public static WinFormsComWrappers Instance { get; } = new WinFormsComWrappers();
 
         protected override unsafe ComInterfaceEntry* ComputeVtables(object obj, CreateComInterfaceFlags flags, out int count)
@@ -164,11 +170,13 @@ namespace WinFormsComInterop
                 return primitivesStreamEntry;
             }
 
+#if USE_WPF
             if (obj is winbase::MS.Win32.UnsafeNativeMethods.IOleDropTarget)
             {
                 count = 1;
                 return oleDropTargetEntry;
             }
+#endif
 
             var interfaces = obj.GetType().GetInterfaces();
             if (interfaces.Length == 1 && interfaces[0].GUID.ToString() == "0000000C-0000-0000-C000-000000000046")

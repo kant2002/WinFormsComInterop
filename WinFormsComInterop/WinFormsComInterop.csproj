@@ -7,7 +7,14 @@
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <Description>ComWrappers implementation for WinForms.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <UseWPF>false</UseWPF>
+    <DefineConstants Condition="$(UseWPF) == true">$(DefineConstants);USE_WPF</DefineConstants>
   </PropertyGroup>
+
+  <ItemGroup Condition="$(UseWPF) != true">
+    <Compile Remove="WinBaseOleDropTarget.cs" />
+    <Compile Remove="IExternalObject.IOleDropTarget.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <Reference Include="Accessibility">
@@ -23,7 +30,7 @@
       <PrivateAssets>All</PrivateAssets>
       <Aliases>primitives</Aliases>
     </ProjectReference>
-    <ProjectReference Include="..\WindowsBase\WindowsBase.csproj">
+    <ProjectReference Include="..\WindowsBase\WindowsBase.csproj" Condition="$(UseWPF) == true">
       <PrivateAssets>All</PrivateAssets>
       <Aliases>winbase</Aliases>
     </ProjectReference>

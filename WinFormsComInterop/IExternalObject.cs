@@ -1,6 +1,5 @@
 ﻿extern alias primitives;
 extern alias drawing;
-extern alias winbase;
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -17,8 +16,7 @@ namespace WinFormsComInterop
         primitives::Interop.Ole32.IStream,
         drawing::Interop.Ole32.IStream,
         primitives::Interop.Ole32.IPicture,
-        primitives::Interop.Ole32.IPersistStream,
-        winbase::MS.Win32.UnsafeNativeMethods.IOleDropTarget
+        primitives::Interop.Ole32.IPersistStream
     {
         private static Guid IID_IAccessible = new Guid("618736E0-3C3D-11CF-810C-00AA00389B71");
         private readonly IntPtr instance;
@@ -437,26 +435,6 @@ namespace WinFormsComInterop
         }
 
         long Ole32.IPersistStream.GetSizeMax()
-        {
-            throw new NotImplementedException();
-        }
-
-        int winbase::MS.Win32.UnsafeNativeMethods.IOleDropTarget.OleDragEnter(object pDataObj, int grfKeyState, long pt, ref int pdwEffect)
-        {
-            throw new NotImplementedException();
-        }
-
-        int winbase::MS.Win32.UnsafeNativeMethods.IOleDropTarget.OleDragOver(int grfKeyState, long pt, ref int pdwEffect)
-        {
-            throw new NotImplementedException();
-        }
-
-        int winbase::MS.Win32.UnsafeNativeMethods.IOleDropTarget.OleDragLeave()
-        {
-            throw new NotImplementedException();
-        }
-
-        int winbase::MS.Win32.UnsafeNativeMethods.IOleDropTarget.OleDrop(object pDataObj, int grfKeyState, long pt, ref int pdwEffect)
         {
             throw new NotImplementedException();
         }
