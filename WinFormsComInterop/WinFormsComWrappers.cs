@@ -1,5 +1,6 @@
 ﻿extern alias primitives;
 extern alias drawing;
+extern alias winbase;
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -13,12 +14,14 @@ namespace WinFormsComInterop
     {
         static ComWrappers.ComInterfaceEntry* wrapperEntry;
         static ComWrappers.ComInterfaceEntry* streamEntry;
+        static ComWrappers.ComInterfaceEntry* oleDropTargetEntry;
 
         internal static Guid IID_IRawElementProviderSimple = new Guid("D6DD68D1-86FD-4332-8666-9ABEDEA2D24C");
 
         internal static Guid IID_IOleWindow = new Guid("00000114-0000-0000-C000-000000000046");
         internal static Guid IID_IStream = new Guid("0000000C-0000-0000-C000-000000000046");
         internal static Guid IID_IPersistStream = new Guid("00000109-0000-0000-C000-000000000046");
+        internal static Guid IID_IOleDropTarget = new Guid("00000122-0000-0000-C000-000000000046");
 
         // This class only exposes IDispatch and the vtable is always the same.
         // The below isn't the most efficient but it is reasonable for prototyping.
@@ -27,6 +30,7 @@ namespace WinFormsComInterop
         {
             wrapperEntry = CreateGenericEntry();
             streamEntry = CreateStreamEntry();
+            oleDropTargetEntry = CreateOleDropTargetEntry();
         }
 
         private static ComInterfaceEntry* CreateGenericEntry()
@@ -47,6 +51,17 @@ namespace WinFormsComInterop
             var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 2);
             var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
             wrapperEntry->IID = IID_IStream;
+            wrapperEntry->Vtable = vtbl;
+            return wrapperEntry;
+        }
+
+        private static ComInterfaceEntry* CreateOleDropTargetEntry()
+        {
+            CreateIOleDropTargetVtbl(out var vtbl);
+
+            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 2);
+            var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
+            wrapperEntry->IID = IID_IOleDropTarget;
             wrapperEntry->Vtable = vtbl;
             return wrapperEntry;
         }
@@ -84,6 +99,19 @@ namespace WinFormsComInterop
             vtbl = (IntPtr)vtblRaw;
         }
 
+        private static void CreateIOleDropTargetVtbl(out IntPtr vtbl)
+        {
+            var vtblRaw = (IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(IntPtr) * 7);
+            GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
+
+            vtblRaw[3] = (IntPtr)(delegate* unmanaged<IntPtr, IntPtr, int, long, int*, int>)&WinBaseOleDropTarget.OleDragEnter;
+            vtblRaw[4] = (IntPtr)(delegate* unmanaged<IntPtr, int, long, int*, int>)&WinBaseOleDropTarget.OleDragOver;
+            vtblRaw[5] = (IntPtr)(delegate* unmanaged<IntPtr, int>)&WinBaseOleDropTarget.OleDragLeave;
+            vtblRaw[6] = (IntPtr)(delegate* unmanaged<IntPtr, IntPtr, int, long, int*, int>)&WinBaseOleDropTarget.OleDrop;
+
+            vtbl = (IntPtr)vtblRaw;
+        }
+
         public static WinFormsComWrappers Instance { get; } = new WinFormsComWrappers();
 
         protected override unsafe ComInterfaceEntry* ComputeVtables(object obj, CreateComInterfaceFlags flags, out int count)
@@ -94,6 +122,12 @@ namespace WinFormsComInterop
             {
                 count = 1;
                 return streamEntry;
+            }
+
+            if (obj is winbase::MS.Win32.UnsafeNativeMethods.IOleDropTarget)
+            {
+                count = 1;
+                return oleDropTargetEntry;
             }
 
             var interfaces = obj.GetType().GetInterfaces();

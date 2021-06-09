@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -13,6 +13,7 @@
     <Reference Include="Accessibility">
       <HintPath>C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\6.0.0-preview.6.21278.1\Accessibility.dll</HintPath>
       <EmbedInteropTypes>false</EmbedInteropTypes>
+      <PrivateAssets>All</PrivateAssets>
     </Reference>
     <ProjectReference Include="..\System.Drawing.Common\System.Drawing.Common.csproj">
       <PrivateAssets>All</PrivateAssets>
@@ -22,9 +23,13 @@
       <PrivateAssets>All</PrivateAssets>
       <Aliases>primitives</Aliases>
     </ProjectReference>
-    <ProjectReference Include="..\WinFormsComInterop.SourceGenerator\WinFormsComInterop.SourceGenerator.csproj"
-                      ReferenceOutputAssembly="false"
-                      OutputItemType="Analyzer" />
+    <ProjectReference Include="..\WindowsBase\WindowsBase.csproj">
+      <PrivateAssets>All</PrivateAssets>
+      <Aliases>winbase</Aliases>
+    </ProjectReference>
+    <ProjectReference Include="..\WinFormsComInterop.SourceGenerator\WinFormsComInterop.SourceGenerator.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer">
+      <PrivateAssets>All</PrivateAssets>
+    </ProjectReference>
   </ItemGroup>
 
 </Project>

@@ -10,4 +10,8 @@
     <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="6.0.0-*" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\WinFormsComInterop\WinFormsComInterop.csproj" />
+  </ItemGroup>
+
 </Project>
