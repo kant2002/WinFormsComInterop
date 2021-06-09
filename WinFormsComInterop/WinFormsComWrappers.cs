@@ -18,6 +18,7 @@ namespace WinFormsComInterop
         static ComWrappers.ComInterfaceEntry* drawingStreamEntry;
         static ComWrappers.ComInterfaceEntry* primitivesStreamEntry;
         static ComWrappers.ComInterfaceEntry* oleDropTargetEntry;
+        static ComWrappers.ComInterfaceEntry* primitivesDropTargetEntry;
 
         internal static Guid IID_IRawElementProviderSimple = new Guid("D6DD68D1-86FD-4332-8666-9ABEDEA2D24C");
 
@@ -35,6 +36,7 @@ namespace WinFormsComInterop
             wrapperEntry = CreateGenericEntry();
             drawingStreamEntry = CreateDrawingStreamEntry();
             primitivesStreamEntry = CreatePrimitivesStreamEntry();
+            primitivesDropTargetEntry = CreatePrimitivesDropTargetEntry();
 #if USE_WPF
             oleDropTargetEntry = CreateOleDropTargetEntry();
 #endif
@@ -66,6 +68,29 @@ namespace WinFormsComInterop
         }
 #endif
 
+        private static ComInterfaceEntry* CreatePrimitivesDropTargetEntry()
+        {
+            CreatePrimitivesIDropTargetVtbl(out var vtbl);
+
+            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 2);
+            var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
+            wrapperEntry->IID = IID_IOleDropTarget;
+            wrapperEntry->Vtable = vtbl;
+            return wrapperEntry;
+        }
+
+        private static void CreatePrimitivesIDropTargetVtbl(out IntPtr vtbl)
+        {
+            var vtblRaw = (IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(IntPtr) * 7);
+            GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
+
+            vtblRaw[3] = (IntPtr)(delegate* unmanaged<IntPtr, IntPtr, uint, System.Drawing.Point, uint*, int>)&PrimitivesIDropTargetVtbl.DragEnter;
+            vtblRaw[4] = (IntPtr)(delegate* unmanaged<IntPtr, uint, System.Drawing.Point, uint*, int>)&PrimitivesIDropTargetVtbl.DragOver;
+            vtblRaw[5] = (IntPtr)(delegate* unmanaged<IntPtr, int>)&PrimitivesIDropTargetVtbl.DragLeave;
+            vtblRaw[6] = (IntPtr)(delegate* unmanaged<IntPtr, IntPtr, uint, System.Drawing.Point, uint*, int>)&PrimitivesIDropTargetVtbl.Drop;
+
+            vtbl = (IntPtr)vtblRaw;
+        }
         private static ComInterfaceEntry* CreateGenericEntry()
         {
             CreateIRawElementProviderSimpleVtbl(out var vtbl);
@@ -168,6 +193,13 @@ namespace WinFormsComInterop
             {
                 count = 1;
                 return primitivesStreamEntry;
+            }
+
+
+            if (obj is primitives::Interop.Ole32.IDropTarget)
+            {
+                count = 1;
+                return primitivesDropTargetEntry;
             }
 
 #if USE_WPF

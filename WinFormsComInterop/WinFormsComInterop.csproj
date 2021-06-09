@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <VersionPrefix>0.2.2</VersionPrefix>
+    <VersionPrefix>0.2.3</VersionPrefix>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <Description>ComWrappers implementation for WinForms.</Description>
