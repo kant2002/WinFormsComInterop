@@ -162,17 +162,17 @@ namespace WinFormsComInterop
             var vtblRaw = (IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(IntPtr) * 14);
             GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
 
-            vtblRaw[3] = (IntPtr)(delegate* unmanaged<IntPtr, byte*, uint, uint*, int>)&PrimitivesIStreamVtbl.Read;
-            vtblRaw[4] = (IntPtr)(delegate* unmanaged<IntPtr, byte*, uint, uint*, int>)&PrimitivesIStreamVtbl.Write;
-            vtblRaw[5] = (IntPtr)(delegate* unmanaged<IntPtr, long, int, ulong*, int>)&PrimitivesIStreamVtbl.Seek;
-            vtblRaw[6] = (IntPtr)(delegate* unmanaged<IntPtr, ulong, int>)&PrimitivesIStreamVtbl.SetSize;
-            vtblRaw[7] = (IntPtr)(delegate* unmanaged<IntPtr, IntPtr, ulong, ulong*, ulong*, int>)&PrimitivesIStreamVtbl.CopyTo;
-            vtblRaw[8] = (IntPtr)(delegate* unmanaged<IntPtr, uint, int>)&PrimitivesIStreamVtbl.Commit;
-            vtblRaw[9] = (IntPtr)(delegate* unmanaged<IntPtr, int>)&PrimitivesIStreamVtbl.Revert;
-            vtblRaw[10] = (IntPtr)(delegate* unmanaged<IntPtr, ulong, ulong, uint, int>)&PrimitivesIStreamVtbl.LockRegion;
-            vtblRaw[11] = (IntPtr)(delegate* unmanaged<IntPtr, ulong, ulong, uint, int>)&PrimitivesIStreamVtbl.UnlockRegion;
-            vtblRaw[12] = (IntPtr)(delegate* unmanaged<IntPtr, primitives::Interop.Ole32.STATSTG*, primitives::Interop.Ole32.STATFLAG, int>)&PrimitivesIStreamVtbl.Stat;
-            vtblRaw[13] = (IntPtr)(delegate* unmanaged<IntPtr, int>)&PrimitivesIStreamVtbl.Clone;
+            vtblRaw[3] = (IntPtr)(delegate* unmanaged<IntPtr, byte*, uint, uint*, int>)&PrimitivesIStreamProxy.Read;
+            vtblRaw[4] = (IntPtr)(delegate* unmanaged<IntPtr, byte*, uint, uint*, int>)&PrimitivesIStreamProxy.Write;
+            vtblRaw[5] = (IntPtr)(delegate* unmanaged<IntPtr, long, int, ulong*, int>)&PrimitivesIStreamProxy.Seek;
+            vtblRaw[6] = (IntPtr)(delegate* unmanaged<IntPtr, ulong, int>)&PrimitivesIStreamProxy.SetSize;
+            vtblRaw[7] = (IntPtr)(delegate* unmanaged<IntPtr, IntPtr, ulong, ulong*, ulong*, int>)&PrimitivesIStreamProxy.CopyTo;
+            vtblRaw[8] = (IntPtr)(delegate* unmanaged<IntPtr, int, int>)&PrimitivesIStreamProxy.Commit;
+            vtblRaw[9] = (IntPtr)(delegate* unmanaged<IntPtr, int>)&PrimitivesIStreamProxy.Revert;
+            vtblRaw[10] = (IntPtr)(delegate* unmanaged<IntPtr, ulong, ulong, uint, int>)&PrimitivesIStreamProxy.LockRegion;
+            vtblRaw[11] = (IntPtr)(delegate* unmanaged<IntPtr, ulong, ulong, uint, int>)&PrimitivesIStreamProxy.UnlockRegion;
+            vtblRaw[12] = (IntPtr)(delegate* unmanaged<IntPtr, primitives::Interop.Ole32.STATSTG*, int, int>)&PrimitivesIStreamProxy.Stat;
+            vtblRaw[13] = (IntPtr)(delegate* unmanaged<IntPtr, System.IntPtr*, int >)&PrimitivesIStreamProxy.Clone;
 
             vtbl = (IntPtr)vtblRaw;
         }

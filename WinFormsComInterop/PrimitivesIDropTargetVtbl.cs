@@ -7,7 +7,7 @@ using ComInterfaceDispatch = System.Runtime.InteropServices.ComWrappers.ComInter
 
 namespace WinFormsComInterop
 {
-    //[ComProxy(typeof(primitives::Interop.Ole32.IDropTarget))]
+    //[ComCallableWrapper(typeof(primitives::Interop.Ole32.IDropTarget))]
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     public unsafe static class PrimitivesIDropTargetVtbl
     {

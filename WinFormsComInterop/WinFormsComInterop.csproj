@@ -2,13 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <VersionPrefix>0.2.3</VersionPrefix>
+    <VersionPrefix>0.2.4</VersionPrefix>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <Description>ComWrappers implementation for WinForms.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <UseWPF>false</UseWPF>
     <DefineConstants Condition="$(UseWPF) == true">$(DefineConstants);USE_WPF</DefineConstants>
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
   </PropertyGroup>
 
   <ItemGroup Condition="$(UseWPF) != true">
