@@ -1,9 +1,9 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Text;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Text;
 
 namespace WinFormsComInterop.SourceGenerator
 {
@@ -11,11 +11,23 @@ namespace WinFormsComInterop.SourceGenerator
     {
         private readonly GeneratorExecutionContext context;
         private Dictionary<string, string> aliasMap = new();
+        private StringBuilder debug = new StringBuilder();
 
         public WrapperGenerationContext(GeneratorExecutionContext context)
         {
             this.context = context;
             BuildAliasMap();
+        }
+
+        [Conditional("DEBUG")]
+        public void AddDebugLine(string line)
+        {
+            debug.AppendLine("// " + line);
+        }
+
+        public string DebugOutput()
+        {
+            return debug.ToString();
         }
 
         private void BuildAliasMap()
@@ -45,7 +57,9 @@ namespace WinFormsComInterop.SourceGenerator
             }
 
             if (this.aliasMap.TryGetValue(type.ContainingAssembly.Name, out var alias))
+            {
                 return alias;
+            }
 
             return null;
         }
@@ -65,8 +79,9 @@ namespace WinFormsComInterop.SourceGenerator
         internal void AddSource(INamedTypeSymbol classType, INamedTypeSymbol interfaceTypeSymbol, SourceText sourceText)
         {
             var aliasSymbol = GetAlias(interfaceTypeSymbol);
+            // AddDebugLine(aliasSymbol);
             var typesuffix = interfaceTypeSymbol.FormatType(aliasSymbol).Replace(".", "_").Replace("::", "_");
-            context.AddSource($"{classType.ToDisplayString().Replace(".", "_")}_{typesuffix}_comcallablewrapper.cs", sourceText);
+            context.AddSource($"{classType.ToDisplayString().Replace(".", "_")}_{typesuffix}.cs", sourceText);
         }
     }
 }

@@ -46,12 +46,6 @@ internal sealed class ComCallableWrapperAttribute: System.Attribute
 
         public void Execute(GeneratorExecutionContext context)
         {
-#if DEBUG
-            if (!System.Diagnostics.Debugger.IsAttached)
-            {
-                //System.Diagnostics.Debugger.Launch();
-            }
-#endif 
             // Retrieve the populated receiver
             if (!(context.SyntaxContextReceiver is SyntaxReceiver receiver))
             {
@@ -63,6 +57,9 @@ internal sealed class ComCallableWrapperAttribute: System.Attribute
             {
                 ProcessClassDeclaration(classSymbol, wrapperContext);
             }
+
+            // Uncomment line below to trace resulting codegen.
+            // context.AddSource("DebugOutput.cs", wrapperContext.DebugOutput());
         }
         private string ProcessClassDeclaration(ClassDeclaration classSymbol, INamedTypeSymbol interfaceTypeSymbol, WrapperGenerationContext context)
         {
@@ -88,18 +85,34 @@ namespace {namespaceName}
 ");
             source.PushIndent();
             source.AppendLine("[System.Runtime.Versioning.SupportedOSPlatform(\"windows\")]");
-            source.AppendLine($"unsafe partial class {interfaceTypeSymbol.Name}Proxy");
+            var typeName = $"{interfaceTypeSymbol.Name}Proxy";
+            if (!string.IsNullOrWhiteSpace(aliasSymbol))
+            {
+                typeName = aliasSymbol.Substring(0,1).ToUpperInvariant() + aliasSymbol.Substring(1) + typeName;
+            }
+
+            context.AddDebugLine(interfaceTypeSymbol.ToDisplayString());
+            context.AddDebugLine(interfaceTypeSymbol.ContainingAssembly.ToDisplayString());
+            context.AddDebugLine(context.GetAlias(interfaceTypeSymbol) + "_" + aliasSymbol);
+            source.AppendLine($"unsafe partial class {typeName}");
             source.AppendLine("{");
             source.PushIndent();
             foreach (var member in interfaceTypeSymbol.GetMembers())
             {
-                var preserveSigAttribute = member.GetAttributes().FirstOrDefault(ad => ad.AttributeClass?.ToDisplayString() == "System.Runtime.InteropServices.PreserveSigAttribute");
+                var preserveSigAttribute = member.GetAttributes().FirstOrDefault(ad =>
+                {
+                    string attributeName = ad.AttributeClass?.ToDisplayString();
+                    return attributeName == "System.Runtime.InteropServices.PreserveSigAttribute"
+                    || attributeName == "PreserveSigAttribute";
+                });
                 var preserveSignature = preserveSigAttribute != null;
+                context.AddDebugLine(member.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat) + "=" + preserveSignature.ToString() + " " + member.GetAttributes().Length);
 
                 switch (member)
                 {
                     case IMethodSymbol methodSymbol:
                         {
+                            preserveSignature |= (methodSymbol.MethodImplementationFlags & System.Reflection.MethodImplAttributes.PreserveSig) == System.Reflection.MethodImplAttributes.PreserveSig;
                             var methodContext = context.CreateMethodGenerationContext(methodSymbol, preserveSignature);
                             GenerateMethod(source, interfaceTypeSymbol, methodContext);
                         }
@@ -130,6 +143,7 @@ namespace {namespaceName}
 
                 var sourceCode = ProcessClassDeclaration(classSymbol, interfaceTypeSymbol, context);
                 var key = (INamedTypeSymbol)classSymbol.Type;
+                context.AddDebugLine(interfaceTypeSymbol.ContainingAssembly.Identity.GetDisplayName());
                 context.AddSource(key, interfaceTypeSymbol, SourceText.From(sourceCode, Encoding.UTF8));
             }
         }
@@ -147,7 +161,7 @@ namespace {namespaceName}
 
         private Marshaller CreateMarshaller(ITypeSymbol parameterSymbol)
         {
-            if (parameterSymbol.IsEnum())
+            if (parameterSymbol.IsEnum() || parameterSymbol.TypeKind == TypeKind.Enum)
             {
                 return new EnumMarshaller();
             }

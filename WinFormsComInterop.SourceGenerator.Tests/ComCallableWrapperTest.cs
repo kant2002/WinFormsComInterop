@@ -147,7 +147,7 @@ using Marshal = System.Runtime.InteropServices.Marshal;
 namespace Foo
 {
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
-    unsafe partial class ICloneableProxy
+    unsafe partial class DrawingICloneableProxy
     {
         [System.Runtime.InteropServices.UnmanagedCallersOnly]
         public static int Clone(System.IntPtr thisPtr)
@@ -530,7 +530,7 @@ namespace Foo
 {
     using System.Runtime.InteropServices;
 
-    enum HRESULT {}
+    enum HRESULT: int {}
 
     public interface IStr
     {
