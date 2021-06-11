@@ -22,13 +22,15 @@ namespace WinFormsComInterop.SourceGenerator
 #nullable disable
 
 [System.AttributeUsage(System.AttributeTargets.Class, AllowMultiple=true)]
-internal sealed class ComProxyAttribute: System.Attribute
+internal sealed class ComCallableWrapperAttribute: System.Attribute
 {
-    public ComProxyAttribute(System.Type interfaceType) => this.InterfaceType = interfaceType;
+    public ComCallableWrapperAttribute(System.Type interfaceType) => this.InterfaceType = interfaceType;
 
     public System.Type InterfaceType { get; }
 }
 ";
+
+        private static string ComCallableWrapperAttributeName = "ComCallableWrapperAttribute";
 
         public void Initialize(GeneratorInitializationContext context)
         {
@@ -73,7 +75,7 @@ using ComInterfaceDispatch = System.Runtime.InteropServices.ComWrappers.ComInter
 namespace {namespaceName}
 {{
 ");
-            var proxyDeclarations = classSymbol.Type.GetAttributes().Where(ad => ad.AttributeClass?.ToDisplayString() == "ComProxyAttribute");
+            var proxyDeclarations = classSymbol.Type.GetAttributes().Where(ad => ad.AttributeClass?.ToDisplayString() == ComCallableWrapperAttributeName);
             foreach (var proxyAttribute in proxyDeclarations)
             {
                 var overridenNameOpt = proxyAttribute.ConstructorArguments.FirstOrDefault().Value as INamedTypeSymbol;
@@ -240,7 +242,7 @@ namespace {namespaceName}
                         return;
                     }
 
-                    if (classSymbol.GetAttributes().Any(ad => ad.AttributeClass?.ToDisplayString() == "ComProxyAttribute"))
+                    if (classSymbol.GetAttributes().Any(ad => ad.AttributeClass?.ToDisplayString() == ComCallableWrapperAttributeName))
                     {
                         var argumentExpression = classDeclarationSyntax.AttributeLists[0].Attributes[0].ArgumentList.Arguments[0].Expression as TypeOfExpressionSyntax;
                         var typeNameSyntax = argumentExpression.Type as QualifiedNameSyntax;

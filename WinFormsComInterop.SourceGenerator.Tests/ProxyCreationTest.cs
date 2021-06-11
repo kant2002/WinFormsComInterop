@@ -19,7 +19,7 @@ namespace Foo
         void Read(byte* pv, uint cb, uint* pcbRead);
     }
 
-    [ComProxy(typeof(IStr))]
+    [ComCallableWrapper(typeof(IStr))]
     partial class C
     {
     }
@@ -74,7 +74,7 @@ namespace Foo
         void Clone();
     }
 
-    [ComProxy(typeof(ICloneable))]
+    [ComCallableWrapper(typeof(ICloneable))]
     partial class C
     {
     }
@@ -131,7 +131,7 @@ namespace Foo
         void Clone();
     }
 
-    [ComProxy(typeof(ICloneable))]
+    [ComCallableWrapper(typeof(ICloneable))]
     partial class C
     {
     }
@@ -188,7 +188,7 @@ namespace Foo
         void Read(byte* pv, EnumValue cb, uint* pcbRead);
     }
 
-    [ComProxy(typeof(IStr))]
+    [ComCallableWrapper(typeof(IStr))]
     partial class C
     {
     }
@@ -245,7 +245,7 @@ namespace Foo
         void CopyTo(IStr pstm, ulong cb);
     }
 
-    [ComProxy(typeof(IStr))]
+    [ComCallableWrapper(typeof(IStr))]
     partial class C
     {
     }
@@ -303,7 +303,7 @@ namespace Foo
         void CopyTo([MarshalAs(UnmanagedType.Interface)]object data, ulong cb);
     }
 
-    [ComProxy(typeof(IStr))]
+    [ComCallableWrapper(typeof(IStr))]
     partial class C
     {
     }
@@ -362,7 +362,7 @@ namespace Foo
         void Stat(out STATSTG pstatstg, STATFLAG grfStatFlag);
     }
 
-    [ComProxy(typeof(IStr))]
+    [ComCallableWrapper(typeof(IStr))]
     partial class C
     {
     }
@@ -420,7 +420,7 @@ namespace Foo
         void Stat(ref STATSTG pstatstg, STATFLAG grfStatFlag);
     }
 
-    [ComProxy(typeof(IStr))]
+    [ComCallableWrapper(typeof(IStr))]
     partial class C
     {
     }
@@ -478,7 +478,7 @@ namespace Foo
         void Stat(in STATSTG pstatstg, STATFLAG grfStatFlag);
     }
 
-    [ComProxy(typeof(IStr))]
+    [ComCallableWrapper(typeof(IStr))]
     partial class C
     {
     }
@@ -536,7 +536,7 @@ namespace Foo
         HRESULT LockRegion(ulong libOffset);
     }
 
-    [ComProxy(typeof(IStr))]
+    [ComCallableWrapper(typeof(IStr))]
     partial class C
     {
     }
@@ -591,7 +591,7 @@ namespace Foo
         IStr Clone();
     }
 
-    [ComProxy(typeof(IStr))]
+    [ComCallableWrapper(typeof(IStr))]
     partial class C
     {
     }
@@ -648,7 +648,7 @@ namespace Foo
         IStr Parent { get; }
     }
 
-    [ComProxy(typeof(IStr))]
+    [ComCallableWrapper(typeof(IStr))]
     partial class C
     {
     }
