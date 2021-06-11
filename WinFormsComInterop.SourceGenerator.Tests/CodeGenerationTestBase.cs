@@ -13,6 +13,18 @@
     {
         protected string GetGeneratedOutput(string source, NullableContextOptions nullableContextOptions)
         {
+            var fakeCode = @"
+public interface ICloneable
+{
+    void Clone();
+}
+";
+            var fakeCompilation = CSharpCompilation.Create(
+                "drawing",
+                new SyntaxTree[] { CSharpSyntaxTree.ParseText(fakeCode) },
+                null,
+                new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, nullableContextOptions: nullableContextOptions));
+            
             var syntaxTree = CSharpSyntaxTree.ParseText(source);
 
             var references = new List<MetadataReference>();
@@ -26,6 +38,8 @@
                         new MetadataReferenceProperties()));
                 }
             }
+
+            references.Add(fakeCompilation.ToMetadataReference().WithAliases(new[] { "drawing" }));
 
             var compilation = CSharpCompilation.Create(
                 "foo",

@@ -7,6 +7,8 @@
         public IMethodSymbol Method { get; set; }
         public bool PreserveSignature { get; set; }
 
-        public string Alias { get; set; }
+        internal WrapperGenerationContext Context { get; set; }
+
+        public string GetAlias(INamedTypeSymbol type) => Context.GetAlias(type);
     }
 }

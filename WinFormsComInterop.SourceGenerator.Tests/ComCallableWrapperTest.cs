@@ -35,11 +35,12 @@ namespace Foo
 // </auto-generated>
 #nullable enable
 using ComInterfaceDispatch = System.Runtime.InteropServices.ComWrappers.ComInterfaceDispatch;
+using Marshal = System.Runtime.InteropServices.Marshal;
 
 namespace Foo
 {
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
-    partial unsafe class IStrProxy
+    unsafe partial class IStrProxy
     {
         [System.Runtime.InteropServices.UnmanagedCallersOnly]
         public static int Read(System.IntPtr thisPtr, byte* pv, uint cb, uint* pcbRead)
@@ -90,11 +91,12 @@ namespace Foo
 // </auto-generated>
 #nullable enable
 using ComInterfaceDispatch = System.Runtime.InteropServices.ComWrappers.ComInterfaceDispatch;
+using Marshal = System.Runtime.InteropServices.Marshal;
 
 namespace Foo
 {
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
-    partial unsafe class ICloneableProxy
+    unsafe partial class ICloneableProxy
     {
         [System.Runtime.InteropServices.UnmanagedCallersOnly]
         public static int Clone(System.IntPtr thisPtr)
@@ -123,14 +125,7 @@ namespace Foo
 extern alias drawing;
 namespace Foo
 {
-    using System.Threading;
-
-    public interface ICloneable
-    {
-        void Clone();
-    }
-
-    [ComCallableWrapper(typeof(ICloneable), ""somealias"")]
+    [ComCallableWrapper(typeof(drawing::ICloneable))]
     partial class C
     {
     }
@@ -145,20 +140,21 @@ namespace Foo
 // regenerated.
 // </auto-generated>
 #nullable enable
+extern alias drawing;
 using ComInterfaceDispatch = System.Runtime.InteropServices.ComWrappers.ComInterfaceDispatch;
-extern alias somealias;
+using Marshal = System.Runtime.InteropServices.Marshal;
 
 namespace Foo
 {
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
-    partial unsafe class ICloneableProxy
+    unsafe partial class ICloneableProxy
     {
         [System.Runtime.InteropServices.UnmanagedCallersOnly]
         public static int Clone(System.IntPtr thisPtr)
         {
             try
             {
-                var inst = ComInterfaceDispatch.GetInstance<somealias::Foo.ICloneable>((ComInterfaceDispatch*)thisPtr);
+                var inst = ComInterfaceDispatch.GetInstance<drawing::ICloneable>((ComInterfaceDispatch*)thisPtr);
                 inst.Clone();
             }
             catch (System.Exception __e)
@@ -204,11 +200,12 @@ namespace Foo
 // </auto-generated>
 #nullable enable
 using ComInterfaceDispatch = System.Runtime.InteropServices.ComWrappers.ComInterfaceDispatch;
+using Marshal = System.Runtime.InteropServices.Marshal;
 
 namespace Foo
 {
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
-    partial unsafe class IStrProxy
+    unsafe partial class IStrProxy
     {
         [System.Runtime.InteropServices.UnmanagedCallersOnly]
         public static int Read(System.IntPtr thisPtr, byte* pv, int cb, uint* pcbRead)
@@ -261,11 +258,12 @@ namespace Foo
 // </auto-generated>
 #nullable enable
 using ComInterfaceDispatch = System.Runtime.InteropServices.ComWrappers.ComInterfaceDispatch;
+using Marshal = System.Runtime.InteropServices.Marshal;
 
 namespace Foo
 {
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
-    partial unsafe class IStrProxy
+    unsafe partial class IStrProxy
     {
         [System.Runtime.InteropServices.UnmanagedCallersOnly]
         public static int CopyTo(System.IntPtr thisPtr, System.IntPtr pstm, ulong cb)
@@ -319,11 +317,12 @@ namespace Foo
 // </auto-generated>
 #nullable enable
 using ComInterfaceDispatch = System.Runtime.InteropServices.ComWrappers.ComInterfaceDispatch;
+using Marshal = System.Runtime.InteropServices.Marshal;
 
 namespace Foo
 {
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
-    partial unsafe class IStrProxy
+    unsafe partial class IStrProxy
     {
         [System.Runtime.InteropServices.UnmanagedCallersOnly]
         public static int CopyTo(System.IntPtr thisPtr, System.IntPtr data, ulong cb)
@@ -378,11 +377,12 @@ namespace Foo
 // </auto-generated>
 #nullable enable
 using ComInterfaceDispatch = System.Runtime.InteropServices.ComWrappers.ComInterfaceDispatch;
+using Marshal = System.Runtime.InteropServices.Marshal;
 
 namespace Foo
 {
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
-    partial unsafe class IStrProxy
+    unsafe partial class IStrProxy
     {
         [System.Runtime.InteropServices.UnmanagedCallersOnly]
         public static int Stat(System.IntPtr thisPtr, global::Foo.STATSTG* pstatstg, int grfStatFlag)
@@ -436,11 +436,12 @@ namespace Foo
 // </auto-generated>
 #nullable enable
 using ComInterfaceDispatch = System.Runtime.InteropServices.ComWrappers.ComInterfaceDispatch;
+using Marshal = System.Runtime.InteropServices.Marshal;
 
 namespace Foo
 {
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
-    partial unsafe class IStrProxy
+    unsafe partial class IStrProxy
     {
         [System.Runtime.InteropServices.UnmanagedCallersOnly]
         public static int Stat(System.IntPtr thisPtr, global::Foo.STATSTG* pstatstg, int grfStatFlag)
@@ -494,11 +495,12 @@ namespace Foo
 // </auto-generated>
 #nullable enable
 using ComInterfaceDispatch = System.Runtime.InteropServices.ComWrappers.ComInterfaceDispatch;
+using Marshal = System.Runtime.InteropServices.Marshal;
 
 namespace Foo
 {
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
-    partial unsafe class IStrProxy
+    unsafe partial class IStrProxy
     {
         [System.Runtime.InteropServices.UnmanagedCallersOnly]
         public static int Stat(System.IntPtr thisPtr, global::Foo.STATSTG* pstatstg, int grfStatFlag)
@@ -552,11 +554,12 @@ namespace Foo
 // </auto-generated>
 #nullable enable
 using ComInterfaceDispatch = System.Runtime.InteropServices.ComWrappers.ComInterfaceDispatch;
+using Marshal = System.Runtime.InteropServices.Marshal;
 
 namespace Foo
 {
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
-    partial unsafe class IStrProxy
+    unsafe partial class IStrProxy
     {
         [System.Runtime.InteropServices.UnmanagedCallersOnly]
         public static int LockRegion(System.IntPtr thisPtr, ulong libOffset)
@@ -607,11 +610,12 @@ namespace Foo
 // </auto-generated>
 #nullable enable
 using ComInterfaceDispatch = System.Runtime.InteropServices.ComWrappers.ComInterfaceDispatch;
+using Marshal = System.Runtime.InteropServices.Marshal;
 
 namespace Foo
 {
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
-    partial unsafe class IStrProxy
+    unsafe partial class IStrProxy
     {
         [System.Runtime.InteropServices.UnmanagedCallersOnly]
         public static int Clone(System.IntPtr thisPtr, System.IntPtr* retVal)
@@ -664,11 +668,12 @@ namespace Foo
 // </auto-generated>
 #nullable enable
 using ComInterfaceDispatch = System.Runtime.InteropServices.ComWrappers.ComInterfaceDispatch;
+using Marshal = System.Runtime.InteropServices.Marshal;
 
 namespace Foo
 {
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
-    partial unsafe class IStrProxy
+    unsafe partial class IStrProxy
     {
         [System.Runtime.InteropServices.UnmanagedCallersOnly]
         public static int get_Parent(System.IntPtr thisPtr, System.IntPtr* retVal)
