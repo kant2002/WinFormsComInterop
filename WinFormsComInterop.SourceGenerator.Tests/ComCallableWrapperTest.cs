@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace WinFormsComInterop.SourceGenerator.Tests
 {
     [TestClass]
-    public class ProxyCreationTest : CodeGenerationTestBase
+    public class ComCallableWrapperTest : CodeGenerationTestBase
     {
         [TestMethod]
         public void DeclarationOfProxy()
