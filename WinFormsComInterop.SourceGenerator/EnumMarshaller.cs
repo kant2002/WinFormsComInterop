@@ -11,7 +11,7 @@ namespace WinFormsComInterop.SourceGenerator
 
         public override string GetParameterInvocation()
         {
-            return $"({Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}){Name}";
+            return $"({FormatTypeName()}){Name}";
         }
     }
 }

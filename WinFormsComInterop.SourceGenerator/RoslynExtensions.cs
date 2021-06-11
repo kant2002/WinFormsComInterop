@@ -8,5 +8,14 @@
         {
             return type.BaseType?.Name == "Enum";
         }
+        internal static string FormatType(this ITypeSymbol type, string typeAlias)
+        {
+            if (string.IsNullOrWhiteSpace(typeAlias))
+            {
+                return type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+            }
+
+            return $"{typeAlias}::{type.ToDisplayString()}";
+        }
     }
 }

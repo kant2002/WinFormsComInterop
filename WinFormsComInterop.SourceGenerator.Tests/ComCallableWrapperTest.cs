@@ -117,7 +117,6 @@ namespace Foo
         }
 
         [TestMethod]
-        [Ignore]
         public void ExternIntefaceType()
         {
             string source = @"
@@ -131,7 +130,7 @@ namespace Foo
         void Clone();
     }
 
-    [ComCallableWrapper(typeof(ICloneable))]
+    [ComCallableWrapper(typeof(ICloneable), ""somealias"")]
     partial class C
     {
     }
@@ -147,6 +146,7 @@ namespace Foo
 // </auto-generated>
 #nullable enable
 using ComInterfaceDispatch = System.Runtime.InteropServices.ComWrappers.ComInterfaceDispatch;
+extern alias somealias;
 
 namespace Foo
 {
@@ -158,7 +158,7 @@ namespace Foo
         {
             try
             {
-                var inst = ComInterfaceDispatch.GetInstance<Foo.ICloneable>((ComInterfaceDispatch*)thisPtr);
+                var inst = ComInterfaceDispatch.GetInstance<somealias::Foo.ICloneable>((ComInterfaceDispatch*)thisPtr);
                 inst.Clone();
             }
             catch (System.Exception __e)

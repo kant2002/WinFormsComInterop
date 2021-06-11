@@ -11,18 +11,25 @@ namespace WinFormsComInterop.SourceGenerator
 
         public RefKind RefKind { get; set; }
 
+        public string TypeAlias { get; set; }
+
         public virtual string GetParameterDeclaration()
         {
             if (RefKind != RefKind.None)
             {
-                return $"{Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}* {Name}";
+                return $"{FormatTypeName()}* {Name}";
             }
 
-            return $"{Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)} {Name}";
+            return $"{FormatTypeName()} {Name}";
         }
 
         public virtual void DeclareLocalParameter(IndentedStringBuilder builder)
         {
+        }
+
+        protected string FormatTypeName()
+        {
+            return Type.FormatType(TypeAlias);
         }
 
         public virtual string GetParameterInvocation()
