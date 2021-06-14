@@ -65,13 +65,14 @@ namespace WinFormsComInterop.SourceGenerator
         }
 
         public MethodGenerationContext CreateMethodGenerationContext(
-            IMethodSymbol method, bool preserveSignature)
+            IMethodSymbol method, bool preserveSignature, int comSlotNumber = 0)
         {
             var methodContext = new MethodGenerationContext
             {
                 Method = method,
                 PreserveSignature = preserveSignature,
                 Context = this,
+                ComSlotNumber = comSlotNumber,
             };
             return methodContext;
         }

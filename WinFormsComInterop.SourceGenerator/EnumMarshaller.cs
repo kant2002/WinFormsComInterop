@@ -4,7 +4,7 @@ namespace WinFormsComInterop.SourceGenerator
 {
     internal class EnumMarshaller : Marshaller
     {
-        public override string GetParameterDeclaration()
+        public override string GetUnmanagedParameterDeclaration()
         {
             return $"int {Name}";
         }

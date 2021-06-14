@@ -9,7 +9,7 @@ namespace WinFormsComInterop.SourceGenerator
     class ComInterfaceMarshaller : Marshaller
     {
         public string LocalVariable => $"local_{Index}";
-        public override string GetParameterDeclaration()
+        public override string GetUnmanagedParameterDeclaration()
         {
             return $"System.IntPtr {Name}";
         }
@@ -36,20 +36,19 @@ namespace WinFormsComInterop.SourceGenerator
                 return;
             }
 
-            var attributeData = Type.GetAttributes().FirstOrDefault(_ => _.AttributeClass?.Name == "GuidAttribute");
-            if (attributeData == null)
+            var guidString = Type.GetTypeGuid();
+            if (guidString == null)
             {
                 builder.AppendLine($"throw new InvalidOperationException(\"No Guid attribute on the interface.\");");
                 return;
             }
 
-            var guidString = attributeData.ConstructorArguments.First();
             builder.AppendLine($"var retValManaged = {invocationExpression};");
             builder.AppendLine($"if (retValManaged != null)");
             builder.AppendLine("{");
             builder.PushIndent();
             builder.AppendLine($"var retValLocal = Marshal.GetIUnknownForObject(retValManaged);");
-            builder.AppendLine($"var targetInterface = new System.Guid(\"{guidString.Value}\");");
+            builder.AppendLine($"var targetInterface = new System.Guid(\"{guidString}\");");
             builder.AppendLine("try");
             builder.AppendLine("{");
             builder.PushIndent();

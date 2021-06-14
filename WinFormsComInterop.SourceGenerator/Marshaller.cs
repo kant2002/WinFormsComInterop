@@ -13,7 +13,7 @@ namespace WinFormsComInterop.SourceGenerator
 
         public string TypeAlias { get; set; }
 
-        public virtual string GetParameterDeclaration()
+        public virtual string GetUnmanagedParameterDeclaration()
         {
             if (RefKind != RefKind.None)
             {
