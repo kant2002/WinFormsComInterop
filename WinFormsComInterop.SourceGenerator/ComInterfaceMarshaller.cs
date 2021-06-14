@@ -76,5 +76,32 @@ namespace WinFormsComInterop.SourceGenerator
             builder.PopIndent();
             builder.AppendLine("}");
         }
+
+        public override void ConvertToUnmanagedParameter(IndentedStringBuilder builder)
+        {
+            var guidString = Type.GetTypeGuid();
+            if (guidString == null)
+            {
+                builder.AppendLine($"throw new InvalidOperationException(\"No Guid attribute on the interface.\");");
+                return;
+            }
+
+            builder.AppendLine($"var local_{Name}_IID = new System.Guid(\"{guidString}\");");
+            builder.AppendLine($"result = Marshal.QueryInterface(this.instance, ref local_{Name}_IID, out var {LocalVariable});");
+            builder.AppendLine($"if (result != 0)");
+            builder.AppendLine("{");
+            builder.PushIndent();
+            builder.AppendLine($"Marshal.ThrowExceptionForHR(result);");
+            builder.PopIndent();
+            builder.AppendLine("}");
+            builder.AppendLine();
+        }
+
+        public override string GetUnmanagedParameterInvocation()
+        {
+            return LocalVariable;
+        }
+
+        public override string UnmanagedTypeName => "System.IntPtr";
     }
 }

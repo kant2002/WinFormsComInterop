@@ -315,7 +315,7 @@ namespace {namespaceName}
                 return marshaller;
             });
             var preserveSignature = context.PreserveSignature;
-            var parametersList = method.Parameters.Select(_ => $"{_.Type} {_.Name}").ToList();
+            var parametersList = marshallers.Select(_ => _.GetManagedParameterDeclaration()).ToList();
             var returnMarshaller = context.CreateReturnMarshaller(method.ReturnType);
 
             var parametersListString = string.Join(", ", parametersList);
@@ -332,6 +332,12 @@ namespace {namespaceName}
             source.PopIndent();
             source.AppendLine("}");
             source.AppendLine();
+
+            foreach (var m in marshallers)
+            {
+                m.ConvertToUnmanagedParameter(source);
+            }
+
             source.AppendLine("var comDispatch = (System.IntPtr*)thisPtr;");
             source.AppendLine("var vtbl = (System.IntPtr*)comDispatch[0];");
             var parametersCallList = string.Join(", ", marshallers.Select(_ => _.GetUnmanagedParameterInvocation()));

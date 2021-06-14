@@ -33,6 +33,11 @@ namespace WinFormsComInterop.SourceGenerator
             return $"{UnmanagedTypeName} {Name}";
         }
 
+        public virtual string GetManagedParameterDeclaration()
+        {
+            return $"{FormatTypeName()} {Name}";
+        }
+
         public virtual string GetReturnDeclaration()
         {
             return $"{UnmanagedTypeName}* {Name}";
@@ -44,6 +49,10 @@ namespace WinFormsComInterop.SourceGenerator
         }
 
         public virtual void DeclareLocalParameter(IndentedStringBuilder builder)
+        {
+        }
+
+        public virtual void ConvertToUnmanagedParameter(IndentedStringBuilder builder)
         {
         }
 
