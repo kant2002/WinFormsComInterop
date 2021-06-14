@@ -159,6 +159,17 @@ namespace {namespaceName}
             return marshaller;
         }
 
+        private Marshaller CreateReturnMarshaller(ITypeSymbol parameterSymbol, MethodGenerationContext context)
+        {
+            Marshaller marshaller = CreateMarshaller(parameterSymbol);
+            marshaller.Name = "retVal";
+            marshaller.Type = parameterSymbol;
+            marshaller.RefKind = RefKind.None;
+            marshaller.Index = -1;
+            marshaller.TypeAlias = context.GetAlias(parameterSymbol as INamedTypeSymbol);
+            return marshaller;
+        }
+
         private Marshaller CreateMarshaller(ITypeSymbol parameterSymbol)
         {
             if (parameterSymbol.IsEnum() || parameterSymbol.TypeKind == TypeKind.Enum)
@@ -186,11 +197,12 @@ namespace {namespaceName}
             var preserveSignature = context.PreserveSignature;
             var parametersList = marshallers.Select(_ => _.GetParameterDeclaration()).ToList();
             parametersList.Insert(0, "System.IntPtr thisPtr");
+            var returnMarshaller = CreateReturnMarshaller(method.ReturnType, context);
             if (!preserveSignature)
             {
                 if (method.ReturnType.SpecialType != SpecialType.System_Void)
                 {
-                    parametersList.Add("System.IntPtr* retVal");
+                    parametersList.Add(returnMarshaller.GetReturnDeclaration());
                 }
             }
 
@@ -218,14 +230,17 @@ namespace {namespaceName}
                 }
                 else
                 {
+                    string invocationExpression;
                     if (method.MethodKind == MethodKind.PropertyGet)
                     {
-                        source.AppendLine($"*retVal = Marshal.GetIUnknownForObject(inst.{method.AssociatedSymbol.Name});");
+                        invocationExpression = $"inst.{method.AssociatedSymbol.Name}";
                     }
                     else
                     {
-                        source.AppendLine($"*retVal = Marshal.GetIUnknownForObject(inst.{method.Name}({parametersInvocationList}));");
+                        invocationExpression = $"inst.{method.Name}({parametersInvocationList})";
                     }
+
+                    returnMarshaller.GetReturnValue(source, invocationExpression);
                 }
             }
             else

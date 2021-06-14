@@ -22,6 +22,15 @@ namespace WinFormsComInterop.SourceGenerator
 
             return $"{FormatTypeName()} {Name}";
         }
+        public virtual string GetReturnDeclaration()
+        {
+            return $"{FormatTypeName()}* {Name}";
+        }
+
+        public virtual void GetReturnValue(IndentedStringBuilder builder, string invocationExpression)
+        {
+            builder.AppendLine($"*retVal = {invocationExpression};");
+        }
 
         public virtual void DeclareLocalParameter(IndentedStringBuilder builder)
         {

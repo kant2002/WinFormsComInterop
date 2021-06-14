@@ -129,10 +129,10 @@ namespace WinFormsComInterop
             var vtblRaw = (IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(IntPtr) * 7);
             GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
 
-            vtblRaw[3] = (IntPtr)(delegate* unmanaged<IntPtr, ProviderOptions*, int>)&IRawElementProviderSimpleVtbl.GetProviderOptionsInternal;
-            vtblRaw[4] = (IntPtr)(delegate* unmanaged<IntPtr, UIA, IntPtr*, int>)&IRawElementProviderSimpleVtbl.GetPatternProviderInternal;
-            vtblRaw[5] = (IntPtr)(delegate* unmanaged<IntPtr, UIA, IntPtr*, int>)&IRawElementProviderSimpleVtbl.GetPropertyValueInternal;
-            vtblRaw[6] = (IntPtr)(delegate* unmanaged<IntPtr, IntPtr*, int>)&IRawElementProviderSimpleVtbl.HostRawElementProviderInternal;
+            vtblRaw[3] = (IntPtr)(delegate* unmanaged<IntPtr, ProviderOptions*, int>)&PrimitivesIRawElementProviderSimpleProxy.get_ProviderOptions;
+            vtblRaw[4] = (IntPtr)(delegate* unmanaged<IntPtr, int, IntPtr*, int>)&PrimitivesIRawElementProviderSimpleProxy.GetPatternProvider;
+            vtblRaw[5] = (IntPtr)(delegate* unmanaged<IntPtr, int, IntPtr*, int>)&PrimitivesIRawElementProviderSimpleProxy.GetPropertyValue;
+            vtblRaw[6] = (IntPtr)(delegate* unmanaged<IntPtr, IntPtr*, int>)&PrimitivesIRawElementProviderSimpleProxy.get_HostRawElementProvider;
 
             vtbl = (IntPtr)vtblRaw;
         }
