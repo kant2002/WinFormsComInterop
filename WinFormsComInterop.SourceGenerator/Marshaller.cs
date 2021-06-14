@@ -15,18 +15,27 @@ namespace WinFormsComInterop.SourceGenerator
 
         public string TypeName => FormatTypeName();
 
+        public virtual string UnmanagedTypeName
+        {
+            get
+            {
+                return FormatTypeName();
+            }
+        }
+
         public virtual string GetUnmanagedParameterDeclaration()
         {
             if (RefKind != RefKind.None)
             {
-                return $"{FormatTypeName()}* {Name}";
+                return $"{UnmanagedTypeName}* {Name}";
             }
 
-            return $"{FormatTypeName()} {Name}";
+            return $"{UnmanagedTypeName} {Name}";
         }
+
         public virtual string GetReturnDeclaration()
         {
-            return $"{FormatTypeName()}* {Name}";
+            return $"{UnmanagedTypeName}* {Name}";
         }
 
         public virtual void GetReturnValue(IndentedStringBuilder builder, string invocationExpression)
@@ -56,6 +65,11 @@ namespace WinFormsComInterop.SourceGenerator
                 default:
                     return Name;
             }
+        }
+
+        public virtual string GetUnmanagedParameterInvocation()
+        {
+            return Name;
         }
     }
 }

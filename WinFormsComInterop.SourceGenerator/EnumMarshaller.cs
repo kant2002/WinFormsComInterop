@@ -4,6 +4,7 @@ namespace WinFormsComInterop.SourceGenerator
 {
     internal class EnumMarshaller : Marshaller
     {
+        public override string UnmanagedTypeName => "int";
         public override string GetUnmanagedParameterDeclaration()
         {
             return $"int {Name}";
@@ -12,6 +13,16 @@ namespace WinFormsComInterop.SourceGenerator
         public override string GetParameterInvocation()
         {
             return $"({FormatTypeName()}){Name}";
+        }
+
+        public override string GetUnmanagedParameterInvocation()
+        {
+            return $"({UnmanagedTypeName}){Name}";
+        }
+
+        public override void GetReturnValue(IndentedStringBuilder builder, string invocationExpression)
+        {
+            base.GetReturnValue(builder, $"({UnmanagedTypeName}){invocationExpression}");
         }
     }
 }

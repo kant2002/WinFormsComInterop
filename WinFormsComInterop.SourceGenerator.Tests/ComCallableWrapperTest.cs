@@ -896,12 +896,12 @@ namespace Foo
     unsafe partial class IStrProxy
     {
         [System.Runtime.InteropServices.UnmanagedCallersOnly]
-        public static int get_Parent(System.IntPtr thisPtr, global::Foo.HRESULT* retVal)
+        public static int get_Parent(System.IntPtr thisPtr, int* retVal)
         {
             try
             {
                 var inst = ComInterfaceDispatch.GetInstance<global::Foo.IStr>((ComInterfaceDispatch*)thisPtr);
-                *retVal = inst.Parent;
+                *retVal = (int)inst.Parent;
             }
             catch (System.Exception __e)
             {

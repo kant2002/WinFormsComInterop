@@ -128,8 +128,6 @@ namespace {namespaceName}
                             GenerateCCWMethod(source, interfaceTypeSymbol, methodContext);
                         }
                         break;
-                    case IPropertySymbol propertySymbol:
-                        break;
                 }
             }
 
@@ -197,8 +195,6 @@ namespace {namespaceName}
                             GenerateRCWMethod(source, interfaceTypeSymbol, methodContext);
                             slotNumber++;
                         }
-                        break;
-                    case IPropertySymbol propertySymbol:
                         break;
                 }
             }
@@ -338,7 +334,7 @@ namespace {namespaceName}
             source.AppendLine();
             source.AppendLine("var comDispatch = (System.IntPtr*)thisPtr;");
             source.AppendLine("var vtbl = (System.IntPtr*)comDispatch[0];");
-            var parametersCallList = string.Join(", ", context.Method.Parameters.Select(_ => _.Name));
+            var parametersCallList = string.Join(", ", marshallers.Select(_ => _.GetUnmanagedParameterInvocation()));
             source.AppendLine($"(({context.UnmanagedDelegateSignature})vtbl[{context.ComSlotNumber}])(thisPtr, {parametersCallList});");
             source.PopIndent();
             source.AppendLine("}");

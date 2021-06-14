@@ -19,7 +19,12 @@
             {
                 var preserveSignature = PreserveSignature;
                 var returnMarshaller = CreateReturnMarshaller(Method.ReturnType);
-                var parametersList = Method.Parameters.Select(_ => $"{_.Type}").ToList();
+                var marshallers = Method.Parameters.Select(_ =>
+                {
+                    var marshaller = CreateMarshaller(_);
+                    return marshaller;
+                });
+                var parametersList = marshallers.Select(_ => $"{_.UnmanagedTypeName}").ToList();
                 parametersList.Insert(0, "System.IntPtr");
                 if (!preserveSignature)
                 {
