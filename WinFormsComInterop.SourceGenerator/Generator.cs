@@ -120,21 +120,11 @@ namespace {namespaceName}
             source.PushIndent();
             foreach (var member in interfaceTypeSymbol.GetMembers())
             {
-                var preserveSigAttribute = member.GetAttributes().FirstOrDefault(ad =>
-                {
-                    string attributeName = ad.AttributeClass?.ToDisplayString();
-                    return attributeName == "System.Runtime.InteropServices.PreserveSigAttribute"
-                    || attributeName == "PreserveSigAttribute";
-                });
-                var preserveSignature = preserveSigAttribute != null;
-                context.AddDebugLine(member.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat) + "=" + preserveSignature.ToString() + " " + member.GetAttributes().Length);
-
                 switch (member)
                 {
                     case IMethodSymbol methodSymbol:
                         {
-                            preserveSignature |= (methodSymbol.MethodImplementationFlags & System.Reflection.MethodImplAttributes.PreserveSig) == System.Reflection.MethodImplAttributes.PreserveSig;
-                            var methodContext = context.CreateMethodGenerationContext(methodSymbol, preserveSignature);
+                            var methodContext = context.CreateMethodGenerationContext(methodSymbol);
                             GenerateCCWMethod(source, interfaceTypeSymbol, methodContext);
                         }
                         break;
@@ -199,21 +189,11 @@ namespace {namespaceName}
             int slotNumber = 3; /* Starting with slot after IUnknown */
             foreach (var member in interfaceTypeSymbol.GetMembers())
             {
-                var preserveSigAttribute = member.GetAttributes().FirstOrDefault(ad =>
-                {
-                    string attributeName = ad.AttributeClass?.ToDisplayString();
-                    return attributeName == "System.Runtime.InteropServices.PreserveSigAttribute"
-                    || attributeName == "PreserveSigAttribute";
-                });
-                var preserveSignature = preserveSigAttribute != null;
-                context.AddDebugLine(member.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat) + "=" + preserveSignature.ToString() + " " + member.GetAttributes().Length);
-
                 switch (member)
                 {
                     case IMethodSymbol methodSymbol:
                         {
-                            preserveSignature |= (methodSymbol.MethodImplementationFlags & System.Reflection.MethodImplAttributes.PreserveSig) == System.Reflection.MethodImplAttributes.PreserveSig;
-                            var methodContext = context.CreateMethodGenerationContext(methodSymbol, preserveSignature, slotNumber);
+                            var methodContext = context.CreateMethodGenerationContext(methodSymbol, slotNumber);
                             GenerateRCWMethod(source, interfaceTypeSymbol, methodContext);
                             slotNumber++;
                         }
@@ -249,56 +229,19 @@ namespace {namespaceName}
             }
         }
 
-        private Marshaller CreateMarshaller(IParameterSymbol parameterSymbol, MethodGenerationContext context)
-        {
-            Marshaller marshaller = CreateMarshaller(parameterSymbol.Type);
-            marshaller.Name = parameterSymbol.Name;
-            marshaller.Type = parameterSymbol.Type;
-            marshaller.RefKind = parameterSymbol.RefKind;
-            marshaller.Index = parameterSymbol.Ordinal;
-            marshaller.TypeAlias = context.GetAlias(parameterSymbol.Type as INamedTypeSymbol);
-            return marshaller;
-        }
-
-        private Marshaller CreateReturnMarshaller(ITypeSymbol parameterSymbol, MethodGenerationContext context)
-        {
-            Marshaller marshaller = CreateMarshaller(parameterSymbol);
-            marshaller.Name = "retVal";
-            marshaller.Type = parameterSymbol;
-            marshaller.RefKind = RefKind.None;
-            marshaller.Index = -1;
-            marshaller.TypeAlias = context.GetAlias(parameterSymbol as INamedTypeSymbol);
-            return marshaller;
-        }
-
-        private Marshaller CreateMarshaller(ITypeSymbol parameterSymbol)
-        {
-            if (parameterSymbol.IsEnum() || parameterSymbol.TypeKind == TypeKind.Enum)
-            {
-                return new EnumMarshaller();
-            }
-
-            if (parameterSymbol.TypeKind == TypeKind.Interface || parameterSymbol.SpecialType == SpecialType.System_Object)
-            {
-                return new ComInterfaceMarshaller();
-            }
-
-            return new BlittableMarshaller();
-        }
-
         private void GenerateCCWMethod(IndentedStringBuilder source, INamedTypeSymbol interfaceSymbol, MethodGenerationContext context)
         {
             source.AppendLine("[System.Runtime.InteropServices.UnmanagedCallersOnly]");
             var method = context.Method;
             var marshallers = method.Parameters.Select(_ =>
             {
-                var marshaller = CreateMarshaller(_, context);
+                var marshaller = context.CreateMarshaller(_);
                 return marshaller;
             });
             var preserveSignature = context.PreserveSignature;
             var parametersList = marshallers.Select(_ => _.GetUnmanagedParameterDeclaration()).ToList();
             parametersList.Insert(0, "System.IntPtr thisPtr");
-            var returnMarshaller = CreateReturnMarshaller(method.ReturnType, context);
+            var returnMarshaller = context.CreateReturnMarshaller(method.ReturnType);
             if (!preserveSignature)
             {
                 if (method.ReturnType.SpecialType != SpecialType.System_Void)
@@ -372,12 +315,12 @@ namespace {namespaceName}
             var method = context.Method;
             var marshallers = method.Parameters.Select(_ =>
             {
-                var marshaller = CreateMarshaller(_, context);
+                var marshaller = context.CreateMarshaller(_);
                 return marshaller;
             });
             var preserveSignature = context.PreserveSignature;
             var parametersList = method.Parameters.Select(_ => $"{_.Type} {_.Name}").ToList();
-            var returnMarshaller = CreateReturnMarshaller(method.ReturnType, context);
+            var returnMarshaller = context.CreateReturnMarshaller(method.ReturnType);
 
             var parametersListString = string.Join(", ", parametersList);
             source.AppendLine($"public {method.ReturnType} {method.Name}({parametersListString})");
@@ -389,12 +332,12 @@ namespace {namespaceName}
             source.AppendLine("if (result != 0)");
             source.AppendLine("{");
             source.PushIndent();
-            source.AppendLine("throw new InvalidCastException();");
+            source.AppendLine("throw new System.InvalidCastException();");
             source.PopIndent();
             source.AppendLine("}");
             source.AppendLine();
-            source.AppendLine("IntPtr* comDispatch = (IntPtr*)thisPtr;");
-            source.AppendLine("IntPtr* vtbl = (IntPtr*)comDispatch[0];");
+            source.AppendLine("var comDispatch = (System.IntPtr*)thisPtr;");
+            source.AppendLine("var vtbl = (System.IntPtr*)comDispatch[0];");
             var parametersCallList = string.Join(", ", context.Method.Parameters.Select(_ => _.Name));
             source.AppendLine($"(({context.UnmanagedDelegateSignature})vtbl[{context.ComSlotNumber}])(thisPtr, {parametersCallList});");
             source.PopIndent();

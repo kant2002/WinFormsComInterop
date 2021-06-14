@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
@@ -65,8 +66,16 @@ namespace WinFormsComInterop.SourceGenerator
         }
 
         public MethodGenerationContext CreateMethodGenerationContext(
-            IMethodSymbol method, bool preserveSignature, int comSlotNumber = 0)
+            IMethodSymbol method, int comSlotNumber = 0)
         {
+            var preserveSigAttribute = method.GetAttributes().FirstOrDefault(ad =>
+            {
+                string attributeName = ad.AttributeClass?.ToDisplayString();
+                return attributeName == "System.Runtime.InteropServices.PreserveSigAttribute"
+                || attributeName == "PreserveSigAttribute";
+            });
+            var preserveSignature = preserveSigAttribute != null;
+            preserveSignature |= (method.MethodImplementationFlags & System.Reflection.MethodImplAttributes.PreserveSig) == System.Reflection.MethodImplAttributes.PreserveSig;
             var methodContext = new MethodGenerationContext
             {
                 Method = method,

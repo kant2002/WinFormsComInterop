@@ -13,6 +13,8 @@ namespace WinFormsComInterop.SourceGenerator
 
         public string TypeAlias { get; set; }
 
+        public string TypeName => FormatTypeName();
+
         public virtual string GetUnmanagedParameterDeclaration()
         {
             if (RefKind != RefKind.None)

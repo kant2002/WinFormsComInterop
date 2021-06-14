@@ -48,12 +48,12 @@ namespace Foo
             var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var thisPtr);
             if (result != 0)
             {
-                throw new InvalidCastException();
+                throw new System.InvalidCastException();
             }
 
-            IntPtr* comDispatch = (IntPtr*)thisPtr;
-            IntPtr* vtbl = (IntPtr*)comDispatch[0];
-            ((delegate* unmanaged<IntPtr, byte*, uint, uint*, void>)vtbl[3])(thisPtr, pv, cb, pcbRead);
+            var comDispatch = (System.IntPtr*)thisPtr;
+            var vtbl = (System.IntPtr*)comDispatch[0];
+            ((delegate* unmanaged<System.IntPtr, byte*, uint, uint*, int>)vtbl[3])(thisPtr, pv, cb, pcbRead);
         }
     }
 }";
