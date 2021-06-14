@@ -145,7 +145,7 @@ namespace WinFormsComInterop
 
             IntPtr* comDispatch = (IntPtr*)streamPtr;
             IntPtr* vtbl = (IntPtr*)comDispatch[0];
-            ((delegate* unmanaged<IntPtr, byte*, uint, uint*, void>)vtbl[3])(streamPtr, pv, cb, pcbRead);
+            ((delegate* unmanaged<IntPtr, byte*, uint, uint*, int>)vtbl[3])(streamPtr, pv, cb, pcbRead);
         }
 
         public unsafe void Write(byte* pv, uint cb, uint* pcbWritten)
