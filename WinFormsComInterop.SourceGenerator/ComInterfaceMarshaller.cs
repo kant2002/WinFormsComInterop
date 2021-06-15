@@ -39,6 +39,11 @@ namespace WinFormsComInterop.SourceGenerator
 
         public override string GetParameterInvocation()
         {
+            if (Index == -1)
+            {
+                return $"({FormatTypeName()})Marshal.GetObjectForIUnknown({Name})";
+            }
+
             return RefKind switch
             {
                 RefKind.None => LocalVariable,
@@ -100,6 +105,12 @@ namespace WinFormsComInterop.SourceGenerator
 
         public override void ConvertToUnmanagedParameter(IndentedStringBuilder builder)
         {
+            if (Index == -1)
+            {
+                builder.AppendLine($"{UnmanagedTypeName} {Name};");
+                return;
+            }
+
             var guidString = Type.GetTypeGuid();
             if (guidString == null)
             {
@@ -121,6 +132,11 @@ namespace WinFormsComInterop.SourceGenerator
         public override string GetUnmanagedParameterInvocation()
         {
             return LocalVariable;
+        }
+
+        public override string GetUnmanagedReturnValue()
+        {
+            return $"&{Name}";
         }
     }
 }
