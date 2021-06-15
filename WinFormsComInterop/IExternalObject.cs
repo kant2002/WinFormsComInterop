@@ -8,11 +8,12 @@ using static primitives::Interop.Oleaut32;
 
 namespace WinFormsComInterop
 {
+    [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IOleWindow))]
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     partial class IExternalObject 
         : Accessibility.IAccessible, 
         primitives::Interop.Oleaut32.IEnumVariant, 
-        primitives::Interop.Ole32.IOleWindow, 
+        //primitives::Interop.Ole32.IOleWindow, 
         primitives::Interop.Ole32.IStream,
         drawing::Interop.Ole32.IStream,
         primitives::Interop.Ole32.IPicture,
@@ -20,17 +21,10 @@ namespace WinFormsComInterop
     {
         private static Guid IID_IAccessible = new Guid("618736E0-3C3D-11CF-810C-00AA00389B71");
         private readonly IntPtr instance;
-        private readonly IntPtr accessible;
 
         public IExternalObject(IntPtr instance)
         {
-            //var inst = Marshal.PtrToStructure<VtblPtr>(instance);
-            //this.vtable = Marshal.PtrToStructure<IExternalObjectVftbl>(inst.Vtbl);
             this.instance = instance;
-            //if (Marshal.QueryInterface(instance, ref IID_IAccessible, out var pAccessible) == 0)
-            //{
-            //    accessible = pAccessible;
-            //}
         }
 
         public void accSelect(int flagsSelect, object varChild)
@@ -124,15 +118,15 @@ namespace WinFormsComInterop
             throw new NotImplementedException();
         }
 
-        unsafe HRESULT Ole32.IOleWindow.GetWindow(IntPtr* phwnd)
-        {
-            throw new NotImplementedException();
-        }
-
-        HRESULT Ole32.IOleWindow.ContextSensitiveHelp(BOOL fEnterMode)
-        {
-            throw new NotImplementedException();
-        }
+        //unsafe HRESULT Ole32.IOleWindow.GetWindow(IntPtr* phwnd)
+        //{
+        //    throw new NotImplementedException();
+        //}
+        //
+        //HRESULT Ole32.IOleWindow.ContextSensitiveHelp(BOOL fEnterMode)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public unsafe void Read(byte* pv, uint cb, uint* pcbRead)
         {
