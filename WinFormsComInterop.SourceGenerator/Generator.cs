@@ -146,8 +146,8 @@ namespace {namespaceName}
             vtblMethod.AppendLine($"vtbl = (System.IntPtr)vtblRaw;");
             vtblMethod.PopIndent();
             vtblMethod.AppendLine("}");
-            source.Append(vtblMethod);
-            source.AppendLine();
+            //source.Append(vtblMethod);
+            //source.AppendLine();
             source.Append(proxyMethods);
             source.PopIndent();
             source.AppendLine("}");
