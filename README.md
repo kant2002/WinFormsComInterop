@@ -81,3 +81,9 @@ Restore packages to local folder to not pollute global Nuget cache. You will bui
 	dotnet restore -r win-x64 --packages packages
 
 Then publish applications using regular workflow described above.
+
+
+# Additional reading
+
+Design of future stubs in Runtime
+- https://github.com/dotnet/runtimelab/blob/feature/DllImportGenerator/designs/Pipeline.md#stub-code-generation
