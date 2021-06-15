@@ -405,6 +405,11 @@ namespace {namespaceName}
                 source.AppendLine($"return (int)inst.{method.Name}({parametersInvocationList});");
             }
 
+            foreach (var p in marshallers)
+            {
+                p.MarshalOutputParameter(source);
+            }
+            
             source.PopIndent();
             source.AppendLine("}");
             source.AppendLine("catch (System.Exception __e)");

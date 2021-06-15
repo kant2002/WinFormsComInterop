@@ -52,14 +52,20 @@ namespace WinFormsComInterop.SourceGenerator
 
         public string? GetAlias(ITypeSymbol type)
         {
-            if (type == null)
-            {
-                return null;
-            }
-
             if (type is IPointerTypeSymbol pointerTypeSymbol)
             {
                 type = pointerTypeSymbol.PointedAtType;
+            }
+
+            if (type is IArrayTypeSymbol arrayTypeSymbol)
+            {
+                type = arrayTypeSymbol.ElementType;
+            }
+
+            type = type as INamedTypeSymbol;
+            if (type == null)
+            {
+                return null;
             }
 
             if (this.aliasMap.TryGetValue(type.ContainingAssembly.Name, out var alias))

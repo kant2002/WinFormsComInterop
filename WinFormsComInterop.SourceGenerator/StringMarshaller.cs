@@ -11,7 +11,7 @@ namespace WinFormsComInterop.SourceGenerator
 
         public override void DeclareLocalParameter(IndentedStringBuilder builder)
         {
-            builder.AppendLine($"var {LocalVariable} = Marshal.StringToCoTaskMemUni({Name});");
+            builder.AppendLine($"var {LocalVariable} = Marshal.PtrToStringUni({Name});");
         }
 
         public override string GetParameterInvocation()

@@ -13,7 +13,7 @@ namespace WinFormsComInterop
     [ComCallableWrapper(typeof(drawing::Interop.Ole32.IStream))]
     [ComCallableWrapper(typeof(primitives::Interop.UiaCore.IRawElementProviderSimple))]
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IDropTarget))]
-    //[ComCallableWrapper(typeof(primitives::Interop.Ole32.IStorage))]
+    [ComCallableWrapper(typeof(primitives::Interop.Ole32.IStorage))]
     //[ComCallableWrapper(typeof(primitives::Interop.Richedit.IRichEditOleCallback))]
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     public unsafe partial class WinFormsComWrappers : ComWrappers
@@ -44,6 +44,7 @@ namespace WinFormsComInterop
             wrapperEntry = CreateGenericEntry();
             drawingStreamEntry = CreateDrawingStreamEntry();
             primitivesStreamEntry = CreatePrimitivesStreamEntry();
+            
             primitivesDropTargetEntry = CreatePrimitivesDropTargetEntry();
 #if USE_WPF
             oleDropTargetEntry = CreateOleDropTargetEntry();

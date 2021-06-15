@@ -9,15 +9,29 @@ namespace WinFormsComInterop.SourceGenerator
     class ComInterfaceMarshaller : Marshaller
     {
         public string LocalVariable => $"local_{Index}";
-        public override string GetUnmanagedParameterDeclaration()
-        {
-            return $"System.IntPtr {Name}";
-        }
+
+        public override string UnmanagedTypeName => "System.IntPtr";
 
         public override void DeclareLocalParameter(IndentedStringBuilder builder)
         {
-            builder.AppendLine($"var {LocalVariable} = ComInterfaceDispatch.GetInstance<{FormatTypeName()}>((ComInterfaceDispatch*){Name});");
+            if (RefKind == RefKind.None || RefKind == RefKind.In || RefKind == RefKind.Ref)
+            {
+                builder.AppendLine($"var {LocalVariable} = ComInterfaceDispatch.GetInstance<{FormatTypeName()}>((ComInterfaceDispatch*){Name});");
+            }
+            else
+            {
+                builder.AppendLine($"{TypeName} {LocalVariable};");
+            }
         }
+
+        public override void MarshalOutputParameter(IndentedStringBuilder builder)
+        {
+            if (RefKind == RefKind.Ref || RefKind == RefKind.Out)
+            {
+                builder.AppendLine($"*{Name} = Marshal.GetIUnknownForObject({LocalVariable});");
+            }
+        }
+
         public override string GetReturnDeclaration()
         {
             return $"System.IntPtr* {Name}";
@@ -25,7 +39,14 @@ namespace WinFormsComInterop.SourceGenerator
 
         public override string GetParameterInvocation()
         {
-            return LocalVariable;
+            return RefKind switch
+            {
+                RefKind.None => LocalVariable,
+                RefKind.In => $"in {LocalVariable}",
+                RefKind.Out => $"out {LocalVariable}",
+                RefKind.Ref => $"ref {LocalVariable}",
+                _ => throw new NotImplementedException("GetParameterInvocation"),
+            };
         }
 
         public override void GetReturnValue(IndentedStringBuilder builder, string invocationExpression)
@@ -101,7 +122,5 @@ namespace WinFormsComInterop.SourceGenerator
         {
             return LocalVariable;
         }
-
-        public override string UnmanagedTypeName => "System.IntPtr";
     }
 }

@@ -60,6 +60,10 @@ namespace WinFormsComInterop.SourceGenerator
         {
         }
 
+        public virtual void MarshalOutputParameter(IndentedStringBuilder builder)
+        {
+        }
+
         public virtual void ConvertToUnmanagedParameter(IndentedStringBuilder builder)
         {
         }

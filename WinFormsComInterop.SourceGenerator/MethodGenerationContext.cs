@@ -86,6 +86,11 @@
                 return new StringMarshaller();
             }
 
+            if (parameterSymbol is IArrayTypeSymbol)
+            {
+                return new ArrayMarshaller();
+            }
+
             if (parameterSymbol.TypeKind == TypeKind.Interface || parameterSymbol.SpecialType == SpecialType.System_Object)
             {
                 return new ComInterfaceMarshaller();
