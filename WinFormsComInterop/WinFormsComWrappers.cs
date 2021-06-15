@@ -11,8 +11,10 @@ using static primitives::Interop.UiaCore;
 
 namespace WinFormsComInterop
 {
+    [ComCallableWrapper(typeof(primitives::Interop.Ole32.IStream))]
+    [ComCallableWrapper(typeof(primitives::Interop.UiaCore.IRawElementProviderSimple))]
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
-    public unsafe class WinFormsComWrappers : ComWrappers
+    public unsafe partial class WinFormsComWrappers : ComWrappers
     {
         static ComWrappers.ComInterfaceEntry* wrapperEntry;
         static ComWrappers.ComInterfaceEntry* drawingStreamEntry;
@@ -47,7 +49,7 @@ namespace WinFormsComInterop
         {
             CreateIOleDropTargetVtbl(out var vtbl);
 
-            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 2);
+            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 1);
             var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
             wrapperEntry->IID = IID_IOleDropTarget;
             wrapperEntry->Vtable = vtbl;
@@ -72,7 +74,7 @@ namespace WinFormsComInterop
         {
             CreatePrimitivesIDropTargetVtbl(out var vtbl);
 
-            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 2);
+            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 1);
             var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
             wrapperEntry->IID = IID_IOleDropTarget;
             wrapperEntry->Vtable = vtbl;
@@ -93,9 +95,9 @@ namespace WinFormsComInterop
         }
         private static ComInterfaceEntry* CreateGenericEntry()
         {
-            CreateIRawElementProviderSimpleVtbl(out var vtbl);
+            CreatePrimitivesIRawElementProviderSimpleProxyVtbl(out var vtbl);
 
-            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 2);
+            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 1);
             var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
             wrapperEntry->IID = IID_IRawElementProviderSimple;
             wrapperEntry->Vtable = vtbl;
@@ -106,7 +108,7 @@ namespace WinFormsComInterop
         {
             CreateIDrawingStreamSimpleVtbl(out var vtbl);
 
-            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 2);
+            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 1);
             var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
             wrapperEntry->IID = IID_IStream;
             wrapperEntry->Vtable = vtbl;
@@ -115,26 +117,13 @@ namespace WinFormsComInterop
 
         private static ComInterfaceEntry* CreatePrimitivesStreamEntry()
         {
-            CreatePrimitivesIStreamSimpleVtbl(out var vtbl);
+            CreatePrimitivesIStreamProxyVtbl(out var vtbl);
 
-            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 2);
+            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 1);
             var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
             wrapperEntry->IID = IID_IStream;
             wrapperEntry->Vtable = vtbl;
             return wrapperEntry;
-        }
-
-        private static void CreateIRawElementProviderSimpleVtbl(out IntPtr vtbl)
-        {
-            var vtblRaw = (IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(IntPtr) * 7);
-            GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
-
-            vtblRaw[3] = (IntPtr)(delegate* unmanaged<IntPtr, int*, int>)&PrimitivesIRawElementProviderSimpleProxy.get_ProviderOptions;
-            vtblRaw[4] = (IntPtr)(delegate* unmanaged<IntPtr, int, IntPtr*, int>)&PrimitivesIRawElementProviderSimpleProxy.GetPatternProvider;
-            vtblRaw[5] = (IntPtr)(delegate* unmanaged<IntPtr, int, IntPtr*, int>)&PrimitivesIRawElementProviderSimpleProxy.GetPropertyValue;
-            vtblRaw[6] = (IntPtr)(delegate* unmanaged<IntPtr, IntPtr*, int>)&PrimitivesIRawElementProviderSimpleProxy.get_HostRawElementProvider;
-
-            vtbl = (IntPtr)vtblRaw;
         }
 
         private static void CreateIDrawingStreamSimpleVtbl(out IntPtr vtbl)

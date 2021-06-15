@@ -86,12 +86,17 @@ namespace WinFormsComInterop.SourceGenerator
             return methodContext;
         }
 
-        internal void AddSource(INamedTypeSymbol classType, INamedTypeSymbol interfaceTypeSymbol, SourceText sourceText)
+        internal void AddCCWSource(INamedTypeSymbol classType, INamedTypeSymbol interfaceTypeSymbol, SourceText sourceText)
         {
             var aliasSymbol = GetAlias(interfaceTypeSymbol);
             // AddDebugLine(aliasSymbol);
             var typesuffix = interfaceTypeSymbol.FormatType(aliasSymbol).Replace(".", "_").Replace("::", "_");
             context.AddSource($"{classType.ToDisplayString().Replace(".", "_")}_{typesuffix}.cs", sourceText);
+        }
+
+        internal void AddComWrapperSource(INamedTypeSymbol classType, SourceText sourceText)
+        {
+            context.AddSource($"{classType.ToDisplayString().Replace(".", "_")}_comwrappers.cs", sourceText);
         }
     }
 }

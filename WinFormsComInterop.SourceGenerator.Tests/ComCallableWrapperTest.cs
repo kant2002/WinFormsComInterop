@@ -1,11 +1,18 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace WinFormsComInterop.SourceGenerator.Tests
 {
     [TestClass]
     public class ComCallableWrapperTest : CodeGenerationTestBase
     {
+        protected override SyntaxTree GetValidatedSyntaxTree(Compilation outputCompilation)
+        {
+            return outputCompilation.SyntaxTrees
+                .First(_ => _.FilePath.Contains("Foo") && !_.FilePath.Contains("comwrappers"));
+        }
+
         [TestMethod]
         public void DeclarationOfProxy()
         {

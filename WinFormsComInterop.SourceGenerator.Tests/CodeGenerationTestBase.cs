@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.Immutable;
     using System.Linq;
     using System.Reflection;
     using Microsoft.CodeAnalysis;
@@ -12,6 +11,20 @@
     public class CodeGenerationTestBase
     {
         protected string GetGeneratedOutput(string source, NullableContextOptions nullableContextOptions)
+        {
+            Compilation outputCompilation = GetGeneratedCompilation(source, nullableContextOptions);
+
+            string output = GetValidatedSyntaxTree(outputCompilation).ToString();
+
+            return output;
+        }
+
+        protected virtual SyntaxTree GetValidatedSyntaxTree(Compilation outputCompilation)
+        {
+            return outputCompilation.SyntaxTrees.Last();
+        }
+
+        private static Compilation GetGeneratedCompilation(string source, NullableContextOptions nullableContextOptions)
         {
             var fakeCode = @"
 public interface ICloneable
@@ -24,7 +37,7 @@ public interface ICloneable
                 new SyntaxTree[] { CSharpSyntaxTree.ParseText(fakeCode) },
                 null,
                 new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, nullableContextOptions: nullableContextOptions));
-            
+
             var syntaxTree = CSharpSyntaxTree.ParseText(source);
 
             var references = new List<MetadataReference>();
@@ -54,12 +67,7 @@ public interface ICloneable
             var driver = CSharpGeneratorDriver.Create(generator);
             driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out var generateDiagnostics);
             Assert.IsFalse(generateDiagnostics.Any(d => d.Severity == DiagnosticSeverity.Error), "Failed: " + generateDiagnostics.FirstOrDefault()?.GetMessage());
-
-            string output = outputCompilation.SyntaxTrees.Last().ToString();
-
-            Console.WriteLine(output);
-
-            return output;
+            return outputCompilation;
         }
     }
 }
