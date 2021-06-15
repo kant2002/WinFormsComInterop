@@ -11,15 +11,16 @@ namespace WinFormsComInterop
     [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IOleWindow))]
     [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IStream))]
     [RuntimeCallableWrapper(typeof(drawing::Interop.Ole32.IStream))]
+    [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IPersistStream))]
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     partial class IExternalObject 
         : Accessibility.IAccessible, 
-        primitives::Interop.Oleaut32.IEnumVariant, 
-        //primitives::Interop.Ole32.IOleWindow, 
-        //primitives::Interop.Ole32.IStream,
-        //drawing::Interop.Ole32.IStream,
-        primitives::Interop.Ole32.IPicture,
-        primitives::Interop.Ole32.IPersistStream
+        primitives::Interop.Oleaut32.IEnumVariant,
+        // primitives::Interop.Ole32.IPersistStream, 
+        // primitives::Interop.Ole32.IOleWindow, 
+        // primitives::Interop.Ole32.IStream,
+        // drawing::Interop.Ole32.IStream,
+        primitives::Interop.Ole32.IPicture
     {
         private static Guid IID_IAccessible = new Guid("618736E0-3C3D-11CF-810C-00AA00389B71");
         private readonly IntPtr instance;
@@ -388,49 +389,49 @@ namespace WinFormsComInterop
         //    return (drawing::Interop.Ole32.IStream)Marshal.GetObjectForIUnknown(ptr);
         //}
 
-        unsafe HRESULT Ole32.IPersistStream.GetClassID(Guid* pClassID)
-        {
-            throw new NotImplementedException();
-        }
+        //unsafe HRESULT Ole32.IPersistStream.GetClassID(Guid* pClassID)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        HRESULT Ole32.IPersistStream.IsDirty()
-        {
-            throw new NotImplementedException();
-        }
+        //HRESULT Ole32.IPersistStream.IsDirty()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        unsafe void Ole32.IPersistStream.Load(Ole32.IStream pstm)
-        {
-            IntPtr streamUnk = Marshal.GetIUnknownForObject(pstm);
-            var result = Marshal.QueryInterface(streamUnk, ref WinFormsComWrappers.IID_IStream, out var streamIf);
-            if (result != 0)
-            {
-                throw new InvalidCastException();
-            }
+        //unsafe void Ole32.IPersistStream.Load(Ole32.IStream pstm)
+        //{
+        //    IntPtr streamUnk = Marshal.GetIUnknownForObject(pstm);
+        //    var result = Marshal.QueryInterface(streamUnk, ref WinFormsComWrappers.IID_IStream, out var streamIf);
+        //    if (result != 0)
+        //    {
+        //        throw new InvalidCastException();
+        //    }
 
-            Guid targetInterface = WinFormsComWrappers.IID_IPersistStream;
-            result = Marshal.QueryInterface(this.instance, ref targetInterface, out var persistStreamPtr);
-            if (result != 0)
-            {
-                throw new InvalidCastException();
-            }
+        //    Guid targetInterface = WinFormsComWrappers.IID_IPersistStream;
+        //    result = Marshal.QueryInterface(this.instance, ref targetInterface, out var persistStreamPtr);
+        //    if (result != 0)
+        //    {
+        //        throw new InvalidCastException();
+        //    }
 
-            IntPtr* comDispatch = (IntPtr*)persistStreamPtr;
-            IntPtr* vtbl = (IntPtr*)comDispatch[0];
-            result = ((delegate* unmanaged<IntPtr, IntPtr, int>)vtbl[5])(persistStreamPtr, streamIf);
-            if (result != 0)
-            {
-                Marshal.ThrowExceptionForHR(result);
-            }
-        }
+        //    IntPtr* comDispatch = (IntPtr*)persistStreamPtr;
+        //    IntPtr* vtbl = (IntPtr*)comDispatch[0];
+        //    result = ((delegate* unmanaged<IntPtr, IntPtr, int>)vtbl[5])(persistStreamPtr, streamIf);
+        //    if (result != 0)
+        //    {
+        //        Marshal.ThrowExceptionForHR(result);
+        //    }
+        //}
 
-        void Ole32.IPersistStream.Save(Ole32.IStream pstm, BOOL fClearDirty)
-        {
-            throw new NotImplementedException();
-        }
+        //void Ole32.IPersistStream.Save(Ole32.IStream pstm, BOOL fClearDirty)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        long Ole32.IPersistStream.GetSizeMax()
-        {
-            throw new NotImplementedException();
-        }
+        //long Ole32.IPersistStream.GetSizeMax()
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

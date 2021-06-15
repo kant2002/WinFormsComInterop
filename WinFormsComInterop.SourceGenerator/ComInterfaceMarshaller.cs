@@ -117,8 +117,9 @@ namespace WinFormsComInterop.SourceGenerator
                 return;
             }
 
+            builder.AppendLine($"var {LocalVariable}_unk = Marshal.GetIUnknownForObject({Name});");
             builder.AppendLine($"var local_{Name}_IID = new System.Guid(\"{guidString}\");");
-            builder.AppendLine($"result = Marshal.QueryInterface(this.instance, ref local_{Name}_IID, out var {LocalVariable});");
+            builder.AppendLine($"result = Marshal.QueryInterface({LocalVariable}_unk, ref local_{Name}_IID, out var {LocalVariable});");
             builder.AppendLine($"if (result != 0)");
             builder.AppendLine("{");
             builder.PushIndent();
