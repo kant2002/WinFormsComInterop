@@ -6,13 +6,13 @@ extern alias winbase;
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using static primitives::Interop;
-using static primitives::Interop.UiaCore;
 
 namespace WinFormsComInterop
 {
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IStream))]
+    [ComCallableWrapper(typeof(drawing::Interop.Ole32.IStream))]
     [ComCallableWrapper(typeof(primitives::Interop.UiaCore.IRawElementProviderSimple))]
+    [ComCallableWrapper(typeof(primitives::Interop.Ole32.IDropTarget))]
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     public unsafe partial class WinFormsComWrappers : ComWrappers
     {
@@ -72,26 +72,13 @@ namespace WinFormsComInterop
 
         private static ComInterfaceEntry* CreatePrimitivesDropTargetEntry()
         {
-            CreatePrimitivesIDropTargetVtbl(out var vtbl);
+            CreatePrimitivesIDropTargetProxyVtbl(out var vtbl);
 
             var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 1);
             var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
             wrapperEntry->IID = IID_IOleDropTarget;
             wrapperEntry->Vtable = vtbl;
             return wrapperEntry;
-        }
-
-        private static void CreatePrimitivesIDropTargetVtbl(out IntPtr vtbl)
-        {
-            var vtblRaw = (IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(IntPtr) * 7);
-            GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
-
-            vtblRaw[3] = (IntPtr)(delegate* unmanaged<IntPtr, IntPtr, uint, System.Drawing.Point, uint*, int>)&PrimitivesIDropTargetVtbl.DragEnter;
-            vtblRaw[4] = (IntPtr)(delegate* unmanaged<IntPtr, uint, System.Drawing.Point, uint*, int>)&PrimitivesIDropTargetVtbl.DragOver;
-            vtblRaw[5] = (IntPtr)(delegate* unmanaged<IntPtr, int>)&PrimitivesIDropTargetVtbl.DragLeave;
-            vtblRaw[6] = (IntPtr)(delegate* unmanaged<IntPtr, IntPtr, uint, System.Drawing.Point, uint*, int>)&PrimitivesIDropTargetVtbl.Drop;
-
-            vtbl = (IntPtr)vtblRaw;
         }
         private static ComInterfaceEntry* CreateGenericEntry()
         {
@@ -106,7 +93,7 @@ namespace WinFormsComInterop
 
         private static ComInterfaceEntry* CreateDrawingStreamEntry()
         {
-            CreateIDrawingStreamSimpleVtbl(out var vtbl);
+            CreateDrawingIStreamProxyVtbl(out var vtbl);
 
             var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 1);
             var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
@@ -124,46 +111,6 @@ namespace WinFormsComInterop
             wrapperEntry->IID = IID_IStream;
             wrapperEntry->Vtable = vtbl;
             return wrapperEntry;
-        }
-
-        private static void CreateIDrawingStreamSimpleVtbl(out IntPtr vtbl)
-        {
-            var vtblRaw = (IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(IntPtr) * 14);
-            GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
-
-            vtblRaw[3] = (IntPtr)(delegate* unmanaged<IntPtr, byte*, uint, uint*, int>)&DrawingIStreamVtbl.Read;
-            vtblRaw[4] = (IntPtr)(delegate* unmanaged<IntPtr, byte*, uint, uint*, int>)&DrawingIStreamVtbl.Write;
-            vtblRaw[5] = (IntPtr)(delegate* unmanaged<IntPtr, long, int, ulong*, int>)&DrawingIStreamVtbl.Seek;
-            vtblRaw[6] = (IntPtr)(delegate* unmanaged<IntPtr, ulong, int>)&DrawingIStreamVtbl.SetSize;
-            vtblRaw[7] = (IntPtr)(delegate* unmanaged<IntPtr, IntPtr, ulong, ulong*, ulong*, int>)&DrawingIStreamVtbl.CopyTo;
-            vtblRaw[8] = (IntPtr)(delegate* unmanaged<IntPtr, uint, int>)&DrawingIStreamVtbl.Commit;
-            vtblRaw[9] = (IntPtr)(delegate* unmanaged<IntPtr, int>)&DrawingIStreamVtbl.Revert;
-            vtblRaw[10] = (IntPtr)(delegate* unmanaged<IntPtr, ulong, ulong, uint, int>)&DrawingIStreamVtbl.LockRegion;
-            vtblRaw[11] = (IntPtr)(delegate* unmanaged<IntPtr, ulong, ulong, uint, int>)&DrawingIStreamVtbl.UnlockRegion;
-            vtblRaw[12] = (IntPtr)(delegate* unmanaged<IntPtr, drawing::Interop.Ole32.STATSTG*, drawing::Interop.Ole32.STATFLAG, int>)&DrawingIStreamVtbl.Stat;
-            vtblRaw[13] = (IntPtr)(delegate* unmanaged<IntPtr, int>)&DrawingIStreamVtbl.Clone;
-
-            vtbl = (IntPtr)vtblRaw;
-        }
-
-        private static void CreatePrimitivesIStreamSimpleVtbl(out IntPtr vtbl)
-        {
-            var vtblRaw = (IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(IntPtr) * 14);
-            GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
-
-            vtblRaw[3] = (IntPtr)(delegate* unmanaged<IntPtr, byte*, uint, uint*, int>)&PrimitivesIStreamProxy.Read;
-            vtblRaw[4] = (IntPtr)(delegate* unmanaged<IntPtr, byte*, uint, uint*, int>)&PrimitivesIStreamProxy.Write;
-            vtblRaw[5] = (IntPtr)(delegate* unmanaged<IntPtr, long, int, ulong*, int>)&PrimitivesIStreamProxy.Seek;
-            vtblRaw[6] = (IntPtr)(delegate* unmanaged<IntPtr, ulong, int>)&PrimitivesIStreamProxy.SetSize;
-            vtblRaw[7] = (IntPtr)(delegate* unmanaged<IntPtr, IntPtr, ulong, ulong*, ulong*, int>)&PrimitivesIStreamProxy.CopyTo;
-            vtblRaw[8] = (IntPtr)(delegate* unmanaged<IntPtr, int, int>)&PrimitivesIStreamProxy.Commit;
-            vtblRaw[9] = (IntPtr)(delegate* unmanaged<IntPtr, int>)&PrimitivesIStreamProxy.Revert;
-            vtblRaw[10] = (IntPtr)(delegate* unmanaged<IntPtr, ulong, ulong, uint, int>)&PrimitivesIStreamProxy.LockRegion;
-            vtblRaw[11] = (IntPtr)(delegate* unmanaged<IntPtr, ulong, ulong, uint, int>)&PrimitivesIStreamProxy.UnlockRegion;
-            vtblRaw[12] = (IntPtr)(delegate* unmanaged<IntPtr, primitives::Interop.Ole32.STATSTG*, int, int>)&PrimitivesIStreamProxy.Stat;
-            vtblRaw[13] = (IntPtr)(delegate* unmanaged<IntPtr, System.IntPtr*, int >)&PrimitivesIStreamProxy.Clone;
-
-            vtbl = (IntPtr)vtblRaw;
         }
 
         public static WinFormsComWrappers Instance { get; } = new WinFormsComWrappers();
@@ -198,13 +145,6 @@ namespace WinFormsComInterop
                 return oleDropTargetEntry;
             }
 #endif
-
-            var interfaces = obj.GetType().GetInterfaces();
-            if (interfaces.Length == 1 && interfaces[0].GUID.ToString() == "0000000C-0000-0000-C000-000000000046")
-            {
-                count = 1;
-                return drawingStreamEntry;
-            }
 
             count = 1;
             return wrapperEntry;

@@ -81,6 +81,11 @@
                 return new EnumMarshaller();
             }
 
+            if (parameterSymbol.SpecialType == SpecialType.System_String)
+            {
+                return new StringMarshaller();
+            }
+
             if (parameterSymbol.TypeKind == TypeKind.Interface || parameterSymbol.SpecialType == SpecialType.System_Object)
             {
                 return new ComInterfaceMarshaller();
