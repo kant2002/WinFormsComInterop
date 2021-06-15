@@ -14,7 +14,7 @@ namespace WinFormsComInterop
     [ComCallableWrapper(typeof(primitives::Interop.UiaCore.IRawElementProviderSimple))]
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IDropTarget))]
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IStorage))]
-    //[ComCallableWrapper(typeof(primitives::Interop.Richedit.IRichEditOleCallback))]
+    [ComCallableWrapper(typeof(primitives::Interop.Richedit.IRichEditOleCallback))]
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     public unsafe partial class WinFormsComWrappers : ComWrappers
     {
@@ -46,6 +46,8 @@ namespace WinFormsComInterop
             primitivesStreamEntry = CreatePrimitivesStreamEntry();
             
             primitivesDropTargetEntry = CreatePrimitivesDropTargetEntry();
+            storageEntry = CreatePrimitivesIStorageEntry();
+            richEditOleCallbackEntry = CreatePrimitivesIRichEditOleCallbackEntry();
 #if USE_WPF
             oleDropTargetEntry = CreateOleDropTargetEntry();
 #endif
@@ -88,27 +90,27 @@ namespace WinFormsComInterop
             return wrapperEntry;
         }
 
-        //private static ComInterfaceEntry* CreatePrimitivesIStorageEntry()
-        //{
-        //    CreatePrimitivesIStorageProxyVtbl(out var vtbl);
+        private static ComInterfaceEntry* CreatePrimitivesIStorageEntry()
+        {
+            CreatePrimitivesIStorageProxyVtbl(out var vtbl);
 
-        //    var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 1);
-        //    var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
-        //    wrapperEntry->IID = IID_IStorage;
-        //    wrapperEntry->Vtable = vtbl;
-        //    return wrapperEntry;
-        //}
+            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 1);
+            var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
+            wrapperEntry->IID = IID_IStorage;
+            wrapperEntry->Vtable = vtbl;
+            return wrapperEntry;
+        }
 
-        //private static ComInterfaceEntry* CreatePrimitivesIRichEditOleCallbackEntry()
-        //{
-        //    CreatePrimitivesIRichEditOleCallbackProxyVtbl(out var vtbl);
+        private static ComInterfaceEntry* CreatePrimitivesIRichEditOleCallbackEntry()
+        {
+            CreatePrimitivesIRichEditOleCallbackProxyVtbl(out var vtbl);
 
-        //    var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 1);
-        //    var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
-        //    wrapperEntry->IID = IID_IRichEditOleCallback;
-        //    wrapperEntry->Vtable = vtbl;
-        //    return wrapperEntry;
-        //}
+            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 1);
+            var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
+            wrapperEntry->IID = IID_IRichEditOleCallback;
+            wrapperEntry->Vtable = vtbl;
+            return wrapperEntry;
+        }
         private static ComInterfaceEntry* CreateGenericEntry()
         {
             CreatePrimitivesIRawElementProviderSimpleProxyVtbl(out var vtbl);
@@ -146,8 +148,6 @@ namespace WinFormsComInterop
 
         protected override unsafe ComInterfaceEntry* ComputeVtables(object obj, CreateComInterfaceFlags flags, out int count)
         {
-            // count = 0;
-            // return null;
             if (obj is drawing::Interop.Ole32.IStream)
             {
                 count = 1;
@@ -160,11 +160,22 @@ namespace WinFormsComInterop
                 return primitivesStreamEntry;
             }
 
-
             if (obj is primitives::Interop.Ole32.IDropTarget)
             {
                 count = 1;
                 return primitivesDropTargetEntry;
+            }
+
+            if (obj is primitives::Interop.Ole32.IStorage)
+            {
+                count = 1;
+                return storageEntry;
+            }
+
+            if (obj is primitives::Interop.Richedit.IRichEditOleCallback)
+            {
+                count = 1;
+                return richEditOleCallbackEntry;
             }
 
 #if USE_WPF
@@ -181,15 +192,12 @@ namespace WinFormsComInterop
 
         protected override object CreateObject(IntPtr externalComObject, CreateObjectFlags flags)
         {
-            // Return NULL works,
-            //return null;
             GetIUnknownImpl(out IntPtr fpQueryInteface, out IntPtr fpAddRef, out IntPtr fpRelease);
             if (((IntPtr*)((IntPtr*)externalComObject)[0])[0] == fpQueryInteface)
             {
                 return ComWrappers.ComInterfaceDispatch.GetInstance<object>((ComWrappers.ComInterfaceDispatch*)externalComObject);
             }
 
-            // Return object does not works yet.
             return new IExternalObject(externalComObject);
         }
 
