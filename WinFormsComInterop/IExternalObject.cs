@@ -9,13 +9,15 @@ using static primitives::Interop.Oleaut32;
 namespace WinFormsComInterop
 {
     [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IOleWindow))]
+    [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IStream))]
+    [RuntimeCallableWrapper(typeof(drawing::Interop.Ole32.IStream))]
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     partial class IExternalObject 
         : Accessibility.IAccessible, 
         primitives::Interop.Oleaut32.IEnumVariant, 
         //primitives::Interop.Ole32.IOleWindow, 
-        primitives::Interop.Ole32.IStream,
-        drawing::Interop.Ole32.IStream,
+        //primitives::Interop.Ole32.IStream,
+        //drawing::Interop.Ole32.IStream,
         primitives::Interop.Ole32.IPicture,
         primitives::Interop.Ole32.IPersistStream
     {
@@ -128,265 +130,263 @@ namespace WinFormsComInterop
         //    throw new NotImplementedException();
         //}
 
-        public unsafe void Read(byte* pv, uint cb, uint* pcbRead)
-        {
-            Guid targetInterface = WinFormsComWrappers.IID_IStream;
-            var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
-            if (result != 0)
-            {
-                throw new InvalidCastException();
-            }
+        //public unsafe void Read(byte* pv, uint cb, uint* pcbRead)
+        //{
+        //    Guid targetInterface = WinFormsComWrappers.IID_IStream;
+        //    var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
+        //    if (result != 0)
+        //    {
+        //        throw new InvalidCastException();
+        //    }
 
-            IntPtr* comDispatch = (IntPtr*)streamPtr;
-            IntPtr* vtbl = (IntPtr*)comDispatch[0];
-            ((delegate* unmanaged<IntPtr, byte*, uint, uint*, int>)vtbl[3])(streamPtr, pv, cb, pcbRead);
-        }
+        //    IntPtr* comDispatch = (IntPtr*)streamPtr;
+        //    IntPtr* vtbl = (IntPtr*)comDispatch[0];
+        //    ((delegate* unmanaged<IntPtr, byte*, uint, uint*, int>)vtbl[3])(streamPtr, pv, cb, pcbRead);
+        //}
 
-        public unsafe void Write(byte* pv, uint cb, uint* pcbWritten)
-        {
-            Guid targetInterface = WinFormsComWrappers.IID_IStream;
-            var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
-            if (result != 0)
-            {
-                throw new InvalidCastException();
-            }
+        //public unsafe void Write(byte* pv, uint cb, uint* pcbWritten)
+        //{
+        //    Guid targetInterface = WinFormsComWrappers.IID_IStream;
+        //    var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
+        //    if (result != 0)
+        //    {
+        //        throw new InvalidCastException();
+        //    }
 
-            IntPtr* comDispatch = (IntPtr*)streamPtr;
-            IntPtr* vtbl = (IntPtr*)comDispatch[0];
-            ((delegate* unmanaged<IntPtr, byte*, uint, uint*, void>)vtbl[4])(streamPtr, pv, cb, pcbWritten);
-        }
+        //    IntPtr* comDispatch = (IntPtr*)streamPtr;
+        //    IntPtr* vtbl = (IntPtr*)comDispatch[0];
+        //    ((delegate* unmanaged<IntPtr, byte*, uint, uint*, void>)vtbl[4])(streamPtr, pv, cb, pcbWritten);
+        //}
 
-        public unsafe void Seek(long dlibMove, SeekOrigin dwOrigin, ulong* plibNewPosition)
-        {
-            Guid targetInterface = WinFormsComWrappers.IID_IStream;
-            var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
-            if (result != 0)
-            {
-                throw new InvalidCastException();
-            }
+        //public unsafe void Seek(long dlibMove, SeekOrigin dwOrigin, ulong* plibNewPosition)
+        //{
+        //    Guid targetInterface = WinFormsComWrappers.IID_IStream;
+        //    var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
+        //    if (result != 0)
+        //    {
+        //        throw new InvalidCastException();
+        //    }
 
-            IntPtr* comDispatch = (IntPtr*)streamPtr;
-            IntPtr* vtbl = (IntPtr*)comDispatch[0];
-            ((delegate* unmanaged<IntPtr, long, SeekOrigin, ulong*, void>)vtbl[5])(streamPtr, dlibMove, dwOrigin, plibNewPosition);
-        }
+        //    IntPtr* comDispatch = (IntPtr*)streamPtr;
+        //    IntPtr* vtbl = (IntPtr*)comDispatch[0];
+        //    ((delegate* unmanaged<IntPtr, long, SeekOrigin, ulong*, void>)vtbl[5])(streamPtr, dlibMove, dwOrigin, plibNewPosition);
+        //}
 
-        public unsafe void SetSize(ulong libNewSize)
-        {
-            Guid targetInterface = WinFormsComWrappers.IID_IStream;
-            var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
-            if (result != 0)
-            {
-                throw new InvalidCastException();
-            }
+        //public unsafe void SetSize(ulong libNewSize)
+        //{
+        //    Guid targetInterface = WinFormsComWrappers.IID_IStream;
+        //    var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
+        //    if (result != 0)
+        //    {
+        //        throw new InvalidCastException();
+        //    }
 
-            IntPtr* comDispatch = (IntPtr*)streamPtr;
-            IntPtr* vtbl = (IntPtr*)comDispatch[0];
-            ((delegate* unmanaged<IntPtr, ulong, void>)vtbl[6])(streamPtr, libNewSize);
-        }
+        //    IntPtr* comDispatch = (IntPtr*)streamPtr;
+        //    IntPtr* vtbl = (IntPtr*)comDispatch[0];
+        //    ((delegate* unmanaged<IntPtr, ulong, void>)vtbl[6])(streamPtr, libNewSize);
+        //}
 
-        unsafe void primitives::Interop.Ole32.IStream.CopyTo(primitives::Interop.Ole32.IStream pstm, ulong cb, ulong* pcbRead, ulong* pcbWritten)
-        {
-            IntPtr streamUnk = Marshal.GetIUnknownForObject(pstm);
-            var result = Marshal.QueryInterface(streamUnk, ref WinFormsComWrappers.IID_IStream, out var streamIf);
-            if (result != 0)
-            {
-                throw new InvalidCastException();
-            }
+        //unsafe void primitives::Interop.Ole32.IStream.CopyTo(primitives::Interop.Ole32.IStream pstm, ulong cb, ulong* pcbRead, ulong* pcbWritten)
+        //{
+        //    IntPtr streamUnk = Marshal.GetIUnknownForObject(pstm);
+        //    var result = Marshal.QueryInterface(streamUnk, ref WinFormsComWrappers.IID_IStream, out var streamIf);
+        //    if (result != 0)
+        //    {
+        //        throw new InvalidCastException();
+        //    }
 
-            Guid targetInterface = WinFormsComWrappers.IID_IStream;
-            result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
-            if (result != 0)
-            {
-                throw new InvalidCastException();
-            }
+        //    Guid targetInterface = WinFormsComWrappers.IID_IStream;
+        //    result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
+        //    if (result != 0)
+        //    {
+        //        throw new InvalidCastException();
+        //    }
 
-            IntPtr* comDispatch = (IntPtr*)streamPtr;
-            IntPtr* vtbl = (IntPtr*)comDispatch[0];
-            ((delegate* unmanaged<IntPtr, IntPtr, ulong, ulong*, ulong*, void>)vtbl[7])(streamPtr, streamIf, cb, pcbRead, pcbWritten);
-        }
+        //    IntPtr* comDispatch = (IntPtr*)streamPtr;
+        //    IntPtr* vtbl = (IntPtr*)comDispatch[0];
+        //    ((delegate* unmanaged<IntPtr, IntPtr, ulong, ulong*, ulong*, void>)vtbl[7])(streamPtr, streamIf, cb, pcbRead, pcbWritten);
+        //}
 
-        unsafe void drawing::Interop.Ole32.IStream.CopyTo(drawing::Interop.Ole32.IStream pstm, ulong cb, ulong* pcbRead, ulong* pcbWritten)
-        {
-            IntPtr streamUnk = Marshal.GetIUnknownForObject(pstm);
-            var result = Marshal.QueryInterface(streamUnk, ref WinFormsComWrappers.IID_IStream, out var streamIf);
-            if (result != 0)
-            {
-                throw new InvalidCastException();
-            }
+        //unsafe void drawing::Interop.Ole32.IStream.CopyTo(drawing::Interop.Ole32.IStream pstm, ulong cb, ulong* pcbRead, ulong* pcbWritten)
+        //{
+        //    IntPtr streamUnk = Marshal.GetIUnknownForObject(pstm);
+        //    var result = Marshal.QueryInterface(streamUnk, ref WinFormsComWrappers.IID_IStream, out var streamIf);
+        //    if (result != 0)
+        //    {
+        //        throw new InvalidCastException();
+        //    }
 
-            Guid targetInterface = WinFormsComWrappers.IID_IStream;
-            result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
-            if (result != 0)
-            {
-                throw new InvalidCastException();
-            }
+        //    Guid targetInterface = WinFormsComWrappers.IID_IStream;
+        //    result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
+        //    if (result != 0)
+        //    {
+        //        throw new InvalidCastException();
+        //    }
 
-            IntPtr* comDispatch = (IntPtr*)streamPtr;
-            IntPtr* vtbl = (IntPtr*)comDispatch[0];
-            ((delegate* unmanaged<IntPtr, IntPtr, ulong, ulong*, ulong*, void>)vtbl[7])(streamPtr, streamIf, cb, pcbRead, pcbWritten);
-        }
+        //    IntPtr* comDispatch = (IntPtr*)streamPtr;
+        //    IntPtr* vtbl = (IntPtr*)comDispatch[0];
+        //    ((delegate* unmanaged<IntPtr, IntPtr, ulong, ulong*, ulong*, void>)vtbl[7])(streamPtr, streamIf, cb, pcbRead, pcbWritten);
+        //}
 
-        unsafe void primitives::Interop.Ole32.IStream.Commit(primitives::Interop.Ole32.STGC grfCommitFlags)
-        {
-            Guid targetInterface = WinFormsComWrappers.IID_IStream;
-            var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
-            if (result != 0)
-            {
-                throw new InvalidCastException();
-            }
+        //unsafe void primitives::Interop.Ole32.IStream.Commit(primitives::Interop.Ole32.STGC grfCommitFlags)
+        //{
+        //    Guid targetInterface = WinFormsComWrappers.IID_IStream;
+        //    var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
+        //    if (result != 0)
+        //    {
+        //        throw new InvalidCastException();
+        //    }
 
-            IntPtr* comDispatch = (IntPtr*)streamPtr;
-            IntPtr* vtbl = (IntPtr*)comDispatch[0];
-            ((delegate* unmanaged<IntPtr, primitives::Interop.Ole32.STGC, void>)vtbl[8])(streamPtr, grfCommitFlags);
-        }
+        //    IntPtr* comDispatch = (IntPtr*)streamPtr;
+        //    IntPtr* vtbl = (IntPtr*)comDispatch[0];
+        //    ((delegate* unmanaged<IntPtr, primitives::Interop.Ole32.STGC, void>)vtbl[8])(streamPtr, grfCommitFlags);
+        //}
 
-        unsafe void drawing::Interop.Ole32.IStream.Commit(uint grfCommitFlags)
-        {
-            Guid targetInterface = WinFormsComWrappers.IID_IStream;
-            var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
-            if (result != 0)
-            {
-                throw new InvalidCastException();
-            }
+        //unsafe void drawing::Interop.Ole32.IStream.Commit(uint grfCommitFlags)
+        //{
+        //    Guid targetInterface = WinFormsComWrappers.IID_IStream;
+        //    var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
+        //    if (result != 0)
+        //    {
+        //        throw new InvalidCastException();
+        //    }
 
-            IntPtr* comDispatch = (IntPtr*)streamPtr;
-            IntPtr* vtbl = (IntPtr*)comDispatch[0];
-            ((delegate* unmanaged<IntPtr, uint, void>)vtbl[8])(streamPtr, grfCommitFlags);
-        }
+        //    IntPtr* comDispatch = (IntPtr*)streamPtr;
+        //    IntPtr* vtbl = (IntPtr*)comDispatch[0];
+        //    ((delegate* unmanaged<IntPtr, uint, void>)vtbl[8])(streamPtr, grfCommitFlags);
+        //}
 
-        public unsafe void Revert()
-        {
-            Guid targetInterface = WinFormsComWrappers.IID_IStream;
-            var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
-            if (result != 0)
-            {
-                throw new InvalidCastException();
-            }
+        //public unsafe void Revert()
+        //{
+        //    Guid targetInterface = WinFormsComWrappers.IID_IStream;
+        //    var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
+        //    if (result != 0)
+        //    {
+        //        throw new InvalidCastException();
+        //    }
 
-            IntPtr* comDispatch = (IntPtr*)streamPtr;
-            IntPtr* vtbl = (IntPtr*)comDispatch[0];
-            ((delegate* unmanaged<IntPtr, void>)vtbl[9])(streamPtr);
-        }
+        //    IntPtr* comDispatch = (IntPtr*)streamPtr;
+        //    IntPtr* vtbl = (IntPtr*)comDispatch[0];
+        //    ((delegate* unmanaged<IntPtr, void>)vtbl[9])(streamPtr);
+        //}
 
-        unsafe primitives::Interop.HRESULT primitives::Interop.Ole32.IStream.LockRegion(ulong libOffset, ulong cb, uint dwLockType)
-        {
-            Guid targetInterface = WinFormsComWrappers.IID_IStream;
-            var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
-            if (result != 0)
-            {
-                throw new InvalidCastException();
-            }
+        //unsafe primitives::Interop.HRESULT primitives::Interop.Ole32.IStream.LockRegion(ulong libOffset, ulong cb, uint dwLockType)
+        //{
+        //    Guid targetInterface = WinFormsComWrappers.IID_IStream;
+        //    var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
+        //    if (result != 0)
+        //    {
+        //        throw new InvalidCastException();
+        //    }
 
-            IntPtr* comDispatch = (IntPtr*)streamPtr;
-            IntPtr* vtbl = (IntPtr*)comDispatch[0];
-            return ((delegate* unmanaged<IntPtr, ulong, ulong, uint, primitives::Interop.HRESULT>)vtbl[10])(streamPtr, libOffset, cb, dwLockType);
-        }
+        //    IntPtr* comDispatch = (IntPtr*)streamPtr;
+        //    IntPtr* vtbl = (IntPtr*)comDispatch[0];
+        //    return ((delegate* unmanaged<IntPtr, ulong, ulong, uint, primitives::Interop.HRESULT>)vtbl[10])(streamPtr, libOffset, cb, dwLockType);
+        //}
 
-        unsafe drawing::Interop.HRESULT drawing::Interop.Ole32.IStream.LockRegion(ulong libOffset, ulong cb, uint dwLockType)
-        {
-            Guid targetInterface = WinFormsComWrappers.IID_IStream;
-            var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
-            if (result != 0)
-            {
-                throw new InvalidCastException();
-            }
+        //unsafe drawing::Interop.HRESULT drawing::Interop.Ole32.IStream.LockRegion(ulong libOffset, ulong cb, uint dwLockType)
+        //{
+        //    Guid targetInterface = WinFormsComWrappers.IID_IStream;
+        //    var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
+        //    if (result != 0)
+        //    {
+        //        throw new InvalidCastException();
+        //    }
 
-            IntPtr* comDispatch = (IntPtr*)streamPtr;
-            IntPtr* vtbl = (IntPtr*)comDispatch[0];
-            return ((delegate* unmanaged<IntPtr, ulong, ulong, uint, drawing::Interop.HRESULT>)vtbl[10])(streamPtr, libOffset, cb, dwLockType);
-        }
+        //    IntPtr* comDispatch = (IntPtr*)streamPtr;
+        //    IntPtr* vtbl = (IntPtr*)comDispatch[0];
+        //    return ((delegate* unmanaged<IntPtr, ulong, ulong, uint, drawing::Interop.HRESULT>)vtbl[10])(streamPtr, libOffset, cb, dwLockType);
+        //}
 
-        unsafe primitives::Interop.HRESULT primitives::Interop.Ole32.IStream.UnlockRegion(ulong libOffset, ulong cb, uint dwLockType)
-        {
-            Guid targetInterface = WinFormsComWrappers.IID_IStream;
-            var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
-            if (result != 0)
-            {
-                throw new InvalidCastException();
-            }
+        //unsafe primitives::Interop.HRESULT primitives::Interop.Ole32.IStream.UnlockRegion(ulong libOffset, ulong cb, uint dwLockType)
+        //{
+        //    Guid targetInterface = WinFormsComWrappers.IID_IStream;
+        //    var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
+        //    if (result != 0)
+        //    {
+        //        throw new InvalidCastException();
+        //    }
 
-            IntPtr* comDispatch = (IntPtr*)streamPtr;
-            IntPtr* vtbl = (IntPtr*)comDispatch[0];
-            return ((delegate* unmanaged<IntPtr, ulong, ulong, uint, primitives::Interop.HRESULT>)vtbl[11])(streamPtr, libOffset, cb, dwLockType);
-        }
+        //    IntPtr* comDispatch = (IntPtr*)streamPtr;
+        //    IntPtr* vtbl = (IntPtr*)comDispatch[0];
+        //    return ((delegate* unmanaged<IntPtr, ulong, ulong, uint, primitives::Interop.HRESULT>)vtbl[11])(streamPtr, libOffset, cb, dwLockType);
+        //}
 
-        unsafe drawing::Interop.HRESULT drawing::Interop.Ole32.IStream.UnlockRegion(ulong libOffset, ulong cb, uint dwLockType)
-        {
-            Guid targetInterface = WinFormsComWrappers.IID_IStream;
-            var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
-            if (result != 0)
-            {
-                throw new InvalidCastException();
-            }
+        //unsafe drawing::Interop.HRESULT drawing::Interop.Ole32.IStream.UnlockRegion(ulong libOffset, ulong cb, uint dwLockType)
+        //{
+        //    Guid targetInterface = WinFormsComWrappers.IID_IStream;
+        //    var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
+        //    if (result != 0)
+        //    {
+        //        throw new InvalidCastException();
+        //    }
 
-            IntPtr* comDispatch = (IntPtr*)streamPtr;
-            IntPtr* vtbl = (IntPtr*)comDispatch[0];
-            return ((delegate* unmanaged<IntPtr, ulong, ulong, uint, drawing::Interop.HRESULT>)vtbl[11])(streamPtr, libOffset, cb, dwLockType);
-        }
+        //    IntPtr* comDispatch = (IntPtr*)streamPtr;
+        //    IntPtr* vtbl = (IntPtr*)comDispatch[0];
+        //    return ((delegate* unmanaged<IntPtr, ulong, ulong, uint, drawing::Interop.HRESULT>)vtbl[11])(streamPtr, libOffset, cb, dwLockType);
+        //}
 
-        unsafe void primitives::Interop.Ole32.IStream.Stat(out primitives::Interop.Ole32.STATSTG pstatstg, primitives::Interop.Ole32.STATFLAG grfStatFlag)
-        {
-            Guid targetInterface = WinFormsComWrappers.IID_IStream;
-            var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
-            if (result != 0)
-            {
-                throw new InvalidCastException();
-            }
+        //unsafe void primitives::Interop.Ole32.IStream.Stat(out primitives::Interop.Ole32.STATSTG pstatstg, primitives::Interop.Ole32.STATFLAG grfStatFlag)
+        //{
+        //    Guid targetInterface = WinFormsComWrappers.IID_IStream;
+        //    var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
+        //    if (result != 0)
+        //    {
+        //        throw new InvalidCastException();
+        //    }
 
-            IntPtr* comDispatch = (IntPtr*)streamPtr;
-            IntPtr* vtbl = (IntPtr*)comDispatch[0];
-            fixed (primitives::Interop.Ole32.STATSTG* statstf = &pstatstg)
-            {
-                ((delegate* unmanaged<IntPtr, primitives::Interop.Ole32.STATSTG*, primitives::Interop.Ole32.STATFLAG, void>)vtbl[12])(streamPtr, statstf, grfStatFlag);
-            }
-        }
+        //    IntPtr* comDispatch = (IntPtr*)streamPtr;
+        //    IntPtr* vtbl = (IntPtr*)comDispatch[0];
+        //    fixed (primitives::Interop.Ole32.STATSTG* statstf = &pstatstg)
+        //    {
+        //        ((delegate* unmanaged<IntPtr, primitives::Interop.Ole32.STATSTG*, primitives::Interop.Ole32.STATFLAG, void>)vtbl[12])(streamPtr, statstf, grfStatFlag);
+        //    }
+        //}
 
-        unsafe void drawing::Interop.Ole32.IStream.Stat(out drawing::Interop.Ole32.STATSTG pstatstg, drawing::Interop.Ole32.STATFLAG grfStatFlag)
-        {
-            Guid targetInterface = WinFormsComWrappers.IID_IStream;
-            var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
-            if (result != 0)
-            {
-                throw new InvalidCastException();
-            }
+        //unsafe void drawing::Interop.Ole32.IStream.Stat(out drawing::Interop.Ole32.STATSTG pstatstg, drawing::Interop.Ole32.STATFLAG grfStatFlag)
+        //{
+        //    Guid targetInterface = WinFormsComWrappers.IID_IStream;
+        //    var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
+        //    if (result != 0)
+        //    {
+        //        throw new InvalidCastException();
+        //    }
 
-            IntPtr* comDispatch = (IntPtr*)streamPtr;
-            IntPtr* vtbl = (IntPtr*)comDispatch[0];
-            fixed (drawing::Interop.Ole32.STATSTG* statstf = &pstatstg)
-            {
-                ((delegate* unmanaged<IntPtr, drawing::Interop.Ole32.STATSTG*, drawing::Interop.Ole32.STATFLAG, void>)vtbl[12])(streamPtr, statstf, grfStatFlag);
-            }
-        }
+        //    IntPtr* comDispatch = (IntPtr*)streamPtr;
+        //    IntPtr* vtbl = (IntPtr*)comDispatch[0];
+        //    fixed (drawing::Interop.Ole32.STATSTG* statstf = &pstatstg)
+        //    ((delegate* unmanaged<IntPtr, drawing::Interop.Ole32.STATSTG*, drawing::Interop.Ole32.STATFLAG, void>)vtbl[12])(streamPtr, statstf, grfStatFlag);
+        //}
 
-        unsafe primitives::Interop.Ole32.IStream primitives::Interop.Ole32.IStream.Clone()
-        {
-            Guid targetInterface = WinFormsComWrappers.IID_IStream;
-            var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
-            if (result != 0)
-            {
-                throw new InvalidCastException();
-            }
+        //unsafe primitives::Interop.Ole32.IStream primitives::Interop.Ole32.IStream.Clone()
+        //{
+        //    Guid targetInterface = WinFormsComWrappers.IID_IStream;
+        //    var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
+        //    if (result != 0)
+        //    {
+        //        throw new InvalidCastException();
+        //    }
 
-            IntPtr* comDispatch = (IntPtr*)streamPtr;
-            IntPtr* vtbl = (IntPtr*)comDispatch[0];
-            var ptr = ((delegate* unmanaged<IntPtr, IntPtr>)vtbl[13])(streamPtr);
-            return (primitives::Interop.Ole32.IStream)Marshal.GetObjectForIUnknown(ptr);
-        }
+        //    IntPtr* comDispatch = (IntPtr*)streamPtr;
+        //    IntPtr* vtbl = (IntPtr*)comDispatch[0];
+        //    var ptr = ((delegate* unmanaged<IntPtr, IntPtr>)vtbl[13])(streamPtr);
+        //    return (primitives::Interop.Ole32.IStream)Marshal.GetObjectForIUnknown(ptr);
+        //}
 
-        unsafe drawing::Interop.Ole32.IStream drawing::Interop.Ole32.IStream.Clone()
-        {
-            Guid targetInterface = WinFormsComWrappers.IID_IStream;
-            var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
-            if (result != 0)
-            {
-                throw new InvalidCastException();
-            }
+        //unsafe drawing::Interop.Ole32.IStream drawing::Interop.Ole32.IStream.Clone()
+        //{
+        //    Guid targetInterface = WinFormsComWrappers.IID_IStream;
+        //    var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var streamPtr);
+        //    if (result != 0)
+        //    {
+        //        throw new InvalidCastException();
+        //    }
 
-            IntPtr* comDispatch = (IntPtr*)streamPtr;
-            IntPtr* vtbl = (IntPtr*)comDispatch[0];
-            var ptr = ((delegate* unmanaged<IntPtr, IntPtr>)vtbl[13])(streamPtr);
-            return (drawing::Interop.Ole32.IStream)Marshal.GetObjectForIUnknown(ptr);
-        }
+        //    IntPtr* comDispatch = (IntPtr*)streamPtr;
+        //    IntPtr* vtbl = (IntPtr*)comDispatch[0];
+        //    var ptr = ((delegate* unmanaged<IntPtr, IntPtr>)vtbl[13])(streamPtr);
+        //    return (drawing::Interop.Ole32.IStream)Marshal.GetObjectForIUnknown(ptr);
+        //}
 
         unsafe HRESULT Ole32.IPersistStream.GetClassID(Guid* pClassID)
         {

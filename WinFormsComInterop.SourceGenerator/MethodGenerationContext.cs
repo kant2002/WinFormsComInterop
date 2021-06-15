@@ -91,6 +91,11 @@
                 return new ArrayMarshaller();
             }
 
+            if (parameterSymbol.TypeKind == TypeKind.Struct && parameterSymbol.SpecialType == SpecialType.None)
+            {
+                return new BlittableStructMarshaller();
+            }
+
             if (parameterSymbol.TypeKind == TypeKind.Interface || parameterSymbol.SpecialType == SpecialType.System_Object)
             {
                 return new ComInterfaceMarshaller();

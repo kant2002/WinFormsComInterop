@@ -35,6 +35,7 @@ namespace WinFormsComInterop.SourceGenerator
                 return UnmanagedTypeName;
             }
         }
+        public string LocalVariable => $"local_{Index}";
 
         public virtual string GetUnmanagedParameterDeclaration()
         {
@@ -43,7 +44,17 @@ namespace WinFormsComInterop.SourceGenerator
 
         public virtual string GetManagedParameterDeclaration()
         {
-            return $"{FormatTypeName()} {Name}";
+            switch (RefKind)
+            {
+                case RefKind.Out:
+                    return $"out {FormatTypeName()} {Name}";
+                case RefKind.Ref:
+                    return $"ref {FormatTypeName()} {Name}";
+                case RefKind.In:
+                    return $"in {FormatTypeName()} {Name}";
+                default:
+                    return $"{FormatTypeName()} {Name}";
+            }
         }
 
         public virtual string GetReturnDeclaration()
@@ -95,7 +106,17 @@ namespace WinFormsComInterop.SourceGenerator
 
         public virtual string GetUnmanagedParameterInvocation()
         {
-            return Name;
+            switch (RefKind)
+            {
+                case RefKind.Out:
+                    return $"&{Name}";
+                case RefKind.Ref:
+                    return $"&{Name}";
+                case RefKind.In:
+                    return $"&{Name}";
+                default:
+                    return Name;
+            }
         }
     }
 }

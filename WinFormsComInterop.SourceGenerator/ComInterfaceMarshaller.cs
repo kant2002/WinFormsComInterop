@@ -8,7 +8,6 @@ namespace WinFormsComInterop.SourceGenerator
 {
     class ComInterfaceMarshaller : Marshaller
     {
-        public string LocalVariable => $"local_{Index}";
 
         public override string UnmanagedTypeName => "System.IntPtr";
 

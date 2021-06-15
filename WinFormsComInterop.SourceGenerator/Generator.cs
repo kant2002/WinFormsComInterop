@@ -441,8 +441,9 @@ namespace {namespaceName}
             var returnMarshaller = context.CreateReturnMarshaller(method.ReturnType);
 
             var parametersListString = string.Join(", ", parametersList);
+            var interfaceTypeName = interfaceSymbol.FormatType(context.GetAlias(interfaceSymbol));
             var returnTypeName = method.ReturnType.FormatType(context.GetAlias(method.ReturnType));
-            source.AppendLine($"public {returnTypeName} {method.Name}({parametersListString})");
+            source.AppendLine($"{returnTypeName} {interfaceTypeName}.{method.Name}({parametersListString})");
             source.AppendLine("{");
             source.PushIndent();
 
@@ -456,6 +457,8 @@ namespace {namespaceName}
             source.AppendLine("}");
             source.AppendLine();
 
+            source.AppendLine("var comDispatch = (System.IntPtr*)thisPtr;");
+            source.AppendLine("var vtbl = (System.IntPtr*)comDispatch[0];");
             foreach (var m in marshallers)
             {
                 m.ConvertToUnmanagedParameter(source);
@@ -466,8 +469,6 @@ namespace {namespaceName}
                 returnMarshaller.ConvertToUnmanagedParameter(source);
             }
 
-            source.AppendLine("var comDispatch = (System.IntPtr*)thisPtr;");
-            source.AppendLine("var vtbl = (System.IntPtr*)comDispatch[0];");
             var parametersCallList = marshallers.Select(_ => _.GetUnmanagedParameterInvocation()).ToList();
             if (!context.PreserveSignature)
             {
@@ -477,8 +478,9 @@ namespace {namespaceName}
                 }
             }
 
+            parametersCallList.Insert(0, "thisPtr");
             var parametersCallListString = string.Join(", ", parametersCallList);
-            source.AppendLine($"result = (({context.UnmanagedDelegateSignature})vtbl[{context.ComSlotNumber}])(thisPtr, {parametersCallListString});");
+            source.AppendLine($"result = (({context.UnmanagedDelegateSignature})vtbl[{context.ComSlotNumber}])({parametersCallListString});");
 
             if (!context.PreserveSignature)
             {

@@ -42,7 +42,7 @@ namespace Foo
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
     unsafe partial class C : global::Foo.IStr
     {
-        public void Read(byte* pv, uint cb, uint* pcbRead)
+        void global::Foo.IStr.Read(byte* pv, uint cb, uint* pcbRead)
         {
             var targetInterface = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
             var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var thisPtr);
@@ -98,7 +98,7 @@ namespace Foo
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
     unsafe partial class C : global::Foo.IStr
     {
-        public void Seek(long dlibMove, global::Foo.SeekOrigin dwOrigin, ulong* plibNewPosition)
+        void global::Foo.IStr.Seek(long dlibMove, global::Foo.SeekOrigin dwOrigin, ulong* plibNewPosition)
         {
             var targetInterface = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
             var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var thisPtr);
@@ -154,7 +154,7 @@ namespace Foo
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
     unsafe partial class C : global::Foo.IStr
     {
-        public void CopyTo(global::Foo.IStr pstm, ulong cb, ulong* pcbRead, ulong* pcbWritten)
+        void global::Foo.IStr.CopyTo(global::Foo.IStr pstm, ulong cb, ulong* pcbRead, ulong* pcbWritten)
         {
             var targetInterface = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
             var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var thisPtr);
@@ -163,6 +163,8 @@ namespace Foo
                 throw new System.InvalidCastException();
             }
 
+            var comDispatch = (System.IntPtr*)thisPtr;
+            var vtbl = (System.IntPtr*)comDispatch[0];
             var local_pstm_IID = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
             result = Marshal.QueryInterface(this.instance, ref local_pstm_IID, out var local_0);
             if (result != 0)
@@ -170,8 +172,6 @@ namespace Foo
                 Marshal.ThrowExceptionForHR(result);
             }
 
-            var comDispatch = (System.IntPtr*)thisPtr;
-            var vtbl = (System.IntPtr*)comDispatch[0];
             result = ((delegate* unmanaged<System.IntPtr, System.IntPtr, ulong, ulong*, ulong*, int>)vtbl[3])(thisPtr, local_0, cb, pcbRead, pcbWritten);
         }
     }
@@ -217,7 +217,7 @@ namespace Foo
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
     unsafe partial class C : global::Foo.IStr
     {
-        public global::Foo.SeekOrigin CopyTo(global::Foo.IStr pstm, ulong cb, ulong* pcbRead, ulong* pcbWritten)
+        global::Foo.SeekOrigin global::Foo.IStr.CopyTo(global::Foo.IStr pstm, ulong cb, ulong* pcbRead, ulong* pcbWritten)
         {
             var targetInterface = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
             var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var thisPtr);
@@ -226,6 +226,8 @@ namespace Foo
                 throw new System.InvalidCastException();
             }
 
+            var comDispatch = (System.IntPtr*)thisPtr;
+            var vtbl = (System.IntPtr*)comDispatch[0];
             var local_pstm_IID = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
             result = Marshal.QueryInterface(this.instance, ref local_pstm_IID, out var local_0);
             if (result != 0)
@@ -234,8 +236,6 @@ namespace Foo
             }
 
             int retVal;
-            var comDispatch = (System.IntPtr*)thisPtr;
-            var vtbl = (System.IntPtr*)comDispatch[0];
             result = ((delegate* unmanaged<System.IntPtr, System.IntPtr, ulong, ulong*, ulong*, int*, int>)vtbl[3])(thisPtr, local_0, cb, pcbRead, pcbWritten, &retVal);
             return (global::Foo.SeekOrigin)retVal;
         }
@@ -283,7 +283,7 @@ namespace Foo
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
     unsafe partial class C : global::Foo.IStr
     {
-        public global::Foo.HRESULT GetWindow(global::System.IntPtr* phwnd)
+        global::Foo.HRESULT global::Foo.IStr.GetWindow(global::System.IntPtr* phwnd)
         {
             var targetInterface = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
             var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var thisPtr);
@@ -340,7 +340,7 @@ namespace Foo
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
     unsafe partial class C : global::Foo.IStr
     {
-        public global::Foo.IStr Clone()
+        global::Foo.IStr global::Foo.IStr.Clone()
         {
             var targetInterface = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
             var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var thisPtr);
@@ -349,11 +349,124 @@ namespace Foo
                 throw new System.InvalidCastException();
             }
 
-            System.IntPtr retVal;
             var comDispatch = (System.IntPtr*)thisPtr;
             var vtbl = (System.IntPtr*)comDispatch[0];
+            System.IntPtr retVal;
             result = ((delegate* unmanaged<System.IntPtr, System.IntPtr*, int>)vtbl[3])(thisPtr, &retVal);
             return (global::Foo.IStr)Marshal.GetObjectForIUnknown(retVal);
+        }
+    }
+}";
+            Assert.AreEqual(expectedOutput, output);
+        }
+
+        [TestMethod]
+        public void OutParameter()
+        {
+            string source = @"
+namespace Foo
+{
+    using System.Runtime.InteropServices;
+
+    public struct STATSTG {}
+
+    [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    public interface IStr
+    {
+        void Stat(out STATSTG pstatstg);
+    }
+
+    [RuntimeCallableWrapper(typeof(IStr))]
+    partial class C
+    {
+    }
+}";
+            string output = this.GetGeneratedOutput(source, NullableContextOptions.Disable);
+
+            Assert.IsNotNull(output);
+
+            var expectedOutput = @"// <auto-generated>
+// Code generated by COM Proxy Code Generator.
+// Changes may cause incorrect behavior and will be lost if the code is
+// regenerated.
+// </auto-generated>
+#nullable enable
+using Marshal = System.Runtime.InteropServices.Marshal;
+
+namespace Foo
+{
+    [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
+    unsafe partial class C : global::Foo.IStr
+    {
+        void global::Foo.IStr.Stat(out global::Foo.STATSTG pstatstg)
+        {
+            var targetInterface = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
+            var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var thisPtr);
+            if (result != 0)
+            {
+                throw new System.InvalidCastException();
+            }
+
+            var comDispatch = (System.IntPtr*)thisPtr;
+            var vtbl = (System.IntPtr*)comDispatch[0];
+            fixed (global::Foo.STATSTG* local_0 = &pstatstg)
+            result = ((delegate* unmanaged<System.IntPtr, global::Foo.STATSTG*, int>)vtbl[3])(thisPtr, local_0);
+        }
+    }
+}";
+            Assert.AreEqual(expectedOutput, output);
+        }
+
+        [TestMethod]
+        public void NoParameters()
+        {
+            string source = @"
+namespace Foo
+{
+    using System.Runtime.InteropServices;
+
+    public enum SeekOrigin {}
+
+    [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    public interface IStr
+    {
+        void CopyTo();
+    }
+
+    [RuntimeCallableWrapper(typeof(IStr))]
+    partial class C
+    {
+    }
+}";
+            string output = this.GetGeneratedOutput(source, NullableContextOptions.Disable);
+
+            Assert.IsNotNull(output);
+
+            var expectedOutput = @"// <auto-generated>
+// Code generated by COM Proxy Code Generator.
+// Changes may cause incorrect behavior and will be lost if the code is
+// regenerated.
+// </auto-generated>
+#nullable enable
+using Marshal = System.Runtime.InteropServices.Marshal;
+
+namespace Foo
+{
+    [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
+    unsafe partial class C : global::Foo.IStr
+    {
+        void global::Foo.IStr.CopyTo()
+        {
+            var targetInterface = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
+            var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var thisPtr);
+            if (result != 0)
+            {
+                throw new System.InvalidCastException();
+            }
+
+            var comDispatch = (System.IntPtr*)thisPtr;
+            var vtbl = (System.IntPtr*)comDispatch[0];
+            result = ((delegate* unmanaged<System.IntPtr, int>)vtbl[3])(thisPtr);
         }
     }
 }";
