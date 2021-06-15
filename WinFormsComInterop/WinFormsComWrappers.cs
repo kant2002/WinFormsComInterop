@@ -13,6 +13,8 @@ namespace WinFormsComInterop
     [ComCallableWrapper(typeof(drawing::Interop.Ole32.IStream))]
     [ComCallableWrapper(typeof(primitives::Interop.UiaCore.IRawElementProviderSimple))]
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IDropTarget))]
+    //[ComCallableWrapper(typeof(primitives::Interop.Ole32.IStorage))]
+    //[ComCallableWrapper(typeof(primitives::Interop.Richedit.IRichEditOleCallback))]
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     public unsafe partial class WinFormsComWrappers : ComWrappers
     {
@@ -20,6 +22,8 @@ namespace WinFormsComInterop
         static ComWrappers.ComInterfaceEntry* drawingStreamEntry;
         static ComWrappers.ComInterfaceEntry* primitivesStreamEntry;
         static ComWrappers.ComInterfaceEntry* oleDropTargetEntry;
+        static ComWrappers.ComInterfaceEntry* storageEntry;
+        static ComWrappers.ComInterfaceEntry* richEditOleCallbackEntry;
         static ComWrappers.ComInterfaceEntry* primitivesDropTargetEntry;
 
         internal static Guid IID_IRawElementProviderSimple = new Guid("D6DD68D1-86FD-4332-8666-9ABEDEA2D24C");
@@ -29,6 +33,8 @@ namespace WinFormsComInterop
         internal static Guid IID_IPersistStream = new Guid("00000109-0000-0000-C000-000000000046");
         internal static Guid IID_IOleDropTarget = new Guid("00000122-0000-0000-C000-000000000046");
         internal static Guid IID_IPicture = new Guid("7BF80980-BF32-101A-8BBB-00AA00300CAB");
+        internal static Guid IID_IStorage = new Guid("0000000B-0000-0000-C000-000000000046");
+        internal static Guid IID_IRichEditOleCallback = new Guid("00020D03-0000-0000-C000-000000000046");
 
         // This class only exposes IDispatch and the vtable is always the same.
         // The below isn't the most efficient but it is reasonable for prototyping.
@@ -80,6 +86,28 @@ namespace WinFormsComInterop
             wrapperEntry->Vtable = vtbl;
             return wrapperEntry;
         }
+
+        //private static ComInterfaceEntry* CreatePrimitivesIStorageEntry()
+        //{
+        //    CreatePrimitivesIStorageProxyVtbl(out var vtbl);
+
+        //    var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 1);
+        //    var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
+        //    wrapperEntry->IID = IID_IStorage;
+        //    wrapperEntry->Vtable = vtbl;
+        //    return wrapperEntry;
+        //}
+
+        //private static ComInterfaceEntry* CreatePrimitivesIRichEditOleCallbackEntry()
+        //{
+        //    CreatePrimitivesIRichEditOleCallbackProxyVtbl(out var vtbl);
+
+        //    var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 1);
+        //    var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
+        //    wrapperEntry->IID = IID_IRichEditOleCallback;
+        //    wrapperEntry->Vtable = vtbl;
+        //    return wrapperEntry;
+        //}
         private static ComInterfaceEntry* CreateGenericEntry()
         {
             CreatePrimitivesIRawElementProviderSimpleProxyVtbl(out var vtbl);

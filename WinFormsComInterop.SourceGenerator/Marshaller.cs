@@ -11,7 +11,7 @@ namespace WinFormsComInterop.SourceGenerator
 
         public RefKind RefKind { get; set; }
 
-        public string TypeAlias { get; set; }
+        public string? TypeAlias { get; set; }
 
         public string TypeName => FormatTypeName();
 

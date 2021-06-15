@@ -11,7 +11,7 @@
 
         internal WrapperGenerationContext Context { get; set; }
 
-        public string GetAlias(INamedTypeSymbol type) => Context.GetAlias(type);
+        public string? GetAlias(ITypeSymbol type) => Context.GetAlias(type);
 
         public string UnmanagedDelegateSignature
         {
@@ -59,7 +59,7 @@
             marshaller.Type = parameterSymbol.Type;
             marshaller.RefKind = parameterSymbol.RefKind;
             marshaller.Index = parameterSymbol.Ordinal;
-            marshaller.TypeAlias = context.GetAlias(parameterSymbol.Type as INamedTypeSymbol);
+            marshaller.TypeAlias = context.GetAlias(parameterSymbol.Type);
             return marshaller;
         }
 
@@ -70,7 +70,7 @@
             marshaller.Type = parameterSymbol;
             marshaller.RefKind = RefKind.None;
             marshaller.Index = -1;
-            marshaller.TypeAlias = context.GetAlias(parameterSymbol as INamedTypeSymbol);
+            marshaller.TypeAlias = context.GetAlias(parameterSymbol);
             return marshaller;
         }
 

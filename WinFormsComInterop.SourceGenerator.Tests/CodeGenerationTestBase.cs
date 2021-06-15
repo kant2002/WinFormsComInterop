@@ -31,6 +31,13 @@ public interface ICloneable
 {
     void Clone();
 }
+
+enum EnumValue { }
+
+public interface IPtrMethod
+{
+    void MethodPtr(EnumValue* val);
+}
 ";
             var fakeCompilation = CSharpCompilation.Create(
                 "drawing",

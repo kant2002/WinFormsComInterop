@@ -113,9 +113,6 @@ namespace {namespaceName}
                 typeName = aliasSymbol.Substring(0,1).ToUpperInvariant() + aliasSymbol.Substring(1) + typeName;
             }
 
-            context.AddDebugLine(interfaceTypeSymbol.ToDisplayString());
-            context.AddDebugLine(interfaceTypeSymbol.ContainingAssembly.ToDisplayString());
-            context.AddDebugLine(context.GetAlias(interfaceTypeSymbol) + "_" + aliasSymbol);
             source.AppendLine($"unsafe partial class {typeName}");
             source.AppendLine("{");
             source.PushIndent();
@@ -393,7 +390,7 @@ namespace {namespaceName}
                     string invocationExpression;
                     if (method.MethodKind == MethodKind.PropertyGet)
                     {
-                        invocationExpression = $"inst.{method.AssociatedSymbol.Name}";
+                        invocationExpression = $"inst.{method.AssociatedSymbol!.Name}";
                     }
                     else
                     {

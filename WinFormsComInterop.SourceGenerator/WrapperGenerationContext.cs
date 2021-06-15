@@ -50,11 +50,16 @@ namespace WinFormsComInterop.SourceGenerator
             }
         }
 
-        public string GetAlias(INamedTypeSymbol type)
+        public string? GetAlias(ITypeSymbol type)
         {
             if (type == null)
             {
                 return null;
+            }
+
+            if (type is IPointerTypeSymbol pointerTypeSymbol)
+            {
+                type = pointerTypeSymbol.PointedAtType;
             }
 
             if (this.aliasMap.TryGetValue(type.ContainingAssembly.Name, out var alias))
@@ -70,7 +75,7 @@ namespace WinFormsComInterop.SourceGenerator
         {
             var preserveSigAttribute = method.GetAttributes().FirstOrDefault(ad =>
             {
-                string attributeName = ad.AttributeClass?.ToDisplayString();
+                var attributeName = ad.AttributeClass?.ToDisplayString();
                 return attributeName == "System.Runtime.InteropServices.PreserveSigAttribute"
                 || attributeName == "PreserveSigAttribute";
             });
