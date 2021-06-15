@@ -441,7 +441,8 @@ namespace {namespaceName}
             var returnMarshaller = context.CreateReturnMarshaller(method.ReturnType);
 
             var parametersListString = string.Join(", ", parametersList);
-            source.AppendLine($"public {method.ReturnType} {method.Name}({parametersListString})");
+            var returnTypeName = method.ReturnType.FormatType(context.GetAlias(method.ReturnType));
+            source.AppendLine($"public {returnTypeName} {method.Name}({parametersListString})");
             source.AppendLine("{");
             source.PushIndent();
 
@@ -460,10 +461,37 @@ namespace {namespaceName}
                 m.ConvertToUnmanagedParameter(source);
             }
 
+            if (!context.PreserveSignature)
+            {
+                returnMarshaller.ConvertToUnmanagedParameter(source);
+            }
+
             source.AppendLine("var comDispatch = (System.IntPtr*)thisPtr;");
             source.AppendLine("var vtbl = (System.IntPtr*)comDispatch[0];");
-            var parametersCallList = string.Join(", ", marshallers.Select(_ => _.GetUnmanagedParameterInvocation()));
-            source.AppendLine($"(({context.UnmanagedDelegateSignature})vtbl[{context.ComSlotNumber}])(thisPtr, {parametersCallList});");
+            var parametersCallList = marshallers.Select(_ => _.GetUnmanagedParameterInvocation()).ToList();
+            if (!context.PreserveSignature)
+            {
+                if (method.ReturnType.SpecialType != SpecialType.System_Void)
+                {
+                    parametersCallList.Add(returnMarshaller.GetUnmanagedReturnValue());
+                }
+            }
+
+            var parametersCallListString = string.Join(", ", parametersCallList);
+            source.AppendLine($"result = (({context.UnmanagedDelegateSignature})vtbl[{context.ComSlotNumber}])(thisPtr, {parametersCallListString});");
+
+            if (!context.PreserveSignature)
+            {
+                if (method.ReturnType.SpecialType != SpecialType.System_Void)
+                {
+                    source.AppendLine($"return {returnMarshaller.GetParameterInvocation()};");
+                }
+            }
+            else
+            {
+                source.AppendLine($"return ({returnTypeName})result;");
+            }    
+
             source.PopIndent();
             source.AppendLine("}");
         }

@@ -68,6 +68,11 @@ namespace WinFormsComInterop.SourceGenerator
         {
         }
 
+        public virtual string GetUnmanagedReturnValue()
+        {
+            return string.Empty;
+        }
+
         protected string FormatTypeName()
         {
             return Type.FormatType(TypeAlias);

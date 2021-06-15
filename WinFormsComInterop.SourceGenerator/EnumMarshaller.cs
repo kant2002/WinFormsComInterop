@@ -4,6 +4,7 @@ namespace WinFormsComInterop.SourceGenerator
 {
     internal class EnumMarshaller : Marshaller
     {
+        public string LocalVariable => Index >=0 ? $"local_{Index}" : "returnValueNative";
         public override string UnmanagedTypeName => "int";
         public override string GetUnmanagedParameterDeclaration()
         {
@@ -23,6 +24,19 @@ namespace WinFormsComInterop.SourceGenerator
         public override void GetReturnValue(IndentedStringBuilder builder, string invocationExpression)
         {
             base.GetReturnValue(builder, $"({UnmanagedTypeName}){invocationExpression}");
+        }
+
+        public override string GetUnmanagedReturnValue()
+        {
+            return $"&{Name}";
+        }
+
+        public override void ConvertToUnmanagedParameter(IndentedStringBuilder builder)
+        {
+            if (Index == -1)
+            {
+                builder.AppendLine($"{UnmanagedTypeName} {Name};");
+            }
         }
     }
 }
