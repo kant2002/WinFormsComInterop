@@ -118,19 +118,37 @@ namespace {namespaceName}
             source.AppendLine($"unsafe partial class {typeName}");
             source.AppendLine("{");
             source.PushIndent();
+            IndentedStringBuilder proxyMethods = new ();
+            IndentedStringBuilder vtblMethod = new ();
+            int slotNumber = 3; /* Starting with slot after IUnknown */
+            vtblMethod.AppendLine($"internal static void Create{typeName}Vtbl(out System.IntPtr vtbl)");
+            vtblMethod.AppendLine("{");
+            vtblMethod.PushIndent();
+            vtblMethod.AppendLine($"var vtblRaw = (System.IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof({typeName}), sizeof(System.IntPtr) * 4);");
+            vtblMethod.AppendLine("GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);");
+            vtblMethod.AppendLine();
             foreach (var member in interfaceTypeSymbol.GetMembers())
             {
                 switch (member)
                 {
                     case IMethodSymbol methodSymbol:
                         {
-                            var methodContext = context.CreateMethodGenerationContext(methodSymbol);
-                            GenerateCCWMethod(source, interfaceTypeSymbol, methodContext);
+                            var methodContext = context.CreateMethodGenerationContext(methodSymbol, slotNumber);
+                            GenerateCCWMethod(proxyMethods, interfaceTypeSymbol, methodContext);
+                            vtblMethod.AppendLine($"vtblRaw[{slotNumber}] = (System.IntPtr)({methodContext.UnmanagedDelegateSignature})&{typeName}.{methodContext.Method.Name};");
+                            slotNumber++;
                         }
                         break;
                 }
             }
 
+            vtblMethod.AppendLine();
+            vtblMethod.AppendLine($"vtbl = (System.IntPtr)vtblRaw;");
+            vtblMethod.PopIndent();
+            vtblMethod.AppendLine("}");
+            source.Append(vtblMethod);
+            source.AppendLine();
+            source.Append(proxyMethods);
             source.PopIndent();
             source.AppendLine("}");
             source.PopIndent();

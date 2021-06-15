@@ -66,7 +66,7 @@ namespace WinFormsComInterop.SourceGenerator
         }
 
         public MethodGenerationContext CreateMethodGenerationContext(
-            IMethodSymbol method, int comSlotNumber = 0)
+            IMethodSymbol method, int comSlotNumber)
         {
             var preserveSigAttribute = method.GetAttributes().FirstOrDefault(ad =>
             {

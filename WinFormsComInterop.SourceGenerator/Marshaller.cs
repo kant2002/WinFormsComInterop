@@ -23,14 +23,22 @@ namespace WinFormsComInterop.SourceGenerator
             }
         }
 
+        public virtual string UnmanagedParameterTypeName
+        {
+            get
+            {
+                if (RefKind != RefKind.None)
+                {
+                    return $"{UnmanagedTypeName}*";
+                }
+
+                return UnmanagedTypeName;
+            }
+        }
+
         public virtual string GetUnmanagedParameterDeclaration()
         {
-            if (RefKind != RefKind.None)
-            {
-                return $"{UnmanagedTypeName}* {Name}";
-            }
-
-            return $"{UnmanagedTypeName} {Name}";
+            return $"{UnmanagedParameterTypeName} {Name}";
         }
 
         public virtual string GetManagedParameterDeclaration()

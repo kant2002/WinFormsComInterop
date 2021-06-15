@@ -1,6 +1,7 @@
 ﻿namespace WinFormsComInterop.SourceGenerator
 {
     using System;
+    using System.Linq;
     using System.Text;
 
     internal sealed class IndentedStringBuilder
@@ -13,7 +14,7 @@
         /// Initializes a new instance of the <see cref="IndentedStringBuilder"/> class.
         /// </summary>
         /// <param name="content">Initial content for the string builder.</param>
-        public IndentedStringBuilder(string content)
+        public IndentedStringBuilder(string content = "")
         {
             this.builder = new StringBuilder(content);
         }
@@ -22,6 +23,22 @@
         {
             this.WriteIndent();
             this.builder.Append(value);
+        }
+
+        public void Append(IndentedStringBuilder value)
+        {
+            var lines = value.ToString().Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            foreach (var line in lines.Take(lines.Length - 1))
+            {
+                if (string.IsNullOrWhiteSpace(line))
+                {
+                    this.AppendLine();
+                }
+                else
+                {
+                    this.AppendLine(line);
+                }
+            }
         }
 
         public void AppendLine()

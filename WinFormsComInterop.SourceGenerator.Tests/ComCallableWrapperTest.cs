@@ -42,6 +42,16 @@ namespace Foo
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
     unsafe partial class IStrProxy
     {
+        internal static void CreateIStrProxyVtbl(out System.IntPtr vtbl)
+        {
+            var vtblRaw = (System.IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(IStrProxy), sizeof(System.IntPtr) * 4);
+            GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
+
+            vtblRaw[3] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, byte*, uint, uint*, int>)&IStrProxy.Read;
+
+            vtbl = (System.IntPtr)vtblRaw;
+        }
+
         [System.Runtime.InteropServices.UnmanagedCallersOnly]
         public static int Read(System.IntPtr thisPtr, byte* pv, uint cb, uint* pcbRead)
         {
@@ -98,6 +108,16 @@ namespace Foo
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
     unsafe partial class ICloneableProxy
     {
+        internal static void CreateICloneableProxyVtbl(out System.IntPtr vtbl)
+        {
+            var vtblRaw = (System.IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(ICloneableProxy), sizeof(System.IntPtr) * 4);
+            GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
+
+            vtblRaw[3] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, int>)&ICloneableProxy.Clone;
+
+            vtbl = (System.IntPtr)vtblRaw;
+        }
+
         [System.Runtime.InteropServices.UnmanagedCallersOnly]
         public static int Clone(System.IntPtr thisPtr)
         {
@@ -149,6 +169,16 @@ namespace Foo
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
     unsafe partial class DrawingICloneableProxy
     {
+        internal static void CreateDrawingICloneableProxyVtbl(out System.IntPtr vtbl)
+        {
+            var vtblRaw = (System.IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(DrawingICloneableProxy), sizeof(System.IntPtr) * 4);
+            GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
+
+            vtblRaw[3] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, int>)&DrawingICloneableProxy.Clone;
+
+            vtbl = (System.IntPtr)vtblRaw;
+        }
+
         [System.Runtime.InteropServices.UnmanagedCallersOnly]
         public static int Clone(System.IntPtr thisPtr)
         {
@@ -207,6 +237,16 @@ namespace Foo
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
     unsafe partial class IStrProxy
     {
+        internal static void CreateIStrProxyVtbl(out System.IntPtr vtbl)
+        {
+            var vtblRaw = (System.IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(IStrProxy), sizeof(System.IntPtr) * 4);
+            GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
+
+            vtblRaw[3] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, byte*, int, uint*, int>)&IStrProxy.Read;
+
+            vtbl = (System.IntPtr)vtblRaw;
+        }
+
         [System.Runtime.InteropServices.UnmanagedCallersOnly]
         public static int Read(System.IntPtr thisPtr, byte* pv, int cb, uint* pcbRead)
         {
@@ -265,6 +305,16 @@ namespace Foo
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
     unsafe partial class IStrProxy
     {
+        internal static void CreateIStrProxyVtbl(out System.IntPtr vtbl)
+        {
+            var vtblRaw = (System.IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(IStrProxy), sizeof(System.IntPtr) * 4);
+            GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
+
+            vtblRaw[3] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, System.IntPtr, ulong, int>)&IStrProxy.CopyTo;
+
+            vtbl = (System.IntPtr)vtblRaw;
+        }
+
         [System.Runtime.InteropServices.UnmanagedCallersOnly]
         public static int CopyTo(System.IntPtr thisPtr, System.IntPtr pstm, ulong cb)
         {
@@ -324,6 +374,16 @@ namespace Foo
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
     unsafe partial class IStrProxy
     {
+        internal static void CreateIStrProxyVtbl(out System.IntPtr vtbl)
+        {
+            var vtblRaw = (System.IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(IStrProxy), sizeof(System.IntPtr) * 4);
+            GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
+
+            vtblRaw[3] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, System.IntPtr, ulong, int>)&IStrProxy.CopyTo;
+
+            vtbl = (System.IntPtr)vtblRaw;
+        }
+
         [System.Runtime.InteropServices.UnmanagedCallersOnly]
         public static int CopyTo(System.IntPtr thisPtr, System.IntPtr data, ulong cb)
         {
@@ -384,6 +444,16 @@ namespace Foo
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
     unsafe partial class IStrProxy
     {
+        internal static void CreateIStrProxyVtbl(out System.IntPtr vtbl)
+        {
+            var vtblRaw = (System.IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(IStrProxy), sizeof(System.IntPtr) * 4);
+            GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
+
+            vtblRaw[3] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, global::Foo.STATSTG*, int, int>)&IStrProxy.Stat;
+
+            vtbl = (System.IntPtr)vtblRaw;
+        }
+
         [System.Runtime.InteropServices.UnmanagedCallersOnly]
         public static int Stat(System.IntPtr thisPtr, global::Foo.STATSTG* pstatstg, int grfStatFlag)
         {
@@ -443,6 +513,16 @@ namespace Foo
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
     unsafe partial class IStrProxy
     {
+        internal static void CreateIStrProxyVtbl(out System.IntPtr vtbl)
+        {
+            var vtblRaw = (System.IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(IStrProxy), sizeof(System.IntPtr) * 4);
+            GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
+
+            vtblRaw[3] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, global::Foo.STATSTG*, int, int>)&IStrProxy.Stat;
+
+            vtbl = (System.IntPtr)vtblRaw;
+        }
+
         [System.Runtime.InteropServices.UnmanagedCallersOnly]
         public static int Stat(System.IntPtr thisPtr, global::Foo.STATSTG* pstatstg, int grfStatFlag)
         {
@@ -502,6 +582,16 @@ namespace Foo
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
     unsafe partial class IStrProxy
     {
+        internal static void CreateIStrProxyVtbl(out System.IntPtr vtbl)
+        {
+            var vtblRaw = (System.IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(IStrProxy), sizeof(System.IntPtr) * 4);
+            GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
+
+            vtblRaw[3] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, global::Foo.STATSTG*, int, int>)&IStrProxy.Stat;
+
+            vtbl = (System.IntPtr)vtblRaw;
+        }
+
         [System.Runtime.InteropServices.UnmanagedCallersOnly]
         public static int Stat(System.IntPtr thisPtr, global::Foo.STATSTG* pstatstg, int grfStatFlag)
         {
@@ -561,6 +651,16 @@ namespace Foo
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
     unsafe partial class IStrProxy
     {
+        internal static void CreateIStrProxyVtbl(out System.IntPtr vtbl)
+        {
+            var vtblRaw = (System.IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(IStrProxy), sizeof(System.IntPtr) * 4);
+            GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
+
+            vtblRaw[3] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, ulong, int>)&IStrProxy.LockRegion;
+
+            vtbl = (System.IntPtr)vtblRaw;
+        }
+
         [System.Runtime.InteropServices.UnmanagedCallersOnly]
         public static int LockRegion(System.IntPtr thisPtr, ulong libOffset)
         {
@@ -618,6 +718,16 @@ namespace Foo
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
     unsafe partial class IStrProxy
     {
+        internal static void CreateIStrProxyVtbl(out System.IntPtr vtbl)
+        {
+            var vtblRaw = (System.IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(IStrProxy), sizeof(System.IntPtr) * 4);
+            GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
+
+            vtblRaw[3] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, System.IntPtr*, int>)&IStrProxy.Clone;
+
+            vtbl = (System.IntPtr)vtblRaw;
+        }
+
         [System.Runtime.InteropServices.UnmanagedCallersOnly]
         public static int Clone(System.IntPtr thisPtr, System.IntPtr* retVal)
         {
@@ -677,6 +787,16 @@ namespace Foo
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
     unsafe partial class IStrProxy
     {
+        internal static void CreateIStrProxyVtbl(out System.IntPtr vtbl)
+        {
+            var vtblRaw = (System.IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(IStrProxy), sizeof(System.IntPtr) * 4);
+            GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
+
+            vtblRaw[3] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, System.IntPtr*, int>)&IStrProxy.Clone;
+
+            vtbl = (System.IntPtr)vtblRaw;
+        }
+
         [System.Runtime.InteropServices.UnmanagedCallersOnly]
         public static int Clone(System.IntPtr thisPtr, System.IntPtr* retVal)
         {
@@ -756,6 +876,16 @@ namespace Foo
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
     unsafe partial class IStrProxy
     {
+        internal static void CreateIStrProxyVtbl(out System.IntPtr vtbl)
+        {
+            var vtblRaw = (System.IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(IStrProxy), sizeof(System.IntPtr) * 4);
+            GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
+
+            vtblRaw[3] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, System.IntPtr*, int>)&IStrProxy.get_Parent;
+
+            vtbl = (System.IntPtr)vtblRaw;
+        }
+
         [System.Runtime.InteropServices.UnmanagedCallersOnly]
         public static int get_Parent(System.IntPtr thisPtr, System.IntPtr* retVal)
         {
@@ -815,6 +945,16 @@ namespace Foo
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
     unsafe partial class IStrProxy
     {
+        internal static void CreateIStrProxyVtbl(out System.IntPtr vtbl)
+        {
+            var vtblRaw = (System.IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(IStrProxy), sizeof(System.IntPtr) * 4);
+            GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
+
+            vtblRaw[3] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, System.IntPtr*, int>)&IStrProxy.get_Parent;
+
+            vtbl = (System.IntPtr)vtblRaw;
+        }
+
         [System.Runtime.InteropServices.UnmanagedCallersOnly]
         public static int get_Parent(System.IntPtr thisPtr, System.IntPtr* retVal)
         {
@@ -895,6 +1035,16 @@ namespace Foo
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
     unsafe partial class IStrProxy
     {
+        internal static void CreateIStrProxyVtbl(out System.IntPtr vtbl)
+        {
+            var vtblRaw = (System.IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(IStrProxy), sizeof(System.IntPtr) * 4);
+            GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
+
+            vtblRaw[3] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, int*, int>)&IStrProxy.get_Parent;
+
+            vtbl = (System.IntPtr)vtblRaw;
+        }
+
         [System.Runtime.InteropServices.UnmanagedCallersOnly]
         public static int get_Parent(System.IntPtr thisPtr, int* retVal)
         {

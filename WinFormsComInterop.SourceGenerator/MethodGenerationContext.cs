@@ -24,18 +24,23 @@
                     var marshaller = CreateMarshaller(_);
                     return marshaller;
                 });
-                var parametersList = marshallers.Select(_ => $"{_.UnmanagedTypeName}").ToList();
+                var parametersList = marshallers.Select(_ => $"{_.UnmanagedParameterTypeName}").ToList();
                 parametersList.Insert(0, "System.IntPtr");
                 if (!preserveSignature)
                 {
                     if (Method.ReturnType.SpecialType != SpecialType.System_Void)
                     {
-                        parametersList.Add(returnMarshaller.TypeName);
+                        parametersList.Add(returnMarshaller.UnmanagedParameterTypeName + "*");
+                        parametersList.Add("int");
                     }
                     else
                     {
                         parametersList.Add("int");
                     }
+                }
+                else
+                {
+                    parametersList.Add(returnMarshaller.UnmanagedParameterTypeName);
                 }
 
                 return $"delegate* unmanaged<{string.Join(", ", parametersList)}>";
