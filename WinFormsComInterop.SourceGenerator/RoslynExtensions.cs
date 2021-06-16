@@ -22,7 +22,7 @@
 
         internal static string? GetTypeGuid(this ITypeSymbol type)
         {
-            var attributeData = type.GetAttributes().FirstOrDefault(_ => _.AttributeClass?.Name == "GuidAttribute");
+            var attributeData = type.GetAttributes().FirstOrDefault(_ => _.AttributeClass?.ToDisplayString() == "System.Runtime.InteropServices.GuidAttribute");
             if (attributeData == null)
             {
                 return null;

@@ -110,6 +110,12 @@ namespace WinFormsComInterop.SourceGenerator
                 return;
             }
 
+            if (Type.SpecialType == SpecialType.System_Object)
+            {
+                builder.AppendLine($"var {LocalVariable} = Marshal.GetIUnknownForObject({Name});");
+                return;
+            }
+
             var guidString = Type.GetTypeGuid();
             if (guidString == null)
             {

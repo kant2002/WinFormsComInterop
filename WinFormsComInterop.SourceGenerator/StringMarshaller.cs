@@ -18,5 +18,15 @@ namespace WinFormsComInterop.SourceGenerator
         {
             return LocalVariable;
         }
+
+        public override string GetUnmanagedParameterInvocation()
+        {
+            return LocalVariable;
+        }
+
+        public override void ConvertToUnmanagedParameter(IndentedStringBuilder builder)
+        {
+            builder.AppendLine($"var {LocalVariable} = Marshal.StringToCoTaskMemUni({Name});");
+        }
     }
 }
