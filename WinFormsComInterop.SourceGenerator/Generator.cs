@@ -443,9 +443,21 @@ namespace {namespaceName}
             var parametersListString = string.Join(", ", parametersList);
             var interfaceTypeName = interfaceSymbol.FormatType(context.GetAlias(interfaceSymbol));
             var returnTypeName = method.ReturnType.FormatType(context.GetAlias(method.ReturnType));
-            source.AppendLine($"{returnTypeName} {interfaceTypeName}.{method.Name}({parametersListString})");
-            source.AppendLine("{");
-            source.PushIndent();
+            if (method.MethodKind == MethodKind.PropertyGet)
+            {
+                source.AppendLine($"{returnTypeName} {interfaceTypeName}.{method.AssociatedSymbol!.Name}");
+                source.AppendLine("{");
+                source.PushIndent();
+                source.AppendLine("get");
+                source.AppendLine("{");
+                source.PushIndent();
+            }
+            else
+            {
+                source.AppendLine($"{returnTypeName} {interfaceTypeName}.{method.Name}({parametersListString})");
+                source.AppendLine("{");
+                source.PushIndent();
+            }
 
             source.AppendLine($"var targetInterface = new System.Guid(\"{interfaceSymbol.GetTypeGuid()}\");");
             source.AppendLine("var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var thisPtr);");
@@ -492,10 +504,20 @@ namespace {namespaceName}
             else
             {
                 source.AppendLine($"return ({returnTypeName})result;");
-            }    
+            }
 
-            source.PopIndent();
-            source.AppendLine("}");
+            if (method.MethodKind == MethodKind.PropertyGet)
+            {
+                source.PopIndent();
+                source.AppendLine("}");
+                source.PopIndent();
+                source.AppendLine("}");
+            }
+            else
+            {
+                source.PopIndent();
+                source.AppendLine("}");
+            }
         }
 
         internal class ClassDeclaration
