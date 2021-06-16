@@ -13,6 +13,10 @@ namespace WinFormsComInterop
     [RuntimeCallableWrapper(typeof(drawing::Interop.Ole32.IStream))]
     [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IPersistStream))]
     [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IPicture))]
+    //[RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IOleObject))]
+    [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IOleInPlaceObject))]
+    [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IOleInPlaceActiveObject))]
+    [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IOleControl))]
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     partial class IExternalObject 
         : Accessibility.IAccessible, 
