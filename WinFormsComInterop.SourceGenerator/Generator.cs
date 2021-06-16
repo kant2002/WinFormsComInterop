@@ -364,7 +364,21 @@ namespace {namespaceName}
             }
 
             var parametersListString = string.Join(", ", parametersList);
-            source.AppendLine($"public static int {method.Name}({parametersListString})");
+            var returnType = "int";
+            if (preserveSignature)
+            {
+                if (method.ReturnType.SpecialType == SpecialType.System_Void)
+                {
+                    returnType = "void";
+                }
+                else
+                {
+                    returnType = method.ReturnType.FormatType(context.GetAlias(method.ReturnType));
+                    returnType = "int";
+                }
+            }
+
+            source.AppendLine($"public static {returnType} {method.Name}({parametersListString})");
             source.AppendLine("{");
             source.PushIndent();
 
@@ -402,7 +416,14 @@ namespace {namespaceName}
             }
             else
             {
-                source.AppendLine($"return (int)inst.{method.Name}({parametersInvocationList});");
+                if (method.ReturnType.SpecialType != SpecialType.System_Void)
+                {
+                    source.AppendLine($"return (int)inst.{method.Name}({parametersInvocationList});");
+                }
+                else
+                {
+                    source.AppendLine($"inst.{method.Name}({parametersInvocationList});");
+                }
             }
 
             foreach (var p in marshallers)
@@ -497,7 +518,15 @@ namespace {namespaceName}
 
             parametersCallList.Insert(0, "thisPtr");
             var parametersCallListString = string.Join(", ", parametersCallList);
-            source.AppendLine($"result = (({context.UnmanagedDelegateSignature})vtbl[{context.ComSlotNumber}])({parametersCallListString});");
+            if (!preserveSignature || method.ReturnType.SpecialType != SpecialType.System_Void)
+            {
+                source.AppendLine($"result = (({context.UnmanagedDelegateSignature})vtbl[{context.ComSlotNumber}])({parametersCallListString});");
+            }
+            else
+            {
+                source.AppendLine($"(({context.UnmanagedDelegateSignature})vtbl[{context.ComSlotNumber}])({parametersCallListString});");
+            }
+
             foreach (var m in marshallers)
             {
                 m.UnmarshalParameter(source);

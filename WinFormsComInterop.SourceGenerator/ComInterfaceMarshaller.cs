@@ -118,7 +118,7 @@ namespace WinFormsComInterop.SourceGenerator
 
             if (Type.SpecialType == SpecialType.System_Object)
             {
-                builder.AppendLine($"var {LocalVariable} = Marshal.GetIUnknownForObject({Name});");
+                builder.AppendLine($"var {LocalVariable} = {Name} == null ? System.IntPtr.Zero : Marshal.GetIUnknownForObject({Name});");
                 return;
             }
 
@@ -130,13 +130,25 @@ namespace WinFormsComInterop.SourceGenerator
                 return;
             }
 
+            builder.AppendLine($"System.IntPtr {LocalVariable};");
+            builder.AppendLine($"if ({Name} == null)");
+            builder.AppendLine("{");
+            builder.PushIndent();
+            builder.AppendLine($"{LocalVariable} = System.IntPtr.Zero;");
+            builder.PopIndent();
+            builder.AppendLine("}");
+            builder.AppendLine("else");
+            builder.AppendLine("{");
+            builder.PushIndent();
             builder.AppendLine($"var {LocalVariable}_unk = Marshal.GetIUnknownForObject({Name});");
             builder.AppendLine($"var local_{Name}_IID = new System.Guid(\"{guidString}\");");
-            builder.AppendLine($"result = Marshal.QueryInterface({LocalVariable}_unk, ref local_{Name}_IID, out var {LocalVariable});");
+            builder.AppendLine($"result = Marshal.QueryInterface({LocalVariable}_unk, ref local_{Name}_IID, out {LocalVariable});");
             builder.AppendLine($"if (result != 0)");
             builder.AppendLine("{");
             builder.PushIndent();
             builder.AppendLine($"Marshal.ThrowExceptionForHR(result);");
+            builder.PopIndent();
+            builder.AppendLine("}");
             builder.PopIndent();
             builder.AppendLine("}");
             builder.AppendLine();

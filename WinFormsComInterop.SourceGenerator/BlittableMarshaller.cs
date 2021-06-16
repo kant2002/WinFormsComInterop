@@ -12,5 +12,24 @@ namespace WinFormsComInterop.SourceGenerator
                 return;
             }
         }
+
+        public override void PinParameter(IndentedStringBuilder builder)
+        {
+            if (RefKind == RefKind.Out || RefKind == RefKind.Ref || RefKind == RefKind.In)
+            {
+                builder.AppendLine($"fixed ({TypeName}* {LocalVariable} = &{Name})");
+            }
+        }
+
+        public override string GetUnmanagedParameterInvocation()
+        {
+            return RefKind switch
+            {
+                RefKind.Out => LocalVariable,
+                RefKind.Ref => LocalVariable,
+                RefKind.In => LocalVariable,
+                _ => Name,
+            };
+        }
     }
 }
