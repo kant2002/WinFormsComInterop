@@ -6,16 +6,20 @@ namespace WinFormsComInterop.SourceGenerator
     {
         public override void ConvertToUnmanagedParameter(IndentedStringBuilder builder)
         {
-            builder.AppendLine($"fixed ({TypeName}* {LocalVariable} = &{Name})");
+            if (RefKind == RefKind.Out || RefKind == RefKind.Ref)
+            {
+                builder.AppendLine($"fixed ({TypeName}* {LocalVariable} = &{Name})");
+            }
         }
 
         public override string GetUnmanagedParameterInvocation()
         {
-            switch (RefKind)
+            return RefKind switch
             {
-                default:
-                    return LocalVariable;
-            }
+                RefKind.Out => LocalVariable,
+                RefKind.Ref => LocalVariable,
+                _ => Name,
+            };
         }
     }
 }

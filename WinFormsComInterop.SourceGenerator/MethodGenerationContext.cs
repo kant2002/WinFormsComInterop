@@ -55,7 +55,7 @@
         private Marshaller CreateMarshaller(IParameterSymbol parameterSymbol, MethodGenerationContext context)
         {
             Marshaller marshaller = CreateMarshaller(parameterSymbol.Type);
-            marshaller.Name = parameterSymbol.Name;
+            marshaller.Name = parameterSymbol.Name == "string" ? "@string" : parameterSymbol.Name;
             marshaller.Type = parameterSymbol.Type;
             marshaller.RefKind = parameterSymbol.RefKind;
             marshaller.Index = parameterSymbol.Ordinal;
