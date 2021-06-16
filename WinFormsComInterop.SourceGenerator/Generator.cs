@@ -481,6 +481,11 @@ namespace {namespaceName}
                 returnMarshaller.ConvertToUnmanagedParameter(source);
             }
 
+            foreach (var m in marshallers)
+            {
+                m.PinParameter(source);
+            }
+
             var parametersCallList = marshallers.Select(_ => _.GetUnmanagedParameterInvocation()).ToList();
             if (!context.PreserveSignature)
             {
@@ -507,7 +512,10 @@ namespace {namespaceName}
             }
             else
             {
-                source.AppendLine($"return ({returnTypeName})result;");
+                if (method.ReturnType.SpecialType != SpecialType.System_Void)
+                {
+                    source.AppendLine($"return ({returnTypeName})result;");
+                }
             }
 
             if (method.MethodKind == MethodKind.PropertyGet)

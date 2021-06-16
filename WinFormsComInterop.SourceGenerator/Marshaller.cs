@@ -79,6 +79,10 @@ namespace WinFormsComInterop.SourceGenerator
         {
         }
 
+        public virtual void PinParameter(IndentedStringBuilder builder)
+        {
+        }
+
         public virtual string GetUnmanagedReturnValue()
         {
             return $"&{Name}";

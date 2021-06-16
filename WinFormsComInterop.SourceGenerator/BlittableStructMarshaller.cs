@@ -6,7 +6,11 @@ namespace WinFormsComInterop.SourceGenerator
     {
         public override void ConvertToUnmanagedParameter(IndentedStringBuilder builder)
         {
-            if (RefKind == RefKind.Out || RefKind == RefKind.Ref)
+        }
+
+        public override void PinParameter(IndentedStringBuilder builder)
+        {
+            if (RefKind == RefKind.Out || RefKind == RefKind.Ref || RefKind == RefKind.In)
             {
                 builder.AppendLine($"fixed ({TypeName}* {LocalVariable} = &{Name})");
             }
@@ -18,6 +22,7 @@ namespace WinFormsComInterop.SourceGenerator
             {
                 RefKind.Out => LocalVariable,
                 RefKind.Ref => LocalVariable,
+                RefKind.In => LocalVariable,
                 _ => Name,
             };
         }
