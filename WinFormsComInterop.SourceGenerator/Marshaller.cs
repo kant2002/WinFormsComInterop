@@ -118,5 +118,9 @@ namespace WinFormsComInterop.SourceGenerator
                     return Name;
             }
         }
+
+        public virtual void UnmarshalParameter(IndentedStringBuilder builder)
+        {
+        }
     }
 }

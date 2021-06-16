@@ -493,6 +493,10 @@ namespace {namespaceName}
             parametersCallList.Insert(0, "thisPtr");
             var parametersCallListString = string.Join(", ", parametersCallList);
             source.AppendLine($"result = (({context.UnmanagedDelegateSignature})vtbl[{context.ComSlotNumber}])({parametersCallListString});");
+            foreach (var m in marshallers)
+            {
+                m.UnmarshalParameter(source);
+            }
 
             if (!context.PreserveSignature)
             {

@@ -64,7 +64,7 @@ namespace WinFormsComInterop.SourceGenerator
             var guidString = Type.GetTypeGuid();
             if (guidString == null)
             {
-                builder.AppendLine($"throw new InvalidOperationException(\"No Guid attribute on the interface.\");");
+                builder.AppendLine($"throw new System.InvalidOperationException(\"No Guid attribute on the interface.\");");
                 return;
             }
 
@@ -110,6 +110,12 @@ namespace WinFormsComInterop.SourceGenerator
                 return;
             }
 
+            if (RefKind == RefKind.Out)
+            {
+                builder.AppendLine($"{UnmanagedTypeName} {LocalVariable};");
+                return;
+            }
+
             if (Type.SpecialType == SpecialType.System_Object)
             {
                 builder.AppendLine($"var {LocalVariable} = Marshal.GetIUnknownForObject({Name});");
@@ -119,7 +125,8 @@ namespace WinFormsComInterop.SourceGenerator
             var guidString = Type.GetTypeGuid();
             if (guidString == null)
             {
-                builder.AppendLine($"throw new InvalidOperationException(\"No Guid attribute on the interface.\");");
+                builder.AppendLine($"{UnmanagedTypeName} {LocalVariable} = default;");
+                builder.AppendLine($"throw new System.InvalidOperationException(\"No Guid attribute on the interface.\");");
                 return;
             }
 
@@ -137,12 +144,30 @@ namespace WinFormsComInterop.SourceGenerator
 
         public override string GetUnmanagedParameterInvocation()
         {
-            return LocalVariable;
+            switch (RefKind)
+            {
+                case RefKind.Out:
+                    return $"&{LocalVariable}";
+                case RefKind.Ref:
+                    return $"&{LocalVariable}";
+                case RefKind.In:
+                    return $"&{LocalVariable}";
+                default:
+                    return LocalVariable;
+            }
         }
 
         public override string GetUnmanagedReturnValue()
         {
             return $"&{Name}";
+        }
+
+        public override void UnmarshalParameter(IndentedStringBuilder builder)
+        {
+            if (RefKind == RefKind.Out || RefKind == RefKind.Ref)
+            {
+                builder.AppendLine($"{Name} = ({TypeName})Marshal.GetObjectForIUnknown({LocalVariable});");
+            }
         }
     }
 }
