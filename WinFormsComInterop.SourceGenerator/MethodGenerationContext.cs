@@ -9,6 +9,8 @@
         public bool PreserveSignature { get; set; }
         public int ComSlotNumber { get; set; }
 
+        public ITypeSymbol WrapperClass { get; internal set; }
+
         internal WrapperGenerationContext Context { get; set; }
 
         public string? GetAlias(ITypeSymbol type) => Context.GetAlias(type);
@@ -46,6 +48,7 @@
                 return $"delegate* unmanaged<{string.Join(", ", parametersList)}>";
             }
         }
+
         public Marshaller CreateMarshaller(IParameterSymbol parameterSymbol)
         {
             return CreateMarshaller(parameterSymbol, this);
@@ -60,6 +63,7 @@
             marshaller.RefKind = parameterSymbol.RefKind;
             marshaller.Index = parameterSymbol.Ordinal;
             marshaller.TypeAlias = context.GetAlias(parameterSymbol.Type);
+            marshaller.Context = context;
             return marshaller;
         }
 
@@ -71,6 +75,7 @@
             marshaller.RefKind = RefKind.None;
             marshaller.Index = -1;
             marshaller.TypeAlias = context.GetAlias(parameterSymbol);
+            marshaller.Context = context;
             return marshaller;
         }
 

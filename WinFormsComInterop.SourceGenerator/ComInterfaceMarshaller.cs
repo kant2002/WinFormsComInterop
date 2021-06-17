@@ -140,6 +140,15 @@ namespace WinFormsComInterop.SourceGenerator
             builder.AppendLine("else");
             builder.AppendLine("{");
             builder.PushIndent();
+            builder.AppendLine($"if ({Name} is {Context.WrapperClass.FormatType(Context.GetAlias(Context.WrapperClass))} {LocalVariable}_proxy)");
+            builder.AppendLine("{");
+            builder.PushIndent();
+            builder.AppendLine($"{LocalVariable} = {LocalVariable}_proxy.instance;");
+            builder.PopIndent();
+            builder.AppendLine("}");
+            builder.AppendLine("else");
+            builder.AppendLine("{");
+            builder.PushIndent();
             builder.AppendLine($"var {LocalVariable}_unk = Marshal.GetIUnknownForObject({Name});");
             builder.AppendLine($"var local_{Name}_IID = new System.Guid(\"{guidString}\");");
             builder.AppendLine($"result = Marshal.QueryInterface({LocalVariable}_unk, ref local_{Name}_IID, out {LocalVariable});");
@@ -147,6 +156,8 @@ namespace WinFormsComInterop.SourceGenerator
             builder.AppendLine("{");
             builder.PushIndent();
             builder.AppendLine($"Marshal.ThrowExceptionForHR(result);");
+            builder.PopIndent();
+            builder.AppendLine("}");
             builder.PopIndent();
             builder.AppendLine("}");
             builder.PopIndent();

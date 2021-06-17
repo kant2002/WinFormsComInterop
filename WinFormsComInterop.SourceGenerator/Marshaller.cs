@@ -15,6 +15,8 @@ namespace WinFormsComInterop.SourceGenerator
 
         public string TypeName => FormatTypeName();
 
+        internal MethodGenerationContext Context { get; set; }
+
         public virtual string UnmanagedTypeName
         {
             get

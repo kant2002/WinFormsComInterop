@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
+using static WinFormsComInterop.SourceGenerator.Generator;
 
 namespace WinFormsComInterop.SourceGenerator
 {
@@ -77,7 +78,7 @@ namespace WinFormsComInterop.SourceGenerator
         }
 
         public MethodGenerationContext CreateMethodGenerationContext(
-            IMethodSymbol method, int comSlotNumber)
+            ClassDeclaration classSymbol, IMethodSymbol method, int comSlotNumber)
         {
             var preserveSigAttribute = method.GetAttributes().FirstOrDefault(ad =>
             {
@@ -89,6 +90,7 @@ namespace WinFormsComInterop.SourceGenerator
             preserveSignature |= (method.MethodImplementationFlags & System.Reflection.MethodImplAttributes.PreserveSig) == System.Reflection.MethodImplAttributes.PreserveSig;
             var methodContext = new MethodGenerationContext
             {
+                WrapperClass = classSymbol.Type,
                 Method = method,
                 PreserveSignature = preserveSignature,
                 Context = this,

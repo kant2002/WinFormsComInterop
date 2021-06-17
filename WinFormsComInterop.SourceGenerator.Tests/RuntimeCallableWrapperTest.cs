@@ -172,12 +172,19 @@ namespace Foo
             }
             else
             {
-                var local_0_unk = Marshal.GetIUnknownForObject(pstm);
-                var local_pstm_IID = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
-                result = Marshal.QueryInterface(local_0_unk, ref local_pstm_IID, out local_0);
-                if (result != 0)
+                if (pstm is global::Foo.C local_0_proxy)
                 {
-                    Marshal.ThrowExceptionForHR(result);
+                    local_0 = local_0_proxy.instance;
+                }
+                else
+                {
+                    var local_0_unk = Marshal.GetIUnknownForObject(pstm);
+                    var local_pstm_IID = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
+                    result = Marshal.QueryInterface(local_0_unk, ref local_pstm_IID, out local_0);
+                    if (result != 0)
+                    {
+                        Marshal.ThrowExceptionForHR(result);
+                    }
                 }
             }
 
@@ -244,12 +251,19 @@ namespace Foo
             }
             else
             {
-                var local_0_unk = Marshal.GetIUnknownForObject(pstm);
-                var local_pstm_IID = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
-                result = Marshal.QueryInterface(local_0_unk, ref local_pstm_IID, out local_0);
-                if (result != 0)
+                if (pstm is global::Foo.C local_0_proxy)
                 {
-                    Marshal.ThrowExceptionForHR(result);
+                    local_0 = local_0_proxy.instance;
+                }
+                else
+                {
+                    var local_0_unk = Marshal.GetIUnknownForObject(pstm);
+                    var local_pstm_IID = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
+                    result = Marshal.QueryInterface(local_0_unk, ref local_pstm_IID, out local_0);
+                    if (result != 0)
+                    {
+                        Marshal.ThrowExceptionForHR(result);
+                    }
                 }
             }
 
@@ -547,12 +561,19 @@ namespace Foo
             }
             else
             {
-                var local_0_unk = Marshal.GetIUnknownForObject(pstm);
-                var local_pstm_IID = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
-                result = Marshal.QueryInterface(local_0_unk, ref local_pstm_IID, out local_0);
-                if (result != 0)
+                if (pstm is global::Foo.C local_0_proxy)
                 {
-                    Marshal.ThrowExceptionForHR(result);
+                    local_0 = local_0_proxy.instance;
+                }
+                else
+                {
+                    var local_0_unk = Marshal.GetIUnknownForObject(pstm);
+                    var local_pstm_IID = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
+                    result = Marshal.QueryInterface(local_0_unk, ref local_pstm_IID, out local_0);
+                    if (result != 0)
+                    {
+                        Marshal.ThrowExceptionForHR(result);
+                    }
                 }
             }
 

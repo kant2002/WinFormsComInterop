@@ -131,7 +131,7 @@ namespace {namespaceName}
                 {
                     case IMethodSymbol methodSymbol:
                         {
-                            var methodContext = context.CreateMethodGenerationContext(methodSymbol, slotNumber);
+                            var methodContext = context.CreateMethodGenerationContext(classSymbol, methodSymbol, slotNumber);
                             GenerateCCWMethod(proxyMethods, interfaceTypeSymbol, methodContext);
                             vtblMethod.AppendLine($"vtblRaw[{slotNumber}] = (System.IntPtr)({methodContext.UnmanagedDelegateSignature})&{typeName}.{methodContext.Method.Name};");
                             slotNumber++;
@@ -209,7 +209,7 @@ namespace {namespaceName}
                     continue;
                 }
 
-                ProcessCCWVblDeclaration(source, key, interfaceTypeSymbol, context);
+                ProcessCCWVblDeclaration(source, classSymbol, interfaceTypeSymbol, context);
             }
 
             source.AppendLine("}");
@@ -219,9 +219,10 @@ namespace {namespaceName}
             context.AddComWrapperSource(key, SourceText.From(source.ToString(), Encoding.UTF8));
         }
 
-        private void ProcessCCWVblDeclaration(IndentedStringBuilder vtblMethod, INamedTypeSymbol classSymbol, INamedTypeSymbol interfaceTypeSymbol, WrapperGenerationContext context)
+        private void ProcessCCWVblDeclaration(IndentedStringBuilder vtblMethod, ClassDeclaration classSymbol, INamedTypeSymbol interfaceTypeSymbol, WrapperGenerationContext context)
         {
             var aliasSymbol = context.GetAlias(interfaceTypeSymbol);
+            var key = (INamedTypeSymbol)classSymbol.Type;
             var typeName = $"{interfaceTypeSymbol.Name}Proxy";
             if (!string.IsNullOrWhiteSpace(aliasSymbol))
             {
@@ -233,7 +234,7 @@ namespace {namespaceName}
             vtblMethod.AppendLine($"internal static void Create{typeName}Vtbl(out System.IntPtr vtbl)");
             vtblMethod.AppendLine("{");
             vtblMethod.PushIndent();
-            vtblMethod.AppendLine($"var vtblRaw = (System.IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof({classSymbol.ToDisplayString()}), sizeof(System.IntPtr) * {membersCount});");
+            vtblMethod.AppendLine($"var vtblRaw = (System.IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof({key.ToDisplayString()}), sizeof(System.IntPtr) * {membersCount});");
             vtblMethod.AppendLine("GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);");
             vtblMethod.AppendLine();
             foreach (var member in interfaceTypeSymbol.GetMembers())
@@ -242,7 +243,7 @@ namespace {namespaceName}
                 {
                     case IMethodSymbol methodSymbol:
                         {
-                            var methodContext = context.CreateMethodGenerationContext(methodSymbol, slotNumber);
+                            var methodContext = context.CreateMethodGenerationContext(classSymbol, methodSymbol, slotNumber);
                             vtblMethod.AppendLine($"vtblRaw[{slotNumber}] = (System.IntPtr)({methodContext.UnmanagedDelegateSignature})&{typeName}.{methodContext.Method.Name};");
                             slotNumber++;
                         }
@@ -308,7 +309,7 @@ namespace {namespaceName}
                 {
                     case IMethodSymbol methodSymbol:
                         {
-                            var methodContext = context.CreateMethodGenerationContext(methodSymbol, slotNumber);
+                            var methodContext = context.CreateMethodGenerationContext(classSymbol, methodSymbol, slotNumber);
                             GenerateRCWMethod(source, interfaceTypeSymbol, methodContext);
                             slotNumber++;
                         }

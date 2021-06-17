@@ -2,6 +2,7 @@
 extern alias drawing;
 #if USE_WPF
 extern alias winbase;
+extern alias presentation;
 #endif
 using System;
 using System.Runtime.CompilerServices;
@@ -18,6 +19,9 @@ namespace WinFormsComInterop
 #if USE_WPF
     [ComCallableWrapper(typeof(winbase::MS.Win32.UnsafeNativeMethods.ITfContext))]
     [ComCallableWrapper(typeof(winbase::MS.Win32.UnsafeNativeMethods.IOleDropTarget))]
+    [ComCallableWrapper(typeof(winbase::MS.Win32.UnsafeNativeMethods.ITfContextOwner))]
+    [ComCallableWrapper(typeof(winbase::MS.Win32.UnsafeNativeMethods.ITfContextOwnerCompositionSink))]
+    [ComCallableWrapper(typeof(winbase::MS.Win32.UnsafeNativeMethods.ITfTransitoryExtensionSink))]
 #endif
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     public unsafe partial class WinFormsComWrappers : ComWrappers
@@ -30,6 +34,7 @@ namespace WinFormsComInterop
         static ComWrappers.ComInterfaceEntry* richEditOleCallbackEntry;
         static ComWrappers.ComInterfaceEntry* primitivesDropTargetEntry;
         static ComWrappers.ComInterfaceEntry* winbaseTfContextEntry;
+        static ComWrappers.ComInterfaceEntry* presentationDefaultTextStoreEntry;
 
         internal static Guid IID_IRawElementProviderSimple = new Guid("D6DD68D1-86FD-4332-8666-9ABEDEA2D24C");
 
@@ -57,6 +62,7 @@ namespace WinFormsComInterop
 #if USE_WPF
             oleDropTargetEntry = CreateOleDropTargetEntry();
             winbaseTfContextEntry = CreateWinbaseITfContextEntry();
+            presentationDefaultTextStoreEntry = CreatePresentationDefaultTextStoreEntry();
 #endif
         }
 
@@ -68,6 +74,32 @@ namespace WinFormsComInterop
             var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 1);
             var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
             wrapperEntry->IID = IID_IOleDropTarget;
+            wrapperEntry->Vtable = vtbl;
+            return wrapperEntry;
+        }
+        private static ComInterfaceEntry* CreatePresentationDefaultTextStoreEntry()
+        {
+            CreateWinbaseITfContextOwnerProxyVtbl(out var tfContextVtbl);
+            CreateWinbaseITfContextOwnerCompositionSinkProxyVtbl(out var tfContextOwnerCompositionVtbl);
+            CreateWinbaseITfTransitoryExtensionSinkProxyVtbl(out var tfTransitoryExtensionSinkVtbl);
+
+            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 3);
+            var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
+            wrapperEntry[0].IID = new Guid("aa80e80c-2021-11d2-93e0-0060b067b86e");
+            wrapperEntry[0].Vtable = tfContextVtbl;
+            wrapperEntry[1].IID = new Guid("5F20AA40-B57A-4F34-96AB-3576F377CC79");
+            wrapperEntry[1].Vtable = tfContextOwnerCompositionVtbl;
+            wrapperEntry[2].IID = new Guid("a615096f-1c57-4813-8a15-55ee6e5a839c");
+            wrapperEntry[2].Vtable = tfTransitoryExtensionSinkVtbl;
+            return wrapperEntry;
+        }
+        private static ComInterfaceEntry* CreateWinbaseITfContextEntry()
+        {
+            CreateWinbaseITfContextProxyVtbl(out var vtbl);
+
+            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 1);
+            var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
+            wrapperEntry->IID = IID_ITfContext;
             wrapperEntry->Vtable = vtbl;
             return wrapperEntry;
         }
@@ -137,16 +169,6 @@ namespace WinFormsComInterop
             wrapperEntry->Vtable = vtbl;
             return wrapperEntry;
         }
-        private static ComInterfaceEntry* CreateWinbaseITfContextEntry()
-        {
-            CreateWinbaseITfContextProxyVtbl(out var vtbl);
-
-            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 1);
-            var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
-            wrapperEntry->IID = IID_ITfContext;
-            wrapperEntry->Vtable = vtbl;
-            return wrapperEntry;
-        }
 
         public static WinFormsComWrappers Instance { get; } = new WinFormsComWrappers();
 
@@ -193,6 +215,12 @@ namespace WinFormsComInterop
             {
                 count = 1;
                 return winbaseTfContextEntry;
+            }
+
+            if (obj is presentation::System.Windows.Input.DefaultTextStore)
+            {
+                count = 3;
+                return presentationDefaultTextStoreEntry;
             }
 #endif
 

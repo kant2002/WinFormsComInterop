@@ -12,11 +12,6 @@
     <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
   </PropertyGroup>
 
-  <ItemGroup Condition="$(GenerateWPF) != true">
-    <Compile Remove="WinBaseOleDropTarget.cs" />
-    <Compile Remove="IExternalObject.IOleDropTarget.cs" />
-  </ItemGroup>
-
   <ItemGroup>
     <Reference Include="Accessibility">
       <HintPath>C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\6.0.0-preview.6.21305.3\Accessibility.dll</HintPath>
@@ -31,12 +26,19 @@
       <PrivateAssets>All</PrivateAssets>
       <Aliases>primitives</Aliases>
     </ProjectReference>
-    <ProjectReference Include="..\WindowsBase\WindowsBase.csproj" Condition="$(GenerateWPF) == true">
+    <ProjectReference Include="..\WinFormsComInterop.SourceGenerator\WinFormsComInterop.SourceGenerator.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer">
+      <PrivateAssets>All</PrivateAssets>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="$(GenerateWPF) == true">
+    <ProjectReference Include="..\WindowsBase\WindowsBase.csproj">
       <PrivateAssets>All</PrivateAssets>
       <Aliases>winbase</Aliases>
     </ProjectReference>
-    <ProjectReference Include="..\WinFormsComInterop.SourceGenerator\WinFormsComInterop.SourceGenerator.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer">
+    <ProjectReference Include="..\PresentationCore\PresentationCore.csproj">
       <PrivateAssets>All</PrivateAssets>
+      <Aliases>presentation</Aliases>
     </ProjectReference>
   </ItemGroup>
 

@@ -8,10 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WindowsBase\WindowsBase.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Accessibility">
       <HintPath>C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\6.0.0-preview.6.21305.3\Accessibility.dll</HintPath>
       <EmbedInteropTypes>false</EmbedInteropTypes>
       <PrivateAssets>All</PrivateAssets>
     </Reference>
   </ItemGroup>
+
 </Project>
