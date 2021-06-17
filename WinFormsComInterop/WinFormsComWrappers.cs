@@ -15,6 +15,10 @@ namespace WinFormsComInterop
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IDropTarget))]
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IStorage))]
     [ComCallableWrapper(typeof(primitives::Interop.Richedit.IRichEditOleCallback))]
+#if USE_WPF
+    [ComCallableWrapper(typeof(winbase::MS.Win32.UnsafeNativeMethods.ITfContext))]
+    [ComCallableWrapper(typeof(winbase::MS.Win32.UnsafeNativeMethods.IOleDropTarget))]
+#endif
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     public unsafe partial class WinFormsComWrappers : ComWrappers
     {
@@ -25,6 +29,7 @@ namespace WinFormsComInterop
         static ComWrappers.ComInterfaceEntry* storageEntry;
         static ComWrappers.ComInterfaceEntry* richEditOleCallbackEntry;
         static ComWrappers.ComInterfaceEntry* primitivesDropTargetEntry;
+        static ComWrappers.ComInterfaceEntry* winbaseTfContextEntry;
 
         internal static Guid IID_IRawElementProviderSimple = new Guid("D6DD68D1-86FD-4332-8666-9ABEDEA2D24C");
 
@@ -35,6 +40,7 @@ namespace WinFormsComInterop
         internal static Guid IID_IPicture = new Guid("7BF80980-BF32-101A-8BBB-00AA00300CAB");
         internal static Guid IID_IStorage = new Guid("0000000B-0000-0000-C000-000000000046");
         internal static Guid IID_IRichEditOleCallback = new Guid("00020D03-0000-0000-C000-000000000046");
+        internal static Guid IID_ITfContext = new Guid("aa80e7fd-2021-11d2-93e0-0060b067b86e");
 
         // This class only exposes IDispatch and the vtable is always the same.
         // The below isn't the most efficient but it is reasonable for prototyping.
@@ -50,32 +56,20 @@ namespace WinFormsComInterop
             richEditOleCallbackEntry = CreatePrimitivesIRichEditOleCallbackEntry();
 #if USE_WPF
             oleDropTargetEntry = CreateOleDropTargetEntry();
+            winbaseTfContextEntry = CreateWinbaseITfContextEntry();
 #endif
         }
 
 #if USE_WPF
         private static ComInterfaceEntry* CreateOleDropTargetEntry()
         {
-            CreateIOleDropTargetVtbl(out var vtbl);
+            CreateWinbaseIOleDropTargetProxyVtbl(out var vtbl);
 
             var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 1);
             var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
             wrapperEntry->IID = IID_IOleDropTarget;
             wrapperEntry->Vtable = vtbl;
             return wrapperEntry;
-        }
-
-        private static void CreateIOleDropTargetVtbl(out IntPtr vtbl)
-        {
-            var vtblRaw = (IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(IntPtr) * 7);
-            GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
-
-            vtblRaw[3] = (IntPtr)(delegate* unmanaged<IntPtr, IntPtr, int, long, int*, int>)&WinBaseOleDropTarget.OleDragEnter;
-            vtblRaw[4] = (IntPtr)(delegate* unmanaged<IntPtr, int, long, int*, int>)&WinBaseOleDropTarget.OleDragOver;
-            vtblRaw[5] = (IntPtr)(delegate* unmanaged<IntPtr, int>)&WinBaseOleDropTarget.OleDragLeave;
-            vtblRaw[6] = (IntPtr)(delegate* unmanaged<IntPtr, IntPtr, int, long, int*, int>)&WinBaseOleDropTarget.OleDrop;
-
-            vtbl = (IntPtr)vtblRaw;
         }
 #endif
 
@@ -143,6 +137,16 @@ namespace WinFormsComInterop
             wrapperEntry->Vtable = vtbl;
             return wrapperEntry;
         }
+        private static ComInterfaceEntry* CreateWinbaseITfContextEntry()
+        {
+            CreateWinbaseITfContextProxyVtbl(out var vtbl);
+
+            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 1);
+            var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
+            wrapperEntry->IID = IID_ITfContext;
+            wrapperEntry->Vtable = vtbl;
+            return wrapperEntry;
+        }
 
         public static WinFormsComWrappers Instance { get; } = new WinFormsComWrappers();
 
@@ -183,6 +187,12 @@ namespace WinFormsComInterop
             {
                 count = 1;
                 return oleDropTargetEntry;
+            }
+
+            if (obj is winbase::MS.Win32.UnsafeNativeMethods.ITfContext)
+            {
+                count = 1;
+                return winbaseTfContextEntry;
             }
 #endif
 

@@ -22,7 +22,10 @@ namespace WinFormsComInterop
     [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IOleControl))]
     //[RuntimeCallableWrapper(typeof(primitives::Interop.Mshtml.IWebBrowser2))]
 #if USE_WPF
-    //[RuntimeCallableWrapper(typeof(winbase::MS.Win32.UnsafeNativeMethods.IOleDropTarget))]
+    [RuntimeCallableWrapper(typeof(winbase::MS.Win32.UnsafeNativeMethods.IOleDropTarget))]
+    [RuntimeCallableWrapper(typeof(winbase::MS.Win32.UnsafeNativeMethods.ITfThreadMgr))]
+    [RuntimeCallableWrapper(typeof(winbase::MS.Win32.UnsafeNativeMethods.ITfDocumentMgr))]
+    [RuntimeCallableWrapper(typeof(winbase::MS.Win32.UnsafeNativeMethods.ITfContext))]
 #endif
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     partial class IExternalObject 
