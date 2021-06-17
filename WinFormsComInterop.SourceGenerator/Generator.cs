@@ -122,7 +122,7 @@ namespace {namespaceName}
             vtblMethod.AppendLine($"internal static void Create{typeName}Vtbl(out System.IntPtr vtbl)");
             vtblMethod.AppendLine("{");
             vtblMethod.PushIndent();
-            vtblMethod.AppendLine($"var vtblRaw = (System.IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof({typeName}), sizeof(System.IntPtr) * 4);");
+            vtblMethod.AppendLine($"var vtblRaw = (System.IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(global::{typeName}), sizeof(System.IntPtr) * 4);");
             vtblMethod.AppendLine("GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);");
             vtblMethod.AppendLine();
             foreach (var member in interfaceTypeSymbol.GetMembers())
@@ -234,7 +234,7 @@ namespace {namespaceName}
             vtblMethod.AppendLine($"internal static void Create{typeName}Vtbl(out System.IntPtr vtbl)");
             vtblMethod.AppendLine("{");
             vtblMethod.PushIndent();
-            vtblMethod.AppendLine($"var vtblRaw = (System.IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof({key.ToDisplayString()}), sizeof(System.IntPtr) * {membersCount});");
+            vtblMethod.AppendLine($"var vtblRaw = (System.IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof({key.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}), sizeof(System.IntPtr) * {membersCount});");
             vtblMethod.AppendLine("GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);");
             vtblMethod.AppendLine();
             foreach (var member in interfaceTypeSymbol.GetMembers())
@@ -257,9 +257,11 @@ namespace {namespaceName}
             vtblMethod.AppendLine("}");
         }
 
-        private void ProcessCCWDeclaration(ClassDeclaration classSymbol, WrapperGenerationContext context)
+        private IEnumerable<INamedTypeSymbol> FindCCWDeclarations(ClassDeclaration classSymbol)
         {
-            var proxyDeclarations = classSymbol.Type.GetAttributes().Where(ad => ad.AttributeClass?.ToDisplayString() == ComCallableWrapperAttributeName);
+            var proxyDeclarations = classSymbol.Type
+                .GetAttributes()
+                .Where(ad => ad.AttributeClass?.ToDisplayString() == ComCallableWrapperAttributeName);
             foreach (var proxyAttribute in proxyDeclarations)
             {
                 var interfaceTypeSymbol = proxyAttribute.ConstructorArguments.FirstOrDefault().Value as INamedTypeSymbol;
@@ -268,12 +270,26 @@ namespace {namespaceName}
                     continue;
                 }
 
+                foreach (var baseInterface in interfaceTypeSymbol.Interfaces)
+                {
+                    yield return baseInterface;
+                }
+
+                yield return interfaceTypeSymbol;
+            }
+
+        }
+
+        private void ProcessCCWDeclaration(ClassDeclaration classSymbol, WrapperGenerationContext context)
+        {
+            foreach (var interfaceTypeSymbol in FindCCWDeclarations(classSymbol).Distinct())
+            {
                 var sourceCode = ProcessCCWDeclaration(classSymbol, interfaceTypeSymbol, context);
                 var key = (INamedTypeSymbol)classSymbol.Type;
-                context.AddDebugLine(interfaceTypeSymbol.ContainingAssembly.Identity.GetDisplayName());
                 context.AddCCWSource(key, interfaceTypeSymbol, SourceText.From(sourceCode, Encoding.UTF8));
             }
         }
+
         private string ProcessRCWDeclaration(ClassDeclaration classSymbol, INamedTypeSymbol interfaceTypeSymbol, WrapperGenerationContext context)
         {
             string namespaceName = classSymbol.Type.ContainingNamespace.ToDisplayString();
@@ -325,9 +341,11 @@ namespace {namespaceName}
             return source.ToString();
         }
 
-        private void ProcessRCWDeclaration(ClassDeclaration classSymbol, WrapperGenerationContext context)
+        private IEnumerable<INamedTypeSymbol> FindRCWDeclarations(ClassDeclaration classSymbol)
         {
-            var proxyDeclarations = classSymbol.Type.GetAttributes().Where(ad => ad.AttributeClass?.ToDisplayString() == RuntimeCallableWrapperAttributeName);
+            var proxyDeclarations = classSymbol.Type
+                .GetAttributes()
+                .Where(ad => ad.AttributeClass?.ToDisplayString() == RuntimeCallableWrapperAttributeName);
             foreach (var proxyAttribute in proxyDeclarations)
             {
                 var interfaceTypeSymbol = proxyAttribute.ConstructorArguments.FirstOrDefault().Value as INamedTypeSymbol;
@@ -336,9 +354,22 @@ namespace {namespaceName}
                     continue;
                 }
 
+                foreach (var baseInterface in interfaceTypeSymbol.Interfaces)
+                {
+                    yield return baseInterface;
+                }
+
+                yield return interfaceTypeSymbol;
+            }
+
+        }
+
+        private void ProcessRCWDeclaration(ClassDeclaration classSymbol, WrapperGenerationContext context)
+        {
+            foreach (var interfaceTypeSymbol in FindRCWDeclarations(classSymbol).Distinct())
+            {
                 var sourceCode = ProcessRCWDeclaration(classSymbol, interfaceTypeSymbol, context);
                 var key = (INamedTypeSymbol)classSymbol.Type;
-                context.AddDebugLine(interfaceTypeSymbol.ContainingAssembly.Identity.GetDisplayName());
                 context.AddCCWSource(key, interfaceTypeSymbol, SourceText.From(sourceCode, Encoding.UTF8));
             }
         }
@@ -375,7 +406,10 @@ namespace {namespaceName}
                 else
                 {
                     returnType = method.ReturnType.FormatType(context.GetAlias(method.ReturnType));
-                    returnType = "int";
+                    if (method.ReturnType.TypeKind == TypeKind.Enum)
+                    {
+                        returnType = "int";
+                    }
                 }
             }
 
@@ -419,7 +453,7 @@ namespace {namespaceName}
             {
                 if (method.ReturnType.SpecialType != SpecialType.System_Void)
                 {
-                    source.AppendLine($"return (int)inst.{method.Name}({parametersInvocationList});");
+                    source.AppendLine($"return ({returnType})inst.{method.Name}({parametersInvocationList});");
                 }
                 else
                 {
@@ -437,7 +471,15 @@ namespace {namespaceName}
             source.AppendLine("catch (System.Exception __e)");
             source.AppendLine("{");
             source.PushIndent();
-            source.AppendLine("return __e.HResult;");
+            if (preserveSignature && method.ReturnType.SpecialType == SpecialType.System_Void)
+            {
+                source.AppendLine("throw;");
+            }
+            else
+            {
+                source.AppendLine("return __e.HResult;");
+            }
+
             source.PopIndent();
             source.AppendLine("}");
             if (!preserveSignature)
@@ -502,6 +544,13 @@ namespace {namespaceName}
             {
                 returnMarshaller.ConvertToUnmanagedParameter(source);
             }
+            else
+            {
+                if (method.ReturnType.SpecialType != SpecialType.System_Void)
+                {
+                    source.AppendLine($"{returnMarshaller.UnmanagedTypeName} retVal;");
+                }
+            }
 
             foreach (var m in marshallers)
             {
@@ -519,13 +568,20 @@ namespace {namespaceName}
 
             parametersCallList.Insert(0, "thisPtr");
             var parametersCallListString = string.Join(", ", parametersCallList);
-            if (!preserveSignature || method.ReturnType.SpecialType != SpecialType.System_Void)
+            if (!preserveSignature)
             {
                 source.AppendLine($"result = (({context.UnmanagedDelegateSignature})vtbl[{context.ComSlotNumber}])({parametersCallListString});");
             }
             else
             {
-                source.AppendLine($"(({context.UnmanagedDelegateSignature})vtbl[{context.ComSlotNumber}])({parametersCallListString});");
+                if (method.ReturnType.SpecialType != SpecialType.System_Void)
+                {
+                    source.AppendLine($"retVal = (({context.UnmanagedDelegateSignature})vtbl[{context.ComSlotNumber}])({parametersCallListString});");
+                }
+                else
+                {
+                    source.AppendLine($"(({context.UnmanagedDelegateSignature})vtbl[{context.ComSlotNumber}])({parametersCallListString});");
+                }
             }
 
             foreach (var m in marshallers)
@@ -544,7 +600,7 @@ namespace {namespaceName}
             {
                 if (method.ReturnType.SpecialType != SpecialType.System_Void)
                 {
-                    source.AppendLine($"return ({returnTypeName})result;");
+                    source.AppendLine($"return ({returnMarshaller.TypeName})retVal;");
                 }
             }
 

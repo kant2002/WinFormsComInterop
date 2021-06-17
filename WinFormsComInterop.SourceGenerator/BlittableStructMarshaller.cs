@@ -6,6 +6,10 @@ namespace WinFormsComInterop.SourceGenerator
     {
         public override void ConvertToUnmanagedParameter(IndentedStringBuilder builder)
         {
+            if (Index == -1)
+            {
+                builder.AppendLine($"{UnmanagedTypeName} {Name};");
+            }
         }
 
         public override void PinParameter(IndentedStringBuilder builder)

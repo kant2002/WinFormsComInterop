@@ -4,7 +4,6 @@ namespace WinFormsComInterop.SourceGenerator
 {
     internal class EnumMarshaller : Marshaller
     {
-        public string LocalVariable => $"local_{Index}";
         public override string UnmanagedTypeName => "int";
         public override string GetUnmanagedParameterDeclaration()
         {
@@ -18,6 +17,11 @@ namespace WinFormsComInterop.SourceGenerator
 
         public override string GetUnmanagedParameterInvocation()
         {
+            if (RefKind != RefKind.None)
+            {
+                return $"&{LocalVariable}";
+            }
+
             return $"({UnmanagedTypeName}){Name}";
         }
 
@@ -36,6 +40,19 @@ namespace WinFormsComInterop.SourceGenerator
             if (Index == -1)
             {
                 builder.AppendLine($"{UnmanagedTypeName} {Name};");
+            }
+
+            if (RefKind == RefKind.Out || RefKind == RefKind.Ref)
+            {
+                builder.AppendLine($"{UnmanagedTypeName} {LocalVariable};");
+            }
+        }
+
+        public override void UnmarshalParameter(IndentedStringBuilder builder)
+        {
+            if (RefKind == RefKind.Out || RefKind == RefKind.Ref)
+            {
+                builder.AppendLine($"{Name} = ({FormatTypeName()}){LocalVariable};");
             }
         }
     }
