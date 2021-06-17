@@ -27,7 +27,7 @@ namespace WinFormsComInterop.SourceGenerator
         {
             if (RefKind == RefKind.Ref || RefKind == RefKind.Out)
             {
-                builder.AppendLine($"*{Name} = Marshal.GetIUnknownForObject({LocalVariable});");
+                builder.AppendLine($"*{Name} = {LocalVariable} == null ? System.IntPtr.Zero : Marshal.GetIUnknownForObject({LocalVariable});");
             }
         }
 
@@ -40,7 +40,7 @@ namespace WinFormsComInterop.SourceGenerator
         {
             if (Index == -1)
             {
-                return $"({FormatTypeName()})Marshal.GetObjectForIUnknown({Name})";
+                return $"{Name} == System.IntPtr.Zero ? null : ({FormatTypeName()})Marshal.GetObjectForIUnknown({Name})";
             }
 
             return RefKind switch
@@ -189,7 +189,7 @@ namespace WinFormsComInterop.SourceGenerator
         {
             if (RefKind == RefKind.Out || RefKind == RefKind.Ref)
             {
-                builder.AppendLine($"{Name} = ({TypeName})Marshal.GetObjectForIUnknown({LocalVariable});");
+                builder.AppendLine($"{Name} = {LocalVariable} == System.IntPtr.Zero ? null : ({TypeName})Marshal.GetObjectForIUnknown({LocalVariable});");
             }
         }
     }

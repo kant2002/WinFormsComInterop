@@ -571,6 +571,13 @@ namespace {namespaceName}
             if (!preserveSignature)
             {
                 source.AppendLine($"result = (({context.UnmanagedDelegateSignature})vtbl[{context.ComSlotNumber}])({parametersCallListString});");
+                source.AppendLine("if (result != 0)");
+                source.AppendLine("{");
+                source.PushIndent();
+                source.AppendLine("Marshal.ThrowExceptionForHR(result);");
+                source.PopIndent();
+                source.AppendLine("}");
+                source.AppendLine();
             }
             else
             {

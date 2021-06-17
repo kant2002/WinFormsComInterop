@@ -54,6 +54,11 @@ namespace Foo
             var comDispatch = (System.IntPtr*)thisPtr;
             var vtbl = (System.IntPtr*)comDispatch[0];
             result = ((delegate* unmanaged<System.IntPtr, byte*, uint, uint*, int>)vtbl[3])(thisPtr, pv, cb, pcbRead);
+            if (result != 0)
+            {
+                Marshal.ThrowExceptionForHR(result);
+            }
+
         }
     }
 }";
@@ -110,6 +115,11 @@ namespace Foo
             var comDispatch = (System.IntPtr*)thisPtr;
             var vtbl = (System.IntPtr*)comDispatch[0];
             result = ((delegate* unmanaged<System.IntPtr, long, int, ulong*, int>)vtbl[3])(thisPtr, dlibMove, (int)dwOrigin, plibNewPosition);
+            if (result != 0)
+            {
+                Marshal.ThrowExceptionForHR(result);
+            }
+
         }
     }
 }";
@@ -167,6 +177,11 @@ namespace Foo
             var vtbl = (System.IntPtr*)comDispatch[0];
             int local_1;
             result = ((delegate* unmanaged<System.IntPtr, long, int*, ulong*, int>)vtbl[3])(thisPtr, dlibMove, &local_1, plibNewPosition);
+            if (result != 0)
+            {
+                Marshal.ThrowExceptionForHR(result);
+            }
+
             dwOrigin = (global::Foo.SeekOrigin)local_1;
         }
     }
@@ -247,6 +262,11 @@ namespace Foo
             }
 
             result = ((delegate* unmanaged<System.IntPtr, System.IntPtr, ulong, ulong*, ulong*, int>)vtbl[3])(thisPtr, local_0, cb, pcbRead, pcbWritten);
+            if (result != 0)
+            {
+                Marshal.ThrowExceptionForHR(result);
+            }
+
         }
     }
 }";
@@ -327,6 +347,11 @@ namespace Foo
 
             int retVal;
             result = ((delegate* unmanaged<System.IntPtr, System.IntPtr, ulong, ulong*, ulong*, int*, int>)vtbl[3])(thisPtr, local_0, cb, pcbRead, pcbWritten, &retVal);
+            if (result != 0)
+            {
+                Marshal.ThrowExceptionForHR(result);
+            }
+
             return (global::Foo.SeekOrigin)retVal;
         }
     }
@@ -503,7 +528,12 @@ namespace Foo
             var vtbl = (System.IntPtr*)comDispatch[0];
             System.IntPtr retVal;
             result = ((delegate* unmanaged<System.IntPtr, System.IntPtr*, int>)vtbl[3])(thisPtr, &retVal);
-            return (global::Foo.IStr)Marshal.GetObjectForIUnknown(retVal);
+            if (result != 0)
+            {
+                Marshal.ThrowExceptionForHR(result);
+            }
+
+            return retVal == System.IntPtr.Zero ? null : (global::Foo.IStr)Marshal.GetObjectForIUnknown(retVal);
         }
     }
 }";
@@ -561,6 +591,11 @@ namespace Foo
             var vtbl = (System.IntPtr*)comDispatch[0];
             fixed (global::Foo.STATSTG* local_0 = &pstatstg)
             result = ((delegate* unmanaged<System.IntPtr, global::Foo.STATSTG*, int>)vtbl[3])(thisPtr, local_0);
+            if (result != 0)
+            {
+                Marshal.ThrowExceptionForHR(result);
+            }
+
         }
     }
 }";
@@ -617,6 +652,11 @@ namespace Foo
             var comDispatch = (System.IntPtr*)thisPtr;
             var vtbl = (System.IntPtr*)comDispatch[0];
             result = ((delegate* unmanaged<System.IntPtr, int>)vtbl[3])(thisPtr);
+            if (result != 0)
+            {
+                Marshal.ThrowExceptionForHR(result);
+            }
+
         }
     }
 }";
@@ -697,6 +737,11 @@ namespace Foo
 
             long retVal;
             result = ((delegate* unmanaged<System.IntPtr, System.IntPtr, ulong, ulong*, ulong*, long*, int>)vtbl[3])(thisPtr, local_0, cb, pcbRead, pcbWritten, &retVal);
+            if (result != 0)
+            {
+                Marshal.ThrowExceptionForHR(result);
+            }
+
             return retVal;
         }
     }
@@ -757,6 +802,11 @@ namespace Foo
                 var vtbl = (System.IntPtr*)comDispatch[0];
                 long retVal;
                 result = ((delegate* unmanaged<System.IntPtr, long*, int>)vtbl[3])(thisPtr, &retVal);
+                if (result != 0)
+                {
+                    Marshal.ThrowExceptionForHR(result);
+                }
+
                 return retVal;
             }
         }
@@ -816,6 +866,11 @@ namespace Foo
             var vtbl = (System.IntPtr*)comDispatch[0];
             var local_1 = Marshal.StringToCoTaskMemUni(dwOrigin);
             result = ((delegate* unmanaged<System.IntPtr, long, System.IntPtr, ulong*, int>)vtbl[3])(thisPtr, dlibMove, local_1, plibNewPosition);
+            if (result != 0)
+            {
+                Marshal.ThrowExceptionForHR(result);
+            }
+
         }
     }
 }";
@@ -873,6 +928,11 @@ namespace Foo
             var vtbl = (System.IntPtr*)comDispatch[0];
             var local_0 = pstm == null ? System.IntPtr.Zero : Marshal.GetIUnknownForObject(pstm);
             result = ((delegate* unmanaged<System.IntPtr, System.IntPtr, ulong, ulong*, ulong*, int>)vtbl[3])(thisPtr, local_0, cb, pcbRead, pcbWritten);
+            if (result != 0)
+            {
+                Marshal.ThrowExceptionForHR(result);
+            }
+
         }
     }
 }";
@@ -930,7 +990,12 @@ namespace Foo
             var vtbl = (System.IntPtr*)comDispatch[0];
             System.IntPtr local_0;
             result = ((delegate* unmanaged<System.IntPtr, System.IntPtr*, ulong, ulong*, ulong*, int>)vtbl[3])(thisPtr, &local_0, cb, pcbRead, pcbWritten);
-            pstm = (global::Foo.IStr)Marshal.GetObjectForIUnknown(local_0);
+            if (result != 0)
+            {
+                Marshal.ThrowExceptionForHR(result);
+            }
+
+            pstm = local_0 == System.IntPtr.Zero ? null : (global::Foo.IStr)Marshal.GetObjectForIUnknown(local_0);
         }
     }
 }";
@@ -988,6 +1053,11 @@ namespace Foo
             var vtbl = (System.IntPtr*)comDispatch[0];
             System.IntPtr local_1;
             result = ((delegate* unmanaged<System.IntPtr, long, System.IntPtr*, ulong*, int>)vtbl[3])(thisPtr, dlibMove, &local_1, plibNewPosition);
+            if (result != 0)
+            {
+                Marshal.ThrowExceptionForHR(result);
+            }
+
             dwOrigin = Marshal.PtrToStringUni(local_1);
         }
     }
@@ -1045,6 +1115,11 @@ namespace Foo
             var comDispatch = (System.IntPtr*)thisPtr;
             var vtbl = (System.IntPtr*)comDispatch[0];
             result = ((delegate* unmanaged<System.IntPtr, global::Foo.STATSTG, int>)vtbl[3])(thisPtr, pstatstg);
+            if (result != 0)
+            {
+                Marshal.ThrowExceptionForHR(result);
+            }
+
         }
     }
 }";
@@ -1102,6 +1177,11 @@ namespace Foo
             var vtbl = (System.IntPtr*)comDispatch[0];
             global::Foo.STATSTG retVal;
             result = ((delegate* unmanaged<System.IntPtr, ulong, global::Foo.STATSTG*, int>)vtbl[3])(thisPtr, cb, &retVal);
+            if (result != 0)
+            {
+                Marshal.ThrowExceptionForHR(result);
+            }
+
             return retVal;
         }
     }
@@ -1217,6 +1297,11 @@ namespace Foo
             var vtbl = (System.IntPtr*)comDispatch[0];
             fixed (global::Foo.STATSTG* local_0 = &pstatstg)
             result = ((delegate* unmanaged<System.IntPtr, global::Foo.STATSTG*, int>)vtbl[3])(thisPtr, local_0);
+            if (result != 0)
+            {
+                Marshal.ThrowExceptionForHR(result);
+            }
+
         }
     }
 }";
@@ -1274,6 +1359,11 @@ namespace Foo
             var vtbl = (System.IntPtr*)comDispatch[0];
             fixed (global::Foo.STATSTG* local_0 = pstatstg)
             result = ((delegate* unmanaged<System.IntPtr, global::Foo.STATSTG*, int>)vtbl[3])(thisPtr, local_0);
+            if (result != 0)
+            {
+                Marshal.ThrowExceptionForHR(result);
+            }
+
         }
     }
 }";
@@ -1337,6 +1427,11 @@ namespace Foo
 
             fixed (System.IntPtr* local_0 = local_0_arr)
             result = ((delegate* unmanaged<System.IntPtr, System.IntPtr*, int>)vtbl[3])(thisPtr, local_0);
+            if (result != 0)
+            {
+                Marshal.ThrowExceptionForHR(result);
+            }
+
         }
     }
 }";

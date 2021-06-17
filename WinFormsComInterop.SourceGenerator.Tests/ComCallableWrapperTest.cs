@@ -1247,7 +1247,7 @@ namespace Foo
                 var inst = ComInterfaceDispatch.GetInstance<global::Foo.IStr>((ComInterfaceDispatch*)thisPtr);
                 global::Foo.IStr local_0;
                 inst.CopyTo(out local_0, cb);
-                *pstm = Marshal.GetIUnknownForObject(local_0);
+                *pstm = local_0 == null ? System.IntPtr.Zero : Marshal.GetIUnknownForObject(local_0);
             }
             catch (System.Exception __e)
             {
