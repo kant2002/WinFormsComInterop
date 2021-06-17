@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <VersionPrefix>0.2.6</VersionPrefix>
     <NoWarn>$(NoWarn);RS1024</NoWarn>
     <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
