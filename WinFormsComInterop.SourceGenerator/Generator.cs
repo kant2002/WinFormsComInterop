@@ -533,6 +533,10 @@ namespace {namespaceName}
             source.AppendLine("}");
             source.AppendLine();
 
+            source.AppendLine("try");
+            source.AppendLine("{");
+            source.PushIndent();
+
             source.AppendLine("var comDispatch = (System.IntPtr*)thisPtr;");
             source.AppendLine("var vtbl = (System.IntPtr*)comDispatch[0];");
             foreach (var m in marshallers)
@@ -610,6 +614,15 @@ namespace {namespaceName}
                     source.AppendLine($"return ({returnMarshaller.TypeName})retVal;");
                 }
             }
+
+            source.PopIndent();
+            source.AppendLine("}");
+            source.AppendLine("finally");
+            source.AppendLine("{");
+            source.PushIndent();
+            source.AppendLine("Marshal.Release(thisPtr);");
+            source.PopIndent();
+            source.AppendLine("}");
 
             if (method.MethodKind == MethodKind.PropertyGet)
             {
