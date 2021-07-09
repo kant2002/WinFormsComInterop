@@ -1,5 +1,7 @@
 ﻿extern alias primitives;
+#if NET5_0
 extern alias drawing;
+#endif
 #if USE_WPF
 extern alias winbase;
 #endif
@@ -11,10 +13,12 @@ using static primitives::Interop.Oleaut32;
 
 namespace WinFormsComInterop
 {
+#if NET5_0
+    [RuntimeCallableWrapper(typeof(drawing::Interop.Ole32.IStream))]
+#endif
     [RuntimeCallableWrapper(typeof(primitives::Interop.Oleaut32.IEnumVariant))]
     [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IOleWindow))]
     [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IStream))]
-    [RuntimeCallableWrapper(typeof(drawing::Interop.Ole32.IStream))]
     [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IPersistStream))]
     [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IPicture))]
     [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IOleObject))]
