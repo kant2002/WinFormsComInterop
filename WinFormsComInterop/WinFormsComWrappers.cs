@@ -1,5 +1,7 @@
 ﻿extern alias primitives;
+#if NET5_0
 extern alias drawing;
+#endif
 #if USE_WPF
 extern alias winbase;
 extern alias presentation;
@@ -10,8 +12,10 @@ using System.Runtime.InteropServices;
 
 namespace WinFormsComInterop
 {
-    [ComCallableWrapper(typeof(primitives::Interop.Ole32.IStream))]
+#if NET5_0
     [ComCallableWrapper(typeof(drawing::Interop.Ole32.IStream))]
+#endif
+    [ComCallableWrapper(typeof(primitives::Interop.Ole32.IStream))]
     [ComCallableWrapper(typeof(primitives::Interop.UiaCore.IRawElementProviderSimple))]
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IDropTarget))]
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IStorage))]
@@ -26,8 +30,10 @@ namespace WinFormsComInterop
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     public unsafe partial class WinFormsComWrappers : ComWrappers
     {
-        static ComWrappers.ComInterfaceEntry* wrapperEntry;
+#if NET5_0
         static ComWrappers.ComInterfaceEntry* drawingStreamEntry;
+#endif
+        static ComWrappers.ComInterfaceEntry* wrapperEntry;
         static ComWrappers.ComInterfaceEntry* primitivesStreamEntry;
         static ComWrappers.ComInterfaceEntry* oleDropTargetEntry;
         static ComWrappers.ComInterfaceEntry* storageEntry;
@@ -52,8 +58,10 @@ namespace WinFormsComInterop
         // If additional interfaces want to be exposed, add them here.
         static WinFormsComWrappers()
         {
-            wrapperEntry = CreateGenericEntry();
+#if NET5_0
             drawingStreamEntry = CreateDrawingStreamEntry();
+#endif
+            wrapperEntry = CreateGenericEntry();
             primitivesStreamEntry = CreatePrimitivesStreamEntry();
             
             primitivesDropTargetEntry = CreatePrimitivesDropTargetEntry();
@@ -148,6 +156,7 @@ namespace WinFormsComInterop
             return wrapperEntry;
         }
 
+#if NET5_0
         private static ComInterfaceEntry* CreateDrawingStreamEntry()
         {
             CreateDrawingIStreamProxyVtbl(out var vtbl);
@@ -158,6 +167,7 @@ namespace WinFormsComInterop
             wrapperEntry->Vtable = vtbl;
             return wrapperEntry;
         }
+#endif
 
         private static ComInterfaceEntry* CreatePrimitivesStreamEntry()
         {
@@ -174,11 +184,13 @@ namespace WinFormsComInterop
 
         protected override unsafe ComInterfaceEntry* ComputeVtables(object obj, CreateComInterfaceFlags flags, out int count)
         {
+#if NET5_0
             if (obj is drawing::Interop.Ole32.IStream)
             {
                 count = 1;
                 return drawingStreamEntry;
             }
+#endif
 
             if (obj is primitives::Interop.Ole32.IStream)
             {
