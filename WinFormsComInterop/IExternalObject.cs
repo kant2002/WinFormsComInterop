@@ -11,6 +11,7 @@ using static primitives::Interop.Oleaut32;
 
 namespace WinFormsComInterop
 {
+    [RuntimeCallableWrapper(typeof(primitives::Interop.Oleaut32.IEnumVariant))]
     [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IOleWindow))]
     [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IStream))]
     [RuntimeCallableWrapper(typeof(drawing::Interop.Ole32.IStream))]
@@ -29,8 +30,7 @@ namespace WinFormsComInterop
 #endif
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     partial class IExternalObject 
-        : Accessibility.IAccessible, 
-        primitives::Interop.Oleaut32.IEnumVariant
+        : IAccessible
     {
         private static Guid IID_IAccessible = new Guid("618736E0-3C3D-11CF-810C-00AA00389B71");
         private readonly IntPtr instance;
@@ -110,25 +110,5 @@ namespace WinFormsComInterop
         public object accSelection => throw new NotImplementedException();
 
         string Accessibility.IAccessible.get_accDefaultAction(object index) => throw new NotImplementedException();
-
-        unsafe HRESULT IEnumVariant.Next(uint celt, IntPtr rgVar, uint* pCeltFetched)
-        {
-            throw new NotImplementedException();
-        }
-
-        HRESULT IEnumVariant.Skip(uint celt)
-        {
-            throw new NotImplementedException();
-        }
-
-        HRESULT IEnumVariant.Reset()
-        {
-            throw new NotImplementedException();
-        }
-
-        HRESULT IEnumVariant.Clone(IEnumVariant[] ppEnum)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
