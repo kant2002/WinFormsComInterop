@@ -51,14 +51,21 @@ namespace Foo
                 throw new System.InvalidCastException();
             }
 
-            var comDispatch = (System.IntPtr*)thisPtr;
-            var vtbl = (System.IntPtr*)comDispatch[0];
-            result = ((delegate* unmanaged<System.IntPtr, byte*, uint, uint*, int>)vtbl[3])(thisPtr, pv, cb, pcbRead);
-            if (result != 0)
+            try
             {
-                Marshal.ThrowExceptionForHR(result);
-            }
+                var comDispatch = (System.IntPtr*)thisPtr;
+                var vtbl = (System.IntPtr*)comDispatch[0];
+                result = ((delegate* unmanaged<System.IntPtr, byte*, uint, uint*, int>)vtbl[3])(thisPtr, pv, cb, pcbRead);
+                if (result != 0)
+                {
+                    Marshal.ThrowExceptionForHR(result);
+                }
 
+            }
+            finally
+            {
+                Marshal.Release(thisPtr);
+            }
         }
     }
 }";
@@ -112,14 +119,21 @@ namespace Foo
                 throw new System.InvalidCastException();
             }
 
-            var comDispatch = (System.IntPtr*)thisPtr;
-            var vtbl = (System.IntPtr*)comDispatch[0];
-            result = ((delegate* unmanaged<System.IntPtr, long, int, ulong*, int>)vtbl[3])(thisPtr, dlibMove, (int)dwOrigin, plibNewPosition);
-            if (result != 0)
+            try
             {
-                Marshal.ThrowExceptionForHR(result);
-            }
+                var comDispatch = (System.IntPtr*)thisPtr;
+                var vtbl = (System.IntPtr*)comDispatch[0];
+                result = ((delegate* unmanaged<System.IntPtr, long, int, ulong*, int>)vtbl[3])(thisPtr, dlibMove, (int)dwOrigin, plibNewPosition);
+                if (result != 0)
+                {
+                    Marshal.ThrowExceptionForHR(result);
+                }
 
+            }
+            finally
+            {
+                Marshal.Release(thisPtr);
+            }
         }
     }
 }";
@@ -173,16 +187,23 @@ namespace Foo
                 throw new System.InvalidCastException();
             }
 
-            var comDispatch = (System.IntPtr*)thisPtr;
-            var vtbl = (System.IntPtr*)comDispatch[0];
-            int local_1;
-            result = ((delegate* unmanaged<System.IntPtr, long, int*, ulong*, int>)vtbl[3])(thisPtr, dlibMove, &local_1, plibNewPosition);
-            if (result != 0)
+            try
             {
-                Marshal.ThrowExceptionForHR(result);
-            }
+                var comDispatch = (System.IntPtr*)thisPtr;
+                var vtbl = (System.IntPtr*)comDispatch[0];
+                int local_1;
+                result = ((delegate* unmanaged<System.IntPtr, long, int*, ulong*, int>)vtbl[3])(thisPtr, dlibMove, &local_1, plibNewPosition);
+                if (result != 0)
+                {
+                    Marshal.ThrowExceptionForHR(result);
+                }
 
-            dwOrigin = (global::Foo.SeekOrigin)local_1;
+                dwOrigin = (global::Foo.SeekOrigin)local_1;
+            }
+            finally
+            {
+                Marshal.Release(thisPtr);
+            }
         }
     }
 }";
@@ -236,37 +257,44 @@ namespace Foo
                 throw new System.InvalidCastException();
             }
 
-            var comDispatch = (System.IntPtr*)thisPtr;
-            var vtbl = (System.IntPtr*)comDispatch[0];
-            System.IntPtr local_0;
-            if (pstm == null)
+            try
             {
-                local_0 = System.IntPtr.Zero;
-            }
-            else
-            {
-                if (pstm is global::Foo.C local_0_proxy)
+                var comDispatch = (System.IntPtr*)thisPtr;
+                var vtbl = (System.IntPtr*)comDispatch[0];
+                System.IntPtr local_0;
+                if (pstm == null)
                 {
-                    local_0 = local_0_proxy.instance;
+                    local_0 = System.IntPtr.Zero;
                 }
                 else
                 {
-                    var local_0_unk = Marshal.GetIUnknownForObject(pstm);
-                    var local_pstm_IID = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
-                    result = Marshal.QueryInterface(local_0_unk, ref local_pstm_IID, out local_0);
-                    if (result != 0)
+                    if (pstm is global::Foo.C local_0_proxy)
                     {
-                        Marshal.ThrowExceptionForHR(result);
+                        local_0 = local_0_proxy.instance;
+                    }
+                    else
+                    {
+                        var local_0_unk = Marshal.GetIUnknownForObject(pstm);
+                        var local_pstm_IID = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
+                        result = Marshal.QueryInterface(local_0_unk, ref local_pstm_IID, out local_0);
+                        if (result != 0)
+                        {
+                            Marshal.ThrowExceptionForHR(result);
+                        }
                     }
                 }
-            }
 
-            result = ((delegate* unmanaged<System.IntPtr, System.IntPtr, ulong, ulong*, ulong*, int>)vtbl[3])(thisPtr, local_0, cb, pcbRead, pcbWritten);
-            if (result != 0)
+                result = ((delegate* unmanaged<System.IntPtr, System.IntPtr, ulong, ulong*, ulong*, int>)vtbl[3])(thisPtr, local_0, cb, pcbRead, pcbWritten);
+                if (result != 0)
+                {
+                    Marshal.ThrowExceptionForHR(result);
+                }
+
+            }
+            finally
             {
-                Marshal.ThrowExceptionForHR(result);
+                Marshal.Release(thisPtr);
             }
-
         }
     }
 }";
@@ -320,39 +348,46 @@ namespace Foo
                 throw new System.InvalidCastException();
             }
 
-            var comDispatch = (System.IntPtr*)thisPtr;
-            var vtbl = (System.IntPtr*)comDispatch[0];
-            System.IntPtr local_0;
-            if (pstm == null)
+            try
             {
-                local_0 = System.IntPtr.Zero;
-            }
-            else
-            {
-                if (pstm is global::Foo.C local_0_proxy)
+                var comDispatch = (System.IntPtr*)thisPtr;
+                var vtbl = (System.IntPtr*)comDispatch[0];
+                System.IntPtr local_0;
+                if (pstm == null)
                 {
-                    local_0 = local_0_proxy.instance;
+                    local_0 = System.IntPtr.Zero;
                 }
                 else
                 {
-                    var local_0_unk = Marshal.GetIUnknownForObject(pstm);
-                    var local_pstm_IID = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
-                    result = Marshal.QueryInterface(local_0_unk, ref local_pstm_IID, out local_0);
-                    if (result != 0)
+                    if (pstm is global::Foo.C local_0_proxy)
                     {
-                        Marshal.ThrowExceptionForHR(result);
+                        local_0 = local_0_proxy.instance;
+                    }
+                    else
+                    {
+                        var local_0_unk = Marshal.GetIUnknownForObject(pstm);
+                        var local_pstm_IID = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
+                        result = Marshal.QueryInterface(local_0_unk, ref local_pstm_IID, out local_0);
+                        if (result != 0)
+                        {
+                            Marshal.ThrowExceptionForHR(result);
+                        }
                     }
                 }
-            }
 
-            int retVal;
-            result = ((delegate* unmanaged<System.IntPtr, System.IntPtr, ulong, ulong*, ulong*, int*, int>)vtbl[3])(thisPtr, local_0, cb, pcbRead, pcbWritten, &retVal);
-            if (result != 0)
+                int retVal;
+                result = ((delegate* unmanaged<System.IntPtr, System.IntPtr, ulong, ulong*, ulong*, int*, int>)vtbl[3])(thisPtr, local_0, cb, pcbRead, pcbWritten, &retVal);
+                if (result != 0)
+                {
+                    Marshal.ThrowExceptionForHR(result);
+                }
+
+                return (global::Foo.SeekOrigin)retVal;
+            }
+            finally
             {
-                Marshal.ThrowExceptionForHR(result);
+                Marshal.Release(thisPtr);
             }
-
-            return (global::Foo.SeekOrigin)retVal;
         }
     }
 }";
@@ -407,11 +442,18 @@ namespace Foo
                 throw new System.InvalidCastException();
             }
 
-            var comDispatch = (System.IntPtr*)thisPtr;
-            var vtbl = (System.IntPtr*)comDispatch[0];
-            int retVal;
-            retVal = ((delegate* unmanaged<System.IntPtr, global::System.IntPtr*, int>)vtbl[3])(thisPtr, phwnd);
-            return (global::Foo.HRESULT)retVal;
+            try
+            {
+                var comDispatch = (System.IntPtr*)thisPtr;
+                var vtbl = (System.IntPtr*)comDispatch[0];
+                int retVal;
+                retVal = ((delegate* unmanaged<System.IntPtr, global::System.IntPtr*, int>)vtbl[3])(thisPtr, phwnd);
+                return (global::Foo.HRESULT)retVal;
+            }
+            finally
+            {
+                Marshal.Release(thisPtr);
+            }
         }
     }
 }";
@@ -466,11 +508,18 @@ namespace Foo
                 throw new System.InvalidCastException();
             }
 
-            var comDispatch = (System.IntPtr*)thisPtr;
-            var vtbl = (System.IntPtr*)comDispatch[0];
-            float retVal;
-            retVal = ((delegate* unmanaged<System.IntPtr, global::System.IntPtr*, float>)vtbl[3])(thisPtr, phwnd);
-            return (float)retVal;
+            try
+            {
+                var comDispatch = (System.IntPtr*)thisPtr;
+                var vtbl = (System.IntPtr*)comDispatch[0];
+                float retVal;
+                retVal = ((delegate* unmanaged<System.IntPtr, global::System.IntPtr*, float>)vtbl[3])(thisPtr, phwnd);
+                return (float)retVal;
+            }
+            finally
+            {
+                Marshal.Release(thisPtr);
+            }
         }
     }
 }";
@@ -524,16 +573,23 @@ namespace Foo
                 throw new System.InvalidCastException();
             }
 
-            var comDispatch = (System.IntPtr*)thisPtr;
-            var vtbl = (System.IntPtr*)comDispatch[0];
-            System.IntPtr retVal;
-            result = ((delegate* unmanaged<System.IntPtr, System.IntPtr*, int>)vtbl[3])(thisPtr, &retVal);
-            if (result != 0)
+            try
             {
-                Marshal.ThrowExceptionForHR(result);
-            }
+                var comDispatch = (System.IntPtr*)thisPtr;
+                var vtbl = (System.IntPtr*)comDispatch[0];
+                System.IntPtr retVal;
+                result = ((delegate* unmanaged<System.IntPtr, System.IntPtr*, int>)vtbl[3])(thisPtr, &retVal);
+                if (result != 0)
+                {
+                    Marshal.ThrowExceptionForHR(result);
+                }
 
-            return retVal == System.IntPtr.Zero ? null : (global::Foo.IStr)Marshal.GetObjectForIUnknown(retVal);
+                return retVal == System.IntPtr.Zero ? null : (global::Foo.IStr)Marshal.GetObjectForIUnknown(retVal);
+            }
+            finally
+            {
+                Marshal.Release(thisPtr);
+            }
         }
     }
 }";
@@ -587,15 +643,22 @@ namespace Foo
                 throw new System.InvalidCastException();
             }
 
-            var comDispatch = (System.IntPtr*)thisPtr;
-            var vtbl = (System.IntPtr*)comDispatch[0];
-            fixed (global::Foo.STATSTG* local_0 = &pstatstg)
-            result = ((delegate* unmanaged<System.IntPtr, global::Foo.STATSTG*, int>)vtbl[3])(thisPtr, local_0);
-            if (result != 0)
+            try
             {
-                Marshal.ThrowExceptionForHR(result);
-            }
+                var comDispatch = (System.IntPtr*)thisPtr;
+                var vtbl = (System.IntPtr*)comDispatch[0];
+                fixed (global::Foo.STATSTG* local_0 = &pstatstg)
+                result = ((delegate* unmanaged<System.IntPtr, global::Foo.STATSTG*, int>)vtbl[3])(thisPtr, local_0);
+                if (result != 0)
+                {
+                    Marshal.ThrowExceptionForHR(result);
+                }
 
+            }
+            finally
+            {
+                Marshal.Release(thisPtr);
+            }
         }
     }
 }";
@@ -649,14 +712,21 @@ namespace Foo
                 throw new System.InvalidCastException();
             }
 
-            var comDispatch = (System.IntPtr*)thisPtr;
-            var vtbl = (System.IntPtr*)comDispatch[0];
-            result = ((delegate* unmanaged<System.IntPtr, int>)vtbl[3])(thisPtr);
-            if (result != 0)
+            try
             {
-                Marshal.ThrowExceptionForHR(result);
-            }
+                var comDispatch = (System.IntPtr*)thisPtr;
+                var vtbl = (System.IntPtr*)comDispatch[0];
+                result = ((delegate* unmanaged<System.IntPtr, int>)vtbl[3])(thisPtr);
+                if (result != 0)
+                {
+                    Marshal.ThrowExceptionForHR(result);
+                }
 
+            }
+            finally
+            {
+                Marshal.Release(thisPtr);
+            }
         }
     }
 }";
@@ -710,39 +780,46 @@ namespace Foo
                 throw new System.InvalidCastException();
             }
 
-            var comDispatch = (System.IntPtr*)thisPtr;
-            var vtbl = (System.IntPtr*)comDispatch[0];
-            System.IntPtr local_0;
-            if (pstm == null)
+            try
             {
-                local_0 = System.IntPtr.Zero;
-            }
-            else
-            {
-                if (pstm is global::Foo.C local_0_proxy)
+                var comDispatch = (System.IntPtr*)thisPtr;
+                var vtbl = (System.IntPtr*)comDispatch[0];
+                System.IntPtr local_0;
+                if (pstm == null)
                 {
-                    local_0 = local_0_proxy.instance;
+                    local_0 = System.IntPtr.Zero;
                 }
                 else
                 {
-                    var local_0_unk = Marshal.GetIUnknownForObject(pstm);
-                    var local_pstm_IID = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
-                    result = Marshal.QueryInterface(local_0_unk, ref local_pstm_IID, out local_0);
-                    if (result != 0)
+                    if (pstm is global::Foo.C local_0_proxy)
                     {
-                        Marshal.ThrowExceptionForHR(result);
+                        local_0 = local_0_proxy.instance;
+                    }
+                    else
+                    {
+                        var local_0_unk = Marshal.GetIUnknownForObject(pstm);
+                        var local_pstm_IID = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
+                        result = Marshal.QueryInterface(local_0_unk, ref local_pstm_IID, out local_0);
+                        if (result != 0)
+                        {
+                            Marshal.ThrowExceptionForHR(result);
+                        }
                     }
                 }
-            }
 
-            long retVal;
-            result = ((delegate* unmanaged<System.IntPtr, System.IntPtr, ulong, ulong*, ulong*, long*, int>)vtbl[3])(thisPtr, local_0, cb, pcbRead, pcbWritten, &retVal);
-            if (result != 0)
+                long retVal;
+                result = ((delegate* unmanaged<System.IntPtr, System.IntPtr, ulong, ulong*, ulong*, long*, int>)vtbl[3])(thisPtr, local_0, cb, pcbRead, pcbWritten, &retVal);
+                if (result != 0)
+                {
+                    Marshal.ThrowExceptionForHR(result);
+                }
+
+                return retVal;
+            }
+            finally
             {
-                Marshal.ThrowExceptionForHR(result);
+                Marshal.Release(thisPtr);
             }
-
-            return retVal;
         }
     }
 }";
@@ -798,16 +875,23 @@ namespace Foo
                     throw new System.InvalidCastException();
                 }
 
-                var comDispatch = (System.IntPtr*)thisPtr;
-                var vtbl = (System.IntPtr*)comDispatch[0];
-                long retVal;
-                result = ((delegate* unmanaged<System.IntPtr, long*, int>)vtbl[3])(thisPtr, &retVal);
-                if (result != 0)
+                try
                 {
-                    Marshal.ThrowExceptionForHR(result);
-                }
+                    var comDispatch = (System.IntPtr*)thisPtr;
+                    var vtbl = (System.IntPtr*)comDispatch[0];
+                    long retVal;
+                    result = ((delegate* unmanaged<System.IntPtr, long*, int>)vtbl[3])(thisPtr, &retVal);
+                    if (result != 0)
+                    {
+                        Marshal.ThrowExceptionForHR(result);
+                    }
 
-                return retVal;
+                    return retVal;
+                }
+                finally
+                {
+                    Marshal.Release(thisPtr);
+                }
             }
         }
     }
@@ -862,15 +946,22 @@ namespace Foo
                 throw new System.InvalidCastException();
             }
 
-            var comDispatch = (System.IntPtr*)thisPtr;
-            var vtbl = (System.IntPtr*)comDispatch[0];
-            var local_1 = Marshal.StringToCoTaskMemUni(dwOrigin);
-            result = ((delegate* unmanaged<System.IntPtr, long, System.IntPtr, ulong*, int>)vtbl[3])(thisPtr, dlibMove, local_1, plibNewPosition);
-            if (result != 0)
+            try
             {
-                Marshal.ThrowExceptionForHR(result);
-            }
+                var comDispatch = (System.IntPtr*)thisPtr;
+                var vtbl = (System.IntPtr*)comDispatch[0];
+                var local_1 = Marshal.StringToCoTaskMemUni(dwOrigin);
+                result = ((delegate* unmanaged<System.IntPtr, long, System.IntPtr, ulong*, int>)vtbl[3])(thisPtr, dlibMove, local_1, plibNewPosition);
+                if (result != 0)
+                {
+                    Marshal.ThrowExceptionForHR(result);
+                }
 
+            }
+            finally
+            {
+                Marshal.Release(thisPtr);
+            }
         }
     }
 }";
@@ -924,15 +1015,22 @@ namespace Foo
                 throw new System.InvalidCastException();
             }
 
-            var comDispatch = (System.IntPtr*)thisPtr;
-            var vtbl = (System.IntPtr*)comDispatch[0];
-            var local_0 = pstm == null ? System.IntPtr.Zero : Marshal.GetIUnknownForObject(pstm);
-            result = ((delegate* unmanaged<System.IntPtr, System.IntPtr, ulong, ulong*, ulong*, int>)vtbl[3])(thisPtr, local_0, cb, pcbRead, pcbWritten);
-            if (result != 0)
+            try
             {
-                Marshal.ThrowExceptionForHR(result);
-            }
+                var comDispatch = (System.IntPtr*)thisPtr;
+                var vtbl = (System.IntPtr*)comDispatch[0];
+                var local_0 = pstm == null ? System.IntPtr.Zero : Marshal.GetIUnknownForObject(pstm);
+                result = ((delegate* unmanaged<System.IntPtr, System.IntPtr, ulong, ulong*, ulong*, int>)vtbl[3])(thisPtr, local_0, cb, pcbRead, pcbWritten);
+                if (result != 0)
+                {
+                    Marshal.ThrowExceptionForHR(result);
+                }
 
+            }
+            finally
+            {
+                Marshal.Release(thisPtr);
+            }
         }
     }
 }";
@@ -986,16 +1084,23 @@ namespace Foo
                 throw new System.InvalidCastException();
             }
 
-            var comDispatch = (System.IntPtr*)thisPtr;
-            var vtbl = (System.IntPtr*)comDispatch[0];
-            System.IntPtr local_0;
-            result = ((delegate* unmanaged<System.IntPtr, System.IntPtr*, ulong, ulong*, ulong*, int>)vtbl[3])(thisPtr, &local_0, cb, pcbRead, pcbWritten);
-            if (result != 0)
+            try
             {
-                Marshal.ThrowExceptionForHR(result);
-            }
+                var comDispatch = (System.IntPtr*)thisPtr;
+                var vtbl = (System.IntPtr*)comDispatch[0];
+                System.IntPtr local_0;
+                result = ((delegate* unmanaged<System.IntPtr, System.IntPtr*, ulong, ulong*, ulong*, int>)vtbl[3])(thisPtr, &local_0, cb, pcbRead, pcbWritten);
+                if (result != 0)
+                {
+                    Marshal.ThrowExceptionForHR(result);
+                }
 
-            pstm = local_0 == System.IntPtr.Zero ? null : (global::Foo.IStr)Marshal.GetObjectForIUnknown(local_0);
+                pstm = local_0 == System.IntPtr.Zero ? null : (global::Foo.IStr)Marshal.GetObjectForIUnknown(local_0);
+            }
+            finally
+            {
+                Marshal.Release(thisPtr);
+            }
         }
     }
 }";
@@ -1049,16 +1154,23 @@ namespace Foo
                 throw new System.InvalidCastException();
             }
 
-            var comDispatch = (System.IntPtr*)thisPtr;
-            var vtbl = (System.IntPtr*)comDispatch[0];
-            System.IntPtr local_1;
-            result = ((delegate* unmanaged<System.IntPtr, long, System.IntPtr*, ulong*, int>)vtbl[3])(thisPtr, dlibMove, &local_1, plibNewPosition);
-            if (result != 0)
+            try
             {
-                Marshal.ThrowExceptionForHR(result);
-            }
+                var comDispatch = (System.IntPtr*)thisPtr;
+                var vtbl = (System.IntPtr*)comDispatch[0];
+                System.IntPtr local_1;
+                result = ((delegate* unmanaged<System.IntPtr, long, System.IntPtr*, ulong*, int>)vtbl[3])(thisPtr, dlibMove, &local_1, plibNewPosition);
+                if (result != 0)
+                {
+                    Marshal.ThrowExceptionForHR(result);
+                }
 
-            dwOrigin = Marshal.PtrToStringUni(local_1);
+                dwOrigin = Marshal.PtrToStringUni(local_1);
+            }
+            finally
+            {
+                Marshal.Release(thisPtr);
+            }
         }
     }
 }";
@@ -1112,14 +1224,21 @@ namespace Foo
                 throw new System.InvalidCastException();
             }
 
-            var comDispatch = (System.IntPtr*)thisPtr;
-            var vtbl = (System.IntPtr*)comDispatch[0];
-            result = ((delegate* unmanaged<System.IntPtr, global::Foo.STATSTG, int>)vtbl[3])(thisPtr, pstatstg);
-            if (result != 0)
+            try
             {
-                Marshal.ThrowExceptionForHR(result);
-            }
+                var comDispatch = (System.IntPtr*)thisPtr;
+                var vtbl = (System.IntPtr*)comDispatch[0];
+                result = ((delegate* unmanaged<System.IntPtr, global::Foo.STATSTG, int>)vtbl[3])(thisPtr, pstatstg);
+                if (result != 0)
+                {
+                    Marshal.ThrowExceptionForHR(result);
+                }
 
+            }
+            finally
+            {
+                Marshal.Release(thisPtr);
+            }
         }
     }
 }";
@@ -1173,16 +1292,23 @@ namespace Foo
                 throw new System.InvalidCastException();
             }
 
-            var comDispatch = (System.IntPtr*)thisPtr;
-            var vtbl = (System.IntPtr*)comDispatch[0];
-            global::Foo.STATSTG retVal;
-            result = ((delegate* unmanaged<System.IntPtr, ulong, global::Foo.STATSTG*, int>)vtbl[3])(thisPtr, cb, &retVal);
-            if (result != 0)
+            try
             {
-                Marshal.ThrowExceptionForHR(result);
-            }
+                var comDispatch = (System.IntPtr*)thisPtr;
+                var vtbl = (System.IntPtr*)comDispatch[0];
+                global::Foo.STATSTG retVal;
+                result = ((delegate* unmanaged<System.IntPtr, ulong, global::Foo.STATSTG*, int>)vtbl[3])(thisPtr, cb, &retVal);
+                if (result != 0)
+                {
+                    Marshal.ThrowExceptionForHR(result);
+                }
 
-            return retVal;
+                return retVal;
+            }
+            finally
+            {
+                Marshal.Release(thisPtr);
+            }
         }
     }
 }";
@@ -1237,9 +1363,16 @@ namespace Foo
                 throw new System.InvalidCastException();
             }
 
-            var comDispatch = (System.IntPtr*)thisPtr;
-            var vtbl = (System.IntPtr*)comDispatch[0];
-            ((delegate* unmanaged<System.IntPtr, global::System.IntPtr*, void>)vtbl[3])(thisPtr, phwnd);
+            try
+            {
+                var comDispatch = (System.IntPtr*)thisPtr;
+                var vtbl = (System.IntPtr*)comDispatch[0];
+                ((delegate* unmanaged<System.IntPtr, global::System.IntPtr*, void>)vtbl[3])(thisPtr, phwnd);
+            }
+            finally
+            {
+                Marshal.Release(thisPtr);
+            }
         }
     }
 }";
@@ -1293,15 +1426,22 @@ namespace Foo
                 throw new System.InvalidCastException();
             }
 
-            var comDispatch = (System.IntPtr*)thisPtr;
-            var vtbl = (System.IntPtr*)comDispatch[0];
-            fixed (global::Foo.STATSTG* local_0 = &pstatstg)
-            result = ((delegate* unmanaged<System.IntPtr, global::Foo.STATSTG*, int>)vtbl[3])(thisPtr, local_0);
-            if (result != 0)
+            try
             {
-                Marshal.ThrowExceptionForHR(result);
-            }
+                var comDispatch = (System.IntPtr*)thisPtr;
+                var vtbl = (System.IntPtr*)comDispatch[0];
+                fixed (global::Foo.STATSTG* local_0 = &pstatstg)
+                result = ((delegate* unmanaged<System.IntPtr, global::Foo.STATSTG*, int>)vtbl[3])(thisPtr, local_0);
+                if (result != 0)
+                {
+                    Marshal.ThrowExceptionForHR(result);
+                }
 
+            }
+            finally
+            {
+                Marshal.Release(thisPtr);
+            }
         }
     }
 }";
@@ -1355,15 +1495,22 @@ namespace Foo
                 throw new System.InvalidCastException();
             }
 
-            var comDispatch = (System.IntPtr*)thisPtr;
-            var vtbl = (System.IntPtr*)comDispatch[0];
-            fixed (global::Foo.STATSTG* local_0 = pstatstg)
-            result = ((delegate* unmanaged<System.IntPtr, global::Foo.STATSTG*, int>)vtbl[3])(thisPtr, local_0);
-            if (result != 0)
+            try
             {
-                Marshal.ThrowExceptionForHR(result);
-            }
+                var comDispatch = (System.IntPtr*)thisPtr;
+                var vtbl = (System.IntPtr*)comDispatch[0];
+                fixed (global::Foo.STATSTG* local_0 = pstatstg)
+                result = ((delegate* unmanaged<System.IntPtr, global::Foo.STATSTG*, int>)vtbl[3])(thisPtr, local_0);
+                if (result != 0)
+                {
+                    Marshal.ThrowExceptionForHR(result);
+                }
 
+            }
+            finally
+            {
+                Marshal.Release(thisPtr);
+            }
         }
     }
 }";
@@ -1417,21 +1564,28 @@ namespace Foo
                 throw new System.InvalidCastException();
             }
 
-            var comDispatch = (System.IntPtr*)thisPtr;
-            var vtbl = (System.IntPtr*)comDispatch[0];
-            System.IntPtr[] local_0_arr = new System.IntPtr[pstatstg.Length];
-            for (int local_0_cnt = 0; local_0_cnt < pstatstg.Length; local_0_cnt++)
+            try
             {
-                throw new System.NotImplementedException();
-            }
+                var comDispatch = (System.IntPtr*)thisPtr;
+                var vtbl = (System.IntPtr*)comDispatch[0];
+                System.IntPtr[] local_0_arr = new System.IntPtr[pstatstg.Length];
+                for (int local_0_cnt = 0; local_0_cnt < pstatstg.Length; local_0_cnt++)
+                {
+                    throw new System.NotImplementedException();
+                }
 
-            fixed (System.IntPtr* local_0 = local_0_arr)
-            result = ((delegate* unmanaged<System.IntPtr, System.IntPtr*, int>)vtbl[3])(thisPtr, local_0);
-            if (result != 0)
+                fixed (System.IntPtr* local_0 = local_0_arr)
+                result = ((delegate* unmanaged<System.IntPtr, System.IntPtr*, int>)vtbl[3])(thisPtr, local_0);
+                if (result != 0)
+                {
+                    Marshal.ThrowExceptionForHR(result);
+                }
+
+            }
+            finally
             {
-                Marshal.ThrowExceptionForHR(result);
+                Marshal.Release(thisPtr);
             }
-
         }
     }
 }";
