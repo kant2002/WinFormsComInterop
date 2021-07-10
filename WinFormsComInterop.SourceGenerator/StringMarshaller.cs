@@ -4,7 +4,6 @@ namespace WinFormsComInterop.SourceGenerator
 {
     internal class StringMarshaller : Marshaller
     {
-        public string LocalVariable => $"local_{Index}";
         public override string UnmanagedTypeName => "System.IntPtr";
 
         public override void DeclareLocalParameter(IndentedStringBuilder builder)
@@ -14,6 +13,11 @@ namespace WinFormsComInterop.SourceGenerator
 
         public override string GetParameterInvocation()
         {
+            if (Index == -1)
+            {
+                return $"{Name} == System.IntPtr.Zero ? null : ({FormatTypeName()})Marshal.PtrToStringUni({Name})";
+            }
+
             return LocalVariable;
         }
 
@@ -34,6 +38,12 @@ namespace WinFormsComInterop.SourceGenerator
 
         public override void ConvertToUnmanagedParameter(IndentedStringBuilder builder)
         {
+            if (Index == -1)
+            {
+                builder.AppendLine($"{UnmanagedTypeName} {Name};");
+                return;
+            }
+
             if (RefKind == RefKind.Out)
             {
                 builder.AppendLine($"{UnmanagedTypeName} {LocalVariable};");
