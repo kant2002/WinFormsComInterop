@@ -325,10 +325,46 @@ namespace {namespaceName}
                 {
                     case IMethodSymbol methodSymbol:
                         {
+                            if (methodSymbol.MethodKind == MethodKind.PropertyGet || methodSymbol.MethodKind == MethodKind.PropertySet)
+                            {
+                                continue;
+                            }
+
                             var methodContext = context.CreateMethodGenerationContext(classSymbol, methodSymbol, slotNumber);
-                            GenerateRCWMethod(source, interfaceTypeSymbol, methodContext);
                             slotNumber++;
+
+                            GenerateRCWMethodHeader(source, interfaceTypeSymbol, methodContext);
+                            WriteRCWMethodBody(source, interfaceTypeSymbol, methodContext);
                         }
+                        break;
+                    case IPropertySymbol propertySymbol:
+                        {
+                            GenerateRCWPropertyHeader(source, interfaceTypeSymbol, propertySymbol, context);
+                            source.AppendLine("{");
+                            source.PushIndent();
+
+                            if (propertySymbol.GetMethod != null)
+                            {
+                                var getterContext = context.CreateMethodGenerationContext(classSymbol, propertySymbol.GetMethod, slotNumber);
+                                slotNumber++;
+
+                                source.AppendLine("get");
+                                WriteRCWMethodBody(source, interfaceTypeSymbol, getterContext);
+                            }
+
+                            if (propertySymbol.SetMethod != null)
+                            {
+                                var setterContext = context.CreateMethodGenerationContext(classSymbol, propertySymbol.SetMethod, slotNumber);
+                                slotNumber++;
+
+                                source.AppendLine("set");
+                                WriteRCWMethodBody(source, interfaceTypeSymbol, setterContext);
+                            }
+
+                            source.PopIndent();
+                            source.AppendLine("}");
+                        }
+
                         break;
                 }
             }
@@ -378,11 +414,7 @@ namespace {namespaceName}
         {
             source.AppendLine("[System.Runtime.InteropServices.UnmanagedCallersOnly]");
             var method = context.Method;
-            var marshallers = method.Parameters.Select(_ =>
-            {
-                var marshaller = context.CreateMarshaller(_);
-                return marshaller;
-            });
+            var marshallers = context.Marshallers;
             var preserveSignature = context.PreserveSignature;
             var parametersList = marshallers.Select(_ => _.GetUnmanagedParameterDeclaration()).ToList();
             parametersList.Insert(0, "System.IntPtr thisPtr");
@@ -492,37 +524,32 @@ namespace {namespaceName}
             source.AppendLine("}");
         }
 
-        private void GenerateRCWMethod(IndentedStringBuilder source, INamedTypeSymbol interfaceSymbol, MethodGenerationContext context)
+        private void GenerateRCWMethodHeader(IndentedStringBuilder source, INamedTypeSymbol interfaceSymbol, MethodGenerationContext context)
         {
             var method = context.Method;
-            var marshallers = method.Parameters.Select(_ =>
-            {
-                var marshaller = context.CreateMarshaller(_);
-                return marshaller;
-            });
-            var preserveSignature = context.PreserveSignature;
-            var parametersList = marshallers.Select(_ => _.GetManagedParameterDeclaration()).ToList();
-            var returnMarshaller = context.CreateReturnMarshaller(method.ReturnType);
+            var parametersList = context.Marshallers.Select(_ => _.GetManagedParameterDeclaration()).ToList();
 
             var parametersListString = string.Join(", ", parametersList);
             var interfaceTypeName = interfaceSymbol.FormatType(context.GetAlias(interfaceSymbol));
             var returnTypeName = method.ReturnType.FormatType(context.GetAlias(method.ReturnType));
-            if (method.MethodKind == MethodKind.PropertyGet)
-            {
-                source.AppendLine($"{returnTypeName} {interfaceTypeName}.{method.AssociatedSymbol!.Name}");
-                source.AppendLine("{");
-                source.PushIndent();
-                source.AppendLine("get");
-                source.AppendLine("{");
-                source.PushIndent();
-            }
-            else
-            {
-                source.AppendLine($"{returnTypeName} {interfaceTypeName}.{method.Name}({parametersListString})");
-                source.AppendLine("{");
-                source.PushIndent();
-            }
+            source.AppendLine($"{returnTypeName} {interfaceTypeName}.{method.Name}({parametersListString})");
+        }
 
+        private void GenerateRCWPropertyHeader(IndentedStringBuilder source, INamedTypeSymbol interfaceSymbol, IPropertySymbol propertySymbol, WrapperGenerationContext context)
+        {
+            var interfaceTypeName = interfaceSymbol.FormatType(context.GetAlias(interfaceSymbol));
+            var returnTypeName = propertySymbol.Type.FormatType(context.GetAlias(propertySymbol.Type));
+            source.AppendLine($"{returnTypeName} {interfaceTypeName}.{propertySymbol.Name}");
+        }
+
+        private static void WriteRCWMethodBody(IndentedStringBuilder source, INamedTypeSymbol interfaceSymbol, MethodGenerationContext context)
+        {
+            var method = context.Method;
+            var marshallers = context.Marshallers;
+            var preserveSignature = context.PreserveSignature;
+            var returnMarshaller = context.CreateReturnMarshaller();
+            source.AppendLine("{");
+            source.PushIndent();
             source.AppendLine($"var targetInterface = new System.Guid(\"{interfaceSymbol.GetTypeGuid()}\");");
             source.AppendLine("var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var thisPtr);");
             source.AppendLine("if (result != 0)");
@@ -624,18 +651,8 @@ namespace {namespaceName}
             source.PopIndent();
             source.AppendLine("}");
 
-            if (method.MethodKind == MethodKind.PropertyGet)
-            {
-                source.PopIndent();
-                source.AppendLine("}");
-                source.PopIndent();
-                source.AppendLine("}");
-            }
-            else
-            {
-                source.PopIndent();
-                source.AppendLine("}");
-            }
+            source.PopIndent();
+            source.AppendLine("}");
         }
 
         internal class ClassDeclaration

@@ -1,6 +1,7 @@
 ﻿namespace WinFormsComInterop.SourceGenerator
 {
     using Microsoft.CodeAnalysis;
+    using System.Collections.Generic;
     using System.Linq;
 
     internal class MethodGenerationContext
@@ -12,6 +13,8 @@
         public ITypeSymbol WrapperClass { get; internal set; }
 
         internal WrapperGenerationContext Context { get; set; }
+
+        internal IList<Marshaller> Marshallers => Method.Parameters.Select(_ => CreateMarshaller(_)).ToList();
 
         public string? GetAlias(ITypeSymbol type) => Context.GetAlias(type);
 
@@ -53,6 +56,8 @@
         {
             return CreateMarshaller(parameterSymbol, this);
         }
+
+        public Marshaller CreateReturnMarshaller() => CreateReturnMarshaller(Method.ReturnType);
         public Marshaller CreateReturnMarshaller(ITypeSymbol parameterSymbol) => CreateReturnMarshaller(parameterSymbol, this);
 
         private Marshaller CreateMarshaller(IParameterSymbol parameterSymbol, MethodGenerationContext context)
