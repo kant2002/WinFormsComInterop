@@ -1,6 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <!-- Uncomment cross targeting when .NET 6 Prevew 7 would be debuted -->
+    <!--<TargetFrameworks>net5.0;net6.0</TargetFrameworks>-->
     <TargetFramework>net5.0</TargetFramework>
     <VersionPrefix>0.2.6</VersionPrefix>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -18,7 +20,7 @@
       <EmbedInteropTypes>false</EmbedInteropTypes>
       <PrivateAssets>All</PrivateAssets>
     </Reference>
-    <ProjectReference Include="..\System.Drawing.Common\System.Drawing.Common.csproj">
+    <ProjectReference Include="..\System.Drawing.Common\System.Drawing.Common.csproj" Condition="$(TargetFramework) == 'net5.0'">
       <PrivateAssets>All</PrivateAssets>
       <Aliases>drawing</Aliases>
     </ProjectReference>
