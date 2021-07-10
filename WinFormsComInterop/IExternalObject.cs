@@ -34,7 +34,7 @@ namespace WinFormsComInterop
 #endif
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     partial class IExternalObject 
-        : IAccessible
+        : global::Accessibility.IAccessible
     {
         private static Guid IID_IAccessible = new Guid("618736E0-3C3D-11CF-810C-00AA00389B71");
         private readonly IntPtr instance;
