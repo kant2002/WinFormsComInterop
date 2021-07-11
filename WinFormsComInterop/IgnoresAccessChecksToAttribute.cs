@@ -1,4 +1,5 @@
-﻿[assembly: global::System.Runtime.CompilerServices.IgnoresAccessChecksTo("System.Windows.Forms.Primitives")]
+﻿[assembly: global::System.Runtime.CompilerServices.IgnoresAccessChecksTo("System.Windows.Forms")]
+[assembly: global::System.Runtime.CompilerServices.IgnoresAccessChecksTo("System.Windows.Forms.Primitives")]
 [assembly: global::System.Runtime.CompilerServices.IgnoresAccessChecksTo("System.Drawing.Common")]
 [assembly: global::System.Runtime.CompilerServices.IgnoresAccessChecksTo("WindowsBase")]
 [assembly: global::System.Runtime.CompilerServices.IgnoresAccessChecksTo("PresentationCore")]

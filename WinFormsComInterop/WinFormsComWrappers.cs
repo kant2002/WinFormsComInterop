@@ -1,4 +1,5 @@
 ﻿extern alias primitives;
+extern alias forms;
 #if NET5_0
 extern alias drawing;
 #endif
@@ -16,7 +17,9 @@ namespace WinFormsComInterop
     [ComCallableWrapper(typeof(drawing::Interop.Ole32.IStream))]
 #endif
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IStream))]
+    [ComCallableWrapper(typeof(primitives::Interop.Ole32.IServiceProvider))]
     [ComCallableWrapper(typeof(primitives::Interop.UiaCore.IRawElementProviderSimple))]
+    //[ComCallableWrapper(typeof(primitives::Interop.UiaCore.IAccessibleEx))]
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IDropTarget))]
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IStorage))]
     [ComCallableWrapper(typeof(primitives::Interop.Richedit.IRichEditOleCallback))]
@@ -33,16 +36,21 @@ namespace WinFormsComInterop
 #if NET5_0
         static ComWrappers.ComInterfaceEntry* drawingStreamEntry;
 #endif
-        static ComWrappers.ComInterfaceEntry* wrapperEntry;
+        static ComWrappers.ComInterfaceEntry* accessibleObjectEntry;
         static ComWrappers.ComInterfaceEntry* primitivesStreamEntry;
-        static ComWrappers.ComInterfaceEntry* oleDropTargetEntry;
         static ComWrappers.ComInterfaceEntry* storageEntry;
         static ComWrappers.ComInterfaceEntry* richEditOleCallbackEntry;
         static ComWrappers.ComInterfaceEntry* primitivesDropTargetEntry;
+#if USE_WPF
+        static ComWrappers.ComInterfaceEntry* oleDropTargetEntry;
         static ComWrappers.ComInterfaceEntry* winbaseTfContextEntry;
         static ComWrappers.ComInterfaceEntry* presentationDefaultTextStoreEntry;
+#endif
 
+        internal static Guid IID_IAccessible = new Guid("618736E0-3C3D-11CF-810C-00AA00389B71");
         internal static Guid IID_IRawElementProviderSimple = new Guid("D6DD68D1-86FD-4332-8666-9ABEDEA2D24C");
+        internal static Guid IID_IServiceProvider = new Guid("6D5140C1-7436-11CE-8034-00AA006009FA");
+        internal static Guid IID_IEnumVariant = new Guid("00020404-0000-0000-C000-000000000046");
 
         internal static Guid IID_IOleWindow = new Guid("00000114-0000-0000-C000-000000000046");
         internal static Guid IID_IStream = new Guid("0000000C-0000-0000-C000-000000000046");
@@ -61,7 +69,7 @@ namespace WinFormsComInterop
 #if NET5_0
             drawingStreamEntry = CreateDrawingStreamEntry();
 #endif
-            wrapperEntry = CreateGenericEntry();
+            accessibleObjectEntry = CreateAccessibleObjectEntry();
             primitivesStreamEntry = CreatePrimitivesStreamEntry();
             
             primitivesDropTargetEntry = CreatePrimitivesDropTargetEntry();
@@ -145,14 +153,17 @@ namespace WinFormsComInterop
             wrapperEntry->Vtable = vtbl;
             return wrapperEntry;
         }
-        private static ComInterfaceEntry* CreateGenericEntry()
+        private static ComInterfaceEntry* CreateAccessibleObjectEntry()
         {
-            CreatePrimitivesIRawElementProviderSimpleProxyVtbl(out var vtbl);
+            CreatePrimitivesIRawElementProviderSimpleProxyVtbl(out var rawElementProviderSimpleVtbl);
+            CreatePrimitivesIServiceProviderProxyVtbl(out var serviceProviderVtbl);
 
-            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 1);
+            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 2);
             var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
-            wrapperEntry->IID = IID_IRawElementProviderSimple;
-            wrapperEntry->Vtable = vtbl;
+            wrapperEntry[0].IID = IID_IRawElementProviderSimple;
+            wrapperEntry[0].Vtable = rawElementProviderSimpleVtbl;
+            wrapperEntry[1].IID = IID_IServiceProvider;
+            wrapperEntry[1].Vtable = serviceProviderVtbl;
             return wrapperEntry;
         }
 
@@ -235,13 +246,41 @@ namespace WinFormsComInterop
                 return presentationDefaultTextStoreEntry;
             }
 #endif
+            if (obj is forms::System.Windows.Forms.AccessibleObject)
+            {
+                count = 2;
+                return accessibleObjectEntry;
+            }
 
-            count = 1;
-            return wrapperEntry;
+            if (obj is forms::System.Windows.Forms.InternalAccessibleObject)
+            {
+                count = 2;
+                return accessibleObjectEntry;
+            }
+
+            throw new NotImplementedException();
         }
 
         protected override object CreateObject(IntPtr externalComObject, CreateObjectFlags flags)
         {
+            if (Marshal.QueryInterface(externalComObject, ref IID_IAccessible, out var accessiblePtr) >= 0)
+            {
+                Marshal.Release(accessiblePtr);
+                if (Marshal.QueryInterface(externalComObject, ref IID_IEnumVariant, out var accessibleEnumPtr) >= 0)
+                {
+                    Marshal.Release(accessibleEnumPtr);
+                    return new IAccessibleEnumWrapper(externalComObject);
+                }
+
+                return new IAccessibleWrapper(externalComObject);
+            }
+
+            if (Marshal.QueryInterface(externalComObject, ref IID_IPicture, out var picturePtr) >= 0)
+            {
+                Marshal.Release(picturePtr);
+                return new IPictureWrapper(externalComObject);
+            }
+
             GetIUnknownImpl(out IntPtr fpQueryInteface, out IntPtr fpAddRef, out IntPtr fpRelease);
             if (((IntPtr*)((IntPtr*)externalComObject)[0])[0] == fpQueryInteface)
             {

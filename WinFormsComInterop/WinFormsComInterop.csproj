@@ -28,6 +28,10 @@
       <PrivateAssets>All</PrivateAssets>
       <Aliases>primitives</Aliases>
     </ProjectReference>
+    <ProjectReference Include="..\System.Windows.Forms\System.Windows.Forms.csproj">
+      <PrivateAssets>All</PrivateAssets>
+      <Aliases>forms</Aliases>
+    </ProjectReference>
     <ProjectReference Include="..\WinFormsComInterop.SourceGenerator\WinFormsComInterop.SourceGenerator.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer">
       <PrivateAssets>All</PrivateAssets>
     </ProjectReference>

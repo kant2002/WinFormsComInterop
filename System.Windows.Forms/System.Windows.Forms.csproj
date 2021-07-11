@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <FileVersion>5.0.0.0</FileVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+</Project>
