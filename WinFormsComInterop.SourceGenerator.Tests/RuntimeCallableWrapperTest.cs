@@ -268,19 +268,12 @@ namespace Foo
                 }
                 else
                 {
-                    if (pstm is global::Foo.C local_0_proxy)
+                    var local_0_unk = MarshalSupport.GetIUnknownForObject(pstm);
+                    var local_pstm_IID = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
+                    result = Marshal.QueryInterface(local_0_unk, ref local_pstm_IID, out local_0);
+                    if (result != 0)
                     {
-                        local_0 = local_0_proxy.instance;
-                    }
-                    else
-                    {
-                        var local_0_unk = Marshal.GetIUnknownForObject(pstm);
-                        var local_pstm_IID = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
-                        result = Marshal.QueryInterface(local_0_unk, ref local_pstm_IID, out local_0);
-                        if (result != 0)
-                        {
-                            Marshal.ThrowExceptionForHR(result);
-                        }
+                        Marshal.ThrowExceptionForHR(result);
                     }
                 }
 
@@ -359,19 +352,12 @@ namespace Foo
                 }
                 else
                 {
-                    if (pstm is global::Foo.C local_0_proxy)
+                    var local_0_unk = MarshalSupport.GetIUnknownForObject(pstm);
+                    var local_pstm_IID = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
+                    result = Marshal.QueryInterface(local_0_unk, ref local_pstm_IID, out local_0);
+                    if (result != 0)
                     {
-                        local_0 = local_0_proxy.instance;
-                    }
-                    else
-                    {
-                        var local_0_unk = Marshal.GetIUnknownForObject(pstm);
-                        var local_pstm_IID = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
-                        result = Marshal.QueryInterface(local_0_unk, ref local_pstm_IID, out local_0);
-                        if (result != 0)
-                        {
-                            Marshal.ThrowExceptionForHR(result);
-                        }
+                        Marshal.ThrowExceptionForHR(result);
                     }
                 }
 
@@ -791,19 +777,12 @@ namespace Foo
                 }
                 else
                 {
-                    if (pstm is global::Foo.C local_0_proxy)
+                    var local_0_unk = MarshalSupport.GetIUnknownForObject(pstm);
+                    var local_pstm_IID = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
+                    result = Marshal.QueryInterface(local_0_unk, ref local_pstm_IID, out local_0);
+                    if (result != 0)
                     {
-                        local_0 = local_0_proxy.instance;
-                    }
-                    else
-                    {
-                        var local_0_unk = Marshal.GetIUnknownForObject(pstm);
-                        var local_pstm_IID = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
-                        result = Marshal.QueryInterface(local_0_unk, ref local_pstm_IID, out local_0);
-                        if (result != 0)
-                        {
-                            Marshal.ThrowExceptionForHR(result);
-                        }
+                        Marshal.ThrowExceptionForHR(result);
                     }
                 }
 
@@ -1258,7 +1237,7 @@ namespace Foo
             {
                 var comDispatch = (System.IntPtr*)thisPtr;
                 var vtbl = (System.IntPtr*)comDispatch[0];
-                var local_0 = pstm == null ? System.IntPtr.Zero : Marshal.GetIUnknownForObject(pstm);
+                var local_0 = pstm == null ? System.IntPtr.Zero : MarshalSupport.GetIUnknownForObject(pstm);
                 result = ((delegate* unmanaged<System.IntPtr, System.IntPtr, ulong, ulong*, ulong*, int>)vtbl[3])(thisPtr, local_0, cb, pcbRead, pcbWritten);
                 if (result != 0)
                 {

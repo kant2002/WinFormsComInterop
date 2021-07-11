@@ -745,7 +745,7 @@ namespace Foo
             try
             {
                 var inst = ComInterfaceDispatch.GetInstance<global::Foo.IStr>((ComInterfaceDispatch*)thisPtr);
-                *retVal = Marshal.GetIUnknownForObject(inst.Clone());
+                *retVal = MarshalSupport.GetIUnknownForObject(inst.Clone());
             }
             catch (System.Exception __e)
             {
@@ -807,7 +807,7 @@ namespace Foo
                 var retValManaged = inst.Clone();
                 if (retValManaged != null)
                 {
-                    var retValLocal = Marshal.GetIUnknownForObject(retValManaged);
+                    var retValLocal = MarshalSupport.GetIUnknownForObject(retValManaged);
                     var targetInterface = new System.Guid(""D6DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
                     try
                     {
@@ -883,7 +883,7 @@ namespace Foo
             try
             {
                 var inst = ComInterfaceDispatch.GetInstance<global::Foo.IStr>((ComInterfaceDispatch*)thisPtr);
-                *retVal = Marshal.GetIUnknownForObject(inst.Parent);
+                *retVal = MarshalSupport.GetIUnknownForObject(inst.Parent);
             }
             catch (System.Exception __e)
             {
@@ -945,7 +945,7 @@ namespace Foo
                 var retValManaged = inst.Parent;
                 if (retValManaged != null)
                 {
-                    var retValLocal = Marshal.GetIUnknownForObject(retValManaged);
+                    var retValLocal = MarshalSupport.GetIUnknownForObject(retValManaged);
                     var targetInterface = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
                     try
                     {
@@ -1247,7 +1247,7 @@ namespace Foo
                 var inst = ComInterfaceDispatch.GetInstance<global::Foo.IStr>((ComInterfaceDispatch*)thisPtr);
                 global::Foo.IStr local_0;
                 inst.CopyTo(out local_0, cb);
-                *pstm = local_0 == null ? System.IntPtr.Zero : Marshal.GetIUnknownForObject(local_0);
+                *pstm = local_0 == null ? System.IntPtr.Zero : MarshalSupport.GetIUnknownForObject(local_0);
             }
             catch (System.Exception __e)
             {
