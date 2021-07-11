@@ -1105,6 +1105,7 @@ namespace Foo
                     Marshal.ThrowExceptionForHR(result);
                 }
 
+                Marshal.FreeCoTaskMem(local_1);
             }
             finally
             {
