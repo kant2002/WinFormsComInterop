@@ -49,5 +49,11 @@ namespace SampleWindowsForms
             var openDialog = new FolderBrowserDialog();
             openDialog.ShowDialog();
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var form = new BrowserForm();
+            form.ShowDialog();
+        }
     }
 }
