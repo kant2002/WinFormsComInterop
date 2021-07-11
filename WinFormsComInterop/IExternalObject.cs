@@ -18,12 +18,7 @@ namespace WinFormsComInterop
 #endif
     [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IOleWindow))]
     [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IStream))]
-    [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IOleObject))]
-    [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IOleInPlaceObject))]
-    [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IOleInPlaceActiveObject))]
     [RuntimeCallableWrapper(typeof(primitives::Interop.UiaCore.IRawElementProviderSimple))]
-    [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IOleControl))]
-    [RuntimeCallableWrapper(typeof(primitives::Interop.Mshtml.IWebBrowser2))]
 #if USE_WPF
     [RuntimeCallableWrapper(typeof(winbase::MS.Win32.UnsafeNativeMethods.IOleDropTarget))]
     [RuntimeCallableWrapper(typeof(winbase::MS.Win32.UnsafeNativeMethods.ITfThreadMgr))]

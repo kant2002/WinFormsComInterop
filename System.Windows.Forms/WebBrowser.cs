@@ -11,5 +11,9 @@ namespace System.Windows.Forms
         public class WebBrowserSite
         {
         }
+
+        public class WebBrowserEvent
+        {
+        }
     }
 }
