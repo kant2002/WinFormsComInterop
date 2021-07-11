@@ -29,7 +29,7 @@ public partial class Interop
 
             [PreserveSig]
             HRESULT Clone(
-                [Out, MarshalAs(UnmanagedType.LPArray)] IEnumVariant[]? ppEnum);
+                [Out, CustomMarshalAs(UnmanagedType.LPArray)] IEnumVariant[]? ppEnum);
         }
     }
 }

@@ -12,7 +12,7 @@ public static partial class Interop
         public class OLEVERB
         {
             public OLEIVERB lVerb;
-            [MarshalAs(UnmanagedType.LPWStr)]
+            [CustomMarshalAs(UnmanagedType.LPWStr)]
             public string? lpszVerbName;
             public User32.MF fuFlags;
             public OLEVERBATTRIB grfAttribs;

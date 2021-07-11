@@ -17,7 +17,7 @@ public partial class Interop
         {
             [PreserveSig]
             HRESULT DragEnter(
-                [MarshalAs(UnmanagedType.Interface)]
+                [CustomMarshalAs(UnmanagedType.Interface)]
                 object pDataObj,
                 uint grfKeyState,
                 Point pt,
@@ -34,7 +34,7 @@ public partial class Interop
 
             [PreserveSig]
             HRESULT Drop(
-                [MarshalAs(UnmanagedType.Interface)]
+                [CustomMarshalAs(UnmanagedType.Interface)]
                 object pDataObj,
                 uint grfKeyState,
                 Point pt,

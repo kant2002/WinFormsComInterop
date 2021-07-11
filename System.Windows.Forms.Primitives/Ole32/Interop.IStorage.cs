@@ -16,25 +16,25 @@ public partial class Interop
         public unsafe interface IStorage
         {
             IStream CreateStream(
-                [MarshalAs(UnmanagedType.LPWStr)] string pwcsName,
+                [CustomMarshalAs(UnmanagedType.LPWStr)] string pwcsName,
                 STGM grfMode,
                 uint reserved1,
                 uint reserved2);
 
             IStream OpenStream(
-                [MarshalAs(UnmanagedType.LPWStr)] string pwcsName,
+                [CustomMarshalAs(UnmanagedType.LPWStr)] string pwcsName,
                 IntPtr reserved1,
                 STGM grfMode,
                 uint reserved2);
 
             IStorage CreateStorage(
-                [MarshalAs(UnmanagedType.LPWStr)] string pwcsName,
+                [CustomMarshalAs(UnmanagedType.LPWStr)] string pwcsName,
                 STGM grfMode,
                 uint reserved1,
                 uint reserved2);
 
             IStorage OpenStorage(
-                [MarshalAs(UnmanagedType.LPWStr)] string pwcsName,
+                [CustomMarshalAs(UnmanagedType.LPWStr)] string pwcsName,
                 IntPtr pstgPriority,
                 STGM grfMode,
                 IntPtr snbExclude,
@@ -47,9 +47,9 @@ public partial class Interop
                 IStorage stgDest);
 
             void MoveElementTo(
-                [MarshalAs(UnmanagedType.LPWStr)] string pwcsName,
+                [CustomMarshalAs(UnmanagedType.LPWStr)] string pwcsName,
                 IStorage stgDest,
-                [MarshalAs(UnmanagedType.LPWStr)] string pwcsNewName,
+                [CustomMarshalAs(UnmanagedType.LPWStr)] string pwcsNewName,
                 uint grfFlags);
 
             void Commit(uint grfCommitFlags);
@@ -62,15 +62,15 @@ public partial class Interop
                 uint reserved3,
                 out object ppVal);
 
-            void DestroyElement([MarshalAs(UnmanagedType.LPWStr)] string pwcsName);
+            void DestroyElement([CustomMarshalAs(UnmanagedType.LPWStr)] string pwcsName);
 
             void RenameElement(
-                [MarshalAs(UnmanagedType.LPWStr)] string pwcsOldName,
-                [MarshalAs(UnmanagedType.LPWStr)] string pwcsNewName);
+                [CustomMarshalAs(UnmanagedType.LPWStr)] string pwcsOldName,
+                [CustomMarshalAs(UnmanagedType.LPWStr)] string pwcsNewName);
 
             // pctime, patime and pmtime are optional
             void SetElementTimes(
-                [MarshalAs(UnmanagedType.LPWStr)] string pwcsName,
+                [CustomMarshalAs(UnmanagedType.LPWStr)] string pwcsName,
                 FILETIME* pctime,
                 FILETIME* patime,
                 FILETIME* pmtime);

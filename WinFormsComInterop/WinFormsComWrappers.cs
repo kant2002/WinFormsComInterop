@@ -23,6 +23,12 @@ namespace WinFormsComInterop
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IDropTarget))]
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IStorage))]
     [ComCallableWrapper(typeof(primitives::Interop.Richedit.IRichEditOleCallback))]
+    [ComCallableWrapper(typeof(primitives::Interop.Ole32.IOleControlSite))]
+    [ComCallableWrapper(typeof(primitives::Interop.Ole32.IOleInPlaceSite))]
+    [ComCallableWrapper(typeof(primitives::Interop.Ole32.IOleContainer))]
+    [ComCallableWrapper(typeof(primitives::Interop.Ole32.IOleClientSite))]
+    [ComCallableWrapper(typeof(primitives::Interop.Ole32.IOleInPlaceFrame))]
+    [ComCallableWrapper(typeof(primitives::Interop.Mshtml.IDocHostUIHandler))]
 #if USE_WPF
     [ComCallableWrapper(typeof(winbase::MS.Win32.UnsafeNativeMethods.ITfContext))]
     [ComCallableWrapper(typeof(winbase::MS.Win32.UnsafeNativeMethods.IOleDropTarget))]
@@ -41,6 +47,8 @@ namespace WinFormsComInterop
         static ComWrappers.ComInterfaceEntry* storageEntry;
         static ComWrappers.ComInterfaceEntry* richEditOleCallbackEntry;
         static ComWrappers.ComInterfaceEntry* primitivesDropTargetEntry;
+        static ComWrappers.ComInterfaceEntry* formsWebBrowserSiteEntry;
+        static ComWrappers.ComInterfaceEntry* formsWebBrowserContainerEntry;
 #if USE_WPF
         static ComWrappers.ComInterfaceEntry* oleDropTargetEntry;
         static ComWrappers.ComInterfaceEntry* winbaseTfContextEntry;
@@ -59,6 +67,13 @@ namespace WinFormsComInterop
         internal static Guid IID_IPicture = new Guid("7BF80980-BF32-101A-8BBB-00AA00300CAB");
         internal static Guid IID_IStorage = new Guid("0000000B-0000-0000-C000-000000000046");
         internal static Guid IID_IRichEditOleCallback = new Guid("00020D03-0000-0000-C000-000000000046");
+        internal static Guid IID_IDocHostUIHandler = new Guid("BD3F23C0-D43E-11CF-893B-00AA00BDCE1A");
+        internal static Guid IID_IOleControlSite = new Guid("B196B289-BAB4-101A-B69C-00AA00341D07");
+        internal static Guid IID_IOleInPlaceSite = new Guid("00000119-0000-0000-C000-000000000046");
+        internal static Guid IID_IOleClientSite = new Guid("00000118-0000-0000-C000-000000000046");
+        internal static Guid IID_IOleContainer = new Guid("0000011B-0000-0000-C000-000000000046");
+        internal static Guid IID_IOleInPlaceFrame = new Guid("00000116-0000-0000-C000-000000000046");
+
         internal static Guid IID_ITfContext = new Guid("aa80e7fd-2021-11d2-93e0-0060b067b86e");
 
         // This class only exposes IDispatch and the vtable is always the same.
@@ -75,6 +90,8 @@ namespace WinFormsComInterop
             primitivesDropTargetEntry = CreatePrimitivesDropTargetEntry();
             storageEntry = CreatePrimitivesIStorageEntry();
             richEditOleCallbackEntry = CreatePrimitivesIRichEditOleCallbackEntry();
+            formsWebBrowserSiteEntry = CreateWebBrowserSiteEntry();
+            formsWebBrowserContainerEntry = CreateWebBrowserContainerEntry();
 #if USE_WPF
             oleDropTargetEntry = CreateOleDropTargetEntry();
             winbaseTfContextEntry = CreateWinbaseITfContextEntry();
@@ -164,6 +181,38 @@ namespace WinFormsComInterop
             wrapperEntry[0].Vtable = rawElementProviderSimpleVtbl;
             wrapperEntry[1].IID = IID_IServiceProvider;
             wrapperEntry[1].Vtable = serviceProviderVtbl;
+            return wrapperEntry;
+        }
+        private static ComInterfaceEntry* CreateWebBrowserSiteEntry()
+        {
+            CreatePrimitivesIOleControlSiteProxyVtbl(out var oleControlSiteVtbl);
+            CreatePrimitivesIDocHostUIHandlerProxyVtbl(out var docHostUIHandlerVtbl);
+            CreatePrimitivesIOleInPlaceSiteProxyVtbl(out var oleInPlaceSiteVtbl);
+            CreatePrimitivesIOleClientSiteProxyVtbl(out var oleClientSiteVtbl);
+
+            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 4);
+            var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
+            wrapperEntry[0].IID = IID_IOleControlSite;
+            wrapperEntry[0].Vtable = oleControlSiteVtbl;
+            wrapperEntry[1].IID = IID_IDocHostUIHandler;
+            wrapperEntry[1].Vtable = docHostUIHandlerVtbl;
+            wrapperEntry[2].IID = IID_IOleInPlaceSite;
+            wrapperEntry[2].Vtable = oleInPlaceSiteVtbl;
+            wrapperEntry[3].IID = IID_IOleClientSite;
+            wrapperEntry[3].Vtable = oleClientSiteVtbl;
+            return wrapperEntry;
+        }
+        private static ComInterfaceEntry* CreateWebBrowserContainerEntry()
+        {
+            CreatePrimitivesIOleContainerProxyVtbl(out var oleControlSiteVtbl);
+            CreatePrimitivesIOleInPlaceFrameProxyVtbl(out var docHostUIHandlerVtbl);
+
+            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 4);
+            var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
+            wrapperEntry[0].IID = IID_IOleContainer;
+            wrapperEntry[0].Vtable = oleControlSiteVtbl;
+            wrapperEntry[1].IID = IID_IOleInPlaceFrame;
+            wrapperEntry[1].Vtable = docHostUIHandlerVtbl;
             return wrapperEntry;
         }
 
@@ -256,6 +305,18 @@ namespace WinFormsComInterop
             {
                 count = 2;
                 return accessibleObjectEntry;
+            }
+
+            if (obj is forms::System.Windows.Forms.WebBrowser.WebBrowserSite)
+            {
+                count = 4;
+                return formsWebBrowserSiteEntry;
+            }
+
+            if (obj is forms::System.Windows.Forms.WebBrowserContainer)
+            {
+                count = 2;
+                return formsWebBrowserContainerEntry;
             }
 
             throw new NotImplementedException();

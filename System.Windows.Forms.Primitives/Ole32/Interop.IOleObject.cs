@@ -26,8 +26,8 @@ public partial class Interop
 
             [PreserveSig]
             HRESULT SetHostNames(
-                [MarshalAs(UnmanagedType.LPWStr)] string szContainerApp,
-                [MarshalAs(UnmanagedType.LPWStr)] string szContainerObj);
+                [CustomMarshalAs(UnmanagedType.LPWStr)] string szContainerApp,
+                [CustomMarshalAs(UnmanagedType.LPWStr)] string szContainerObj);
 
             [PreserveSig]
             HRESULT Close(
@@ -36,7 +36,7 @@ public partial class Interop
             [PreserveSig]
             HRESULT SetMoniker(
                 OLEWHICHMK dwWhichMoniker,
-                [MarshalAs(UnmanagedType.Interface)] object pmk);
+                [CustomMarshalAs(UnmanagedType.Interface)] object pmk);
 
             [PreserveSig]
             HRESULT GetMoniker(
@@ -81,7 +81,7 @@ public partial class Interop
             [PreserveSig]
             HRESULT GetUserType(
                 USERCLASSTYPE dwFormOfType,
-                [MarshalAs(UnmanagedType.LPWStr)] out string userType);
+                [CustomMarshalAs(UnmanagedType.LPWStr)] out string userType);
 
             [PreserveSig]
             HRESULT SetExtent(

@@ -36,10 +36,10 @@ public static partial class Interop
             /// </summary>
             [PreserveSig]
             HRESULT GetIAccessiblePair(
-                [MarshalAs(UnmanagedType.Interface)] out object? ppAcc,
+                [CustomMarshalAs(UnmanagedType.Interface)] out object? ppAcc,
                 int* pidChild);
 
-            [return: MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_I4)]
+            [return: CustomMarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_I4)]
             int[]? GetRuntimeId();
 
             /// <summary>

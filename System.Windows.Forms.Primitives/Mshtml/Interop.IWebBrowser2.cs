@@ -46,16 +46,16 @@ public partial class Interop
             void Stop();
 
             [DispId(200)]
-            object Application { [return: MarshalAs(UnmanagedType.IDispatch)]get; }
+            object Application { [return: CustomMarshalAs(UnmanagedType.IDispatch)]get; }
 
             [DispId(201)]
-            object Parent { [return: MarshalAs(UnmanagedType.IDispatch)]get; }
+            object Parent { [return: CustomMarshalAs(UnmanagedType.IDispatch)]get; }
 
             [DispId(202)]
-            object Container { [return: MarshalAs(UnmanagedType.IDispatch)]get; }
+            object Container { [return: CustomMarshalAs(UnmanagedType.IDispatch)]get; }
 
             [DispId(203)]
-            object Document { [return: MarshalAs(UnmanagedType.IDispatch)]get; }
+            object Document { [return: CustomMarshalAs(UnmanagedType.IDispatch)]get; }
 
             [DispId(204)]
             bool TopLevelContainer { get; }

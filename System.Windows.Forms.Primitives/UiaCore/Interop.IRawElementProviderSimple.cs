@@ -33,7 +33,7 @@ public static partial class Interop
             /// </summary>
             /// <param name="patternId">Identifier indicating the interface to return</param>
             /// <returns>Returns the interface as an object, if supported; otherwise returns null/</returns>
-            [return: MarshalAs(UnmanagedType.IUnknown)]
+            [return: CustomMarshalAs(UnmanagedType.IUnknown)]
             object GetPatternProvider(UIA patternId);
 
             /// <summary>
