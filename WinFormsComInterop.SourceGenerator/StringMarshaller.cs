@@ -59,6 +59,11 @@ namespace WinFormsComInterop.SourceGenerator
             {
                 builder.AppendLine($"{Name} = Marshal.PtrToStringUni({LocalVariable});");
             }
+
+            if (RefKind != RefKind.Out && Index != -1)
+            {
+                builder.AppendLine($"Marshal.FreeCoTaskMem({LocalVariable});");
+            }
         }
     }
 }
