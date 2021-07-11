@@ -63,8 +63,12 @@ namespace WinFormsComInterop.SourceGenerator
                 type = arrayTypeSymbol.ElementType;
             }
 
-            type = type as INamedTypeSymbol;
-            if (type == null)
+            if (type is not INamedTypeSymbol)
+            {
+                return null;
+            }
+
+            if (type.ContainingAssembly == null)
             {
                 return null;
             }

@@ -7,7 +7,6 @@ namespace WinFormsComInterop.SourceGenerator
 {
     internal class ArrayMarshaller : Marshaller
     {
-        public string LocalVariable => $"local_{Index}";
         public ITypeSymbol ElementType => ((IArrayTypeSymbol)Type).ElementType;
         public override string UnmanagedTypeName
         {

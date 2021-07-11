@@ -3,6 +3,7 @@
     using Microsoft.CodeAnalysis;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.InteropServices;
 
     internal class MethodGenerationContext
     {
@@ -23,12 +24,8 @@
             get
             {
                 var preserveSignature = PreserveSignature;
-                var returnMarshaller = CreateReturnMarshaller(Method.ReturnType);
-                var marshallers = Method.Parameters.Select(_ =>
-                {
-                    var marshaller = CreateMarshaller(_);
-                    return marshaller;
-                });
+                var returnMarshaller = CreateReturnMarshaller();
+                var marshallers = Marshallers;
                 var parametersList = marshallers.Select(_ => $"{_.UnmanagedParameterTypeName}").ToList();
                 parametersList.Insert(0, "System.IntPtr");
                 if (!preserveSignature)
@@ -54,15 +51,34 @@
 
         public Marshaller CreateMarshaller(IParameterSymbol parameterSymbol)
         {
-            return CreateMarshaller(parameterSymbol, this);
+            var marshalAsAttribute = parameterSymbol.GetAttributes()
+                .FirstOrDefault(_ => _.AttributeClass?.ToDisplayString() == "System.Runtime.InteropServices.MarshalAsAttribute"
+                    || _.AttributeClass?.ToDisplayString() == "System.Runtime.InteropServices.CustomMarshalAsAttribute");
+            UnmanagedType? unmanagedType = null;
+            if (marshalAsAttribute != null)
+            {
+                unmanagedType = (UnmanagedType)(int)marshalAsAttribute.ConstructorArguments[0].Value!;
+            }
+
+            return CreateMarshaller(parameterSymbol, unmanagedType, this);
         }
 
-        public Marshaller CreateReturnMarshaller() => CreateReturnMarshaller(Method.ReturnType);
-        public Marshaller CreateReturnMarshaller(ITypeSymbol parameterSymbol) => CreateReturnMarshaller(parameterSymbol, this);
-
-        private Marshaller CreateMarshaller(IParameterSymbol parameterSymbol, MethodGenerationContext context)
+        public Marshaller CreateReturnMarshaller()
         {
-            Marshaller marshaller = CreateMarshaller(parameterSymbol.Type);
+            var marshalAsAttribute = Method.GetReturnTypeAttributes()
+                .FirstOrDefault(_ => _.AttributeClass?.ToDisplayString() == "System.Runtime.InteropServices.MarshalAsAttribute");
+            UnmanagedType? unmanagedType = null;
+            if (marshalAsAttribute != null)
+            {
+                unmanagedType = (UnmanagedType)(int)marshalAsAttribute.ConstructorArguments[0].Value!;
+            }
+
+            return CreateReturnMarshaller(Method.ReturnType, unmanagedType, this);
+        }
+
+        private Marshaller CreateMarshaller(IParameterSymbol parameterSymbol, UnmanagedType? unmanagedType, MethodGenerationContext context)
+        {
+            Marshaller marshaller = CreateMarshaller(parameterSymbol.Type, unmanagedType);
             marshaller.Name = parameterSymbol.Name == "string" ? "@string" : parameterSymbol.Name;
             marshaller.Type = parameterSymbol.Type;
             marshaller.RefKind = parameterSymbol.RefKind;
@@ -72,9 +88,9 @@
             return marshaller;
         }
 
-        private Marshaller CreateReturnMarshaller(ITypeSymbol parameterSymbol, MethodGenerationContext context)
+        private Marshaller CreateReturnMarshaller(ITypeSymbol parameterSymbol, UnmanagedType? unmanagedType, MethodGenerationContext context)
         {
-            Marshaller marshaller = CreateMarshaller(parameterSymbol);
+            Marshaller marshaller = CreateMarshaller(parameterSymbol, unmanagedType);
             marshaller.Name = "retVal";
             marshaller.Type = parameterSymbol;
             marshaller.RefKind = RefKind.None;
@@ -84,7 +100,7 @@
             return marshaller;
         }
 
-        private Marshaller CreateMarshaller(ITypeSymbol parameterSymbol)
+        private Marshaller CreateMarshaller(ITypeSymbol parameterSymbol, UnmanagedType? unmanagedType)
         {
             if (parameterSymbol.IsEnum() || parameterSymbol.TypeKind == TypeKind.Enum)
             {
@@ -106,9 +122,22 @@
                 return new BlittableStructMarshaller();
             }
 
-            if (parameterSymbol.TypeKind == TypeKind.Interface || parameterSymbol.SpecialType == SpecialType.System_Object)
+            if (parameterSymbol.TypeKind == TypeKind.Interface)
             {
                 return new ComInterfaceMarshaller();
+            }
+
+            if (parameterSymbol.SpecialType == SpecialType.System_Object)
+            {
+                switch (unmanagedType)
+                {
+                    case UnmanagedType.IUnknown:
+                    case UnmanagedType.Interface:
+                    case UnmanagedType.IDispatch:
+                        return new ComInterfaceMarshaller();
+                    default:
+                        return new VariantMarshaller();
+                }
             }
 
             return new BlittableMarshaller();
