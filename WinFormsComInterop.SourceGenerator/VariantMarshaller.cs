@@ -5,16 +5,19 @@ namespace WinFormsComInterop.SourceGenerator
 {
     class VariantMarshaller : Marshaller
     {
-        public override string UnmanagedTypeName => "System.IntPtr";
+        public override string UnmanagedTypeName => "WinFormsComInterop.InteropServices.Variant";
+
+        public override string UnmanagedParameterTypeName => Index == -1 ? UnmanagedTypeName : "WinFormsComInterop.InteropServices.Variant*";
 
         public override string GetReturnDeclaration()
         {
-            return $"System.IntPtr* {Name}";
+            return $"WinFormsComInterop.InteropServices.Variant* {Name}";
         }
 
         public override void GetReturnValue(IndentedStringBuilder builder, string invocationExpression)
         {
-            builder.AppendLine($"*retVal = MarshalSupport.GetIUnknownForObject({invocationExpression});");
+            builder.AppendLine($"object retValTemp = {invocationExpression};");
+            builder.AppendLine($"Marshal.GetNativeVariantForObject(retValTemp, (System.IntPtr)retVal);");
         }
 
         public override void ConvertToUnmanagedParameter(IndentedStringBuilder builder)
@@ -31,9 +34,8 @@ namespace WinFormsComInterop.SourceGenerator
                 return;
             }
 
-            builder.AppendLine($"WinFormsComInterop.InteropServices.Variant {LocalVariable}_variant = new WinFormsComInterop.InteropServices.Variant();");
-            builder.AppendLine($"System.IntPtr {LocalVariable} = (System.IntPtr)(WinFormsComInterop.InteropServices.Variant*)&{LocalVariable}_variant;");
-            builder.AppendLine($"Marshal.GetNativeVariantForObject({Name}, {LocalVariable});");
+            builder.AppendLine($"WinFormsComInterop.InteropServices.Variant {LocalVariable} = new WinFormsComInterop.InteropServices.Variant();");
+            builder.AppendLine($"Marshal.GetNativeVariantForObject({Name}, (System.IntPtr)(WinFormsComInterop.InteropServices.Variant*)&{LocalVariable});");
             //throw new NotImplementedException($"{Context.Method.ToDisplayString()} {TypeName} {Name}");
         }
 
@@ -68,7 +70,7 @@ namespace WinFormsComInterop.SourceGenerator
                 case RefKind.In:
                     return $"&{LocalVariable}";
                 default:
-                    return LocalVariable;
+                    return $"&{LocalVariable}";
             }
         }
 
@@ -76,7 +78,7 @@ namespace WinFormsComInterop.SourceGenerator
         {
             if (RefKind == RefKind.Out || RefKind == RefKind.Ref)
             {
-                builder.AppendLine($"{Name} = {LocalVariable} == System.IntPtr.Zero ? null : Marshal.GetObjectForNativeVariant({LocalVariable});");
+                builder.AppendLine($"{Name} = MarshalSupport.GetObjectForNativeVariant((System.IntPtr)(WinFormsComInterop.InteropServices.Variant*)&{LocalVariable});");
             }
         }
 
@@ -84,7 +86,7 @@ namespace WinFormsComInterop.SourceGenerator
         {
             if (Index == -1)
             {
-                return $"{Name} == System.IntPtr.Zero ? null : Marshal.GetObjectForNativeVariant({Name})";
+                return $"MarshalSupport.GetObjectForNativeVariant((System.IntPtr)(WinFormsComInterop.InteropServices.Variant*)&{Name})";
             }
 
             return RefKind switch

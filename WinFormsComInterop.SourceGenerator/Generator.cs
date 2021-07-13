@@ -120,6 +120,14 @@ namespace WinFormsComInterop.InteropServices
         }
     }
 }
+
+partial class MarshalSupport
+{
+    public static object GetObjectForNativeVariant(IntPtr pVariant)
+    {
+        return Marshal.GetObjectForNativeVariant(pVariant);
+    }
+}
 ";
 
         private static string ComCallableWrapperAttributeName = "ComCallableWrapperAttribute";
@@ -171,7 +179,7 @@ namespace WinFormsComInterop.InteropServices
 ");
 
             source.AppendLine();
-            source.AppendLine("class MarshalSupport");
+            source.AppendLine("partial class MarshalSupport");
             source.AppendLine("{");
             source.PushIndent();
             source.AppendLine("public static System.IntPtr GetIUnknownForObject(object value)");

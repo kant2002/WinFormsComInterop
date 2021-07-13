@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using System;
 
 namespace WinFormsComInterop.SourceGenerator
 {
@@ -8,7 +9,22 @@ namespace WinFormsComInterop.SourceGenerator
 
         public override void DeclareLocalParameter(IndentedStringBuilder builder)
         {
-            builder.AppendLine($"var {LocalVariable} = Marshal.PtrToStringUni({Name});");
+            if (RefKind == RefKind.None || RefKind == RefKind.In || RefKind == RefKind.Ref)
+            {
+                builder.AppendLine($"var {LocalVariable} = Marshal.PtrToStringUni({Name});");
+            }
+            else
+            {
+                builder.AppendLine($"{TypeName} {LocalVariable};");
+            }
+        }
+
+        public override void MarshalOutputParameter(IndentedStringBuilder builder)
+        {
+            if (RefKind == RefKind.Ref || RefKind == RefKind.Out)
+            {
+                builder.AppendLine($"*{Name} = {LocalVariable} == null ? System.IntPtr.Zero : Marshal.StringToCoTaskMemUni({LocalVariable});");
+            }
         }
 
         public override string GetParameterInvocation()
@@ -18,7 +34,14 @@ namespace WinFormsComInterop.SourceGenerator
                 return $"{Name} == System.IntPtr.Zero ? null : ({FormatTypeName()})Marshal.PtrToStringUni({Name})";
             }
 
-            return LocalVariable;
+            return RefKind switch
+            {
+                RefKind.None => LocalVariable,
+                RefKind.In => $"in {LocalVariable}",
+                RefKind.Out => $"out {LocalVariable}",
+                RefKind.Ref => $"ref {LocalVariable}",
+                _ => throw new NotImplementedException("GetParameterInvocation"),
+            };
         }
 
         public override string GetUnmanagedParameterInvocation()
