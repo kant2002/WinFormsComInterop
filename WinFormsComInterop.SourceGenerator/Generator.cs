@@ -210,8 +210,100 @@ partial class MarshalSupport
 
             source.PopIndent();
             source.AppendLine("}");
+            source.AppendLine();
+            List<string> nativeStruct = new();
+            void LocalGenerateNativeType(ITypeSymbol type)
+            {
+                if (type is IArrayTypeSymbol arrayType)
+                {
+                    LocalGenerateNativeType(arrayType.ElementType);
+                    return;
+                }
+
+                if (type.TypeKind != TypeKind.Struct)
+                {
+                    return;
+                }
+
+                if (nativeStruct.Contains(type.Name))
+                {
+                    return;
+                }
+
+                GenerateBlittableStructWrapper(source, type);
+                nativeStruct.Add(type.Name);
+            }
+
+            foreach (var classSymbol in receiver.RCWDeclarations)
+            {
+                //GenerateBlittableStructWrapper(source, classSymbol.Type);
+
+                foreach (var interfaceTypeSymbol in FindRCWDeclarations(classSymbol).Distinct())
+                {
+                    //GenerateBlittableStructWrapper(source, interfaceTypeSymbol);
+                    foreach (var member in interfaceTypeSymbol.GetMembers())
+                    {
+                        switch (member)
+                        {
+                            case IMethodSymbol methodSymbol:
+                                {
+
+                                    if (!MethodGenerationContext.IsBlittableType(methodSymbol.ReturnType)
+                                        && methodSymbol.ReturnType.SpecialType != SpecialType.System_Void)
+                                    {
+                                        LocalGenerateNativeType(methodSymbol.ReturnType);
+                                    }
+
+                                    foreach (var parameter in methodSymbol.Parameters)
+                                    {
+                                        if (!MethodGenerationContext.IsBlittableType(parameter.Type))
+                                        {
+                                            LocalGenerateNativeType(parameter.Type);
+                                        }
+                                    }
+                                }
+                                break;
+                        }
+                    }
+                }
+            }
+
             context.AddSource("SupportLibrary.cs", source.ToString());
         }
+
+        private static void GenerateBlittableStructWrapper(IndentedStringBuilder source, ITypeSymbol type)
+        {
+            //source.AppendLine($"class {type.ToDisplayString()}");
+            if (type is IArrayTypeSymbol arrayType)
+            {
+                GenerateBlittableStructWrapper(source, arrayType.ElementType);
+                return;
+            }
+
+            if (type.TypeKind != TypeKind.Struct)
+            {
+                return;
+            }
+
+            source.AppendLine($"struct {type.Name}_native");
+            source.AppendLine("{");
+            source.PushIndent();
+            foreach (var field in type.GetMembers().OfType<IFieldSymbol>())
+            {
+                if (MethodGenerationContext.IsBlittableType(field.Type))
+                {
+                    source.AppendLine($"public {field.Type} {field.Name};");
+                }
+                else
+                {
+                    source.AppendLine($"public System.IntPtr {field.Name};");
+                }
+            }
+
+            source.PopIndent();
+            source.AppendLine("}");
+        }
+
         private string ProcessCCWDeclaration(ClassDeclaration classSymbol, INamedTypeSymbol interfaceTypeSymbol, WrapperGenerationContext context)
         {
             string namespaceName = classSymbol.Type.ContainingNamespace.ToDisplayString();
@@ -273,8 +365,6 @@ namespace {namespaceName}
             vtblMethod.AppendLine($"vtbl = (System.IntPtr)vtblRaw;");
             vtblMethod.PopIndent();
             vtblMethod.AppendLine("}");
-            //source.Append(vtblMethod);
-            //source.AppendLine();
             source.Append(proxyMethods);
             source.PopIndent();
             source.AppendLine("}");

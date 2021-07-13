@@ -101,6 +101,19 @@
             return marshaller;
         }
 
+        public Marshaller CreateFieldMarshaller(IFieldSymbol fieldSymbol, string prefix, int index)
+        {
+            Marshaller marshaller = CreateMarshaller(fieldSymbol.Type, null);
+            marshaller.Name = prefix + "_" + fieldSymbol.Name;
+            marshaller.Type = fieldSymbol.Type;
+            marshaller.RefKind = RefKind.None;
+            marshaller.Index = index;
+            marshaller.LocalVariablePrefix = prefix;
+            marshaller.TypeAlias = this.GetAlias(fieldSymbol.Type);
+            marshaller.Context = this;
+            return marshaller;
+        }
+
         private Marshaller CreateReturnMarshaller(ITypeSymbol parameterSymbol, UnmanagedType? unmanagedType, MethodGenerationContext context)
         {
             Marshaller marshaller = CreateMarshaller(parameterSymbol, unmanagedType);
@@ -139,7 +152,10 @@
 
             if (parameterSymbol.TypeKind == TypeKind.Struct && parameterSymbol.SpecialType == SpecialType.None)
             {
-                return new BlittableStructMarshaller();
+                if (IsBlittableType(parameterSymbol))
+                    return new BlittableStructMarshaller();
+
+                return new StructMarshaller();
             }
 
             if (parameterSymbol.TypeKind == TypeKind.Interface)
@@ -163,7 +179,7 @@
             return new BlittableMarshaller();
         }
 
-        private bool IsBlittableType(ITypeSymbol elementType)
+        public static bool IsBlittableType(ITypeSymbol elementType)
         {
             if (elementType.TypeKind == TypeKind.Pointer)
             {
@@ -199,6 +215,16 @@
                 case SpecialType.System_Decimal:
                 case SpecialType.System_Nullable_T:
                     return false;
+            }
+
+            if (elementType.TypeKind == TypeKind.Enum)
+            {
+                return true;
+            }
+
+            if (elementType is IArrayTypeSymbol arrayType)
+            {
+                return IsBlittableType(arrayType.ElementType);
             }
 
             if (elementType.TypeKind == TypeKind.Struct)
