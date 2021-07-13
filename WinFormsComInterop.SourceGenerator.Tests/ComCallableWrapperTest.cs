@@ -278,7 +278,7 @@ namespace Foo
             try
             {
                 var inst = ComInterfaceDispatch.GetInstance<global::Foo.IStr>((ComInterfaceDispatch*)thisPtr);
-                var local_0 = ComInterfaceDispatch.GetInstance<global::Foo.IStr>((ComInterfaceDispatch*)pstm);
+                var local_0 = pstm == System.IntPtr.Zero ? null : (global::Foo.IStr)Marshal.GetObjectForIUnknown(pstm);
                 inst.CopyTo(local_0, cb);
             }
             catch (System.Exception __e)
@@ -337,7 +337,7 @@ namespace Foo
             try
             {
                 var inst = ComInterfaceDispatch.GetInstance<global::Foo.IStr>((ComInterfaceDispatch*)thisPtr);
-                var local_0 = ComInterfaceDispatch.GetInstance<object>((ComInterfaceDispatch*)data);
+                var local_0 = data == System.IntPtr.Zero ? null : (object)Marshal.GetObjectForIUnknown(data);
                 inst.CopyTo(local_0, cb);
             }
             catch (System.Exception __e)

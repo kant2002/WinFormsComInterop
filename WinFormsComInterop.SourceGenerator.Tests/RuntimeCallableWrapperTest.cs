@@ -15,6 +15,7 @@ namespace Foo
     using System.Runtime.InteropServices;
 
     [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
         void Read(byte* pv, uint cb, uint* pcbRead);
@@ -83,6 +84,7 @@ namespace Foo
     public enum SeekOrigin {}
 
     [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
         void Seek(long dlibMove, SeekOrigin dwOrigin, ulong* plibNewPosition);
@@ -151,6 +153,7 @@ namespace Foo
     public enum SeekOrigin {}
 
     [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
         void Seek(long dlibMove, out SeekOrigin dwOrigin, ulong* plibNewPosition);
@@ -221,6 +224,7 @@ namespace Foo
     public enum SeekOrigin {}
 
     [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
         void CopyTo(IStr pstm, ulong cb, ulong* pcbRead, ulong* pcbWritten);
@@ -305,6 +309,7 @@ namespace Foo
     public enum SeekOrigin {}
 
     [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
         SeekOrigin CopyTo(IStr pstm, ulong cb, ulong* pcbRead, ulong* pcbWritten);
@@ -391,6 +396,7 @@ namespace Foo
     public enum HRESULT {}
 
     [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
         [PreserveSig]
@@ -457,6 +463,7 @@ namespace Foo
     public enum HRESULT {}
 
     [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
         [PreserveSig]
@@ -523,6 +530,7 @@ namespace Foo
     public enum HRESULT {}
 
     [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
         IStr Clone();
@@ -593,6 +601,7 @@ namespace Foo
     public struct STATSTG {}
 
     [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
         void Stat(out STATSTG pstatstg);
@@ -662,6 +671,7 @@ namespace Foo
     public enum SeekOrigin {}
 
     [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
         void CopyTo();
@@ -730,6 +740,7 @@ namespace Foo
     public enum SeekOrigin {}
 
     [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
         long CopyTo(IStr pstm, ulong cb, ulong* pcbRead, ulong* pcbWritten);
@@ -816,6 +827,7 @@ namespace Foo
     public enum SeekOrigin {}
 
     [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
         long Height { get; }
@@ -889,6 +901,7 @@ namespace Foo
     public enum SeekOrigin {}
 
     [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
         long Height { get; set; }
@@ -987,6 +1000,7 @@ namespace Foo
     public enum SeekOrigin {}
 
     [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
         long Height { set; }
@@ -1058,6 +1072,7 @@ namespace Foo
     public enum SeekOrigin {}
 
     [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
         void Seek(long dlibMove, string dwOrigin, ulong* plibNewPosition);
@@ -1128,6 +1143,7 @@ namespace Foo
     public enum SeekOrigin {}
 
     [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
         string CopyTo();
@@ -1198,6 +1214,7 @@ namespace Foo
     public enum SeekOrigin {}
 
     [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
         void CopyTo([MarshalAs(UnmanagedType.Interface)]object pstm, ulong cb, ulong* pcbRead, ulong* pcbWritten);
@@ -1267,6 +1284,7 @@ namespace Foo
     public enum SeekOrigin {}
 
     [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
         void CopyTo(out IStr pstm, ulong cb, ulong* pcbRead, ulong* pcbWritten);
@@ -1337,6 +1355,7 @@ namespace Foo
     public enum SeekOrigin {}
 
     [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
         void Seek(long dlibMove, out string dwOrigin, ulong* plibNewPosition);
@@ -1407,6 +1426,7 @@ namespace Foo
     public struct STATSTG {}
 
     [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
         void Stat(STATSTG pstatstg);
@@ -1475,6 +1495,7 @@ namespace Foo
     public struct STATSTG {}
 
     [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
         STATSTG CopyTo(ulong cb);
@@ -1545,6 +1566,7 @@ namespace Foo
     public enum HRESULT {}
 
     [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
         [PreserveSig]
@@ -1609,6 +1631,7 @@ namespace Foo
     public struct STATSTG {}
 
     [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
         void Stat(in STATSTG pstatstg);
@@ -1678,6 +1701,7 @@ namespace Foo
     public struct STATSTG {}
 
     [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
         void Stat(STATSTG[] pstatstg);
@@ -1747,6 +1771,7 @@ namespace Foo
     public struct STATSTG {}
 
     [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
         void Stat(IStr[] pstatstg);
@@ -1839,6 +1864,7 @@ namespace Foo
     public enum SeekOrigin {}
 
     [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
         object CopyTo();
@@ -1909,6 +1935,7 @@ namespace Foo
     public enum SeekOrigin {}
 
     [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
         void CopyTo(out object param);
@@ -1979,6 +2006,7 @@ namespace Foo
     public enum SeekOrigin {}
 
     [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
         void CopyTo(ref object param);
@@ -2050,6 +2078,7 @@ namespace Foo
     public enum SeekOrigin {}
 
     [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
         void CopyTo(object param);
@@ -2124,6 +2153,7 @@ namespace Foo
     }
 
     [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
         void Stat(STATSTG pstatstg);
@@ -2172,6 +2202,71 @@ namespace Foo
                 var local_0_1 = Marshal.StringToCoTaskMemUni(local_0_Desc);
                 local_0.Desc = local_0_1;
                 result = ((delegate* unmanaged<System.IntPtr, STATSTG_native, int>)vtbl[3])(thisPtr, local_0);
+                if (result != 0)
+                {
+                    Marshal.ThrowExceptionForHR(result);
+                }
+
+            }
+            finally
+            {
+                Marshal.Release(thisPtr);
+            }
+        }
+    }
+}";
+            Assert.AreEqual(expectedOutput, output);
+        }
+        [TestMethod]
+        public void DispatchIsDefault()
+        {
+            string source = @"
+namespace Foo
+{
+    using System.Runtime.InteropServices;
+
+    [Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"")]
+    public interface IStr
+    {
+        void Read(byte* pv, uint cb, uint* pcbRead);
+    }
+
+    [RuntimeCallableWrapper(typeof(IStr))]
+    partial class C
+    {
+    }
+}";
+            string output = this.GetGeneratedOutput(source, NullableContextOptions.Disable);
+
+            Assert.IsNotNull(output);
+
+            var expectedOutput = @"// <auto-generated>
+// Code generated by COM Proxy Code Generator.
+// Changes may cause incorrect behavior and will be lost if the code is
+// regenerated.
+// </auto-generated>
+#nullable enable
+using Marshal = System.Runtime.InteropServices.Marshal;
+
+namespace Foo
+{
+    [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
+    unsafe partial class C : global::Foo.IStr
+    {
+        void global::Foo.IStr.Read(byte* pv, uint cb, uint* pcbRead)
+        {
+            var targetInterface = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
+            var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var thisPtr);
+            if (result != 0)
+            {
+                throw new System.InvalidCastException();
+            }
+
+            try
+            {
+                var comDispatch = (System.IntPtr*)thisPtr;
+                var vtbl = (System.IntPtr*)comDispatch[0];
+                result = ((delegate* unmanaged<System.IntPtr, byte*, uint, uint*, int>)vtbl[7])(thisPtr, pv, cb, pcbRead);
                 if (result != 0)
                 {
                     Marshal.ThrowExceptionForHR(result);
