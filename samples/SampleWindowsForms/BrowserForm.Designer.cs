@@ -42,6 +42,7 @@ namespace SampleWindowsForms
             this.RecentPostBrowser.Size = new System.Drawing.Size(800, 450);
             this.RecentPostBrowser.TabIndex = 0;
             this.RecentPostBrowser.TabStop = false;
+            this.RecentPostBrowser.Url = new System.Uri("https://www.bing.com/?toWww=1&redig=74540BCC17AE49448590D94B155D07F7", System.UriKind.Absolute);
             this.RecentPostBrowser.WebBrowserShortcutsEnabled = false;
             // 
             // BrowserForm
