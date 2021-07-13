@@ -1,6 +1,7 @@
 ﻿namespace WinFormsComInterop.SourceGenerator
 {
     using Microsoft.CodeAnalysis;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.InteropServices;
@@ -112,9 +113,16 @@
                 return new StringMarshaller();
             }
 
-            if (parameterSymbol is IArrayTypeSymbol)
+            if (parameterSymbol is IArrayTypeSymbol arrayTypeSymbol)
             {
-                return new ArrayMarshaller();
+                if (IsBlittableType(arrayTypeSymbol.ElementType))
+                {
+                    return new BlittableArrayMarshaller();
+                }
+                else
+                {
+                    return new ArrayMarshaller();
+                }
             }
 
             if (parameterSymbol.TypeKind == TypeKind.Struct && parameterSymbol.SpecialType == SpecialType.None)
@@ -141,6 +149,65 @@
             }
 
             return new BlittableMarshaller();
+        }
+
+        private bool IsBlittableType(ITypeSymbol elementType)
+        {
+            if (elementType.TypeKind == TypeKind.Pointer)
+            {
+                return true;
+            }
+
+            if (elementType.TypeKind == TypeKind.Interface
+                || elementType.TypeKind == TypeKind.Class
+                || elementType.TypeKind == TypeKind.Delegate)
+            {
+                return false;
+            }
+
+            switch (elementType.SpecialType)
+            {
+                case SpecialType.System_Int32:
+                case SpecialType.System_UInt32:
+                case SpecialType.System_Int16:
+                case SpecialType.System_UInt16:
+                case SpecialType.System_Int64:
+                case SpecialType.System_UInt64:
+                case SpecialType.System_Boolean:
+                case SpecialType.System_Byte:
+                case SpecialType.System_SByte:
+                case SpecialType.System_IntPtr:
+                case SpecialType.System_UIntPtr:
+                case SpecialType.System_Single:
+                case SpecialType.System_Double:
+                case SpecialType.System_Enum:
+                    return true;
+                case SpecialType.System_String:
+                case SpecialType.System_Object:
+                case SpecialType.System_Decimal:
+                case SpecialType.System_Nullable_T:
+                    return false;
+            }
+
+            if (elementType.TypeKind == TypeKind.Struct)
+            {
+                foreach (var fields in elementType.GetMembers().OfType<IFieldSymbol>())
+                {
+                    if (fields.IsStatic)
+                    {
+                        continue;
+                    }
+
+                    if (!IsBlittableType(fields.Type))
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            return false;
         }
     }
 }

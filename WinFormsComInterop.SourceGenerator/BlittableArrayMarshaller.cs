@@ -2,14 +2,14 @@
 
 namespace WinFormsComInterop.SourceGenerator
 {
-    internal class ArrayMarshaller : Marshaller
+    internal class BlittableArrayMarshaller : Marshaller
     {
         public ITypeSymbol ElementType => ((IArrayTypeSymbol)Type).ElementType;
         public override string UnmanagedTypeName
         {
             get
             {
-                return "System.IntPtr*";
+                return ElementType.FormatType(TypeAlias) + "*";
             }
         }
 
@@ -27,15 +27,7 @@ namespace WinFormsComInterop.SourceGenerator
         {
             if (RefKind == RefKind.None)
             {
-                builder.AppendLine($"System.IntPtr[] {LocalVariable}_arr = new System.IntPtr[{Name}.Length];");
-                builder.AppendLine($"for (int {LocalVariable}_cnt = 0; {LocalVariable}_cnt < {Name}.Length; {LocalVariable}_cnt++)");
-                builder.AppendLine("{");
-                builder.PushIndent();
-                builder.AppendLine("throw new System.NotImplementedException();");
-                builder.PopIndent();
-                builder.AppendLine("}");
-                builder.AppendLine();
-                builder.AppendLine($"fixed ({UnmanagedTypeName} {LocalVariable} = {LocalVariable}_arr)");
+                builder.AppendLine($"fixed ({UnmanagedTypeName} {LocalVariable} = {Name})");
             }
         }
 
