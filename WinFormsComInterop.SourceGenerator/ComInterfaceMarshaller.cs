@@ -13,9 +13,13 @@ namespace WinFormsComInterop.SourceGenerator
 
         public override void DeclareLocalParameter(IndentedStringBuilder builder)
         {
-            if (RefKind == RefKind.None || RefKind == RefKind.In || RefKind == RefKind.Ref)
+            if (RefKind == RefKind.None)
             {
-                builder.AppendLine($"var {LocalVariable} = ComInterfaceDispatch.GetInstance<{FormatTypeName()}>((ComInterfaceDispatch*){Name});");
+                builder.AppendLine($"var {LocalVariable} = {Name} == System.IntPtr.Zero ? null : ({FormatTypeName()})Marshal.GetObjectForIUnknown({Name});");
+            }
+            else if (RefKind == RefKind.In || RefKind == RefKind.Ref)
+            {
+                builder.AppendLine($"var {LocalVariable} = *{Name} == System.IntPtr.Zero ? null : ({FormatTypeName()})Marshal.GetObjectForIUnknown(*{Name});");
             }
             else
             {

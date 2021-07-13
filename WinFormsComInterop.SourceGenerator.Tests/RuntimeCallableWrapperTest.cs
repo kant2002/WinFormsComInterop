@@ -1787,7 +1787,7 @@ namespace Foo
             {
                 var comDispatch = (System.IntPtr*)thisPtr;
                 var vtbl = (System.IntPtr*)comDispatch[0];
-                System.IntPtr[] local_0_arr = new System.IntPtr[pstatstg.Length];
+                System.Span<System.IntPtr> local_0_arr = stackalloc System.IntPtr[pstatstg.Length == 0 ? 1 : pstatstg.Length];
                 for (int local_0_cnt = 0; local_0_cnt < pstatstg.Length; local_0_cnt++)
                 {
                     var arrayItem = pstatstg[local_0_cnt];

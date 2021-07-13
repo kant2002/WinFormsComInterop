@@ -29,7 +29,8 @@ namespace WinFormsComInterop.SourceGenerator
         {
             if (RefKind == RefKind.None)
             {
-                builder.AppendLine($"{ElementMarshaller.UnmanagedTypeName}[] {LocalVariable}_arr = new {ElementMarshaller.UnmanagedTypeName}[{Name}.Length];");
+                // I should check for length, and allocate on heap for large numbers.
+                builder.AppendLine($"System.Span<{ElementMarshaller.UnmanagedTypeName}> {LocalVariable}_arr = stackalloc {ElementMarshaller.UnmanagedTypeName}[{Name}.Length == 0 ? 1 : {Name}.Length];");
                 builder.AppendLine($"for (int {LocalVariable}_cnt = 0; {LocalVariable}_cnt < {Name}.Length; {LocalVariable}_cnt++)");
                 builder.AppendLine("{");
                 builder.PushIndent();
@@ -39,6 +40,7 @@ namespace WinFormsComInterop.SourceGenerator
                 builder.PopIndent();
                 builder.AppendLine("}");
                 builder.AppendLine();
+                //builder.AppendLine($"{UnmanagedTypeName} {LocalVariable} = &{LocalVariable}_arr;");
                 builder.AppendLine($"fixed ({UnmanagedTypeName} {LocalVariable} = {LocalVariable}_arr)");
             }
         }

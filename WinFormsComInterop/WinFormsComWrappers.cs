@@ -32,6 +32,7 @@ namespace WinFormsComInterop
     [ComCallableWrapper(typeof(primitives::Interop.SHDocVw.DWebBrowserEvents2))]
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.ISimpleFrameSite))]
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IPropertyNotifySink))]
+    [ComCallableWrapper(typeof(primitives::Interop.Shell32.IFileDialogEvents))]
 #if USE_WPF
     [ComCallableWrapper(typeof(winbase::MS.Win32.UnsafeNativeMethods.ITfContext))]
     [ComCallableWrapper(typeof(winbase::MS.Win32.UnsafeNativeMethods.IOleDropTarget))]
@@ -53,6 +54,7 @@ namespace WinFormsComInterop
         static ComWrappers.ComInterfaceEntry* formsWebBrowserSiteEntry; 
         static ComWrappers.ComInterfaceEntry* formsWebBrowserContainerEntry;
         static ComWrappers.ComInterfaceEntry* formsWebBrowserEventEntry;
+        static ComWrappers.ComInterfaceEntry* formsFileDialogEventsEntry;
 #if USE_WPF
         static ComWrappers.ComInterfaceEntry* oleDropTargetEntry;
         static ComWrappers.ComInterfaceEntry* winbaseTfContextEntry;
@@ -82,7 +84,10 @@ namespace WinFormsComInterop
         internal static Guid IID_DWebBrowserEvents2 = new Guid("34A715A0-6587-11D0-924A-0020AFC7AC4D");
         internal static Guid IID_ISimpleFrameSite = new Guid("742B0E01-14E6-101B-914E-00AA00300CAB");
         internal static Guid IID_IPropertyNotifySink = new Guid("9BFBBC02-EFF1-101A-84ED-00AA00341D07");
-        
+        internal static Guid IID_IFileOpenDialog = new Guid("d57c7288-d4ad-4768-be02-9d969532d960");
+        internal static Guid IID_IFileSaveDialog = new Guid("84bccd23-5fde-4cdb-aea4-af64b83d78ab");
+        internal static Guid IID_IFileDialogEvents = new Guid("973510DB-7D7F-452B-8975-74A85828D354");
+
         internal static Guid IID_ITfContext = new Guid("aa80e7fd-2021-11d2-93e0-0060b067b86e");
 
         // This class only exposes IDispatch and the vtable is always the same.
@@ -102,6 +107,7 @@ namespace WinFormsComInterop
             formsWebBrowserSiteEntry = CreateWebBrowserSiteEntry();
             formsWebBrowserContainerEntry = CreateWebBrowserContainerEntry();
             formsWebBrowserEventEntry = CreateWebBrowserEventEntry();
+            formsFileDialogEventsEntry = CreateFileDialogEventsEntry();
 #if USE_WPF
             oleDropTargetEntry = CreateOleDropTargetEntry();
             winbaseTfContextEntry = CreateWinbaseITfContextEntry();
@@ -241,6 +247,16 @@ namespace WinFormsComInterop
             wrapperEntry[0].Vtable = oleControlSiteVtbl;
             return wrapperEntry;
         }
+        private static ComInterfaceEntry* CreateFileDialogEventsEntry()
+        {
+            CreatePrimitivesIFileDialogEventsProxyVtbl(out var oleControlSiteVtbl);
+
+            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 1);
+            var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
+            wrapperEntry[0].IID = IID_IFileDialogEvents;
+            wrapperEntry[0].Vtable = oleControlSiteVtbl;
+            return wrapperEntry;
+        }
 
 #if NET5_0
         private static ComInterfaceEntry* CreateDrawingStreamEntry()
@@ -351,6 +367,12 @@ namespace WinFormsComInterop
                 return formsWebBrowserEventEntry;
             }
 
+            if (obj is forms::System.Windows.Forms.FileDialog.VistaDialogEvents)
+            {
+                count = 1;
+                return formsFileDialogEventsEntry;
+            }
+
             throw new NotImplementedException();
         }
 
@@ -384,6 +406,18 @@ namespace WinFormsComInterop
             {
                 Marshal.Release(connectionPointPtr);
                 return new IConnectionPointWrapper(externalComObject);
+            }
+
+            if (Marshal.QueryInterface(externalComObject, ref IID_IFileOpenDialog, out var fileOpenDialogPtr) >= 0)
+            {
+                Marshal.Release(fileOpenDialogPtr);
+                return new IFileOpenDialogWrapper(externalComObject);
+            }
+
+            if (Marshal.QueryInterface(externalComObject, ref IID_IFileSaveDialog, out var fileSaveDialogPtr) >= 0)
+            {
+                Marshal.Release(fileSaveDialogPtr);
+                return new IFileSaveDialogWrapper(externalComObject);
             }
 
             GetIUnknownImpl(out IntPtr fpQueryInteface, out IntPtr fpAddRef, out IntPtr fpRelease);

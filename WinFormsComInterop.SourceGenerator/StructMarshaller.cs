@@ -37,6 +37,11 @@ namespace WinFormsComInterop.SourceGenerator
         {
             if (RefKind == RefKind.Out || RefKind == RefKind.Ref || RefKind == RefKind.In)
             {
+                // builder.AppendLine($"var handle_{Index} = System.Runtime.InteropServices.GCHandle.Alloc({Name}, System.Runtime.InteropServices.GCHandleType.Pinned);");
+                // builder.AppendLine($"{TypeName}* {LocalVariable} = GCHandle.ToIntPtr(handle_{Index});");
+                // builder.AppendLine("try");
+                // builder.AppendLine("{");
+                // builder.PushIndent();
                 builder.AppendLine($"fixed ({TypeName}* {LocalVariable} = &{Name})");
             }
         }
