@@ -1,7 +1,6 @@
 ﻿namespace WinFormsComInterop.SourceGenerator
 {
     using Microsoft.CodeAnalysis;
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.InteropServices;
@@ -86,6 +85,19 @@
             marshaller.Index = parameterSymbol.Ordinal;
             marshaller.TypeAlias = context.GetAlias(parameterSymbol.Type);
             marshaller.Context = context;
+            return marshaller;
+        }
+
+        public Marshaller CreateElementMarshaller(IArrayTypeSymbol arrayTypeSymbol, string prefix)
+        {
+            Marshaller marshaller = CreateMarshaller(arrayTypeSymbol.ElementType, null);
+            marshaller.Name = "arrayItem";
+            marshaller.Type = arrayTypeSymbol.ElementType;
+            marshaller.RefKind = RefKind.None;
+            marshaller.Index = 0;
+            marshaller.LocalVariablePrefix = prefix;
+            marshaller.TypeAlias = this.GetAlias(arrayTypeSymbol.ElementType);
+            marshaller.Context = this;
             return marshaller;
         }
 

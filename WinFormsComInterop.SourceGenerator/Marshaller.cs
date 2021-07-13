@@ -37,7 +37,9 @@ namespace WinFormsComInterop.SourceGenerator
                 return UnmanagedTypeName;
             }
         }
-        public string LocalVariable => $"local_{Index}";
+        public string LocalVariable => $"{LocalVariablePrefix}_{Index}";
+
+        public string LocalVariablePrefix { get; set; } = "local";
 
         public virtual string GetUnmanagedParameterDeclaration()
         {

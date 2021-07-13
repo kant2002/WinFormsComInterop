@@ -5,11 +5,13 @@ namespace WinFormsComInterop.SourceGenerator
     internal class ArrayMarshaller : Marshaller
     {
         public ITypeSymbol ElementType => ((IArrayTypeSymbol)Type).ElementType;
+
+        public Marshaller ElementMarshaller => Context.CreateElementMarshaller((IArrayTypeSymbol)Type, LocalVariable);
         public override string UnmanagedTypeName
         {
             get
             {
-                return "System.IntPtr*";
+                return ElementMarshaller.UnmanagedTypeName + "*";
             }
         }
 
@@ -27,11 +29,13 @@ namespace WinFormsComInterop.SourceGenerator
         {
             if (RefKind == RefKind.None)
             {
-                builder.AppendLine($"System.IntPtr[] {LocalVariable}_arr = new System.IntPtr[{Name}.Length];");
+                builder.AppendLine($"{ElementMarshaller.UnmanagedTypeName}[] {LocalVariable}_arr = new {ElementMarshaller.UnmanagedTypeName}[{Name}.Length];");
                 builder.AppendLine($"for (int {LocalVariable}_cnt = 0; {LocalVariable}_cnt < {Name}.Length; {LocalVariable}_cnt++)");
                 builder.AppendLine("{");
                 builder.PushIndent();
-                builder.AppendLine("throw new System.NotImplementedException();");
+                builder.AppendLine($"var arrayItem = {Name}[{LocalVariable}_cnt];");
+                ElementMarshaller.ConvertToUnmanagedParameter(builder);
+                builder.AppendLine($"{LocalVariable}_arr[{LocalVariable}_cnt] = {ElementMarshaller.LocalVariable};");
                 builder.PopIndent();
                 builder.AppendLine("}");
                 builder.AppendLine();

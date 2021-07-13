@@ -1790,7 +1790,24 @@ namespace Foo
                 System.IntPtr[] local_0_arr = new System.IntPtr[pstatstg.Length];
                 for (int local_0_cnt = 0; local_0_cnt < pstatstg.Length; local_0_cnt++)
                 {
-                    throw new System.NotImplementedException();
+                    var arrayItem = pstatstg[local_0_cnt];
+                    System.IntPtr local_0_0;
+                    if (arrayItem == null)
+                    {
+                        local_0_0 = System.IntPtr.Zero;
+                    }
+                    else
+                    {
+                        var local_0_0_unk = MarshalSupport.GetIUnknownForObject(arrayItem);
+                        var local_arrayItem_IID = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
+                        result = Marshal.QueryInterface(local_0_0_unk, ref local_arrayItem_IID, out local_0_0);
+                        if (result != 0)
+                        {
+                            Marshal.ThrowExceptionForHR(result);
+                        }
+                    }
+
+                    local_0_arr[local_0_cnt] = local_0_0;
                 }
 
                 fixed (System.IntPtr* local_0 = local_0_arr)
