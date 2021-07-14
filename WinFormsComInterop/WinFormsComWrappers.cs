@@ -87,6 +87,8 @@ namespace WinFormsComInterop
         internal static Guid IID_IFileOpenDialog = new Guid("d57c7288-d4ad-4768-be02-9d969532d960");
         internal static Guid IID_IFileSaveDialog = new Guid("84bccd23-5fde-4cdb-aea4-af64b83d78ab");
         internal static Guid IID_IFileDialogEvents = new Guid("973510DB-7D7F-452B-8975-74A85828D354");
+        internal static Guid IID_IDropTarget = new Guid("00000122-0000-0000-C000-000000000046");
+        internal static Guid IID_IOleInPlaceActiveObject = new Guid("00000117-0000-0000-C000-000000000046");
 
         internal static Guid IID_ITfContext = new Guid("aa80e7fd-2021-11d2-93e0-0060b067b86e");
 
@@ -418,6 +420,24 @@ namespace WinFormsComInterop
             {
                 Marshal.Release(fileSaveDialogPtr);
                 return new IFileSaveDialogWrapper(externalComObject);
+            }
+
+            if (Marshal.QueryInterface(externalComObject, ref IID_IDropTarget, out var dropTargetPtr) >= 0)
+            {
+                Marshal.Release(dropTargetPtr);
+                return new IDropTargetWrapper(externalComObject);
+            }
+
+            if (Marshal.QueryInterface(externalComObject, ref IID_IOleInPlaceActiveObject, out var inplaceActiveObjectPtr) >= 0)
+            {
+                Marshal.Release(inplaceActiveObjectPtr);
+                return new IOleInPlaceActiveObjectWrapper(externalComObject);
+            }
+
+            if (Marshal.QueryInterface(externalComObject, ref IID_IOleInPlaceFrame, out var inplaceFramePtr) >= 0)
+            {
+                Marshal.Release(inplaceFramePtr);
+                return new IOleInPlaceFrameWrapper(externalComObject);
             }
 
             GetIUnknownImpl(out IntPtr fpQueryInteface, out IntPtr fpAddRef, out IntPtr fpRelease);

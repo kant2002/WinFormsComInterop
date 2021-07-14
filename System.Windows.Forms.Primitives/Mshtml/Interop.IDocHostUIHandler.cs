@@ -83,7 +83,7 @@ public partial class Interop
             HRESULT TranslateUrl(
                 uint dwTranslate,
                 [CustomMarshalAs(UnmanagedType.LPWStr)] string strURLIn,
-                [CustomMarshalAs(UnmanagedType.LPWStr)] string pstrURLOut);
+                [CustomMarshalAs(UnmanagedType.LPWStr)] out string pstrURLOut);
 
             [PreserveSig]
             HRESULT FilterDataObject(

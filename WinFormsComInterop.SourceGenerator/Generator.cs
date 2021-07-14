@@ -137,14 +137,14 @@ internal unsafe struct IDispatchVtbl
 
     [UnmanagedCallersOnly]
     public static int GetTypeInfoCount(IntPtr thisPtr, int* i)
-    {System.Diagnostics.Debugger.Launch();
+    {
         *i = 0;
         return 0; // S_OK;
     }
 
     [UnmanagedCallersOnly]
     public static int GetTypeInfo(IntPtr thisPtr, int itinfo, int lcid, IntPtr* i)
-    {System.Diagnostics.Debugger.Launch();
+    {
         *i = IntPtr.Zero;
         return 0; // S_OK;
     }
@@ -157,7 +157,7 @@ internal unsafe struct IDispatchVtbl
         int namesCount,
         int lcid,
         int* dispIdsRaw)
-    {System.Diagnostics.Debugger.Launch();
+    {
         return E_NOTIMPL;
     }
 
@@ -172,7 +172,7 @@ internal unsafe struct IDispatchVtbl
         IntPtr VarResult,
         IntPtr pExcepInfo,
         IntPtr puArgErr)
-    {System.Diagnostics.Debugger.Launch();
+    {
         return E_NOTIMPL;
     }
 }
