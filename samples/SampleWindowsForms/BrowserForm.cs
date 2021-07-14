@@ -16,5 +16,25 @@ namespace SampleWindowsForms
         {
             InitializeComponent();
         }
+
+        private void RecentPostBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+
+        }
+
+        private void RecentPostBrowser_Navigating(object sender, WebBrowserNavigatingEventArgs e)
+        {
+
+        }
+
+        private void RecentPostBrowser_NewWindow(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void RecentPostBrowser_Navigated(object sender, WebBrowserNavigatedEventArgs e)
+        {
+
+        }
     }
 }

@@ -44,6 +44,10 @@ namespace SampleWindowsForms
             this.RecentPostBrowser.TabStop = false;
             this.RecentPostBrowser.Url = new System.Uri("https://www.bing.com/?toWww=1&redig=74540BCC17AE49448590D94B155D07F7", System.UriKind.Absolute);
             this.RecentPostBrowser.WebBrowserShortcutsEnabled = false;
+            this.RecentPostBrowser.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.RecentPostBrowser_DocumentCompleted);
+            this.RecentPostBrowser.Navigated += new System.Windows.Forms.WebBrowserNavigatedEventHandler(this.RecentPostBrowser_Navigated);
+            this.RecentPostBrowser.Navigating += new System.Windows.Forms.WebBrowserNavigatingEventHandler(this.RecentPostBrowser_Navigating);
+            this.RecentPostBrowser.NewWindow += new System.ComponentModel.CancelEventHandler(this.RecentPostBrowser_NewWindow);
             // 
             // BrowserForm
             // 
