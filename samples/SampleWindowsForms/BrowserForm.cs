@@ -36,5 +36,10 @@ namespace SampleWindowsForms
         {
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            RecentPostBrowser.Url = new Uri("https://google.com");
+        }
     }
 }
