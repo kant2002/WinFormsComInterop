@@ -6,10 +6,7 @@ extern alias drawing;
 extern alias winbase;
 #endif
 using System;
-using System.IO;
 using System.Runtime.InteropServices;
-using static primitives::Interop;
-using static primitives::Interop.Oleaut32;
 
 namespace WinFormsComInterop
 {

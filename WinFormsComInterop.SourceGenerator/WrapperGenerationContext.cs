@@ -14,6 +14,7 @@ namespace WinFormsComInterop.SourceGenerator
         private readonly GeneratorExecutionContext context;
         private Dictionary<string, string> aliasMap = new();
         private StringBuilder debug = new StringBuilder();
+        private Dictionary<string, MethodGenerationContext> contextCache = new();
 
         public WrapperGenerationContext(GeneratorExecutionContext context)
         {
@@ -84,6 +85,12 @@ namespace WinFormsComInterop.SourceGenerator
         public MethodGenerationContext CreateMethodGenerationContext(
             ClassDeclaration classSymbol, IMethodSymbol method, int comSlotNumber)
         {
+            string key = $"{GetAlias(classSymbol.Type)}_{classSymbol.Type.ToDisplayString()}_{GetAlias(method.ContainingType)}_{method.ToDisplayString()}";
+            if (contextCache.TryGetValue(key, out var existingContext))
+            {
+                return existingContext;
+            }
+
             var preserveSigAttribute = method.GetAttributes().FirstOrDefault(ad =>
             {
                 var attributeName = ad.AttributeClass?.ToDisplayString();
@@ -97,15 +104,22 @@ namespace WinFormsComInterop.SourceGenerator
                 PreserveSignature = preserveSignature,
                 ComSlotNumber = comSlotNumber,
             };
+            contextCache.Add(key, methodContext);
             return methodContext;
         }
 
         internal void AddCCWSource(INamedTypeSymbol classType, INamedTypeSymbol interfaceTypeSymbol, SourceText sourceText)
         {
             var aliasSymbol = GetAlias(interfaceTypeSymbol);
-            // AddDebugLine(aliasSymbol);
             var typesuffix = interfaceTypeSymbol.FormatType(aliasSymbol).Replace(".", "_").Replace("::", "_");
-            context.AddSource($"{classType.ToDisplayString().Replace(".", "_")}_{typesuffix}.cs", sourceText);
+            context.AddSource($"ccw_{classType.ToDisplayString().Replace(".", "_")}_{typesuffix}.cs", sourceText);
+        }
+
+        internal void AddRCWSource(INamedTypeSymbol classType, INamedTypeSymbol interfaceTypeSymbol, SourceText sourceText)
+        {
+            var aliasSymbol = GetAlias(interfaceTypeSymbol);
+            var typesuffix = interfaceTypeSymbol.FormatType(aliasSymbol).Replace(".", "_").Replace("::", "_");
+            context.AddSource($"rcw_{classType.ToDisplayString().Replace(".", "_")}_{typesuffix}.cs", sourceText);
         }
 
         internal void AddComWrapperSource(INamedTypeSymbol classType, SourceText sourceText)

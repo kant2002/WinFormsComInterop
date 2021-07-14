@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.CodeAnalysis;
@@ -67,7 +66,7 @@ namespace WinFormsComInterop.InteropServices
 {
     [StructLayout(LayoutKind.Explicit)]
     [SupportedOSPlatform(""windows"")]
-    internal partial struct Variant 
+    internal partial struct Variant
     {
         // Most of the data types in the Variant are carried in _typeUnion
         [FieldOffset(0)] private TypeUnion _typeUnion;
@@ -129,6 +128,52 @@ partial class MarshalSupport
     public static object GetObjectForNativeVariant(IntPtr pVariant)
     {
         return Marshal.GetObjectForNativeVariant(pVariant);
+    }
+}
+
+internal unsafe struct IDispatchVtbl
+{
+    public const int E_NOTIMPL = -2147467263;
+
+    [UnmanagedCallersOnly]
+    public static int GetTypeInfoCount(IntPtr thisPtr, int* i)
+    {System.Diagnostics.Debugger.Launch();
+        *i = 0;
+        return 0; // S_OK;
+    }
+
+    [UnmanagedCallersOnly]
+    public static int GetTypeInfo(IntPtr thisPtr, int itinfo, int lcid, IntPtr* i)
+    {System.Diagnostics.Debugger.Launch();
+        *i = IntPtr.Zero;
+        return 0; // S_OK;
+    }
+
+    [UnmanagedCallersOnly]
+    public static int GetIDsOfNames(
+        IntPtr thisPtr,
+        Guid* iid,
+        IntPtr* namesRaw,
+        int namesCount,
+        int lcid,
+        int* dispIdsRaw)
+    {System.Diagnostics.Debugger.Launch();
+        return E_NOTIMPL;
+    }
+
+    [UnmanagedCallersOnly]
+    public static int Invoke(
+        IntPtr thisPtr,
+        int dispIdMember,
+        Guid* riid,
+        int lcid,
+        System.Runtime.InteropServices.ComTypes.INVOKEKIND wFlags,
+        System.Runtime.InteropServices.ComTypes.DISPPARAMS* pDispParams,
+        IntPtr VarResult,
+        IntPtr pExcepInfo,
+        IntPtr puArgErr)
+    {System.Diagnostics.Debugger.Launch();
+        return E_NOTIMPL;
     }
 }
 ";
@@ -344,9 +389,17 @@ namespace {namespaceName}
             IndentedStringBuilder vtblMethod = new ();
 
             int slotNumber = IDispatchStartSlot;
+            bool hasDispatchInterfaces = true;
+            bool hasIUnknownInterfaces = true;
             if (IsIUnknownInterface(interfaceTypeSymbol))
             {
                 slotNumber = IUnknownStartSlot;
+                hasDispatchInterfaces = false;
+                hasIUnknownInterfaces = true;
+            }
+            else if (IsIDispatchInterface(interfaceTypeSymbol))
+            {
+                hasIUnknownInterfaces = false;
             }
 
             var membersCount = interfaceTypeSymbol.GetMembers().OfType<IMethodSymbol>().Count() + slotNumber;
@@ -356,18 +409,30 @@ namespace {namespaceName}
             vtblMethod.AppendLine($"var vtblRaw = (System.IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(global::{typeName}), sizeof(System.IntPtr) * {membersCount});");
             vtblMethod.AppendLine("GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);");
             vtblMethod.AppendLine();
-            foreach (var member in interfaceTypeSymbol.GetMembers())
+
+            if (hasDispatchInterfaces)
             {
-                switch (member)
+                vtblMethod.AppendLine($"vtblRaw[3] = (IntPtr)(delegate* unmanaged<IntPtr, int*, int>)&IDispatchVtbl.GetTypeInfoCount;");
+                vtblMethod.AppendLine($"vtblRaw[4] = (IntPtr)(delegate* unmanaged<IntPtr, int, int, IntPtr*, int>)&IDispatchVtbl.GetTypeInfo;");
+                vtblMethod.AppendLine($"vtblRaw[5] = (IntPtr)(delegate* unmanaged<IntPtr, Guid*, IntPtr*, int, int, int*, int>)&IDispatchVtbl.GetIDsOfNames;");
+                vtblMethod.AppendLine($"vtblRaw[6] = (IntPtr)(delegate* unmanaged<IntPtr, int, Guid*, int, System.Runtime.InteropServices.ComTypes.INVOKEKIND, System.Runtime.InteropServices.ComTypes.DISPPARAMS*, IntPtr, IntPtr, IntPtr, int>)&IDispatchVtbl.Invoke;");
+            }
+
+            if (hasIUnknownInterfaces)
+            {
+                foreach (var member in interfaceTypeSymbol.GetMembers())
                 {
-                    case IMethodSymbol methodSymbol:
-                        {
-                            var methodContext = context.CreateMethodGenerationContext(classSymbol, methodSymbol, slotNumber);
-                            GenerateCCWMethod(proxyMethods, interfaceTypeSymbol, methodContext);
-                            vtblMethod.AppendLine($"vtblRaw[{slotNumber}] = (System.IntPtr)({methodContext.UnmanagedDelegateSignature})&{typeName}.{methodContext.Method.Name};");
-                            slotNumber++;
-                        }
-                        break;
+                    switch (member)
+                    {
+                        case IMethodSymbol methodSymbol:
+                            {
+                                var methodContext = context.CreateMethodGenerationContext(classSymbol, methodSymbol, slotNumber);
+                                GenerateCCWMethod(proxyMethods, interfaceTypeSymbol, methodContext);
+                                vtblMethod.AppendLine($"vtblRaw[{slotNumber}] = (System.IntPtr)({methodContext.UnmanagedDelegateSignature})&{typeName}.{methodContext.Method.Name};");
+                                slotNumber++;
+                            }
+                            break;
+                    }
                 }
             }
 
@@ -459,29 +524,54 @@ namespace {namespaceName}
             }
 
             int slotNumber = IDispatchStartSlot;
+            bool hasDispatchInterfaces = true;
+            bool hasIUnknownInterfaces = true;
             if (IsIUnknownInterface(interfaceTypeSymbol))
             {
                 slotNumber = IUnknownStartSlot;
+                hasDispatchInterfaces = false;
+                hasIUnknownInterfaces = true;
+            }
+            else if (IsIDispatchInterface(interfaceTypeSymbol))
+            {
+                hasIUnknownInterfaces = false;
             }
 
             var membersCount = interfaceTypeSymbol.GetMembers().OfType<IMethodSymbol>().Count() + slotNumber;
+            if (IsIDispatchInterface(interfaceTypeSymbol))
+            {
+                membersCount = slotNumber;
+            }
+
             vtblMethod.AppendLine($"internal static void Create{typeName}Vtbl(out System.IntPtr vtbl)");
             vtblMethod.AppendLine("{");
             vtblMethod.PushIndent();
             vtblMethod.AppendLine($"var vtblRaw = (System.IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof({key.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}), sizeof(System.IntPtr) * {membersCount});");
             vtblMethod.AppendLine("GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);");
             vtblMethod.AppendLine();
-            foreach (var member in interfaceTypeSymbol.GetMembers())
+
+            if (hasDispatchInterfaces)
             {
-                switch (member)
+                vtblMethod.AppendLine($"vtblRaw[3] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, int*, int>)&IDispatchVtbl.GetTypeInfoCount;");
+                vtblMethod.AppendLine($"vtblRaw[4] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, int, int, System.IntPtr*, int>)&IDispatchVtbl.GetTypeInfo;");
+                vtblMethod.AppendLine($"vtblRaw[5] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, System.Guid*, System.IntPtr*, int, int, int*, int>)&IDispatchVtbl.GetIDsOfNames;");
+                vtblMethod.AppendLine($"vtblRaw[6] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, int, System.Guid*, int, System.Runtime.InteropServices.ComTypes.INVOKEKIND, System.Runtime.InteropServices.ComTypes.DISPPARAMS*, System.IntPtr, System.IntPtr, System.IntPtr, int>)&IDispatchVtbl.Invoke;");
+            }
+
+            if (hasIUnknownInterfaces)
+            {
+                foreach (var member in interfaceTypeSymbol.GetMembers())
                 {
-                    case IMethodSymbol methodSymbol:
-                        {
-                            var methodContext = context.CreateMethodGenerationContext(classSymbol, methodSymbol, slotNumber);
-                            vtblMethod.AppendLine($"vtblRaw[{slotNumber}] = (System.IntPtr)({methodContext.UnmanagedDelegateSignature})&{typeName}.{methodContext.Method.Name};");
-                            slotNumber++;
-                        }
-                        break;
+                    switch (member)
+                    {
+                        case IMethodSymbol methodSymbol:
+                            {
+                                var methodContext = context.CreateMethodGenerationContext(classSymbol, methodSymbol, slotNumber);
+                                vtblMethod.AppendLine($"vtblRaw[{slotNumber}] = (System.IntPtr)({methodContext.UnmanagedDelegateSignature})&{typeName}.{methodContext.Method.Name};");
+                                slotNumber++;
+                            }
+                            break;
+                    }
                 }
             }
 
@@ -527,6 +617,11 @@ namespace {namespaceName}
         private static bool IsIUnknownInterface(INamedTypeSymbol interfaceTypeSymbol)
         {
             return GetComInterfaceType(interfaceTypeSymbol) == System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown;
+        }
+
+        private static bool IsIDispatchInterface(INamedTypeSymbol interfaceTypeSymbol)
+        {
+            return GetComInterfaceType(interfaceTypeSymbol) == System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIDispatch;
         }
 
         private static System.Runtime.InteropServices.ComInterfaceType GetComInterfaceType(INamedTypeSymbol interfaceTypeSymbol)
@@ -579,13 +674,13 @@ namespace {namespaceName}
                 {
                     case IMethodSymbol methodSymbol:
                         {
+                            var methodContext = context.CreateMethodGenerationContext(classSymbol, methodSymbol, slotNumber);
+                            slotNumber++;
+
                             if (methodSymbol.MethodKind == MethodKind.PropertyGet || methodSymbol.MethodKind == MethodKind.PropertySet)
                             {
                                 continue;
                             }
-
-                            var methodContext = context.CreateMethodGenerationContext(classSymbol, methodSymbol, slotNumber);
-                            slotNumber++;
 
                             GenerateRCWMethodHeader(source, interfaceTypeSymbol, methodContext);
                             WriteRCWMethodBody(source, interfaceTypeSymbol, methodContext);
@@ -660,7 +755,7 @@ namespace {namespaceName}
             {
                 var sourceCode = ProcessRCWDeclaration(classSymbol, interfaceTypeSymbol, context);
                 var key = (INamedTypeSymbol)classSymbol.Type;
-                context.AddCCWSource(key, interfaceTypeSymbol, SourceText.From(sourceCode, Encoding.UTF8));
+                context.AddRCWSource(key, interfaceTypeSymbol, SourceText.From(sourceCode, Encoding.UTF8));
             }
         }
 

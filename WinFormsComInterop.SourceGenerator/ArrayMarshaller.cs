@@ -17,7 +17,17 @@ namespace WinFormsComInterop.SourceGenerator
 
         public override void DeclareLocalParameter(IndentedStringBuilder builder)
         {
-            builder.AppendLine($"var {LocalVariable} = new System.Span<{ElementType.FormatType(TypeAlias)}>({Name}, 1).ToArray();");
+            builder.AppendLine($"var {LocalVariable}_length = 1;");
+            builder.AppendLine($"var {LocalVariable} = new {ElementType.FormatType(TypeAlias)}[{LocalVariable}_length];");
+            builder.AppendLine($"for (int {LocalVariable}_cnt = 0; {LocalVariable}_cnt < {LocalVariable}_length; {LocalVariable}_cnt++)");
+            builder.AppendLine("{");
+            builder.PushIndent();
+            builder.AppendLine($"var arrayItem = {Name}[{LocalVariable}_cnt];");
+            ElementMarshaller.DeclareLocalParameter(builder);
+            builder.AppendLine($"{LocalVariable}[{LocalVariable}_cnt] = {ElementMarshaller.LocalVariable};");
+            builder.PopIndent();
+            builder.AppendLine("}");
+            builder.AppendLine();
         }
 
         public override string GetParameterInvocation()

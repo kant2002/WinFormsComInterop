@@ -67,7 +67,7 @@ public partial class Interop
 
             [PreserveSig]
             HRESULT GetOptionKeyPath(
-                [Out, CustomMarshalAs(UnmanagedType.LPArray)] string pbstrKey,
+                [Out, CustomMarshalAs(UnmanagedType.LPArray)] string[] pbstrKey,
                 uint dw);
 
             [PreserveSig]

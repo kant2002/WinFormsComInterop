@@ -27,6 +27,9 @@
         private static Compilation GetGeneratedCompilation(string source, NullableContextOptions nullableContextOptions)
         {
             var fakeCode = @"
+using System.Runtime.InteropServices;
+
+[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 public interface ICloneable
 {
     void Clone();
@@ -34,6 +37,7 @@ public interface ICloneable
 
 enum EnumValue { }
 
+[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 public interface IPtrMethod
 {
     void MethodPtr(EnumValue* val);
