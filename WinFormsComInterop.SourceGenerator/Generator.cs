@@ -334,7 +334,7 @@ namespace {namespaceName}
             var typeName = $"{interfaceTypeSymbol.Name}Proxy";
             if (!string.IsNullOrWhiteSpace(aliasSymbol))
             {
-                typeName = aliasSymbol.Substring(0,1).ToUpperInvariant() + aliasSymbol.Substring(1) + typeName;
+                typeName = aliasSymbol!.Substring(0,1).ToUpperInvariant() + aliasSymbol.Substring(1) + typeName;
             }
 
             source.AppendLine($"unsafe partial class {typeName}");
@@ -406,7 +406,7 @@ namespace {namespaceName}
                 var aliasSymbol = context.GetAlias(interfaceTypeSymbol);
                 if (!string.IsNullOrWhiteSpace(aliasSymbol))
                 {
-                    aliases.Add(aliasSymbol);
+                    aliases.Add(aliasSymbol!);
                 }
             }
 
@@ -455,7 +455,7 @@ namespace {namespaceName}
             var typeName = $"{interfaceTypeSymbol.Name}Proxy";
             if (!string.IsNullOrWhiteSpace(aliasSymbol))
             {
-                typeName = aliasSymbol.Substring(0, 1).ToUpperInvariant() + aliasSymbol.Substring(1) + typeName;
+                typeName = aliasSymbol!.Substring(0, 1).ToUpperInvariant() + aliasSymbol.Substring(1) + typeName;
             }
 
             int slotNumber = IDispatchStartSlot;
@@ -526,13 +526,18 @@ namespace {namespaceName}
 
         private static bool IsIUnknownInterface(INamedTypeSymbol interfaceTypeSymbol)
         {
+            return GetComInterfaceType(interfaceTypeSymbol) == System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown;
+        }
+
+        private static System.Runtime.InteropServices.ComInterfaceType GetComInterfaceType(INamedTypeSymbol interfaceTypeSymbol)
+        {
             var attributeData = interfaceTypeSymbol.GetAttributes().FirstOrDefault(_ => _.AttributeClass?.ToDisplayString() == "System.Runtime.InteropServices.InterfaceTypeAttribute");
-            if (attributeData != null && (int)attributeData.ConstructorArguments[0].Value == 1)
+            if (attributeData != null)
             {
-                return true;
+                return (System.Runtime.InteropServices.ComInterfaceType)(int)attributeData.ConstructorArguments[0].Value!;
             }
 
-            return false;
+            return System.Runtime.InteropServices.ComInterfaceType.InterfaceIsDual;
         }
 
         private string ProcessRCWDeclaration(ClassDeclaration classSymbol, INamedTypeSymbol interfaceTypeSymbol, WrapperGenerationContext context)
@@ -906,9 +911,15 @@ namespace {namespaceName}
 
         internal class ClassDeclaration
         {
-            public ITypeSymbol Type { get; set; }
+            public ClassDeclaration(ITypeSymbol type, string alias)
+            {
+                Type = type;
+                Alias = alias;
+            }
 
-            public string Alias { get; set; }
+            public ITypeSymbol Type { get; }
+
+            public string Alias { get; }
         }
 
         internal class SyntaxReceiver : ISyntaxContextReceiver
@@ -931,18 +942,38 @@ namespace {namespaceName}
 
                     if (classSymbol.GetAttributes().Any(ad => ad.AttributeClass?.ToDisplayString() == ComCallableWrapperAttributeName))
                     {
-                        var argumentExpression = classDeclarationSyntax.AttributeLists[0].Attributes[0].ArgumentList.Arguments[0].Expression as TypeOfExpressionSyntax;
+                        var argumentList = classDeclarationSyntax.AttributeLists[0].Attributes[0].ArgumentList;
+                        if (argumentList == null)
+                        {
+                            return;
+                        }
+
+                        var argumentExpression = argumentList.Arguments[0].Expression as TypeOfExpressionSyntax;
+                        if (argumentExpression == null)
+                        {
+                            return;
+                        }
+
                         var typeNameSyntax = argumentExpression.Type as QualifiedNameSyntax;
-                        var alias = "";
-                        this.CCWDeclarations.Add(new ClassDeclaration { Type = classSymbol, Alias = alias });
+                        this.CCWDeclarations.Add(new ClassDeclaration(classSymbol, string.Empty));
                     }
 
                     if (classSymbol.GetAttributes().Any(ad => ad.AttributeClass?.ToDisplayString() == RuntimeCallableWrapperAttributeName))
                     {
-                        var argumentExpression = classDeclarationSyntax.AttributeLists[0].Attributes[0].ArgumentList.Arguments[0].Expression as TypeOfExpressionSyntax;
+                        var argumentList = classDeclarationSyntax.AttributeLists[0].Attributes[0].ArgumentList;
+                        if (argumentList == null)
+                        {
+                            return;
+                        }
+                            
+                        var argumentExpression = argumentList.Arguments[0].Expression as TypeOfExpressionSyntax;
+                        if (argumentExpression == null)
+                        {
+                            return;
+                        }
+
                         var typeNameSyntax = argumentExpression.Type as QualifiedNameSyntax;
-                        var alias = "";
-                        this.RCWDeclarations.Add(new ClassDeclaration { Type = classSymbol, Alias = alias });
+                        this.RCWDeclarations.Add(new ClassDeclaration(classSymbol, string.Empty));                        
                     }
                 }
             }

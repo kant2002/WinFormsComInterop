@@ -92,12 +92,9 @@ namespace WinFormsComInterop.SourceGenerator
             });
             var preserveSignature = preserveSigAttribute != null;
             preserveSignature |= (method.MethodImplementationFlags & System.Reflection.MethodImplAttributes.PreserveSig) == System.Reflection.MethodImplAttributes.PreserveSig;
-            var methodContext = new MethodGenerationContext
+            var methodContext = new MethodGenerationContext(method, classSymbol.Type, this)
             {
-                WrapperClass = classSymbol.Type,
-                Method = method,
                 PreserveSignature = preserveSignature,
-                Context = this,
                 ComSlotNumber = comSlotNumber,
             };
             return methodContext;

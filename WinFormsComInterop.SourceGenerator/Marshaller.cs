@@ -4,8 +4,11 @@ namespace WinFormsComInterop.SourceGenerator
 {
     abstract class Marshaller
     {
-        public string Name { get; set; }
-        public ITypeSymbol Type { get; set; }
+        public string Name { get; set; } = null!;
+
+        public ITypeSymbol Type { get; set; } = null!;
+
+        internal MethodGenerationContext Context { get; set; } = null!;
 
         public int Index { get; set; }
 
@@ -14,8 +17,6 @@ namespace WinFormsComInterop.SourceGenerator
         public string? TypeAlias { get; set; }
 
         public string TypeName => FormatTypeName();
-
-        internal MethodGenerationContext Context { get; set; }
 
         public virtual string UnmanagedTypeName
         {

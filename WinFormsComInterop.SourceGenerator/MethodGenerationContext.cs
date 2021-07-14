@@ -5,15 +5,22 @@
     using System.Linq;
     using System.Runtime.InteropServices;
 
-    internal class MethodGenerationContext
+    internal sealed class MethodGenerationContext
     {
-        public IMethodSymbol Method { get; set; }
+        public MethodGenerationContext(IMethodSymbol method, ITypeSymbol wrapperClass, WrapperGenerationContext context)
+        {
+            Method = method;
+            WrapperClass = wrapperClass;
+            Context = context;
+        }
+
+        public IMethodSymbol Method { get; }
+
+        public ITypeSymbol WrapperClass { get; }
+
+        internal WrapperGenerationContext Context { get; }
         public bool PreserveSignature { get; set; }
         public int ComSlotNumber { get; set; }
-
-        public ITypeSymbol WrapperClass { get; internal set; }
-
-        internal WrapperGenerationContext Context { get; set; }
 
         internal IList<Marshaller> Marshallers => Method.Parameters.Select(_ => CreateMarshaller(_)).ToList();
 
