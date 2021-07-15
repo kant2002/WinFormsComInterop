@@ -89,6 +89,8 @@ namespace WinFormsComInterop
         internal static Guid IID_IFileDialogEvents = new Guid("973510DB-7D7F-452B-8975-74A85828D354");
         internal static Guid IID_IDropTarget = new Guid("00000122-0000-0000-C000-000000000046");
         internal static Guid IID_IOleInPlaceActiveObject = new Guid("00000117-0000-0000-C000-000000000046");
+        internal static Guid IID_IHTMLDocument4 = new Guid("3050F69A-98B5-11CF-BB82-00AA00BDCE0B");
+        internal static Guid IID_IHTMLLocation = new Guid("163BB1E0-6E00-11CF-837A-48DC04C10000");
 
         internal static Guid IID_ITfContext = new Guid("aa80e7fd-2021-11d2-93e0-0060b067b86e");
 
@@ -426,6 +428,18 @@ namespace WinFormsComInterop
             {
                 Marshal.Release(dropTargetPtr);
                 return new IDropTargetWrapper(externalComObject);
+            }
+
+            if (Marshal.QueryInterface(externalComObject, ref IID_IHTMLDocument4, out var htmlDocumentPtr) >= 0)
+            {
+                Marshal.Release(htmlDocumentPtr);
+                return new IHTMLDocument4Wrapper(externalComObject);
+            }
+
+            if (Marshal.QueryInterface(externalComObject, ref IID_IHTMLLocation, out var htmlLocationPtr) >= 0)
+            {
+                Marshal.Release(htmlLocationPtr);
+                return new IHTMLLocationWrapper(externalComObject);
             }
 
             if (Marshal.QueryInterface(externalComObject, ref IID_IOleInPlaceActiveObject, out var inplaceActiveObjectPtr) >= 0)

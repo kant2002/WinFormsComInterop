@@ -11,7 +11,7 @@ namespace WinFormsComInterop
     [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IOleControl))]
     [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IConnectionPointContainer))]
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
-    partial class IWebBrowserWrapper
+    public partial class IWebBrowserWrapper
     {
         internal readonly IntPtr instance;
 
