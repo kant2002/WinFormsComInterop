@@ -56,9 +56,9 @@
             }
         }
 
-        public Marshaller CreateMarshaller(IParameterSymbol parameterSymbol)
+        private UnmanagedType? GetMarshalAs(System.Collections.Immutable.ImmutableArray<AttributeData> attributes)
         {
-            var marshalAsAttribute = parameterSymbol.GetAttributes()
+            var marshalAsAttribute = attributes
                 .FirstOrDefault(_ => _.AttributeClass?.ToDisplayString() == "System.Runtime.InteropServices.MarshalAsAttribute"
                     || _.AttributeClass?.ToDisplayString() == "System.Runtime.InteropServices.CustomMarshalAsAttribute");
             UnmanagedType? unmanagedType = null;
@@ -67,19 +67,18 @@
                 unmanagedType = (UnmanagedType)(int)marshalAsAttribute.ConstructorArguments[0].Value!;
             }
 
+            return unmanagedType;
+        }
+
+        public Marshaller CreateMarshaller(IParameterSymbol parameterSymbol)
+        {
+            var unmanagedType = GetMarshalAs(parameterSymbol.GetAttributes());
             return CreateMarshaller(parameterSymbol, unmanagedType, this);
         }
 
         public Marshaller CreateReturnMarshaller()
         {
-            var marshalAsAttribute = Method.GetReturnTypeAttributes()
-                .FirstOrDefault(_ => _.AttributeClass?.ToDisplayString() == "System.Runtime.InteropServices.MarshalAsAttribute");
-            UnmanagedType? unmanagedType = null;
-            if (marshalAsAttribute != null)
-            {
-                unmanagedType = (UnmanagedType)(int)marshalAsAttribute.ConstructorArguments[0].Value!;
-            }
-
+            var unmanagedType = GetMarshalAs(Method.GetReturnTypeAttributes());
             return CreateReturnMarshaller(Method.ReturnType, unmanagedType, this);
         }
 
