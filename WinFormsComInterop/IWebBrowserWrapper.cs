@@ -13,7 +13,7 @@ namespace WinFormsComInterop
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     public partial class IWebBrowserWrapper
     {
-        internal readonly IntPtr instance;
+        public readonly IntPtr instance;
 
         public IWebBrowserWrapper(IntPtr instance)
         {
