@@ -11,6 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Windows.Forms.Primit
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{84110EEC-FD63-40B3-B97C-DBA1AFE8848B}"
 	ProjectSection(SolutionItems) = preProject
+		Directory.Build.targets = Directory.Build.targets
 		global.json = global.json
 		nuget.config = nuget.config
 		README.md = README.md
@@ -38,7 +39,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsBase", "WindowsBase\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PresentationCore", "PresentationCore\PresentationCore.csproj", "{46A38622-1BD6-425C-A49C-16DF0534B7EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Windows.Forms", "System.Windows.Forms\System.Windows.Forms.csproj", "{83C0DC07-F23E-4193-B985-2426EE9AFF80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Windows.Forms", "System.Windows.Forms\System.Windows.Forms.csproj", "{83C0DC07-F23E-4193-B985-2426EE9AFF80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

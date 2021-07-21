@@ -1,0 +1,7 @@
+<Project>
+  <ItemGroup>
+    <Reference Update="Accessibility">
+      <HintPath>C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\6.0.0-rc.1.21367.6\Accessibility.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>
