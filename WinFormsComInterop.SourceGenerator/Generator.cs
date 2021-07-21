@@ -426,10 +426,9 @@ namespace {namespaceName}
                     {
                         case IMethodSymbol methodSymbol:
                             {
-                                var methodContext = context.CreateMethodGenerationContext(classSymbol, methodSymbol, slotNumber);
+                                var methodContext = context.CreateMethodGenerationContext(classSymbol, methodSymbol, ref slotNumber);
                                 GenerateCCWMethod(proxyMethods, interfaceTypeSymbol, methodContext);
-                                vtblMethod.AppendLine($"vtblRaw[{slotNumber}] = (System.IntPtr)({methodContext.UnmanagedDelegateSignature})&{typeName}.{methodContext.Method.Name};");
-                                slotNumber++;
+                                vtblMethod.AppendLine($"vtblRaw[{methodContext.ComSlotNumber}] = (System.IntPtr)({methodContext.UnmanagedDelegateSignature})&{typeName}.{methodContext.Method.Name};");
                             }
                             break;
                     }
@@ -566,9 +565,8 @@ namespace {namespaceName}
                     {
                         case IMethodSymbol methodSymbol:
                             {
-                                var methodContext = context.CreateMethodGenerationContext(classSymbol, methodSymbol, slotNumber);
-                                vtblMethod.AppendLine($"vtblRaw[{slotNumber}] = (System.IntPtr)({methodContext.UnmanagedDelegateSignature})&{typeName}.{methodContext.Method.Name};");
-                                slotNumber++;
+                                var methodContext = context.CreateMethodGenerationContext(classSymbol, methodSymbol, ref slotNumber);
+                                vtblMethod.AppendLine($"vtblRaw[{methodContext.ComSlotNumber}] = (System.IntPtr)({methodContext.UnmanagedDelegateSignature})&{typeName}.{methodContext.Method.Name};");
                             }
                             break;
                     }
@@ -674,8 +672,7 @@ namespace {namespaceName}
                 {
                     case IMethodSymbol methodSymbol:
                         {
-                            var methodContext = context.CreateMethodGenerationContext(classSymbol, methodSymbol, slotNumber);
-                            slotNumber++;
+                            var methodContext = context.CreateMethodGenerationContext(classSymbol, methodSymbol, ref slotNumber);
 
                             if (methodSymbol.MethodKind == MethodKind.PropertyGet || methodSymbol.MethodKind == MethodKind.PropertySet)
                             {
@@ -694,8 +691,7 @@ namespace {namespaceName}
 
                             if (propertySymbol.GetMethod != null)
                             {
-                                var getterContext = context.CreateMethodGenerationContext(classSymbol, propertySymbol.GetMethod, slotNumber);
-                                slotNumber++;
+                                var getterContext = context.CreateMethodGenerationContext(classSymbol, propertySymbol.GetMethod, ref slotNumber);
 
                                 source.AppendLine("get");
                                 WriteRCWMethodBody(source, interfaceTypeSymbol, getterContext);
@@ -703,8 +699,7 @@ namespace {namespaceName}
 
                             if (propertySymbol.SetMethod != null)
                             {
-                                var setterContext = context.CreateMethodGenerationContext(classSymbol, propertySymbol.SetMethod, slotNumber);
-                                slotNumber++;
+                                var setterContext = context.CreateMethodGenerationContext(classSymbol, propertySymbol.SetMethod, ref slotNumber);
 
                                 source.AppendLine("set");
                                 WriteRCWMethodBody(source, interfaceTypeSymbol, setterContext);
