@@ -19,8 +19,8 @@ jobs:
         dotnet-version: '6.0.x'
         include-prerelease: true
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore /p:CI=true
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore /p:CI=true
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal /p:CI=true
