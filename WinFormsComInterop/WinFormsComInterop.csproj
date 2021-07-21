@@ -10,6 +10,7 @@
     <Nullable>enable</Nullable>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <Description>ComWrappers implementation for WinForms.</Description>
+    <PackageProjectUrl>https://github.com/kant2002/winformscominterop</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <GenerateWPF>false</GenerateWPF>
     <DefineConstants Condition="$(GenerateWPF) == true">$(DefineConstants);USE_WPF</DefineConstants>
