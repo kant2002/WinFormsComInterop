@@ -83,7 +83,7 @@ namespace WinFormsComInterop.SourceGenerator
         }
 
         public MethodGenerationContext CreateMethodGenerationContext(
-            ClassDeclaration classSymbol, IMethodSymbol method, int comSlotNumber)
+            ClassDeclaration classSymbol, IMethodSymbol method, ref int comSlotNumber)
         {
             string key = $"{GetAlias(classSymbol.Type)}_{classSymbol.Type.ToDisplayString()}_{GetAlias(method.ContainingType)}_{method.ToDisplayString()}";
             if (contextCache.TryGetValue(key, out var existingContext))
@@ -105,6 +105,7 @@ namespace WinFormsComInterop.SourceGenerator
                 ComSlotNumber = comSlotNumber,
             };
             contextCache.Add(key, methodContext);
+            comSlotNumber++;
             return methodContext;
         }
 
