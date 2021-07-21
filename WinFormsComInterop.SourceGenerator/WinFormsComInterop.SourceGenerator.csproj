@@ -12,6 +12,7 @@
     <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
     <PackageProjectUrl>https://github.com/kant2002/winformscominterop</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Description>Source generator for COM interfaces which can be used to build ComWrappers</Description>
   </PropertyGroup>
 
   <ItemGroup>
