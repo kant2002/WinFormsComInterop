@@ -782,7 +782,7 @@ namespace MS.Win32
             /// <summary></summary>
             public TsActiveSelEnd ase;
             /// <summary></summary>
-            [MarshalAs(UnmanagedType.Bool)] 
+            [CustomMarshalAs(UnmanagedType.Bool)] 
             public bool interimChar;
         }
 
@@ -870,7 +870,7 @@ namespace MS.Win32
             /// <summary></summary>
             public TF_DA_LINESTYLE lsStyle;
             /// <summary></summary>
-            [MarshalAs(UnmanagedType.Bool)]
+            [CustomMarshalAs(UnmanagedType.Bool)]
             public bool            fBoldLine;
             /// <summary></summary>
             public TF_DA_COLOR     crLine;
@@ -895,7 +895,7 @@ namespace MS.Win32
             internal Guid clsid;        // CLSID of tip
             internal short langid;      // language id
             internal Guid catid;         // category of tip
-            [MarshalAs(UnmanagedType.Bool)]
+            [CustomMarshalAs(UnmanagedType.Bool)]
             internal bool fActive;       // activated profile
             internal Guid guidProfile;   // profile description
         }
@@ -1043,7 +1043,7 @@ namespace MS.Win32
             /// <summary></summary>
             //HRESULT InWriteSession([in] TfClientId tid,
             //                    [out] BOOL *pfWriteSession);
-            void InWriteSession(int clientId, [MarshalAs(UnmanagedType.Bool)] out bool inWriteSession);
+            void InWriteSession(int clientId, [CustomMarshalAs(UnmanagedType.Bool)] out bool inWriteSession);
 
             //typedef [uuid(1690be9b-d3e9-49f6-8d8b-51b905af4c43)] enum { TF_AE_NONE = 0, TF_AE_START = 1, TF_AE_END = 2 } TfActiveSelEnd;
 
@@ -1151,7 +1151,7 @@ namespace MS.Win32
             //                      [in, unique] IUnknown *punk,
             //                      [out] ITfContext **ppic,
             //                      [out] TfEditCookie *pecTextStore);
-            void CreateContext(int clientId, CreateContextFlags flags, [MarshalAs(UnmanagedType.Interface)] object obj, out ITfContext context, out int editCookie);
+            void CreateContext(int clientId, CreateContextFlags flags, [CustomMarshalAs(UnmanagedType.Interface)] object obj, out ITfContext context, out int editCookie);
 
             // <summary></summary>
             //HRESULT Push([in] ITfContext *pic);
@@ -1171,7 +1171,7 @@ namespace MS.Win32
 
             /// <summary></summary>
             //HRESULT EnumContexts([out] IEnumTfContexts **ppEnum);
-            void EnumContexts([MarshalAs(UnmanagedType.Interface)] out /*IEnumTfContexts*/ object enumContexts);
+            void EnumContexts([CustomMarshalAs(UnmanagedType.Interface)] out /*IEnumTfContexts*/ object enumContexts);
         }
 
         /// <summary></summary>
@@ -1194,14 +1194,14 @@ namespace MS.Win32
 
             /// <summary></summary>
             //HRESULT GetDescription([out] BSTR *pbstrDesc);
-            void GetDescription([MarshalAs(UnmanagedType.BStr)] out string desc);
+            void GetDescription([CustomMarshalAs(UnmanagedType.BStr)] out string desc);
 
             // HRESULT GetFunction([in] REFGUID rguid,
             //                    [in] REFIID riid,
             //                    [out, iid_is(riid)] IUnknown **ppunk);
             /// <summary></summary>
             [PreserveSig]
-            int GetFunction(ref Guid guid, ref Guid riid, [MarshalAs(UnmanagedType.Interface)] out object obj);
+            int GetFunction(ref Guid guid, ref Guid riid, [CustomMarshalAs(UnmanagedType.Interface)] out object obj);
         }
 
         /// <summary></summary>
@@ -1212,7 +1212,7 @@ namespace MS.Win32
         {
             /// <summary></summary>
             //HRESULT GetDisplayName([out] BSTR *pbstrName);
-            void GetDisplayName([MarshalAs(UnmanagedType.BStr)] out string funcName );
+            void GetDisplayName([CustomMarshalAs(UnmanagedType.BStr)] out string funcName );
         }
 
         /// <summary></summary>
@@ -1223,7 +1223,7 @@ namespace MS.Win32
         {
             // HRESULT GetString([out] BSTR *pbstr);
             /// <summary></summary>
-            void GetString([MarshalAs(UnmanagedType.BStr)] out string funcName );
+            void GetString([CustomMarshalAs(UnmanagedType.BStr)] out string funcName );
 
             /// <summary></summary>
             // HRESULT GetIndex([out] ULONG *pnIndex);
@@ -1265,7 +1265,7 @@ namespace MS.Win32
         {
             /// <summary></summary>
             // HRESULT GetDisplayName([out] BSTR *pbstrName);
-            void GetDisplayName([MarshalAs(UnmanagedType.BStr)] out string funcName );
+            void GetDisplayName([CustomMarshalAs(UnmanagedType.BStr)] out string funcName );
 
             // HRESULT QueryRange([in] ITfRange *pRange,
             //                    [in, out, unique] ITfRange **ppNewRange,
@@ -1274,7 +1274,7 @@ namespace MS.Win32
             [PreserveSig]
             int QueryRange(ITfRange range, 
                            out ITfRange newRange, 
-                           [MarshalAs(UnmanagedType.Bool)] out bool isConvertable);
+                           [CustomMarshalAs(UnmanagedType.Bool)] out bool isConvertable);
 
             // HRESULT GetReconversion([in] ITfRange *pRange,
             //                         [out] ITfCandidateList **ppCandList);
@@ -1296,7 +1296,7 @@ namespace MS.Win32
         {
             /// <summary></summary>
             // HRESULT GetDisplayName([out] BSTR *pbstrName);
-            void GetDisplayName([MarshalAs(UnmanagedType.BStr)] out string funcName );
+            void GetDisplayName([CustomMarshalAs(UnmanagedType.BStr)] out string funcName );
 
             /// <summary></summary>
             // HRESULT Show([in] HWND hwndParent,
@@ -1314,7 +1314,7 @@ namespace MS.Win32
         {
             /// <summary></summary>
             // HRESULT GetDisplayName([out] BSTR *pbstrName);
-            void GetDisplayName([MarshalAs(UnmanagedType.BStr)] out string funcName );
+            void GetDisplayName([CustomMarshalAs(UnmanagedType.BStr)] out string funcName );
 
             /// <summary></summary>
             // HRESULT Show([in] HWND hwndParent,
@@ -1325,7 +1325,7 @@ namespace MS.Win32
             int Show(IntPtr hwndParent, 
                      short langid, 
                      ref Guid guidProfile,
-                     [MarshalAs(UnmanagedType.BStr)] string bstrRegistered );
+                     [CustomMarshalAs(UnmanagedType.BStr)] string bstrRegistered );
         }
 
 
@@ -1491,7 +1491,7 @@ namespace MS.Win32
 
             /// <summary></summary>
             //HRESULT IsThreadFocus([out] BOOL *pfThreadFocus);
-            void IsThreadFocus([MarshalAs(UnmanagedType.Bool)] out bool isFocus);
+            void IsThreadFocus([CustomMarshalAs(UnmanagedType.Bool)] out bool isFocus);
 
             //HRESULT GetFunctionProvider([in] REFCLSID clsid,
             //                            [out] ITfFunctionProvider **ppFuncProv);
@@ -1780,7 +1780,7 @@ namespace MS.Win32
             //HRESULT AdviseSink([in] REFIID riid,
             //                   [in, iid_is(riid)] IUnknown *punk,
             //                   [out] DWORD *pdwCookie);
-            void AdviseSink(ref Guid riid, [MarshalAs(UnmanagedType.Interface)] object obj, out int cookie);
+            void AdviseSink(ref Guid riid, [CustomMarshalAs(UnmanagedType.Interface)] object obj, out int cookie);
 
             //HRESULT UnadviseSink([in] DWORD dwCookie);
             /// <summary></summary>
@@ -1797,7 +1797,7 @@ namespace MS.Win32
             //HRESULT AdviseKeyEventSink([in] TfClientId tid,
             //                           [in] ITfKeyEventSink *pSink,
             //                           [in] BOOL fForeground);
-            void AdviseKeyEventSink(int clientId, [MarshalAs(UnmanagedType.Interface)] object obj/*ITfKeyEventSink sink*/, [MarshalAs(UnmanagedType.Bool)] bool fForeground);
+            void AdviseKeyEventSink(int clientId, [CustomMarshalAs(UnmanagedType.Interface)] object obj/*ITfKeyEventSink sink*/, [CustomMarshalAs(UnmanagedType.Bool)] bool fForeground);
 
             /// <summary></summary>
             //HRESULT UnadviseKeyEventSink([in] TfClientId tid);
@@ -1812,28 +1812,28 @@ namespace MS.Win32
             //                    [in] LPARAM lParam,
             //                    [out] BOOL *pfEaten);
             // int should be ok here, bit fields are well defined for this call as 32 bit, no pointers
-            void TestKeyDown(int wParam, int lParam, [MarshalAs(UnmanagedType.Bool)] out bool eaten);
+            void TestKeyDown(int wParam, int lParam, [CustomMarshalAs(UnmanagedType.Bool)] out bool eaten);
 
             // <summary></summary>
             //HRESULT TestKeyUp([in] WPARAM wParam,
             //                  [in] LPARAM lParam,
             //                  [out] BOOL *pfEaten);
             // int should be ok here, bit fields are well defined for this call as 32 bit, no pointers
-            void TestKeyUp(int wParam, int lParam, [MarshalAs(UnmanagedType.Bool)] out bool eaten);
+            void TestKeyUp(int wParam, int lParam, [CustomMarshalAs(UnmanagedType.Bool)] out bool eaten);
 
             // <summary></summary>
             //HRESULT KeyDown([in] WPARAM wParam,
             //                [in] LPARAM lParam,
             //                [out] BOOL *pfEaten);
             // int should be ok here, bit fields are well defined for this call as 32 bit, no pointers
-            void KeyDown(int wParam, int lParam, [MarshalAs(UnmanagedType.Bool)] out bool eaten);
+            void KeyDown(int wParam, int lParam, [CustomMarshalAs(UnmanagedType.Bool)] out bool eaten);
 
             // <summary></summary>
             //HRESULT KeyUp([in] WPARAM wParam,
             //              [in] LPARAM lParam,
             //              [out] BOOL *pfEaten);
             // int should be ok here, bit fields are well defined for this call as 32 bit, no pointers
-            void KeyUp(int wParam, int lParam, [MarshalAs(UnmanagedType.Bool)] out bool eaten);
+            void KeyUp(int wParam, int lParam, [CustomMarshalAs(UnmanagedType.Bool)] out bool eaten);
 
             /// <summary></summary>
             //HRESULT GetPreservedKey([in] ITfContext *pic,
@@ -1845,7 +1845,7 @@ namespace MS.Win32
             //HRESULT IsPreservedKey([in] REFGUID rguid,
             //                       [in] const TF_PRESERVEDKEY *pprekey,
             //                       [out] BOOL *pfRegistered);
-            void IsPreservedKey(ref Guid guid, ref TF_PRESERVEDKEY key, [MarshalAs(UnmanagedType.Bool)] out bool registered);
+            void IsPreservedKey(ref Guid guid, ref TF_PRESERVEDKEY key, [CustomMarshalAs(UnmanagedType.Bool)] out bool registered);
 
             /// <summary></summary>
             //HRESULT PreserveKey([in] TfClientId tid,
@@ -1854,7 +1854,7 @@ namespace MS.Win32
             //                    [in, size_is(cchDesc)] const WCHAR *pchDesc,
             //                    [in] ULONG cchDesc);
             void PreserveKey(int clientId, ref Guid guid, ref TF_PRESERVEDKEY key,
-                            [In, MarshalAs(UnmanagedType.LPArray, SizeParamIndex=4)] char []desc, int descCount);
+                            [In, CustomMarshalAs(UnmanagedType.LPArray, SizeParamIndex=4)] char []desc, int descCount);
 
             /// <summary></summary>
             //HRESULT UnpreserveKey([in] REFGUID rguid, 
@@ -1866,18 +1866,18 @@ namespace MS.Win32
             //                                   [in, size_is(cchDesc)] const WCHAR *pchDesc,
             //                                   [in] ULONG cchDesc);
             void SetPreservedKeyDescription(ref Guid guid,
-                                            [In, MarshalAs(UnmanagedType.LPArray, SizeParamIndex=2)] char []desc, int descCount);
+                                            [In, CustomMarshalAs(UnmanagedType.LPArray, SizeParamIndex=2)] char []desc, int descCount);
 
             /// <summary></summary>
             //HRESULT GetPreservedKeyDescription([in] REFGUID rguid,
             //                                   [out] BSTR *pbstrDesc);
-            void GetPreservedKeyDescription(ref Guid guid, [MarshalAs(UnmanagedType.BStr)] out string desc);
+            void GetPreservedKeyDescription(ref Guid guid, [CustomMarshalAs(UnmanagedType.BStr)] out string desc);
 
             /// <summary></summary>
             //HRESULT SimulatePreservedKey([in] ITfContext *pic,
             //                             [in] REFGUID rguid,
             //                             [out] BOOL *pfEaten);
-            void SimulatePreservedKey(ITfContext context, ref Guid guid, [MarshalAs(UnmanagedType.Bool)] out bool eaten);
+            void SimulatePreservedKey(ITfContext context, ref Guid guid, [CustomMarshalAs(UnmanagedType.Bool)] out bool eaten);
         };
 
         /// <summary></summary>
@@ -1906,7 +1906,7 @@ namespace MS.Win32
             //                [out] ULONG *pcch);
             /// <summary></summary>
             void GetText(int ec, /*GetTextFlags*/int flags,
-                        [Out, MarshalAs(UnmanagedType.LPArray, SizeParamIndex=3)] char []text,
+                        [Out, CustomMarshalAs(UnmanagedType.LPArray, SizeParamIndex=3)] char []text,
                         int countMax, out int count);
 
             //HRESULT SetText([in] TfEditCookie ec,
@@ -1915,26 +1915,26 @@ namespace MS.Win32
             //                [in] LONG cch);
             /// <summary></summary>
             void SetText(int ec, /*SetTextFlags*/ int flags,
-                        [In, MarshalAs(UnmanagedType.LPArray, SizeParamIndex=3)] char []text,
+                        [In, CustomMarshalAs(UnmanagedType.LPArray, SizeParamIndex=3)] char []text,
                         int count);
 
             //HRESULT GetFormattedText([in] TfEditCookie ec,
             //                         [out] IDataObject **ppDataObject);
             /// <summary></summary>
-            void GetFormattedText(int ec, [MarshalAs(UnmanagedType.Interface)] out object data);
+            void GetFormattedText(int ec, [CustomMarshalAs(UnmanagedType.Interface)] out object data);
 
             //HRESULT GetEmbedded([in] TfEditCookie ec,
             //                    [in] REFGUID rguidService,
             //                    [in] REFIID riid,
             //                    [out, iid_is(riid)] IUnknown **ppunk);
             /// <summary></summary>
-            void GetEmbedded(int ec, ref Guid guidService, ref Guid iid, [MarshalAs(UnmanagedType.Interface)] out object obj);
+            void GetEmbedded(int ec, ref Guid guidService, ref Guid iid, [CustomMarshalAs(UnmanagedType.Interface)] out object obj);
 
             //HRESULT InsertEmbedded([in] TfEditCookie ec,
             //                       [in] DWORD dwFlags,
             //                       [in] IDataObject *pDataObject);
             /// <summary></summary>
-            void InsertEmbedded(int ec, int flags, [MarshalAs(UnmanagedType.Interface)] object data);
+            void InsertEmbedded(int ec, int flags, [CustomMarshalAs(UnmanagedType.Interface)] object data);
 
             //HRESULT ShiftStart([in] TfEditCookie ec,
             //                   [in] LONG cchReq,
@@ -1966,18 +1966,18 @@ namespace MS.Win32
             //                         [in] TfShiftDir dir,
             //                         [out] BOOL *pfNoRegion);
             /// <summary></summary>
-            void ShiftStartRegion(int ec, TfShiftDir dir, [MarshalAs(UnmanagedType.Bool)] out bool noRegion);
+            void ShiftStartRegion(int ec, TfShiftDir dir, [CustomMarshalAs(UnmanagedType.Bool)] out bool noRegion);
 
             //HRESULT ShiftEndRegion([in] TfEditCookie ec,
             //                       [in] TfShiftDir dir,
             //                       [out] BOOL *pfNoRegion);
             /// <summary></summary>
-            void ShiftEndRegion(int ec, TfShiftDir dir, [MarshalAs(UnmanagedType.Bool)] out bool noRegion);
+            void ShiftEndRegion(int ec, TfShiftDir dir, [CustomMarshalAs(UnmanagedType.Bool)] out bool noRegion);
 
             //HRESULT IsEmpty([in] TfEditCookie ec,
             //                [out] BOOL *pfEmpty);
             /// <summary></summary>
-            void IsEmpty(int ec, [MarshalAs(UnmanagedType.Bool)] out bool empty);
+            void IsEmpty(int ec, [CustomMarshalAs(UnmanagedType.Bool)] out bool empty);
 
             //HRESULT Collapse([in] TfEditCookie ec,
             //                 [in] TfAnchor aPos);
@@ -1989,14 +1989,14 @@ namespace MS.Win32
             //                     [in] TfAnchor aPos,
             //                     [out] BOOL *pfEqual);
             /// <summary></summary>
-            void IsEqualStart(int ec, ITfRange with, TfAnchor position, [MarshalAs(UnmanagedType.Bool)] out bool equal);
+            void IsEqualStart(int ec, ITfRange with, TfAnchor position, [CustomMarshalAs(UnmanagedType.Bool)] out bool equal);
 
             //HRESULT IsEqualEnd([in] TfEditCookie ec,
             //                   [in] ITfRange *pWith,
             //                   [in] TfAnchor aPos,
             //                   [out] BOOL *pfEqual);
             /// <summary></summary>
-            void IsEqualEnd(int ec, ITfRange with, TfAnchor position, [MarshalAs(UnmanagedType.Bool)] out bool equal);
+            void IsEqualEnd(int ec, ITfRange with, TfAnchor position, [CustomMarshalAs(UnmanagedType.Bool)] out bool equal);
 
             //HRESULT CompareStart([in] TfEditCookie ec,
             //                     [in] ITfRange *pWith,
@@ -2016,7 +2016,7 @@ namespace MS.Win32
             //                        [in] ULONG cchInsert,
             //                        [out] BOOL *pfInsertOk);
             /// <summary></summary>
-            void AdjustForInsert(int ec, int count, [MarshalAs(UnmanagedType.Bool)] out bool insertOk);
+            void AdjustForInsert(int ec, int count, [CustomMarshalAs(UnmanagedType.Bool)] out bool insertOk);
 
             //HRESULT GetGravity([out] TfGravity *pgStart,
             //                   [out] TfGravity *pgEnd);
@@ -2051,7 +2051,7 @@ namespace MS.Win32
             //                [out] ULONG *pcch);
             /// <summary></summary>
             void GetText(int ec, /*GetTextFlags*/int flags,
-                [Out, MarshalAs(UnmanagedType.LPArray, SizeParamIndex=3)] char []text,
+                [Out, CustomMarshalAs(UnmanagedType.LPArray, SizeParamIndex=3)] char []text,
                 int countMax, out int count);
 
             //HRESULT SetText([in] TfEditCookie ec,
@@ -2060,26 +2060,26 @@ namespace MS.Win32
             //                [in] LONG cch);
             /// <summary></summary>
             void SetText(int ec, /*SetTextFlags*/ int flags,
-                [In, MarshalAs(UnmanagedType.LPArray, SizeParamIndex=3)] char []text,
+                [In, CustomMarshalAs(UnmanagedType.LPArray, SizeParamIndex=3)] char []text,
                 int count);
 
             //HRESULT GetFormattedText([in] TfEditCookie ec,
             //                         [out] IDataObject **ppDataObject);
             /// <summary></summary>
-            void GetFormattedText(int ec, [MarshalAs(UnmanagedType.Interface)] out object data);
+            void GetFormattedText(int ec, [CustomMarshalAs(UnmanagedType.Interface)] out object data);
 
             //HRESULT GetEmbedded([in] TfEditCookie ec,
             //                    [in] REFGUID rguidService,
             //                    [in] REFIID riid,
             //                    [out, iid_is(riid)] IUnknown **ppunk);
             /// <summary></summary>
-            void GetEmbedded(int ec, ref Guid guidService, ref Guid iid, [MarshalAs(UnmanagedType.Interface)] out object obj);
+            void GetEmbedded(int ec, ref Guid guidService, ref Guid iid, [CustomMarshalAs(UnmanagedType.Interface)] out object obj);
 
             //HRESULT InsertEmbedded([in] TfEditCookie ec,
             //                       [in] DWORD dwFlags,
             //                       [in] IDataObject *pDataObject);
             /// <summary></summary>
-            void InsertEmbedded(int ec, int flags, [MarshalAs(UnmanagedType.Interface)] object data);
+            void InsertEmbedded(int ec, int flags, [CustomMarshalAs(UnmanagedType.Interface)] object data);
 
             //HRESULT ShiftStart([in] TfEditCookie ec,
             //                   [in] LONG cchReq,
@@ -2111,18 +2111,18 @@ namespace MS.Win32
             //                         [in] TfShiftDir dir,
             //                         [out] BOOL *pfNoRegion);
             /// <summary></summary>
-            void ShiftStartRegion(int ec, TfShiftDir dir, [MarshalAs(UnmanagedType.Bool)] out bool noRegion);
+            void ShiftStartRegion(int ec, TfShiftDir dir, [CustomMarshalAs(UnmanagedType.Bool)] out bool noRegion);
 
             //HRESULT ShiftEndRegion([in] TfEditCookie ec,
             //                       [in] TfShiftDir dir,
             //                       [out] BOOL *pfNoRegion);
             /// <summary></summary>
-            void ShiftEndRegion(int ec, TfShiftDir dir, [MarshalAs(UnmanagedType.Bool)] out bool noRegion);
+            void ShiftEndRegion(int ec, TfShiftDir dir, [CustomMarshalAs(UnmanagedType.Bool)] out bool noRegion);
 
             //HRESULT IsEmpty([in] TfEditCookie ec,
             //                [out] BOOL *pfEmpty);
             /// <summary></summary>
-            void IsEmpty(int ec, [MarshalAs(UnmanagedType.Bool)] out bool empty);
+            void IsEmpty(int ec, [CustomMarshalAs(UnmanagedType.Bool)] out bool empty);
 
             //HRESULT Collapse([in] TfEditCookie ec,
             //                 [in] TfAnchor aPos);
@@ -2134,14 +2134,14 @@ namespace MS.Win32
             //                     [in] TfAnchor aPos,
             //                     [out] BOOL *pfEqual);
             /// <summary></summary>
-            void IsEqualStart(int ec, ITfRange with, TfAnchor position, [MarshalAs(UnmanagedType.Bool)] out bool equal);
+            void IsEqualStart(int ec, ITfRange with, TfAnchor position, [CustomMarshalAs(UnmanagedType.Bool)] out bool equal);
 
             //HRESULT IsEqualEnd([in] TfEditCookie ec,
             //                   [in] ITfRange *pWith,
             //                   [in] TfAnchor aPos,
             //                   [out] BOOL *pfEqual);
             /// <summary></summary>
-            void IsEqualEnd(int ec, ITfRange with, TfAnchor position, [MarshalAs(UnmanagedType.Bool)] out bool equal);
+            void IsEqualEnd(int ec, ITfRange with, TfAnchor position, [CustomMarshalAs(UnmanagedType.Bool)] out bool equal);
 
             //HRESULT CompareStart([in] TfEditCookie ec,
             //                     [in] ITfRange *pWith,
@@ -2161,7 +2161,7 @@ namespace MS.Win32
             //                        [in] ULONG cchInsert,
             //                        [out] BOOL *pfInsertOk);
             /// <summary></summary>
-            void AdjustForInsert(int ec, int count, [MarshalAs(UnmanagedType.Bool)] out bool insertOk);
+            void AdjustForInsert(int ec, int count, [CustomMarshalAs(UnmanagedType.Bool)] out bool insertOk);
 
             //HRESULT GetGravity([out] TfGravity *pgStart,
             //                   [out] TfGravity *pgEnd);
@@ -2217,7 +2217,7 @@ namespace MS.Win32
             /// <summary></summary>
             //HRESULT OnStartComposition([in] ITfCompositionView *pComposition,
             //                           [out] BOOL *pfOk);
-            void OnStartComposition(ITfCompositionView view, [MarshalAs(UnmanagedType.Bool)] out bool ok);
+            void OnStartComposition(ITfCompositionView view, [CustomMarshalAs(UnmanagedType.Bool)] out bool ok);
 
             /// <summary></summary>
             //HRESULT OnUpdateComposition([in] ITfCompositionView *pComposition,
@@ -2272,25 +2272,25 @@ namespace MS.Win32
             //                         [in] ITfRange *pCompositionRange,
             //                         [in] ITfCompositionSink *pSink,
             //                         [out] ITfComposition **ppComposition);
-            void StartComposition(int ecWrite, ITfRange range, [MarshalAs(UnmanagedType.Interface)] object /*ITfCompositionSink */sink, [MarshalAs(UnmanagedType.Interface)] out object /*ITfComposition */composition);
+            void StartComposition(int ecWrite, ITfRange range, [CustomMarshalAs(UnmanagedType.Interface)] object /*ITfCompositionSink */sink, [CustomMarshalAs(UnmanagedType.Interface)] out object /*ITfComposition */composition);
 
             /// <summary></summary>
             //HRESULT EnumCompositions([out] IEnumITfCompositionView **ppEnum);
-            void EnumCompositions([MarshalAs(UnmanagedType.Interface)] out object /*IEnumITfCompositionView*/ enumView);
+            void EnumCompositions([CustomMarshalAs(UnmanagedType.Interface)] out object /*IEnumITfCompositionView*/ enumView);
 
             /// <summary></summary>
             //HRESULT FindComposition([in] TfEditCookie ecRead,
             //                        [in] ITfRange *pTestRange,
             //                        [out] IEnumITfCompositionView **ppEnum);
-            void FindComposition(int ecRead, ITfRange testRange, [MarshalAs(UnmanagedType.Interface)] out object /*IEnumITfCompositionView*/ enumView);
+            void FindComposition(int ecRead, ITfRange testRange, [CustomMarshalAs(UnmanagedType.Interface)] out object /*IEnumITfCompositionView*/ enumView);
 
             /// <summary></summary>
             //HRESULT TakeOwnership([in] TfEditCookie ecWrite,
             //                      [in] ITfCompositionView *pComposition,
             //                      [in] ITfCompositionSink *pSink,
             //                      [out] ITfComposition **ppComposition);
-            void TakeOwnership(int ecWrite, ITfCompositionView view, [MarshalAs(UnmanagedType.Interface)] object /*ITfCompositionSink */ sink,
-                            [MarshalAs(UnmanagedType.Interface)] out object /*ITfComposition*/ composition);
+            void TakeOwnership(int ecWrite, ITfCompositionView view, [CustomMarshalAs(UnmanagedType.Interface)] object /*ITfCompositionSink */ sink,
+                            [CustomMarshalAs(UnmanagedType.Interface)] out object /*ITfComposition*/ composition);
 
             /// <summary></summary>
             //HRESULT TerminateComposition([in] ITfCompositionView *pComposition);
@@ -2407,7 +2407,7 @@ namespace MS.Win32
             //            [out, size_is(ulCount), length_is(*pcFetched)] TF_RENDERINGMARKUP *rgMarkup,
             //            [out] ULONG *pcFetched);
             [PreserveSig]
-            int Next(int count, [Out, MarshalAs(UnmanagedType.LPArray, SizeParamIndex=2)] TF_RENDERINGMARKUP []markup, out int fetched);
+            int Next(int count, [Out, CustomMarshalAs(UnmanagedType.LPArray, SizeParamIndex=2)] TF_RENDERINGMARKUP []markup, out int fetched);
 
             /// <summary></summary>
             //HRESULT Reset();
@@ -2579,7 +2579,7 @@ namespace MS.Win32
             //              [out, size_is(ulCount), length_is(*pcFetch)] TF_LANGUAGEPROFILE *pProfile,
             //              [out] ULONG *pcFetch);
             [PreserveSig]
-            int Next(int count, [Out, MarshalAs(UnmanagedType.LPArray, SizeParamIndex=2)] TF_LANGUAGEPROFILE []profiles, out int fetched);
+            int Next(int count, [Out, CustomMarshalAs(UnmanagedType.LPArray, SizeParamIndex=2)] TF_LANGUAGEPROFILE []profiles, out int fetched);
 
             /// <summary></summary>
             // HRESULT Reset();
@@ -2599,7 +2599,7 @@ namespace MS.Win32
             /// <summary></summary>
             // HRESULT OnLanguageChange([in] LANGID langid,
             //                          [out] BOOL *pfAccept);
-            void OnLanguageChange(short langid, [MarshalAs(UnmanagedType.Bool)] out bool bAccept);
+            void OnLanguageChange(short langid, [CustomMarshalAs(UnmanagedType.Bool)] out bool bAccept);
 
             /// <summary></summary>
             // HRESULT OnLanguageChanged();
@@ -2758,7 +2758,7 @@ namespace MS.Win32
             //                    [in] LONG acpEnd,
             //                    [out] RECT *prc,
             //                    [out] BOOL *pfClipped);
-            void GetTextExt(int start, int end, out RECT rect, [MarshalAs(UnmanagedType.Bool)] out bool clipped);
+            void GetTextExt(int start, int end, out RECT rect, [CustomMarshalAs(UnmanagedType.Bool)] out bool clipped);
 
             /// <summary></summary>
             // HRESULT GetScreenExt([out] RECT *prc);
@@ -2833,7 +2833,7 @@ namespace MS.Win32
             //                                      [in] ITfRange *pResultRange,
             //                                      [in] ITfRange *pCompositionRange,
             //                                      [out] BOOL *pfDeleteResultRange);
-            void OnTransitoryExtensionUpdated(ITfContext context, int ecReadOnly, ITfRange rangeResult, ITfRange rangeComposition, [MarshalAs(UnmanagedType.Bool)] out bool fDeleteResultRange);
+            void OnTransitoryExtensionUpdated(ITfContext context, int ecReadOnly, ITfRange rangeResult, ITfRange rangeComposition, [CustomMarshalAs(UnmanagedType.Bool)] out bool fDeleteResultRange);
         }
 
         /// <summary></summary>
@@ -2856,17 +2856,17 @@ namespace MS.Win32
             /// <summary></summary>
             // HRESULT GetRegularExpression([out] BSTR *pbstrRegExp);
             [PreserveSig]
-            int GetRegularExpression([Out, MarshalAs(UnmanagedType.BStr)] out string desc);
+            int GetRegularExpression([Out, CustomMarshalAs(UnmanagedType.BStr)] out string desc);
 
             /// <summary></summary>
             // HRESULT GetSRGS([out] BSTR *pbstrSRGS);
             [PreserveSig]
-            int GetSRGC([Out, MarshalAs(UnmanagedType.BStr)] out string desc);
+            int GetSRGC([Out, CustomMarshalAs(UnmanagedType.BStr)] out string desc);
 
             /// <summary></summary>
             // HRESULT GetXML([out] BSTR *pbstrXML);
             [PreserveSig]
-            int GetXML([Out, MarshalAs(UnmanagedType.BStr)] out string desc);
+            int GetXML([Out, CustomMarshalAs(UnmanagedType.BStr)] out string desc);
         }
 
 
@@ -2901,7 +2901,7 @@ namespace MS.Win32
             //                      [out] BOOL *pfEaten);
             /// <summary></summary>
             [PreserveSig]
-            int OnMouseEvent(int edge, int quadrant, int btnStatus, [MarshalAs(UnmanagedType.Bool)] out bool eaten);
+            int OnMouseEvent(int edge, int quadrant, int btnStatus, [CustomMarshalAs(UnmanagedType.Bool)] out bool eaten);
         }
 
         #endregion Interfaces

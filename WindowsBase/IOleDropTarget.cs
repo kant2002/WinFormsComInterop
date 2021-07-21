@@ -10,20 +10,20 @@ namespace MS.Win32
         {
             [PreserveSig]
             int OleDragEnter(
-                [In, MarshalAs(UnmanagedType.Interface)]
+                [In, CustomMarshalAs(UnmanagedType.Interface)]
             object pDataObj,
-                [In, MarshalAs(UnmanagedType.U4)]
+                [In, CustomMarshalAs(UnmanagedType.U4)]
             int grfKeyState,
-                [In, MarshalAs(UnmanagedType.U8)]
+                [In, CustomMarshalAs(UnmanagedType.U8)]
             long pt,
                 [In, Out]
             ref int pdwEffect);
 
             [PreserveSig]
             int OleDragOver(
-                [In, MarshalAs(UnmanagedType.U4)]
+                [In, CustomMarshalAs(UnmanagedType.U4)]
             int grfKeyState,
-                [In, MarshalAs(UnmanagedType.U8)]
+                [In, CustomMarshalAs(UnmanagedType.U8)]
             long pt,
                 [In, Out]
             ref int pdwEffect);
@@ -33,11 +33,11 @@ namespace MS.Win32
 
             [PreserveSig]
             int OleDrop(
-                [In, MarshalAs(UnmanagedType.Interface)]
+                [In, CustomMarshalAs(UnmanagedType.Interface)]
             object pDataObj,
-                [In, MarshalAs(UnmanagedType.U4)]
+                [In, CustomMarshalAs(UnmanagedType.U4)]
             int grfKeyState,
-                [In, MarshalAs(UnmanagedType.U8)]
+                [In, CustomMarshalAs(UnmanagedType.U8)]
             long pt,
                 [In, Out]
             ref int pdwEffect);
