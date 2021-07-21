@@ -5,7 +5,7 @@
     <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
     <!--<TargetFramework>net5.0</TargetFramework>-->
     <DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
-    <VersionPrefix>0.2.8</VersionPrefix>
+    <VersionPrefix>0.2.9</VersionPrefix>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
