@@ -23,4 +23,4 @@ jobs:
     - name: Build
       run: dotnet build WinFormsComInterop.Build.sln --no-restore /p:CI=true
     - name: Test
-      run: dotnet test WinFormsComInterop.Build.sln --no-build --verbosity normal /p:CI=true
+      run: dotnet test WinFormsComInterop.Build.sln --no-build --verbosity normal --framework net6.0 /p:CI=true
