@@ -15,6 +15,7 @@
     <GenerateWPF>false</GenerateWPF>
     <DefineConstants Condition="$(GenerateWPF) == true">$(DefineConstants);USE_WPF</DefineConstants>
     <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
   </PropertyGroup>
 
   <ItemGroup>
@@ -48,6 +49,10 @@
       <PrivateAssets>All</PrivateAssets>
       <Aliases>presentation</Aliases>
     </ProjectReference>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
 
 </Project>
