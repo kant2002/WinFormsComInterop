@@ -5,26 +5,61 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
-	<_SuppressWinFormsTrimError>true</_SuppressWinFormsTrimError>
+    <_SuppressWinFormsTrimError>true</_SuppressWinFormsTrimError>	  
     <TrimMode>link</TrimMode>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
     <IlcGenerateDgmlFile>false</IlcGenerateDgmlFile>
+    <IlcGenerateMapFile>false</IlcGenerateMapFile>
 
     <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
     <IlcInvariantGlobalization>true</IlcInvariantGlobalization>
     <IlcFoldIdenticalMethodBodies>true</IlcFoldIdenticalMethodBodies>
     <IlcOptimizationPreference>Size</IlcOptimizationPreference>
-	<CustomResourceTypesSupport>true</CustomResourceTypesSupport>
+    <IlcDisableReflection>false</IlcDisableReflection>
+    <CustomResourceTypesSupport>true</CustomResourceTypesSupport>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PublishTrimmed>true</PublishTrimmed>
+    <TrimmerDefaultAction>link</TrimmerDefaultAction>
   </PropertyGroup>
 
   <ItemGroup>
     <RdXmlFile Include="rd.xml" />
   </ItemGroup>
 
-  <!--<ItemGroup>
-    <AppContextSwitchOverrides Include="Switch.System.Reflection.Assembly.SimulatedLocationInBaseDirectory" />
-  </ItemGroup>-->
+  <ItemGroup Condition="$(IlcDisableReflection) != true">
+    <IlcCompileInput Include="--appcontextswitch:System.Diagnostics.Tracing.EventSource.IsSupported=false" />
+    <IlcCompileInput Include="--appcontextswitch:System.Resources.UseSystemResourceKeys=true" />
+    <IlcCompileInput Include="--appcontextswitch:Switch.System.Reflection.Assembly.SimulatedLocationInBaseDirectory=true" />
+    <IlcCompileInput Include="--feature:System.Resources.UseSystemResourceKeys=true" />
+    <IlcCompileInput Include="--feature:System.Diagnostics.Tracing.EventSource.IsSupported=false" />
+    <IlcCompileInput Include="--feature:System.Collections.Generic.DefaultComparers=false" />
+    <IlcCompileInput Include="--appcontextswitch:Switch.System.Reflection.Disabled.DoNotThrowForNames=true" />
+    <IlcCompileInput Include="--appcontextswitch:Switch.System.Reflection.Disabled.DoNotThrowForAssembly=true" />
+    <IlcCompileInput Include="--reflectedonly" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(IlcDisableReflection) == true">
+    <RuntimeHostConfigurationOption Include="Switch.System.Reflection.Assembly.SimulatedLocationInBaseDirectory" Value="true" />
+    <RuntimeHostConfigurationOption Include="Switch.System.Reflection.Disabled.DoNotThrowForNames" Value="true" />
+    <RuntimeHostConfigurationOption Include="Switch.System.Reflection.Disabled.DoNotThrowForAssembly" Value="true" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <TrimmableAssembly Include="System.Windows.Forms" />
+    <TrimmableAssembly Include="System.Windows.Forms.Primitives" />
+  </ItemGroup>
+<Target Name="ConfigureTrimming" BeforeTargets="PrepareForILLink">
+  <ItemGroup>
+    <ManagedAssemblyToLink Condition="'%(Filename)' == 'System.Windows.Forms'">
+      <IsTrimmable>true</IsTrimmable>
+    </ManagedAssemblyToLink>
+    <ManagedAssemblyToLink Condition="'%(Filename)' == 'System.Windows.Forms.Primitives'">
+      <IsTrimmable>true</IsTrimmable>
+    </ManagedAssemblyToLink>
+  </ItemGroup>
+</Target>
+
 
    <ItemGroup>
     <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-*" />
@@ -33,6 +68,11 @@
    <ItemGroup>
      <ProjectReference Include="..\..\WinFormsComInterop\WinFormsComInterop.csproj" />
    </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="D:\d\kant\GitHub\dotnet\winforms\artifacts\bin\System.Windows.Forms\Debug\net6.0\System.Windows.Forms.dll" />
+    <Reference Include="D:\d\kant\GitHub\dotnet\winforms\artifacts\bin\System.Windows.Forms\Debug\net6.0\System.Windows.Forms.Primitives.dll" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
