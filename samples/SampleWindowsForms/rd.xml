@@ -8,5 +8,31 @@
     <Assembly Name="System.Drawing">
       <Type Name="System.Drawing.Bitmap" Dynamic="Required All" />
     </Assembly>
+    <Assembly Name="System.Windows.Forms">
+      <Type Name="System.Windows.Forms.PropertyGridInternal.PropertiesTab" Dynamic="Required All" />
+      <Type Name="System.Windows.Forms.DataGridViewColumn" Dynamic="Required All" />
+		
+      <Type Name="System.Windows.Forms.DataGridViewButtonColumn" Dynamic="Required All" />
+      <Type Name="System.Windows.Forms.DataGridViewComboBoxColumn" Dynamic="Required All" />
+      <Type Name="System.Windows.Forms.DataGridViewCheckBoxColumn" Dynamic="Required All" />
+      <Type Name="System.Windows.Forms.DataGridViewImageColumn" Dynamic="Required All" />
+      <Type Name="System.Windows.Forms.DataGridViewLinkColumn" Dynamic="Required All" />
+      <Type Name="System.Windows.Forms.DataGridViewTextBoxColumn" Dynamic="Required All" />
+		
+      <Type Name="System.Windows.Forms.DataGridViewButtonCell" Dynamic="Required All" />
+      <Type Name="System.Windows.Forms.DataGridViewComboBoxCell" Dynamic="Required All" />
+      <Type Name="System.Windows.Forms.DataGridViewCheckBoxCell" Dynamic="Required All" />
+      <Type Name="System.Windows.Forms.DataGridViewHeaderCell" Dynamic="Required All" />
+      <Type Name="System.Windows.Forms.DataGridViewImageCell" Dynamic="Required All" />
+      <Type Name="System.Windows.Forms.DataGridViewLinkCell" Dynamic="Required All" />
+      <Type Name="System.Windows.Forms.DataGridViewRowHeaderCell" Dynamic="Required All" />
+      <Type Name="System.Windows.Forms.DataGridViewTextBoxCell" Dynamic="Required All" />
+      <Type Name="System.Windows.Forms.DataGridViewTopLeftHeaderCell" Dynamic="Required All" />
+		
+      <Type Name="System.Windows.Forms.DataGridViewComboBoxEditingControl" Dynamic="Required All" />
+      <Type Name="System.Windows.Forms.DataGridViewTextBoxEditingControl" Dynamic="Required All" />
+
+      <Type Name="System.Windows.Forms.RadioButton" Dynamic="Required All" />
+    </Assembly>
   </Application>
 </Directives>

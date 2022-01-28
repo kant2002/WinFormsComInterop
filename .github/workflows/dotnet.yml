@@ -16,8 +16,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '6.0.x'
-        include-prerelease: true
+        dotnet-version: '6.0.101'
     - name: Restore dependencies
       run: dotnet restore WinFormsComInterop.Build.sln /p:CI=true
     - name: Build
