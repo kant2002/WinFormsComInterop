@@ -1,9 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <!-- Uncomment cross targeting when .NET 6 Prevew 7 would be debuted -->
-    <TargetFrameworks>net5.0;net6.0;net7.0</TargetFrameworks>
-    <!--<TargetFramework>net5.0</TargetFramework>-->
+    <TargetFramework Condition="$(UseNet7) != true">net5.0;net6.0</TargetFramework>
+    <TargetFrameworks Condition="$(UseNet7) == true">net5.0;net6.0;net7.0</TargetFrameworks>
     <DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
     <VersionPrefix>0.2.9</VersionPrefix>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>

@@ -1,4 +1,7 @@
 <Project>
+  <PropertyGroup>
+    <UseNet7>true</UseNet7>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Update="Accessibility">
       <HintPath>C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\6.0.1\Accessibility.dll</HintPath>
