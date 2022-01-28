@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework Condition="$(UseNet7) != true">net5.0;net6.0</TargetFramework>
+    <TargetFrameworks Condition="$(UseNet7) != true">net5.0;net6.0</TargetFrameworks>
     <TargetFrameworks Condition="$(UseNet7) == true">net5.0;net6.0;net7.0</TargetFrameworks>
     <DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
     <VersionPrefix>0.2.9</VersionPrefix>
