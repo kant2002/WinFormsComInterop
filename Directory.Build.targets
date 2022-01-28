@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <UseNet7>true</UseNet7>
+    <UseNet7>false</UseNet7>
   </PropertyGroup>
   <ItemGroup>
     <Reference Update="Accessibility">
