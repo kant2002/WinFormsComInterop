@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <!-- Uncomment cross targeting when .NET 6 Prevew 7 would be debuted -->
-    <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>net5.0;net6.0;net7.0</TargetFrameworks>
     <!--<TargetFramework>net5.0</TargetFramework>-->
     <DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
     <VersionPrefix>0.2.9</VersionPrefix>
