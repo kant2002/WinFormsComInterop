@@ -11,8 +11,13 @@ public partial class Interop
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         public struct COMDLG_FILTERSPEC
         {
+#if NET7_0_OR_GREATER
+            public nuint pszName;
+            public nuint pszSpec;
+#else
             public string? pszName;
             public string? pszSpec;
+#endif
         }
     }
 }
