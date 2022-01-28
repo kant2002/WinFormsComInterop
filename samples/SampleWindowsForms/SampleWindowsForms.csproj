@@ -49,30 +49,27 @@
     <TrimmableAssembly Include="System.Windows.Forms" />
     <TrimmableAssembly Include="System.Windows.Forms.Primitives" />
   </ItemGroup>
-<Target Name="ConfigureTrimming" BeforeTargets="PrepareForILLink">
-  <ItemGroup>
-    <ManagedAssemblyToLink Condition="'%(Filename)' == 'System.Windows.Forms'">
-      <IsTrimmable>true</IsTrimmable>
-    </ManagedAssemblyToLink>
-    <ManagedAssemblyToLink Condition="'%(Filename)' == 'System.Windows.Forms.Primitives'">
-      <IsTrimmable>true</IsTrimmable>
-    </ManagedAssemblyToLink>
-  </ItemGroup>
-</Target>
 
+  <Target Name="ConfigureTrimming" BeforeTargets="PrepareForILLink">
+    <ItemGroup>
+      <ManagedAssemblyToLink Condition="'%(Filename)' == 'System.Windows.Forms'">
+        <IsTrimmable>true</IsTrimmable>
+      </ManagedAssemblyToLink>
+      <ManagedAssemblyToLink Condition="'%(Filename)' == 'System.Windows.Forms.Primitives'">
+        <IsTrimmable>true</IsTrimmable>
+      </ManagedAssemblyToLink>
+    </ItemGroup>
+  </Target>
 
    <ItemGroup>
-    <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-*" />
+    <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-alpha.1.22074.1" />
+    <PackageReference Include="System.Resources.Extensions" Version="6.0.0" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
   </ItemGroup>
 
    <ItemGroup>
      <ProjectReference Include="..\..\WinFormsComInterop\WinFormsComInterop.csproj" />
    </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="D:\d\kant\GitHub\dotnet\winforms\artifacts\bin\System.Windows.Forms\Debug\net6.0\System.Windows.Forms.dll" />
-    <Reference Include="D:\d\kant\GitHub\dotnet\winforms\artifacts\bin\System.Windows.Forms\Debug\net6.0\System.Windows.Forms.Primitives.dll" />
-  </ItemGroup>
 
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
