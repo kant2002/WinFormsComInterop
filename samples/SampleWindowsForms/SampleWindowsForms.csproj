@@ -5,6 +5,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
+	<_SuppressWinFormsTrimError>true</_SuppressWinFormsTrimError>
     <TrimMode>link</TrimMode>
     <DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
     <IlcGenerateDgmlFile>false</IlcGenerateDgmlFile>
@@ -13,6 +14,7 @@
     <IlcInvariantGlobalization>true</IlcInvariantGlobalization>
     <IlcFoldIdenticalMethodBodies>true</IlcFoldIdenticalMethodBodies>
     <IlcOptimizationPreference>Size</IlcOptimizationPreference>
+	<CustomResourceTypesSupport>true</CustomResourceTypesSupport>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
@@ -25,7 +27,7 @@
   </ItemGroup>-->
 
    <ItemGroup>
-    <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="6.0.0-*" />
+    <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-*" />
   </ItemGroup>
 
    <ItemGroup>
