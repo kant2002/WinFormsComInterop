@@ -1,6 +1,7 @@
 <Project>
   <PropertyGroup>
-    <UseNet7>false</UseNet7>
+    <UseNet7 Condition="'$(UseNet7)' == ''">false</UseNet7>
+    <GenerateWPF Condition="'$(GenerateWPF)' == ''">false</GenerateWPF>
   </PropertyGroup>
   <ItemGroup>
     <Reference Update="Accessibility">
