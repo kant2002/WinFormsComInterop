@@ -2,6 +2,9 @@
   <PropertyGroup>
     <UseNet7 Condition="'$(UseNet7)' == ''">false</UseNet7>
     <GenerateWPF Condition="'$(GenerateWPF)' == ''">false</GenerateWPF>
+    <DefineConstants Condition="'$(GenerateWPF)' == 'True'">$(DefineConstants);USE_WPF</DefineConstants>
+	<WinFormsRepoRoot></WinFormsRepoRoot>
+	<WpfRepoRoot></WpfRepoRoot>
   </PropertyGroup>
   <ItemGroup>
     <Reference Update="Accessibility">

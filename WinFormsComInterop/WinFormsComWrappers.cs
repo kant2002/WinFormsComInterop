@@ -321,7 +321,7 @@ namespace WinFormsComInterop
                 count = 1;
                 return richEditOleCallbackEntry;
             }
-
+            
 #if USE_WPF
             if (obj is winbase::MS.Win32.UnsafeNativeMethods.IOleDropTarget)
             {
@@ -347,11 +347,13 @@ namespace WinFormsComInterop
                 return accessibleObjectEntry;
             }
 
+#if !NET7_0_OR_GREATER
             if (obj is forms::System.Windows.Forms.InternalAccessibleObject)
             {
                 count = 2;
                 return accessibleObjectEntry;
             }
+#endif
 
             if (obj is forms::System.Windows.Forms.WebBrowser.WebBrowserSite)
             {

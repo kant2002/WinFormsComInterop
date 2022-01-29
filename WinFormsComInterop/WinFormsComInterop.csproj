@@ -11,7 +11,6 @@
     <Description>ComWrappers implementation for WinForms.</Description>
     <PackageProjectUrl>https://github.com/kant2002/winformscominterop</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <DefineConstants Condition="$(GenerateWPF) == true">$(DefineConstants);USE_WPF</DefineConstants>
     <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
   </PropertyGroup>
