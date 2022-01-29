@@ -93,6 +93,7 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.buttonOpenMultipleFiles = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -465,8 +466,9 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.button4, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.button5, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.button4, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.buttonOpenMultipleFiles, 0, 1);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(555, 353);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -657,6 +659,16 @@
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "linkLabel1";
             // 
+            // buttonOpenMultipleFiles
+            // 
+            this.buttonOpenMultipleFiles.Location = new System.Drawing.Point(3, 60);
+            this.buttonOpenMultipleFiles.Name = "buttonOpenMultipleFiles";
+            this.buttonOpenMultipleFiles.Size = new System.Drawing.Size(75, 23);
+            this.buttonOpenMultipleFiles.TabIndex = 2;
+            this.buttonOpenMultipleFiles.Text = "Open Multi";
+            this.buttonOpenMultipleFiles.UseVisualStyleBackColor = true;
+            this.buttonOpenMultipleFiles.Click += new System.EventHandler(this.buttonOpenMultipleFiles_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -769,6 +781,7 @@
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar2;
+        private System.Windows.Forms.Button buttonOpenMultipleFiles;
     }
 }
 
