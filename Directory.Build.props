@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <UseNet7 Condition="'$(UseNet7)' == ''">False</UseNet7>
+    <GenerateWPF Condition="'$(GenerateWPF)' == ''">False</GenerateWPF>
+    <DefineConstants Condition="'$(GenerateWPF)' == 'True'">$(DefineConstants);USE_WPF</DefineConstants>
+	<WinFormsRepoRoot></WinFormsRepoRoot>
+	<WpfRepoRoot></WpfRepoRoot>
+  </PropertyGroup>
+</Project>

@@ -2,7 +2,7 @@ ComWrappers required to run NativeAOT and WinForms
 =====================================================
 
 This repository has ComWrappers implementation for WinForms.
-In additional to that, it allow use WinForms and NativeAOT together.
+In additional to that, it allow use WinForms and NativeAOT and R2R with trimming together.
 
 ## Getting started
 
@@ -38,7 +38,7 @@ Below are experimental projects. They are need additional work.
 
 ### WPF
 
-	dotnet publish -r win-x64 experiments\WpfTestBed\WpfTestBed.csproj /p:GenerateWPF=true
+	dotnet publish -r win-x64 experiments\WpfTestBed\WpfTestBed.csproj -p:GenerateWPF=true
 
  blocked by https://github.com/kant2002/WinFormsComInterop/issues/30
 

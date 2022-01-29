@@ -5,7 +5,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework Condition="'$(UseNet7)' != 'True'">net6.0-windows</TargetFramework>
     <TargetFramework Condition="'$(UseNet7)' == 'True'">net7.0-windows</TargetFramework>
-    <UseWindowsForms Condition="'$(WinFormsRepoRoot)' == ''">true</UseWindowsForms>
+    <UseWindowsForms Condition="'$(WinFormsRepoRoot)' == ''">True</UseWindowsForms>
     <_SuppressWinFormsTrimError>true</_SuppressWinFormsTrimError>	  
     <TrimMode>link</TrimMode>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
@@ -64,8 +64,10 @@
 
    <ItemGroup>
     <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-alpha.1.22074.1" />
-    <PackageReference Include="System.Resources.Extensions" Version="6.0.0" />
-    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+    <PackageReference Include="System.Resources.Extensions" Version="6.0.0" Condition="'$(UseNet7)' != 'True'" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" Condition="'$(UseNet7)' != 'True'" />
+    <PackageReference Include="System.Resources.Extensions" Version="7.0.0-*" Condition="'$(UseNet7)' == 'True'" />
+    <PackageReference Include="System.Drawing.Common" Version="7.0.0-*" Condition="$(UseNet7) == True" />
   </ItemGroup>
 
    <ItemGroup>
@@ -88,8 +90,8 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(WinFormsRepoRoot)' != ''">
-    <Reference Include="$(WinFormsRepoRoot)\artifacts\bin\System.Windows.Forms\Debug\net6.0\System.Windows.Forms.dll" />
-    <Reference Include="$(WinFormsRepoRoot)\artifacts\bin\System.Windows.Forms\Debug\net6.0\System.Windows.Forms.Primitives.dll" />
+    <Reference Include="$(WinFormsRepoRoot)\artifacts\bin\System.Windows.Forms\Debug\net7.0\System.Windows.Forms.dll" />
+    <Reference Include="$(WinFormsRepoRoot)\artifacts\bin\System.Windows.Forms\Debug\net7.0\System.Windows.Forms.Primitives.dll" />
   </ItemGroup>
   <!--<Import Project="$(MSBuildSDKsPath)\Microsoft.NET.Sdk\Sdk\Sdk.targets" />
   <Import Project="$(IlcPath)\build\Microsoft.NETCore.Native.targets" Condition="'$(IlcPath)' != ''"/>-->
