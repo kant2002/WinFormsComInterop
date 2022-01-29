@@ -2,17 +2,26 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework Condition="'$(UseNet7)' != 'True'">net6.0-windows</TargetFramework>
+    <TargetFramework Condition="'$(UseNet7)' == 'True'">net7.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
+    <_SuppressWpfTrimError>true</_SuppressWpfTrimError>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
   </PropertyGroup>
 
-   <ItemGroup>
-    <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="6.0.0-*" />
+  <ItemGroup>
+    <RdXmlFile Include="rd.xml" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\WinFormsComInterop\WinFormsComInterop.csproj" />
+   <ItemGroup>
+    <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-*" />
   </ItemGroup>
+
+   <ItemGroup>
+     <ProjectReference Include="..\..\WinFormsComInterop\WinFormsComInterop.csproj" />
+   </ItemGroup>
+
+   <Import Project="$(WpfRepoRoot)\eng\wpf-debug.targets" Condition="'$(WpfRepoRoot)' != ''" />
 
 </Project>

@@ -3,8 +3,9 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <UseWindowsForms>true</UseWindowsForms>
+    <TargetFramework Condition="'$(UseNet7)' != 'True'">net6.0-windows</TargetFramework>
+    <TargetFramework Condition="'$(UseNet7)' == 'True'">net7.0-windows</TargetFramework>
+    <UseWindowsForms Condition="'$(WinFormsRepoRoot)' == ''">true</UseWindowsForms>
     <_SuppressWinFormsTrimError>true</_SuppressWinFormsTrimError>	  
     <TrimMode>link</TrimMode>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
@@ -86,6 +87,10 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup Condition="'$(WinFormsRepoRoot)' != ''">
+    <Reference Include="$(WinFormsRepoRoot)\artifacts\bin\System.Windows.Forms\Debug\net6.0\System.Windows.Forms.dll" />
+    <Reference Include="$(WinFormsRepoRoot)\artifacts\bin\System.Windows.Forms\Debug\net6.0\System.Windows.Forms.Primitives.dll" />
+  </ItemGroup>
   <!--<Import Project="$(MSBuildSDKsPath)\Microsoft.NET.Sdk\Sdk\Sdk.targets" />
   <Import Project="$(IlcPath)\build\Microsoft.NETCore.Native.targets" Condition="'$(IlcPath)' != ''"/>-->
 </Project>

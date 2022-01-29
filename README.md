@@ -38,9 +38,9 @@ Below are experimental projects. They are need additional work.
 
 ### WPF
 
-	dotnet publish -r win-x64 experiments\WpfTestBed\WpfTestBed.csproj
+	dotnet publish -r win-x64 experiments\WpfTestBed\WpfTestBed.csproj /p:GenerateWPF=true
 
- blocked by https://github.com/dotnet/runtimelab/issues/1106
+ blocked by https://github.com/kant2002/WinFormsComInterop/issues/30
 
  ### WinUI
 
