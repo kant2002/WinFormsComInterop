@@ -55,5 +55,12 @@ namespace SampleWindowsForms
             var form = new BrowserForm();
             form.ShowDialog();
         }
+
+        private void buttonOpenMultipleFiles_Click(object sender, EventArgs e)
+        {
+            var openDialog = new OpenFileDialog();
+            openDialog.Multiselect = true;
+            openDialog.ShowDialog();
+        }
     }
 }
