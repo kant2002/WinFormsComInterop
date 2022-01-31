@@ -46,7 +46,8 @@ namespace WinFormsComInterop.SourceGenerator
                 {
                     foreach (var alias in metadataReference.Properties.Aliases)
                     {
-                        aliasMap.Add(Path.GetFileNameWithoutExtension(metadataReference.Display), alias);
+                        var assemblySymbol = this.context.Compilation.GetAssemblyOrModuleSymbol(metadataReference);
+                        aliasMap.Add(assemblySymbol!.Name, alias);
                     }
                 }
             }
