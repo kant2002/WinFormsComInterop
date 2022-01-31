@@ -9,9 +9,13 @@ namespace WinFormsComInterop.SourceGenerator
         {
             get
             {
-                return ElementType.FormatType(TypeAlias) + "*";
+                return ElementTypeName + "*";
             }
         }
+
+        internal string ArrayFirstElementRefName => Name + "Ref";
+
+        internal string ElementTypeName => ElementType.FormatType(TypeAlias);
 
         public override void DeclareLocalParameter(IndentedStringBuilder builder)
         {
@@ -23,11 +27,19 @@ namespace WinFormsComInterop.SourceGenerator
             return LocalVariable;
         }
 
+        public override void ConvertToUnmanagedParameter(IndentedStringBuilder builder)
+        {
+            if (RefKind == RefKind.None)
+            {
+                builder.AppendLine($"ref {ElementTypeName} {ArrayFirstElementRefName} = ref {Name} == null ? ref *({UnmanagedTypeName})0 : ref System.Runtime.InteropServices.MemoryMarshal.GetArrayDataReference({Name});");
+            }
+        }
+
         public override void PinParameter(IndentedStringBuilder builder)
         {
             if (RefKind == RefKind.None)
             {
-                builder.AppendLine($"fixed ({UnmanagedTypeName} {LocalVariable} = {Name})");
+                builder.AppendLine($"fixed ({UnmanagedTypeName} {LocalVariable} = &{ArrayFirstElementRefName})");
             }
         }
 
