@@ -31,7 +31,7 @@ namespace WinFormsComInterop.SourceGenerator
         {
             if (RefKind == RefKind.None)
             {
-                builder.AppendLine($"ref {ElementTypeName} {ArrayFirstElementRefName} = ref {Name} == null ? ref *({UnmanagedTypeName})0 : ref MemoryMarshal.GetArrayDataReference({Name});");
+                builder.AppendLine($"ref {ElementTypeName} {ArrayFirstElementRefName} = ref {Name} == null ? ref *({UnmanagedTypeName})0 : ref System.Runtime.InteropServices.MemoryMarshal.GetArrayDataReference({Name});");
             }
         }
 

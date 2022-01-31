@@ -1742,7 +1742,7 @@ namespace Foo
             {
                 var comDispatch = (System.IntPtr*)thisPtr;
                 var vtbl = (System.IntPtr*)comDispatch[0];
-                ref global::Foo.STATSTG pstatstgRef = ref pstatstg == null ? ref *(global::Foo.STATSTG*)0 : ref MemoryMarshal.GetArrayDataReference(pstatstg);
+                ref global::Foo.STATSTG pstatstgRef = ref pstatstg == null ? ref *(global::Foo.STATSTG*)0 : ref System.Runtime.InteropServices.MemoryMarshal.GetArrayDataReference(pstatstg);
                 fixed (global::Foo.STATSTG* local_0 = &pstatstgRef)
                 result = ((delegate* unmanaged<System.IntPtr, global::Foo.STATSTG*, int>)vtbl[3])(thisPtr, local_0);
                 if (result != 0)
