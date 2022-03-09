@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.IO;
+using System.Windows.Forms;
 
 namespace SampleWindowsForms
 {
@@ -21,6 +23,12 @@ namespace SampleWindowsForms
         private void button2_Click(object sender, System.EventArgs e)
         {
             fontDialog1.ShowDialog();
+        }
+
+        private void buttonLoadFromFile_Click(object sender, System.EventArgs e)
+        {
+            pictureBox1.ImageLocation = Path.Combine(AppContext.BaseDirectory, "SimpleImage.bmp");
+            pictureBox1.LoadAsync();
         }
     }
 }
