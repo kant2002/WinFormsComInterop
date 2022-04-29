@@ -13,7 +13,9 @@ namespace SampleWindowsForms
         static void Main()
         {
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
+#if !NET7_0_OR_GREATER
             ComWrappers.RegisterForMarshalling(WinFormsComInterop.WinFormsComWrappers.Instance);
+#endif
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
