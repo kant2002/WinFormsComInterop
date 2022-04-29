@@ -25,6 +25,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="SimpleImage.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <RdXmlFile Include="rd.xml" />
   </ItemGroup>
 
@@ -38,12 +44,14 @@
     <IlcCompileInput Include="--appcontextswitch:Switch.System.Reflection.Disabled.DoNotThrowForNames=true" />
     <IlcCompileInput Include="--appcontextswitch:Switch.System.Reflection.Disabled.DoNotThrowForAssembly=true" />
     <IlcCompileInput Include="--reflectedonly" />
+	<RuntimeHostConfigurationOption Include="System.Windows.Forms.PictureBox.UseWebRequest" Value="false" Trim="true" />
   </ItemGroup>
 
   <ItemGroup Condition="$(IlcDisableReflection) == true">
     <RuntimeHostConfigurationOption Include="Switch.System.Reflection.Assembly.SimulatedLocationInBaseDirectory" Value="true" />
     <RuntimeHostConfigurationOption Include="Switch.System.Reflection.Disabled.DoNotThrowForNames" Value="true" />
     <RuntimeHostConfigurationOption Include="Switch.System.Reflection.Disabled.DoNotThrowForAssembly" Value="true" />
+    <RuntimeHostConfigurationOption Include="System.Windows.Forms.PictureBox.UseWebRequest" Value="false" Trim="true" />
   </ItemGroup>
   
   <ItemGroup>
@@ -63,7 +71,7 @@
   </Target>
 
    <ItemGroup>
-    <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-alpha.1.22074.1" />
+    <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-*" />
     <PackageReference Include="System.Resources.Extensions" Version="6.0.0" Condition="'$(UseNet7)' != 'True'" />
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" Condition="'$(UseNet7)' != 'True'" />
     <PackageReference Include="System.Resources.Extensions" Version="7.0.0-*" Condition="'$(UseNet7)' == 'True'" />
@@ -91,7 +99,7 @@
 
   <ItemGroup Condition="'$(WinFormsRepoRoot)' != ''">
     <Reference Include="$(WinFormsRepoRoot)\artifacts\bin\System.Windows.Forms\Debug\net7.0\System.Windows.Forms.dll" />
-    <Reference Include="$(WinFormsRepoRoot)\artifacts\bin\System.Windows.Forms\Debug\net7.0\System.Windows.Forms.Primitives.dll" />
+    <Reference Include="$(WinFormsRepoRoot)\artifacts\bin\System.Windows.Forms.Primitives\Debug\net7.0\System.Windows.Forms.Primitives.dll" />
   </ItemGroup>
   <!--<Import Project="$(MSBuildSDKsPath)\Microsoft.NET.Sdk\Sdk\Sdk.targets" />
   <Import Project="$(IlcPath)\build\Microsoft.NETCore.Native.targets" Condition="'$(IlcPath)' != ''"/>-->
