@@ -8,6 +8,15 @@ namespace SampleWindowsForms
         public MainForm()
         {
             InitializeComponent();
+
+            this.comboBox1.AutoCompleteMode = AutoCompleteMode.Suggest;
+            this.comboBox1.AutoCompleteSource = AutoCompleteSource.ListItems;
+            this.comboBox1.AutoCompleteCustomSource.Add("SSS");
+            this.comboBox1.AutoCompleteCustomSource.Add("xxx");
+            this.comboBox1.AutoCompleteCustomSource.Add("qqq");
+            this.textBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            this.textBox1.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            this.textBox1.AutoCompleteCustomSource.AddRange(new[] { "SSS", "xx", "qqq", "qqq1", "qqq2", "qqq3", "qqq6", "qqq11", "qqq12", "qqq13", "qqq16" });
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -47,6 +56,8 @@ namespace SampleWindowsForms
         private void button8_Click(object sender, EventArgs e)
         {
             var openDialog = new FolderBrowserDialog();
+            openDialog.UseDescriptionForTitle = false;
+            openDialog.Description = "AAA";
             openDialog.ShowDialog();
         }
 
