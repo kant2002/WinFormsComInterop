@@ -39,13 +39,13 @@
             treeNode2});
             System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Node1");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.button5 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.buttonPressMe = new System.Windows.Forms.Button();
+            this.openFormButton = new System.Windows.Forms.Button();
+            this.buttonMessageBox = new System.Windows.Forms.Button();
+            this.trivialCheckBox = new System.Windows.Forms.CheckBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.label1 = new System.Windows.Forms.Label();
+            this.simpleLabel = new System.Windows.Forms.Label();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.listView1 = new System.Windows.Forms.ListView();
             this.maskedTextBox1 = new System.Windows.Forms.MaskedTextBox();
@@ -53,11 +53,11 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.radioButtonGroup = new System.Windows.Forms.GroupBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBoxMultiline = new System.Windows.Forms.TextBox();
             this.treeView1 = new System.Windows.Forms.TreeView();
-            this.button3 = new System.Windows.Forms.Button();
+            this.buttonBrowserForm = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.listView2 = new System.Windows.Forms.ListView();
@@ -65,9 +65,9 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.button6 = new System.Windows.Forms.Button();
+            this.saveFileButton = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.button4 = new System.Windows.Forms.Button();
+            this.openFileButton = new System.Windows.Forms.Button();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -88,14 +88,14 @@
             this.toolStripSplitButton2 = new System.Windows.Forms.ToolStripSplitButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.button8 = new System.Windows.Forms.Button();
+            this.browseDialogButton = new System.Windows.Forms.Button();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.buttonOpenMultipleFiles = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            this.radioButtonGroup.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -112,49 +112,49 @@
             this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button5
+            // buttonPressMe
             // 
-            this.button5.Location = new System.Drawing.Point(120, 3);
-            this.button5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(88, 27);
-            this.button5.TabIndex = 1;
-            this.button5.Text = "Press Me";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.buttonPressMe.Location = new System.Drawing.Point(120, 3);
+            this.buttonPressMe.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.buttonPressMe.Name = "buttonPressMe";
+            this.buttonPressMe.Size = new System.Drawing.Size(88, 27);
+            this.buttonPressMe.TabIndex = 1;
+            this.buttonPressMe.Text = "Press Me";
+            this.buttonPressMe.UseVisualStyleBackColor = true;
+            this.buttonPressMe.Click += new System.EventHandler(this.buttonPressMe_Click);
             // 
-            // button7
+            // openFormButton
             // 
-            this.button7.Location = new System.Drawing.Point(7, 6);
-            this.button7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(88, 27);
-            this.button7.TabIndex = 0;
-            this.button7.Text = "Open form";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
+            this.openFormButton.Location = new System.Drawing.Point(7, 6);
+            this.openFormButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.openFormButton.Name = "openFormButton";
+            this.openFormButton.Size = new System.Drawing.Size(88, 27);
+            this.openFormButton.TabIndex = 0;
+            this.openFormButton.Text = "Open form";
+            this.openFormButton.UseVisualStyleBackColor = true;
+            this.openFormButton.Click += new System.EventHandler(this.openFormButton_Click);
             // 
-            // button1
+            // buttonMessageBox
             // 
-            this.button1.Location = new System.Drawing.Point(15, 39);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(88, 27);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.buttonMessageBox.Location = new System.Drawing.Point(15, 39);
+            this.buttonMessageBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.buttonMessageBox.Name = "buttonMessageBox";
+            this.buttonMessageBox.Size = new System.Drawing.Size(88, 27);
+            this.buttonMessageBox.TabIndex = 0;
+            this.buttonMessageBox.Text = "Message box";
+            this.buttonMessageBox.UseVisualStyleBackColor = true;
+            this.buttonMessageBox.Click += new System.EventHandler(this.buttonMessageBox_Click);
             // 
-            // checkBox1
+            // trivialCheckBox
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(15, 74);
-            this.checkBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(75, 19);
-            this.checkBox1.TabIndex = 1;
-            this.checkBox1.Text = "Click me!";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.trivialCheckBox.AutoSize = true;
+            this.trivialCheckBox.Location = new System.Drawing.Point(15, 74);
+            this.trivialCheckBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.trivialCheckBox.Name = "trivialCheckBox";
+            this.trivialCheckBox.Size = new System.Drawing.Size(75, 19);
+            this.trivialCheckBox.TabIndex = 1;
+            this.trivialCheckBox.Text = "Click me!";
+            this.trivialCheckBox.UseVisualStyleBackColor = true;
             // 
             // comboBox1
             // 
@@ -177,15 +177,15 @@
             this.dateTimePicker1.Size = new System.Drawing.Size(233, 23);
             this.dateTimePicker1.TabIndex = 4;
             // 
-            // label1
+            // simpleLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 281);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 15);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "label1";
+            this.simpleLabel.AutoSize = true;
+            this.simpleLabel.Location = new System.Drawing.Point(15, 281);
+            this.simpleLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.simpleLabel.Name = "simpleLabel";
+            this.simpleLabel.Size = new System.Drawing.Size(38, 15);
+            this.simpleLabel.TabIndex = 5;
+            this.simpleLabel.Text = "Label here!";
             // 
             // listBox1
             // 
@@ -264,18 +264,18 @@
             this.radioButton2.Text = "Variant 2";
             this.radioButton2.UseVisualStyleBackColor = true;
             // 
-            // groupBox1
+            // radioButtonGroup
             // 
-            this.groupBox1.Controls.Add(this.radioButton2);
-            this.groupBox1.Controls.Add(this.radioButton1);
-            this.groupBox1.Location = new System.Drawing.Point(315, 249);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox1.Size = new System.Drawing.Size(233, 91);
-            this.groupBox1.TabIndex = 12;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Group of related radio buttons";
+            this.radioButtonGroup.Controls.Add(this.radioButton2);
+            this.radioButtonGroup.Controls.Add(this.radioButton1);
+            this.radioButtonGroup.Location = new System.Drawing.Point(315, 249);
+            this.radioButtonGroup.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.radioButtonGroup.Name = "radioButtonGroup";
+            this.radioButtonGroup.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.radioButtonGroup.Size = new System.Drawing.Size(233, 91);
+            this.radioButtonGroup.TabIndex = 12;
+            this.radioButtonGroup.TabStop = false;
+            this.radioButtonGroup.Text = "Group of related radio buttons";
             // 
             // textBox1
             // 
@@ -286,15 +286,15 @@
             this.textBox1.TabIndex = 13;
             this.textBox1.Text = "Text box";
             // 
-            // textBox2
+            // textBoxMultiline
             // 
-            this.textBox2.Location = new System.Drawing.Point(166, 74);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(116, 54);
-            this.textBox2.TabIndex = 14;
-            this.textBox2.Text = "Multiline textbox\r\nwhere you can have multiple lines";
+            this.textBoxMultiline.Location = new System.Drawing.Point(166, 74);
+            this.textBoxMultiline.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.textBoxMultiline.Multiline = true;
+            this.textBoxMultiline.Name = "textBoxMultiline";
+            this.textBoxMultiline.Size = new System.Drawing.Size(116, 54);
+            this.textBoxMultiline.TabIndex = 14;
+            this.textBoxMultiline.Text = "Multiline textbox\r\nwhere you can have multiple lines";
             // 
             // treeView1
             // 
@@ -315,16 +315,16 @@
             this.treeView1.Size = new System.Drawing.Size(140, 111);
             this.treeView1.TabIndex = 15;
             // 
-            // button3
+            // buttonBrowserForm
             // 
-            this.button3.Location = new System.Drawing.Point(100, 3);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(88, 27);
-            this.button3.TabIndex = 1;
-            this.button3.Text = "Flow Is Good";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.buttonBrowserForm.Location = new System.Drawing.Point(100, 3);
+            this.buttonBrowserForm.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.buttonBrowserForm.Name = "buttonBrowserForm";
+            this.buttonBrowserForm.Size = new System.Drawing.Size(88, 27);
+            this.buttonBrowserForm.TabIndex = 1;
+            this.buttonBrowserForm.Text = "Flow Is Good";
+            this.buttonBrowserForm.UseVisualStyleBackColor = true;
+            this.buttonBrowserForm.Click += new System.EventHandler(this.buttonBrowserForm_Click);
             // 
             // button2
             // 
@@ -335,11 +335,12 @@
             this.button2.TabIndex = 0;
             this.button2.Text = "Inside Flow Panel";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.button2);
-            this.flowLayoutPanel1.Controls.Add(this.button3);
+            this.flowLayoutPanel1.Controls.Add(this.buttonBrowserForm);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(611, 38);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -385,7 +386,7 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.button7);
+            this.tabPage2.Controls.Add(this.openFormButton);
             this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabPage2.Name = "tabPage2";
@@ -397,7 +398,7 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.button6);
+            this.tabPage1.Controls.Add(this.saveFileButton);
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabPage1.Name = "tabPage1";
@@ -407,16 +408,16 @@
             this.tabPage1.Text = "Nothing here";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // button6
+            // saveFileButton
             // 
-            this.button6.Location = new System.Drawing.Point(51, 2);
-            this.button6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(88, 27);
-            this.button6.TabIndex = 0;
-            this.button6.Text = "Save file";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.saveFileButton.Location = new System.Drawing.Point(51, 2);
+            this.saveFileButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.saveFileButton.Name = "saveFileButton";
+            this.saveFileButton.Size = new System.Drawing.Size(88, 27);
+            this.saveFileButton.TabIndex = 0;
+            this.saveFileButton.Text = "Save file";
+            this.saveFileButton.UseVisualStyleBackColor = true;
+            this.saveFileButton.Click += new System.EventHandler(this.saveFileButton_Click);
             // 
             // tabControl1
             // 
@@ -429,17 +430,17 @@
             this.tabControl1.Size = new System.Drawing.Size(214, 62);
             this.tabControl1.TabIndex = 18;
             // 
-            // button4
+            // openFileButton
             // 
-            this.button4.ContextMenuStrip = this.contextMenuStrip1;
-            this.button4.Location = new System.Drawing.Point(4, 3);
-            this.button4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(88, 27);
-            this.button4.TabIndex = 0;
-            this.button4.Text = "Open File";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.openFileButton.ContextMenuStrip = this.contextMenuStrip1;
+            this.openFileButton.Location = new System.Drawing.Point(4, 3);
+            this.openFileButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.openFileButton.Name = "openFileButton";
+            this.openFileButton.Size = new System.Drawing.Size(88, 27);
+            this.openFileButton.TabIndex = 0;
+            this.openFileButton.Text = "Open File";
+            this.openFileButton.UseVisualStyleBackColor = true;
+            this.openFileButton.Click += new System.EventHandler(this.openFileButton_Click);
             // 
             // contextMenuStrip1
             // 
@@ -466,8 +467,8 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.button5, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.button4, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.buttonPressMe, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.openFileButton, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.buttonOpenMultipleFiles, 0, 1);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(555, 353);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -599,16 +600,16 @@
             this.notifyIcon1.Text = "text";
             this.notifyIcon1.Visible = true;
             // 
-            // button8
+            // browseDialogButton
             // 
-            this.button8.Location = new System.Drawing.Point(5, 9);
-            this.button8.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(88, 27);
-            this.button8.TabIndex = 0;
-            this.button8.Text = "Browse Dlg";
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
+            this.browseDialogButton.Location = new System.Drawing.Point(5, 9);
+            this.browseDialogButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.browseDialogButton.Name = "browseDialogButton";
+            this.browseDialogButton.Size = new System.Drawing.Size(88, 27);
+            this.browseDialogButton.TabIndex = 0;
+            this.browseDialogButton.Text = "Browse Dlg";
+            this.browseDialogButton.UseVisualStyleBackColor = true;
+            this.browseDialogButton.Click += new System.EventHandler(this.browseDialogButton_Click);
             // 
             // checkBox2
             // 
@@ -633,7 +634,7 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.button8);
+            this.splitContainer1.Panel2.Controls.Add(this.browseDialogButton);
             this.splitContainer1.Size = new System.Drawing.Size(383, 121);
             this.splitContainer1.SplitterDistance = 127;
             this.splitContainer1.SplitterWidth = 5;
@@ -682,27 +683,27 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.treeView1);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.textBoxMultiline);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.radioButtonGroup);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.maskedTextBox1);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.linkLabel1);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.simpleLabel);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.checkedListBox1);
             this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.trivialCheckBox);
+            this.Controls.Add(this.buttonMessageBox);
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "MainForm";
             this.Text = "MainForm";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.radioButtonGroup.ResumeLayout(false);
+            this.radioButtonGroup.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
             this.toolStripContainer1.ResumeLayout(false);
             this.toolStripContainer1.PerformLayout();
@@ -727,13 +728,13 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Button openFormButton;
+        private System.Windows.Forms.Button buttonPressMe;
+        private System.Windows.Forms.Button buttonMessageBox;
+        private System.Windows.Forms.CheckBox trivialCheckBox;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label simpleLabel;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.MaskedTextBox maskedTextBox1;
@@ -741,11 +742,11 @@
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox radioButtonGroup;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBoxMultiline;
         private System.Windows.Forms.TreeView treeView1;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button buttonBrowserForm;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.ListView listView2;
@@ -753,9 +754,9 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button saveFileButton;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button openFileButton;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
@@ -766,7 +767,7 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
-        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button browseDialogButton;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.CheckedListBox checkedListBox1;

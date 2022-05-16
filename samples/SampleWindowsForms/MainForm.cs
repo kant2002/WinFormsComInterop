@@ -19,7 +19,7 @@ namespace SampleWindowsForms
             this.textBox1.AutoCompleteCustomSource.AddRange(new[] { "SSS", "xx", "qqq", "qqq1", "qqq2", "qqq3", "qqq6", "qqq11", "qqq12", "qqq13", "qqq16" });
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonMessageBox_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Clicked!!");
         }
@@ -29,31 +29,37 @@ namespace SampleWindowsForms
             Application.Exit();
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void buttonPressMe_Click(object sender, EventArgs e)
         {
             var form = new SecondaryForm();
             form.ShowDialog();
         }
 
-        private void button7_Click(object sender, EventArgs e)
+        private void openFormButton_Click(object sender, EventArgs e)
         {
             var form = new SecondaryForm();
             form.Show();
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var form = new DragDropForm();
+            form.Show();
+        }
+
+        private void openFileButton_Click(object sender, EventArgs e)
         {
             var openDialog = new OpenFileDialog();
             openDialog.ShowDialog();
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void saveFileButton_Click(object sender, EventArgs e)
         {
             var openDialog = new SaveFileDialog();
             openDialog.ShowDialog();
         }
 
-        private void button8_Click(object sender, EventArgs e)
+        private void browseDialogButton_Click(object sender, EventArgs e)
         {
             var openDialog = new FolderBrowserDialog();
             openDialog.UseDescriptionForTitle = false;
@@ -61,7 +67,7 @@ namespace SampleWindowsForms
             openDialog.ShowDialog();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void buttonBrowserForm_Click(object sender, EventArgs e)
         {
             var form = new BrowserForm();
             form.ShowDialog();

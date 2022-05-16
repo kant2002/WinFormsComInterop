@@ -6,6 +6,7 @@
     <TargetFramework Condition="'$(UseNet7)' != 'True'">net6.0-windows</TargetFramework>
     <TargetFramework Condition="'$(UseNet7)' == 'True'">net7.0-windows</TargetFramework>
     <UseWindowsForms Condition="'$(WinFormsRepoRoot)' == ''">True</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
     <_SuppressWinFormsTrimError>true</_SuppressWinFormsTrimError>	  
     <TrimMode>link</TrimMode>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
@@ -22,6 +23,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PublishTrimmed>true</PublishTrimmed>
     <TrimmerDefaultAction>link</TrimmerDefaultAction>
+    <TrimmerSingleWarn>false</TrimmerSingleWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -44,7 +46,7 @@
     <IlcCompileInput Include="--appcontextswitch:Switch.System.Reflection.Disabled.DoNotThrowForNames=true" />
     <IlcCompileInput Include="--appcontextswitch:Switch.System.Reflection.Disabled.DoNotThrowForAssembly=true" />
     <IlcCompileInput Include="--reflectedonly" />
-	<RuntimeHostConfigurationOption Include="System.Windows.Forms.PictureBox.UseWebRequest" Value="false" Trim="true" />
+	  <RuntimeHostConfigurationOption Include="System.Windows.Forms.PictureBox.UseWebRequest" Value="false" Trim="true" />
   </ItemGroup>
 
   <ItemGroup Condition="$(IlcDisableReflection) == true">
@@ -79,7 +81,7 @@
   </ItemGroup>
 
    <ItemGroup>
-     <ProjectReference Include="..\..\WinFormsComInterop\WinFormsComInterop.csproj" />
+     <ProjectReference Include="..\..\WinFormsComInterop\WinFormsComInterop.csproj" Condition="'$(UseNet7)' != 'True'" />
    </ItemGroup>
 
   <ItemGroup>
