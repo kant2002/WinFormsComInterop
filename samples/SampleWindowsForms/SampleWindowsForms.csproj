@@ -9,7 +9,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <_SuppressWinFormsTrimError>true</_SuppressWinFormsTrimError>	  
     <TrimMode>link</TrimMode>
-    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <BuiltInComInteropSupport>false</BuiltInComInteropSupport>
     <DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
     <IlcGenerateDgmlFile>false</IlcGenerateDgmlFile>
     <IlcGenerateMapFile>false</IlcGenerateMapFile>
@@ -46,7 +46,7 @@
     <IlcCompileInput Include="--appcontextswitch:Switch.System.Reflection.Disabled.DoNotThrowForNames=true" />
     <IlcCompileInput Include="--appcontextswitch:Switch.System.Reflection.Disabled.DoNotThrowForAssembly=true" />
     <IlcCompileInput Include="--reflectedonly" />
-	  <RuntimeHostConfigurationOption Include="System.Windows.Forms.PictureBox.UseWebRequest" Value="false" Trim="true" />
+    <RuntimeHostConfigurationOption Include="System.Windows.Forms.PictureBox.UseWebRequest" Value="false" Trim="true" />
   </ItemGroup>
 
   <ItemGroup Condition="$(IlcDisableReflection) == true">
@@ -67,6 +67,9 @@
         <IsTrimmable>true</IsTrimmable>
       </ManagedAssemblyToLink>
       <ManagedAssemblyToLink Condition="'%(Filename)' == 'System.Windows.Forms.Primitives'">
+        <IsTrimmable>true</IsTrimmable>
+      </ManagedAssemblyToLink>
+      <ManagedAssemblyToLink Condition="'%(Filename)' == 'System.Resources.Extensions'">
         <IsTrimmable>true</IsTrimmable>
       </ManagedAssemblyToLink>
     </ItemGroup>
