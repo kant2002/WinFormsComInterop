@@ -7,7 +7,7 @@
     <VersionPrefix>0.2.9</VersionPrefix>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <!--<RuntimeIdentifier>win-x64</RuntimeIdentifier>-->
     <Description>ComWrappers implementation for WinForms.</Description>
     <PackageProjectUrl>https://github.com/kant2002/winformscominterop</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
