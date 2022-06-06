@@ -1,10 +1,11 @@
 <Project>
+  <PropertyGroup>
+    <DotnetInstallLocation>C:\Program Files\dotnet</DotnetInstallLocation>
+    <DotnetInstallLocation Condition="$(CI) == true">C:\Users\runneradmin\AppData\Local\Microsoft\dotnet</DotnetInstallLocation>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Update="Accessibility">
-      <HintPath>C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\6.0.5\Accessibility.dll</HintPath>
-    </Reference>
-    <Reference Update="Accessibility" Condition="$(CI) == true">
-      <HintPath>C:\Users\runneradmin\AppData\Local\Microsoft\dotnet\shared\Microsoft.WindowsDesktop.App\6.0.5\Accessibility.dll</HintPath>
+      <HintPath>$(DotnetInstallLocation)\shared\Microsoft.WindowsDesktop.App\6.0.5\Accessibility.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>
