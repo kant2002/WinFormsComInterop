@@ -45,7 +45,6 @@
     <IlcCompileInput Include="--feature:System.Collections.Generic.DefaultComparers=false" />
     <IlcCompileInput Include="--appcontextswitch:Switch.System.Reflection.Disabled.DoNotThrowForNames=true" />
     <IlcCompileInput Include="--appcontextswitch:Switch.System.Reflection.Disabled.DoNotThrowForAssembly=true" />
-    <IlcCompileInput Include="--reflectedonly" />
     <RuntimeHostConfigurationOption Include="System.Windows.Forms.PictureBox.UseWebRequest" Value="false" Trim="true" />
   </ItemGroup>
 
