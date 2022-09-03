@@ -13,10 +13,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Setup .NET
+    - name: Setup .NET 5
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '6.0.300'
+        dotnet-version: '5.0.408'
+    - name: Setup .NET 6
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.400'
     - name: Restore dependencies
       run: dotnet restore WinFormsComInterop.Build.sln /p:CI=true
     - name: Build

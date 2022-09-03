@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework Condition="$(UseNet7) != true">net5.0</TargetFramework>
-    <TargetFrameworks Condition="$(UseNet7) == true">net5.0;net7.0</TargetFrameworks>
+    <TargetFrameworks Condition="$(UseNet7) != true">net5.0;net6.0</TargetFrameworks>
+    <TargetFrameworks Condition="$(UseNet7) == true">net5.0;net6.0;net7.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <FileVersion>5.0.0.0</FileVersion>
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
