@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 namespace WinFormsComInterop
 {
     [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IOleWindow))]
+    //[RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IOleWindow))]
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     partial class IAccessibleWrapper
         : global::Accessibility.IAccessible

@@ -25,6 +25,11 @@
             var attributeData = type.GetAttributes().FirstOrDefault(_ => _.AttributeClass?.ToDisplayString() == "System.Runtime.InteropServices.GuidAttribute");
             if (attributeData == null)
             {
+                if (type.ToDisplayString() == "System.Runtime.InteropServices.ComTypes.IEnumString")
+                {
+                    return "00000101-0000-0000-C000-000000000046";
+                }
+
                 return null;
             }
 

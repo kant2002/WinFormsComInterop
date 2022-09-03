@@ -33,6 +33,9 @@ namespace WinFormsComInterop
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.ISimpleFrameSite))]
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IPropertyNotifySink))]
     [ComCallableWrapper(typeof(primitives::Interop.Shell32.IFileDialogEvents))]
+#if !NET7_0_OR_GREATER
+    [ComCallableWrapper(typeof(System.Runtime.InteropServices.ComTypes.IEnumString))]
+#endif
 #if USE_WPF
     [ComCallableWrapper(typeof(winbase::MS.Win32.UnsafeNativeMethods.ITfContext))]
     [ComCallableWrapper(typeof(winbase::MS.Win32.UnsafeNativeMethods.IOleDropTarget))]
@@ -55,6 +58,9 @@ namespace WinFormsComInterop
         static ComWrappers.ComInterfaceEntry* formsWebBrowserContainerEntry;
         static ComWrappers.ComInterfaceEntry* formsWebBrowserEventEntry;
         static ComWrappers.ComInterfaceEntry* formsFileDialogEventsEntry;
+#if !NET7_0_OR_GREATER
+        static ComWrappers.ComInterfaceEntry* enumVariantEntry;
+#endif
 #if USE_WPF
         static ComWrappers.ComInterfaceEntry* oleDropTargetEntry;
         static ComWrappers.ComInterfaceEntry* winbaseTfContextEntry;
@@ -65,6 +71,9 @@ namespace WinFormsComInterop
         internal static Guid IID_IRawElementProviderSimple = new Guid("D6DD68D1-86FD-4332-8666-9ABEDEA2D24C");
         internal static Guid IID_IServiceProvider = new Guid("6D5140C1-7436-11CE-8034-00AA006009FA");
         internal static Guid IID_IEnumVariant = new Guid("00020404-0000-0000-C000-000000000046");
+#if !NET7_0_OR_GREATER
+        internal static Guid IID_IEnumString = new(0x00000101, 0x0000, 0x0000, 0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46);
+#endif
 
         internal static Guid IID_IOleWindow = new Guid("00000114-0000-0000-C000-000000000046");
         internal static Guid IID_IStream = new Guid("0000000C-0000-0000-C000-000000000046");
@@ -91,6 +100,7 @@ namespace WinFormsComInterop
         internal static Guid IID_IOleInPlaceActiveObject = new Guid("00000117-0000-0000-C000-000000000046");
         internal static Guid IID_IHTMLDocument4 = new Guid("3050F69A-98B5-11CF-BB82-00AA00BDCE0B");
         internal static Guid IID_IHTMLLocation = new Guid("163BB1E0-6E00-11CF-837A-48DC04C10000");
+        internal static Guid IID_IAutoComplete2 = new(0xEAC04BC0, 0x3791, 0x11D2, 0xBB, 0x95, 0x00, 0x60, 0x97, 0x7B, 0x46, 0x4C);
 
         internal static Guid IID_ITfContext = new Guid("aa80e7fd-2021-11d2-93e0-0060b067b86e");
 
@@ -104,7 +114,10 @@ namespace WinFormsComInterop
 #endif
             accessibleObjectEntry = CreateAccessibleObjectEntry();
             primitivesStreamEntry = CreatePrimitivesStreamEntry();
-            
+#if !NET7_0_OR_GREATER
+            enumVariantEntry = CreateEnumVariantEntry();
+#endif
+
             primitivesDropTargetEntry = CreatePrimitivesDropTargetEntry();
             storageEntry = CreatePrimitivesIStorageEntry();
             richEditOleCallbackEntry = CreatePrimitivesIRichEditOleCallbackEntry();
@@ -286,6 +299,19 @@ namespace WinFormsComInterop
             return wrapperEntry;
         }
 
+#if !NET7_0_OR_GREATER
+        private static ComInterfaceEntry* CreateEnumVariantEntry()
+        {
+            CreateIEnumStringProxyVtbl(out var vtbl);
+
+            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 1);
+            var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
+            wrapperEntry->IID = IID_IEnumString;
+            wrapperEntry->Vtable = vtbl;
+            return wrapperEntry;
+        }
+#endif
+
         public static WinFormsComWrappers Instance { get; } = new WinFormsComWrappers();
 
         protected override unsafe ComInterfaceEntry* ComputeVtables(object obj, CreateComInterfaceFlags flags, out int count)
@@ -298,11 +324,20 @@ namespace WinFormsComInterop
             }
 #endif
 
+
+#if !NET7_0_OR_GREATER
+            if (obj is System.Runtime.InteropServices.ComTypes.IEnumString)
+            {
+                count = 1;
+                return enumVariantEntry;
+            }
+
             if (obj is primitives::Interop.Ole32.IStream)
             {
                 count = 1;
                 return primitivesStreamEntry;
             }
+#endif
 
             if (obj is primitives::Interop.Ole32.IDropTarget)
             {
@@ -321,7 +356,7 @@ namespace WinFormsComInterop
                 count = 1;
                 return richEditOleCallbackEntry;
             }
-            
+
 #if USE_WPF
             if (obj is winbase::MS.Win32.UnsafeNativeMethods.IOleDropTarget)
             {
@@ -384,6 +419,13 @@ namespace WinFormsComInterop
 
         protected override object CreateObject(IntPtr externalComObject, CreateObjectFlags flags)
         {
+#if !NET7_0_OR_GREATER
+            if (Marshal.QueryInterface(externalComObject, ref IID_IAutoComplete2, out var autoCompletePtr) >= 0)
+            {
+                Marshal.Release(autoCompletePtr);
+                return new IAutoComplete2Wrapper(externalComObject);
+            }
+#endif
             if (Marshal.QueryInterface(externalComObject, ref IID_IAccessible, out var accessiblePtr) >= 0)
             {
                 Marshal.Release(accessiblePtr);

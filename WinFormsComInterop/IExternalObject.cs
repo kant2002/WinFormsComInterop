@@ -13,11 +13,13 @@ namespace WinFormsComInterop
 #if NET5_0
     [RuntimeCallableWrapper(typeof(drawing::Interop.Ole32.IStream))]
 #endif
+#if !NET7_0_OR_GREATER
     [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IOleWindow))]
     [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IStream))]
-    [RuntimeCallableWrapper(typeof(primitives::Interop.UiaCore.IRawElementProviderSimple))]
     [RuntimeCallableWrapper(typeof(primitives::Interop.Shell32.IShellItem))]
     [RuntimeCallableWrapper(typeof(primitives::Interop.Shell32.IShellItemArray))]
+#endif
+    [RuntimeCallableWrapper(typeof(primitives::Interop.UiaCore.IRawElementProviderSimple))]
 #if USE_WPF
     [RuntimeCallableWrapper(typeof(winbase::MS.Win32.UnsafeNativeMethods.IOleDropTarget))]
     [RuntimeCallableWrapper(typeof(winbase::MS.Win32.UnsafeNativeMethods.ITfThreadMgr))]
