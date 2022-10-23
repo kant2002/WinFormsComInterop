@@ -3,6 +3,7 @@
     <UseNet7 Condition="'$(UseNet7)' == ''">False</UseNet7>
     <GenerateWPF Condition="'$(GenerateWPF)' == ''">False</GenerateWPF>
     <DefineConstants Condition="'$(GenerateWPF)' == 'True'">$(DefineConstants);USE_WPF</DefineConstants>
+    <VersionPrefix>0.3.1</VersionPrefix>
 	<WinFormsRepoRoot></WinFormsRepoRoot>
 	<WpfRepoRoot></WpfRepoRoot>
   </PropertyGroup>
