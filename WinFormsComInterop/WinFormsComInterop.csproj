@@ -4,7 +4,6 @@
     <TargetFrameworks Condition="$(UseNet7) != true">net5.0;net6.0</TargetFrameworks>
     <TargetFrameworks Condition="$(UseNet7) == true">net5.0;net6.0;net7.0</TargetFrameworks>
     <DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
-    <VersionPrefix>0.3.0</VersionPrefix>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
     <!--<RuntimeIdentifier>win-x64</RuntimeIdentifier>-->
