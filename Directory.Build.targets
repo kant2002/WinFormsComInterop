@@ -5,7 +5,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Update="Accessibility" Condition="$(TargetFramework) != 'net5.0'">
-      <HintPath>$(DotnetInstallLocation)\shared\Microsoft.WindowsDesktop.App\6.0.8\Accessibility.dll</HintPath>
+      <HintPath>$(DotnetInstallLocation)\shared\Microsoft.WindowsDesktop.App\6.0.10\Accessibility.dll</HintPath>
     </Reference>
     <Reference Update="Accessibility" Condition="$(TargetFramework) == 'net5.0'">
       <HintPath>$(DotnetInstallLocation)\shared\Microsoft.WindowsDesktop.App\5.0.17\Accessibility.dll</HintPath>

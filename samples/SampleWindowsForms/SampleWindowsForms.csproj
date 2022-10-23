@@ -3,8 +3,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework Condition="'$(UseNet7)' != 'True'">net6.0-windows</TargetFramework>
-    <TargetFramework Condition="'$(UseNet7)' == 'True'">net7.0-windows</TargetFramework>
+    <TargetFramework>net7.0-windows</TargetFramework>
     <UseWindowsForms Condition="'$(WinFormsRepoRoot)' == ''">True</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <_SuppressWinFormsTrimError>true</_SuppressWinFormsTrimError>	  
@@ -76,10 +75,8 @@
 
    <ItemGroup>
     <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-*" />
-    <PackageReference Include="System.Resources.Extensions" Version="6.0.0" Condition="'$(UseNet7)' != 'True'" />
-    <PackageReference Include="System.Drawing.Common" Version="6.0.0" Condition="'$(UseNet7)' != 'True'" />
-    <PackageReference Include="System.Resources.Extensions" Version="7.0.0-*" Condition="'$(UseNet7)' == 'True'" />
-    <PackageReference Include="System.Drawing.Common" Version="7.0.0-*" Condition="$(UseNet7) == True" />
+    <PackageReference Include="System.Resources.Extensions" Version="7.0.0-*" />
+    <PackageReference Include="System.Drawing.Common" Version="7.0.0-*" />
   </ItemGroup>
 
    <ItemGroup>

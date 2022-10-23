@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks Condition="$(UseNet7) != true">net5.0;net6.0</TargetFrameworks>
-    <TargetFrameworks Condition="$(UseNet7) == true">net5.0;net6.0;net7.0</TargetFrameworks>
+    <TargetFrameworks>net5.0;net6.0;net7.0</TargetFrameworks>
     <DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>

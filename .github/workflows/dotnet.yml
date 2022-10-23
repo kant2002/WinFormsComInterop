@@ -13,17 +13,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Setup .NET 5
-      uses: actions/setup-dotnet@v1
+    - name: Setup .NET 5 & 6 & 7
+      uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '5.0.408'
-    - name: Setup .NET 6
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: '6.0.400'
+        dotnet-version: |
+            5.0.408
+            6.0.400
+            7.0.100-rc.2.22477.23
     - name: Restore dependencies
       run: dotnet restore WinFormsComInterop.Build.sln /p:CI=true
     - name: Build
       run: dotnet build WinFormsComInterop.Build.sln --no-restore /p:CI=true
     - name: Test
-      run: dotnet test WinFormsComInterop.Build.sln --no-build --verbosity normal --framework net6.0 /p:CI=true
+      run: dotnet test WinFormsComInterop.Build.sln --no-build --verbosity normal --framework net7.0 /p:CI=true
