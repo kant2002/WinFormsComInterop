@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace WinFormsComInterop
 {
+#if !NET7_0_OR_GREATER
     [RuntimeCallableWrapper(typeof(primitives::Interop.Shell32.IAutoComplete2))]
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     partial class IAutoComplete2Wrapper
@@ -21,4 +22,5 @@ namespace WinFormsComInterop
             Marshal.Release(this.instance);
         }
     }
+#endif
 }
