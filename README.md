@@ -14,6 +14,12 @@ Then to your Program.cs add following line
 
 	ComWrappers.RegisterForMarshalling(WinFormsComInterop.WinFormsComWrappers.Instance);
 
+And modify project file to enable NativeAOT
+```
+<PublishAot>true</PublishAot>
+<_SuppressWinFormsTrimError>true</_SuppressWinFormsTrimError>
+```
+
 If you application will works with this ComWrappers implementation, then most likely it would work with NativeAOT.
 
 ## Testing technology
