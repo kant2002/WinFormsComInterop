@@ -1,7 +1,6 @@
 <Project>
   <PropertyGroup>
     <DotnetInstallLocation>C:\Program Files\dotnet</DotnetInstallLocation>
-    <DotnetInstallLocation Condition="$(CI) == true">C:\Users\runneradmin\AppData\Local\Microsoft\dotnet</DotnetInstallLocation>
   </PropertyGroup>
   <ItemGroup>
     <Reference Update="Accessibility" Condition="$(TargetFramework) == 'net7.0'">
