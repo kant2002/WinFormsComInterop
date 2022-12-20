@@ -21,8 +21,8 @@ jobs:
             6.0.404
             7.0.101
     - name: Restore dependencies
-      run: dotnet restore WinFormsComInterop.Build.sln /p:CI=true
+      run: dotnet restore WinFormsComInterop.Build.sln
     - name: Build
-      run: dotnet build WinFormsComInterop.Build.sln --no-restore /p:CI=true
+      run: dotnet build WinFormsComInterop.Build.sln --no-restore
     - name: Test
-      run: dotnet test WinFormsComInterop.Build.sln --no-build --verbosity normal --framework net7.0 /p:CI=true
+      run: dotnet test WinFormsComInterop.Build.sln --no-build --verbosity normal --framework net7.0
