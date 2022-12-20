@@ -4,7 +4,10 @@
     <DotnetInstallLocation Condition="$(CI) == true">C:\Users\runneradmin\AppData\Local\Microsoft\dotnet</DotnetInstallLocation>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Update="Accessibility" Condition="$(TargetFramework) != 'net5.0'">
+    <Reference Update="Accessibility" Condition="$(TargetFramework) == 'net7.0'">
+      <HintPath>$(DotnetInstallLocation)\shared\Microsoft.WindowsDesktop.App\7.0.1\Accessibility.dll</HintPath>
+    </Reference>
+    <Reference Update="Accessibility" Condition="$(TargetFramework) == 'net6.0'">
       <HintPath>$(DotnetInstallLocation)\shared\Microsoft.WindowsDesktop.App\6.0.12\Accessibility.dll</HintPath>
     </Reference>
     <Reference Update="Accessibility" Condition="$(TargetFramework) == 'net5.0'">
