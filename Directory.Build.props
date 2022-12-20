@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <UseNet7 Condition="'$(UseNet7)' == ''">False</UseNet7>
+    <UseNet8 Condition="'$(UseNet8)' == ''">False</UseNet8>
     <GenerateWPF Condition="'$(GenerateWPF)' == ''">False</GenerateWPF>
     <DefineConstants Condition="'$(GenerateWPF)' == 'True'">$(DefineConstants);USE_WPF</DefineConstants>
     <VersionPrefix>0.3.2</VersionPrefix>

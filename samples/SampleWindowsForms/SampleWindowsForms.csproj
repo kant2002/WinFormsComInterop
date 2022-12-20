@@ -21,6 +21,7 @@
     <CustomResourceTypesSupport>true</CustomResourceTypesSupport>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PublishTrimmed>true</PublishTrimmed>
+    <PublishAot>true</PublishAot>
     <TrimmerDefaultAction>link</TrimmerDefaultAction>
     <TrimmerSingleWarn>false</TrimmerSingleWarn>
   </PropertyGroup>
@@ -36,11 +37,9 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(IlcDisableReflection) != true">
-    <IlcCompileInput Include="--appcontextswitch:System.Diagnostics.Tracing.EventSource.IsSupported=false" />
     <IlcCompileInput Include="--appcontextswitch:System.Resources.UseSystemResourceKeys=true" />
     <IlcCompileInput Include="--appcontextswitch:Switch.System.Reflection.Assembly.SimulatedLocationInBaseDirectory=true" />
     <IlcCompileInput Include="--feature:System.Resources.UseSystemResourceKeys=true" />
-    <IlcCompileInput Include="--feature:System.Diagnostics.Tracing.EventSource.IsSupported=false" />
     <IlcCompileInput Include="--feature:System.Collections.Generic.DefaultComparers=false" />
     <IlcCompileInput Include="--appcontextswitch:Switch.System.Reflection.Disabled.DoNotThrowForNames=true" />
     <IlcCompileInput Include="--appcontextswitch:Switch.System.Reflection.Disabled.DoNotThrowForAssembly=true" />
@@ -74,13 +73,7 @@
   </Target>
 
    <ItemGroup>
-    <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-*" />
-    <PackageReference Include="System.Resources.Extensions" Version="7.0.0-*" />
-    <PackageReference Include="System.Drawing.Common" Version="7.0.0-*" />
-  </ItemGroup>
-
-   <ItemGroup>
-     <ProjectReference Include="..\..\WinFormsComInterop\WinFormsComInterop.csproj" Condition="'$(UseNet7)' != 'True'" />
+     <ProjectReference Include="..\..\WinFormsComInterop\WinFormsComInterop.csproj" Condition="'$(UseNet8)' != 'True'" />
    </ItemGroup>
 
   <ItemGroup>
@@ -99,8 +92,10 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(WinFormsRepoRoot)' != ''">
-    <Reference Include="$(WinFormsRepoRoot)\artifacts\bin\System.Windows.Forms\Debug\net7.0\System.Windows.Forms.dll" />
-    <Reference Include="$(WinFormsRepoRoot)\artifacts\bin\System.Windows.Forms.Primitives\Debug\net7.0\System.Windows.Forms.Primitives.dll" />
+    <PackageReference Include="System.Resources.Extensions" Version="8.0.0-*" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.0-*" />
+    <Reference Include="$(WinFormsRepoRoot)\artifacts\bin\System.Windows.Forms\Debug\net8.0\System.Windows.Forms.dll" />
+    <Reference Include="$(WinFormsRepoRoot)\artifacts\bin\System.Windows.Forms.Primitives\Debug\net8.0\System.Windows.Forms.Primitives.dll" />
   </ItemGroup>
   <!--<Import Project="$(MSBuildSDKsPath)\Microsoft.NET.Sdk\Sdk\Sdk.targets" />
   <Import Project="$(IlcPath)\build\Microsoft.NETCore.Native.targets" Condition="'$(IlcPath)' != ''"/>-->

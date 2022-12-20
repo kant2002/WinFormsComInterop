@@ -18,8 +18,8 @@ jobs:
       with:
         dotnet-version: |
             5.0.408
-            6.0.400
-            7.0.100-rc.2.22477.23
+            6.0.404
+            7.0.101
     - name: Restore dependencies
       run: dotnet restore WinFormsComInterop.Build.sln /p:CI=true
     - name: Build
