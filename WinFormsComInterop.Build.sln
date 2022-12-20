@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29806.167
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33209.295
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleWindowsForms", "samples\SampleWindowsForms\SampleWindowsForms.csproj", "{AE64F765-CE4C-4093-8075-270C5CC614B5}"
 EndProject
@@ -23,8 +23,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{B8E0DDAA-1A19-409C-AD36-7B32A997446A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "experiments", "experiments", "{C141C36F-BB90-470F-991B-A4BD26202DE4}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Drawing.Common", "System.Drawing.Common\System.Drawing.Common.csproj", "{079D044C-2F8C-47AD-B492-86D7613DC6B1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinFormsComInterop.SourceGenerator", "WinFormsComInterop.SourceGenerator\WinFormsComInterop.SourceGenerator.csproj", "{4641034A-4BDD-429E-BEE9-7E6D3C95D114}"
 EndProject
@@ -96,22 +94,6 @@ Global
 		{2D80F90C-1E20-406C-ABAF-2824914F8C99}.Release|x64.ActiveCfg = Release|Any CPU
 		{2D80F90C-1E20-406C-ABAF-2824914F8C99}.Release|x64.Build.0 = Release|Any CPU
 		{2D80F90C-1E20-406C-ABAF-2824914F8C99}.Release|x86.ActiveCfg = Release|Any CPU
-		{079D044C-2F8C-47AD-B492-86D7613DC6B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{079D044C-2F8C-47AD-B492-86D7613DC6B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{079D044C-2F8C-47AD-B492-86D7613DC6B1}.Debug|arm64.ActiveCfg = Debug|Any CPU
-		{079D044C-2F8C-47AD-B492-86D7613DC6B1}.Debug|arm64.Build.0 = Debug|Any CPU
-		{079D044C-2F8C-47AD-B492-86D7613DC6B1}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{079D044C-2F8C-47AD-B492-86D7613DC6B1}.Debug|x64.Build.0 = Debug|Any CPU
-		{079D044C-2F8C-47AD-B492-86D7613DC6B1}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{079D044C-2F8C-47AD-B492-86D7613DC6B1}.Debug|x86.Build.0 = Debug|Any CPU
-		{079D044C-2F8C-47AD-B492-86D7613DC6B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{079D044C-2F8C-47AD-B492-86D7613DC6B1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{079D044C-2F8C-47AD-B492-86D7613DC6B1}.Release|arm64.ActiveCfg = Release|Any CPU
-		{079D044C-2F8C-47AD-B492-86D7613DC6B1}.Release|arm64.Build.0 = Release|Any CPU
-		{079D044C-2F8C-47AD-B492-86D7613DC6B1}.Release|x64.ActiveCfg = Release|Any CPU
-		{079D044C-2F8C-47AD-B492-86D7613DC6B1}.Release|x64.Build.0 = Release|Any CPU
-		{079D044C-2F8C-47AD-B492-86D7613DC6B1}.Release|x86.ActiveCfg = Release|Any CPU
-		{079D044C-2F8C-47AD-B492-86D7613DC6B1}.Release|x86.Build.0 = Release|Any CPU
 		{4641034A-4BDD-429E-BEE9-7E6D3C95D114}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4641034A-4BDD-429E-BEE9-7E6D3C95D114}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4641034A-4BDD-429E-BEE9-7E6D3C95D114}.Debug|arm64.ActiveCfg = Debug|Any CPU

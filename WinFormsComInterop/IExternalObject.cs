@@ -1,7 +1,4 @@
 ﻿extern alias primitives;
-#if NET5_0
-extern alias drawing;
-#endif
 #if USE_WPF
 extern alias winbase;
 #endif
@@ -10,9 +7,6 @@ using System.Runtime.InteropServices;
 
 namespace WinFormsComInterop
 {
-#if NET5_0
-    [RuntimeCallableWrapper(typeof(drawing::Interop.Ole32.IStream))]
-#endif
 #if !NET7_0_OR_GREATER
     [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IOleWindow))]
     [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IStream))]
