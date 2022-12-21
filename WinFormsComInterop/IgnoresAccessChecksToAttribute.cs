@@ -3,6 +3,7 @@
 [assembly: global::System.Runtime.CompilerServices.IgnoresAccessChecksTo("System.Drawing.Common")]
 [assembly: global::System.Runtime.CompilerServices.IgnoresAccessChecksTo("WindowsBase")]
 [assembly: global::System.Runtime.CompilerServices.IgnoresAccessChecksTo("PresentationCore")]
+[assembly: global::System.Runtime.CompilerServices.IgnoresAccessChecksTo("Microsoft.Web.WebView2.Core")]
 
 namespace System.Runtime.CompilerServices
 {
