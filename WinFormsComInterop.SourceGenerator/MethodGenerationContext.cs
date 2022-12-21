@@ -112,7 +112,7 @@
             Marshaller marshaller = CreateMarshaller(fieldSymbol.Type, null);
             marshaller.Name = prefix + "_" + fieldSymbol.Name;
             marshaller.Type = fieldSymbol.Type;
-            marshaller.RefKind = RefKind.None;
+            marshaller.RefKind = RefKind.Ref;
             marshaller.Index = index;
             marshaller.LocalVariablePrefix = prefix;
             marshaller.TypeAlias = this.GetAlias(fieldSymbol.Type);

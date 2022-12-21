@@ -317,6 +317,40 @@ internal unsafe struct IDispatchVtbl
                 }
             }
 
+            foreach (var classSymbol in receiver.CCWDeclarations)
+            {
+                //GenerateBlittableStructWrapper(source, classSymbol.Type);
+
+                foreach (var interfaceTypeSymbol in FindCCWDeclarations(classSymbol).Distinct())
+                {
+                    //GenerateBlittableStructWrapper(source, interfaceTypeSymbol);
+                    foreach (var member in interfaceTypeSymbol.GetMembers())
+                    {
+                        switch (member)
+                        {
+                            case IMethodSymbol methodSymbol:
+                                {
+
+                                    if (!MethodGenerationContext.IsBlittableType(methodSymbol.ReturnType)
+                                        && methodSymbol.ReturnType.SpecialType != SpecialType.System_Void)
+                                    {
+                                        LocalGenerateNativeType(methodSymbol.ReturnType);
+                                    }
+
+                                    foreach (var parameter in methodSymbol.Parameters)
+                                    {
+                                        if (!MethodGenerationContext.IsBlittableType(parameter.Type))
+                                        {
+                                            LocalGenerateNativeType(parameter.Type);
+                                        }
+                                    }
+                                }
+                                break;
+                        }
+                    }
+                }
+            }
+
             context.AddSource("SupportLibrary.cs", source.ToString());
         }
 
@@ -334,6 +368,26 @@ internal unsafe struct IDispatchVtbl
                 return;
             }
 
+            if (type.ToDisplayString() == "System.Runtime.InteropServices.ComTypes.STATSTG")
+            {
+                source.AppendLine($"struct {type.Name}_native");
+                source.AppendLine("{");
+                source.PushIndent();
+                source.AppendLine($"public System.IntPtr pwcsName;");
+                source.AppendLine($"public int type;");
+                source.AppendLine($"public long cbSize;");
+                source.AppendLine($"public System.Runtime.InteropServices.ComTypes.FILETIME mtime;");
+                source.AppendLine($"public System.Runtime.InteropServices.ComTypes.FILETIME ctime;");
+                source.AppendLine($"public System.Runtime.InteropServices.ComTypes.FILETIME atime;");
+                source.AppendLine($"public int grfMode;");
+                source.AppendLine($"public int grfLocksSupported;");
+                source.AppendLine($"public System.Guid clsid;");
+                source.AppendLine($"public int grfStateBits;");
+                source.AppendLine($"public int reserved;");
+                source.PopIndent();
+                source.AppendLine("}");
+                return;
+            }
             source.AppendLine($"struct {type.Name}_native");
             source.AppendLine("{");
             source.PushIndent();

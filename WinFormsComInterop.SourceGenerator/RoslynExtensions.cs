@@ -30,6 +30,11 @@
                     return "00000101-0000-0000-C000-000000000046";
                 }
 
+                if (type.ToDisplayString() == "System.Runtime.InteropServices.ComTypes.IStream")
+                {
+                    return "0000000C-0000-0000-C000-000000000046";
+                }
+
                 return null;
             }
 
