@@ -24,6 +24,7 @@ namespace WinFormsComInterop
     [ComCallableWrapper(typeof(webview2::Microsoft.Web.WebView2.Core.Raw.ICoreWebView2WebResourceRequestedEventHandler))]
     [ComCallableWrapper(typeof(webview2::Microsoft.Web.WebView2.Core.Raw.ICoreWebView2NewWindowRequestedEventHandler))]
     [ComCallableWrapper(typeof(webview2::Microsoft.Web.WebView2.Core.Raw.ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler))]
+    [ComCallableWrapper(typeof(System.Runtime.InteropServices.ComTypes.IStream))]
     public unsafe partial class WebView2ComWrapper : WinFormsComWrappers
     {
         static ComWrappers.ComInterfaceEntry* coreWebView2EnvironmentOptionsEntry;
@@ -42,6 +43,7 @@ namespace WinFormsComInterop
         static ComWrappers.ComInterfaceEntry* coreWebView2WebResourceRequestedEventHandlerEntry;
         static ComWrappers.ComInterfaceEntry* coreWebView2NewWindowRequestedEventHandlerEntry;
         static ComWrappers.ComInterfaceEntry* coreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerEntry;
+        static ComWrappers.ComInterfaceEntry* managedStreamEntry;
 
         internal static Guid IID_ICoreWebView2 = new Guid("76ECEACB-0462-4D94-AC83-423A6793775E");
         internal static Guid IID_ICoreWebView2Controller = new Guid("4D00C0D1-9434-4EB6-8078-8697A560334F");
@@ -68,6 +70,10 @@ namespace WinFormsComInterop
         internal static Guid IID_ICoreWebView2NavigationStartingEventArgs = new Guid("5B495469-E119-438A-9B18-7604F25F2E49");
         internal static Guid IID_ICoreWebView2WebResourceRequestedEventArgs = new Guid("453E667F-12C7-49D4-BE6D-DDBE7956F57A");
         internal static Guid IID_ICoreWebView2WebResourceRequest = new Guid("97055CD4-512C-4264-8B5F-E3F446CEA6A5");
+        internal static Guid IID_ICoreWebView2WebResourceResponse = new Guid("AAFCC94F-FA27-48FD-97DF-830EF75AAEC9");
+        internal static Guid IID_ICoreWebView2SourceChangedEventArgs = new Guid("31E0E545-1DBA-4266-8914-F63848A1F7D7");
+        internal static Guid IID_ICoreWebView2ContentLoadingEventArgs = new Guid("0C8A1275-9B6B-4901-87AD-70DF25BAFA6E");
+        internal static Guid IID_ICoreWebView2NavigationCompletedEventArgs = new Guid("30D68B7D-20D9-4752-A9CA-EC8448FBB5C1");
 
         static WebView2ComWrapper()
         {
@@ -87,6 +93,7 @@ namespace WinFormsComInterop
             coreWebView2WebResourceRequestedEventHandlerEntry = CreateCoreWebView2WebResourceRequestedEventHandlerEntry();
             coreWebView2NewWindowRequestedEventHandlerEntry = CreateCoreWebView2NewWindowRequestedEventHandlerEntry();
             coreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerEntry = CreateCoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerEntry();
+            managedStreamEntry = CreateManagedStreamEntry();
         }
         private static ComInterfaceEntry* CreateCoreWebView2EnvironmentOptionsEntry()
         {
@@ -254,6 +261,17 @@ namespace WinFormsComInterop
             wrapperEntry[0].Vtable = coreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerVtbl;
             return wrapperEntry;
         }
+
+        private static ComInterfaceEntry* CreateManagedStreamEntry()
+        {
+            CreateIStreamProxyVtbl(out var vtbl);
+
+            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 1);
+            var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
+            wrapperEntry->IID = IID_IStream;
+            wrapperEntry->Vtable = vtbl;
+            return wrapperEntry;
+        }
         public static new WebView2ComWrapper Instance { get; } = new WebView2ComWrapper();
 
         protected override unsafe ComInterfaceEntry* ComputeVtables(object obj, CreateComInterfaceFlags flags, out int count)
@@ -354,6 +372,12 @@ namespace WinFormsComInterop
                 return coreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandlerEntry;
             }
 
+            if (obj is webview2::Microsoft.Web.WebView2.Core.ManagedIStream)
+            {
+                count = 1;
+                return managedStreamEntry;
+            }
+
             return base.ComputeVtables(obj, flags, out count);
         }
 
@@ -389,6 +413,12 @@ namespace WinFormsComInterop
                 return new ICoreWebView2NavigationStartingEventArgsWrapper(externalComObject);
             }
 
+            if (Marshal.QueryInterface(externalComObject, ref IID_ICoreWebView2NavigationCompletedEventArgs, out var coreWebView2NavigationCompletedEventArgsPtr) >= 0)
+            {
+                Marshal.Release(coreWebView2NavigationCompletedEventArgsPtr);
+                return new ICoreWebView2NavigationCompletedEventArgsWrapper(externalComObject);
+            }
+
             if (Marshal.QueryInterface(externalComObject, ref IID_ICoreWebView2WebResourceRequestedEventArgs, out var coreWebView2WebResourceRequestedEventArgsPtr) >= 0)
             {
                 Marshal.Release(coreWebView2WebResourceRequestedEventArgsPtr);
@@ -399,6 +429,24 @@ namespace WinFormsComInterop
             {
                 Marshal.Release(coreWebView2WebResourceRequestPtr);
                 return new ICoreWebView2WebResourceRequestWrapper(externalComObject);
+            }
+
+            if (Marshal.QueryInterface(externalComObject, ref IID_ICoreWebView2WebResourceResponse, out var coreWebView2WebResourceResponsePtr) >= 0)
+            {
+                Marshal.Release(coreWebView2WebResourceResponsePtr);
+                return new ICoreWebView2WebResourceResponseWrapper(externalComObject);
+            }
+
+            if (Marshal.QueryInterface(externalComObject, ref IID_ICoreWebView2SourceChangedEventArgs, out var coreWebView2SourceChangedEventArgsPtr) >= 0)
+            {
+                Marshal.Release(coreWebView2SourceChangedEventArgsPtr);
+                return new ICoreWebView2SourceChangedEventArgsWrapper(externalComObject);
+            }
+
+            if (Marshal.QueryInterface(externalComObject, ref IID_ICoreWebView2ContentLoadingEventArgs, out var coreWebView2ContentLoadingEventArgsPtr) >= 0)
+            {
+                Marshal.Release(coreWebView2ContentLoadingEventArgsPtr);
+                return new ICoreWebView2ContentLoadingEventArgsWrapper(externalComObject);
             }
 
             return base.CreateObject(externalComObject, flags);
