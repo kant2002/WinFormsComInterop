@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup Condition="$(UseILC) == true">
-    <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-*" />
+    <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="8.0.0-*" />
   </ItemGroup>
 
   <ItemGroup>
