@@ -6,12 +6,11 @@ using System.Runtime.InteropServices.ComTypes;
 namespace Microsoft.Web.WebView2.Core.Raw;
 
 [ComImport]
-[CompilerGenerated]
 [Guid("B96D755E-0319-4E92-A296-23436F46A1FC")]
 [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 public interface ICoreWebView2Environment
 {
-    /*[MethodImpl(MethodImplOptions.InternalCall)]
+    [MethodImpl(MethodImplOptions.InternalCall)]
     void CreateCoreWebView2Controller(IntPtr ParentWindow, [MarshalAs(UnmanagedType.Interface)] ICoreWebView2CreateCoreWebView2ControllerCompletedHandler handler);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
@@ -30,5 +29,5 @@ public interface ICoreWebView2Environment
     void add_NewBrowserVersionAvailable([In][MarshalAs(UnmanagedType.Interface)] ICoreWebView2NewBrowserVersionAvailableEventHandler eventHandler, out EventRegistrationToken token);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    void remove_NewBrowserVersionAvailable([In] EventRegistrationToken token);*/
+    void remove_NewBrowserVersionAvailable([In] EventRegistrationToken token);
 }
