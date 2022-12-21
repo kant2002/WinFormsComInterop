@@ -5,45 +5,56 @@ using System.Runtime.InteropServices;
 namespace Microsoft.Web.WebView2.Core.Raw;
 
 [ComImport]
+[CompilerGenerated]
+[Guid("5B495469-E119-438A-9B18-7604F25F2E49")]
 [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-[Guid("9F760F8A-FB79-42BE-9990-7B56900FA9C7")]
-public interface ICoreWebView2AcceleratorKeyPressedEventArgs
+[TypeIdentifier]
+public interface ICoreWebView2NavigationStartingEventArgs
 {
     [DispId(1610678272)]
-    COREWEBVIEW2_KEY_EVENT_KIND KeyEventKind
+    string Uri
     {
         [MethodImpl(MethodImplOptions.InternalCall)]
+        [return: MarshalAs(UnmanagedType.LPWStr)]
         get;
     }
 
     [DispId(1610678273)]
-    uint VirtualKey
+    int IsUserInitiated
     {
         [MethodImpl(MethodImplOptions.InternalCall)]
         get;
     }
 
     [DispId(1610678274)]
-    int KeyEventLParam
+    int IsRedirected
     {
         [MethodImpl(MethodImplOptions.InternalCall)]
         get;
     }
 
     [DispId(1610678275)]
-    COREWEBVIEW2_PHYSICAL_KEY_STATUS PhysicalKeyStatus
+    ICoreWebView2HttpRequestHeaders RequestHeaders
     {
         [MethodImpl(MethodImplOptions.InternalCall)]
+        [return: MarshalAs(UnmanagedType.Interface)]
         get;
     }
 
     [DispId(1610678276)]
-    int Handled
+    int Cancel
     {
         [MethodImpl(MethodImplOptions.InternalCall)]
         get;
         [MethodImpl(MethodImplOptions.InternalCall)]
         [param: In]
         set;
+    }
+
+    [DispId(1610678278)]
+    ulong NavigationId
+    {
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        get;
     }
 }

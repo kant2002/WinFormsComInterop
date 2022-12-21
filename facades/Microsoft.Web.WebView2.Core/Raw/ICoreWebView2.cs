@@ -1,21 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Microsoft.Web.WebView2.Core.Raw;
-
 
 [ComImport]
 [Guid("76ECEACB-0462-4D94-AC83-423A6793775E")]
 [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 public interface ICoreWebView2
 {
-    /*[DispId(1610678272)]
+    [DispId(1610678272)]
     ICoreWebView2Settings Settings
     {
         [MethodImpl(MethodImplOptions.InternalCall)]
@@ -219,5 +214,5 @@ public interface ICoreWebView2
     void add_WindowCloseRequested([In][MarshalAs(UnmanagedType.Interface)] ICoreWebView2WindowCloseRequestedEventHandler eventHandler, out EventRegistrationToken token);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    void remove_WindowCloseRequested([In] EventRegistrationToken token);*/
+    void remove_WindowCloseRequested([In] EventRegistrationToken token);
 }

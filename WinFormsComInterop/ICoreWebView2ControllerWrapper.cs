@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 namespace WinFormsComInterop;
 
 [RuntimeCallableWrapper(typeof(webview2::Microsoft.Web.WebView2.Core.Raw.ICoreWebView2Controller))]
+[RuntimeCallableWrapper(typeof(webview2::Microsoft.Web.WebView2.Core.Raw.ICoreWebView2Controller2))]
 internal partial class ICoreWebView2ControllerWrapper
 {
     public readonly IntPtr instance;

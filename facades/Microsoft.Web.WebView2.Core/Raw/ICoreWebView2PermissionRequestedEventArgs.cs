@@ -1,44 +1,40 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Microsoft.Web.WebView2.Core.Raw;
 
+
 [ComImport]
+[CompilerGenerated]
+[Guid("973AE2EF-FF18-4894-8FB2-3C758F046810")]
 [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-[Guid("9F760F8A-FB79-42BE-9990-7B56900FA9C7")]
-public interface ICoreWebView2AcceleratorKeyPressedEventArgs
+[TypeIdentifier]
+public interface ICoreWebView2PermissionRequestedEventArgs
 {
     [DispId(1610678272)]
-    COREWEBVIEW2_KEY_EVENT_KIND KeyEventKind
+    string Uri
     {
         [MethodImpl(MethodImplOptions.InternalCall)]
+        [return: MarshalAs(UnmanagedType.LPWStr)]
         get;
     }
 
     [DispId(1610678273)]
-    uint VirtualKey
+    COREWEBVIEW2_PERMISSION_KIND PermissionKind
     {
         [MethodImpl(MethodImplOptions.InternalCall)]
         get;
     }
 
     [DispId(1610678274)]
-    int KeyEventLParam
+    int IsUserInitiated
     {
         [MethodImpl(MethodImplOptions.InternalCall)]
         get;
     }
 
     [DispId(1610678275)]
-    COREWEBVIEW2_PHYSICAL_KEY_STATUS PhysicalKeyStatus
-    {
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        get;
-    }
-
-    [DispId(1610678276)]
-    int Handled
+    COREWEBVIEW2_PERMISSION_STATE State
     {
         [MethodImpl(MethodImplOptions.InternalCall)]
         get;
@@ -46,4 +42,8 @@ public interface ICoreWebView2AcceleratorKeyPressedEventArgs
         [param: In]
         set;
     }
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    [return: MarshalAs(UnmanagedType.Interface)]
+    ICoreWebView2Deferral GetDeferral();
 }
