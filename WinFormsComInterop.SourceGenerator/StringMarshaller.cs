@@ -59,6 +59,23 @@ namespace WinFormsComInterop.SourceGenerator
             }
         }
 
+        public override void GetReturnValue(IndentedStringBuilder builder, string invocationExpression)
+        {
+            builder.AppendLine($"var retValManaged = {invocationExpression};");
+            builder.AppendLine($"if (retValManaged != null)");
+            builder.AppendLine("{");
+            builder.PushIndent();
+            builder.AppendLine("*retVal = Marshal.StringToCoTaskMemUni(retValManaged);");
+            builder.PopIndent();
+            builder.AppendLine("}");
+            builder.AppendLine("else");
+            builder.AppendLine("{");
+            builder.PushIndent();
+            builder.AppendLine("*retVal = System.IntPtr.Zero;");
+            builder.PopIndent();
+            builder.AppendLine("}");
+        }
+
         public override void ConvertToUnmanagedParameter(IndentedStringBuilder builder)
         {
             if (Index == -1)

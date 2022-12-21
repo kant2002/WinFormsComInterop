@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -808,7 +809,14 @@ namespace {namespaceName}
             {
                 if (method.ReturnType.SpecialType == SpecialType.System_Void)
                 {
-                    source.AppendLine($"inst.{method.Name}({parametersInvocationList});");
+                    if (method.MethodKind == MethodKind.PropertySet)
+                    {
+                        source.AppendLine($"inst.{method.AssociatedSymbol!.Name} = {parametersInvocationList};");
+                    }
+                    else
+                    {
+                        source.AppendLine($"inst.{method.Name}({parametersInvocationList});");
+                    }
                 }
                 else
                 {
