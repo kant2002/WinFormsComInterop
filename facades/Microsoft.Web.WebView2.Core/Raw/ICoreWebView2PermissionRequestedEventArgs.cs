@@ -5,10 +5,8 @@ namespace Microsoft.Web.WebView2.Core.Raw;
 
 
 [ComImport]
-[CompilerGenerated]
 [Guid("973AE2EF-FF18-4894-8FB2-3C758F046810")]
 [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-[TypeIdentifier]
 public interface ICoreWebView2PermissionRequestedEventArgs
 {
     [DispId(1610678272)]

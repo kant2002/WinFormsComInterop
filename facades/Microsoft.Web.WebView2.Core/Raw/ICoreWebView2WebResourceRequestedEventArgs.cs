@@ -7,7 +7,6 @@ namespace Microsoft.Web.WebView2.Core.Raw;
 [CompilerGenerated]
 [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 [Guid("453E667F-12C7-49D4-BE6D-DDBE7956F57A")]
-[TypeIdentifier]
 public interface ICoreWebView2WebResourceRequestedEventArgs
 {
     [DispId(1610678272)]

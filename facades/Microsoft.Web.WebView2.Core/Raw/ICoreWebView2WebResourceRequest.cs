@@ -5,13 +5,11 @@ using System.Runtime.InteropServices.ComTypes;
 namespace Microsoft.Web.WebView2.Core.Raw;
 
 [ComImport]
-[CompilerGenerated]
 [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 [Guid("97055CD4-512C-4264-8B5F-E3F446CEA6A5")]
-[TypeIdentifier]
 public interface ICoreWebView2WebResourceRequest
 {
-    [DispId(1610678272)]
+    /*[DispId(1610678272)]
     string Uri
     {
         [MethodImpl(MethodImplOptions.InternalCall)]
@@ -21,7 +19,11 @@ public interface ICoreWebView2WebResourceRequest
         [param: In]
         [param: MarshalAs(UnmanagedType.LPWStr)]
         set;
-    }
+    }*/
+
+    [return: MarshalAs(UnmanagedType.LPWStr)]
+    string get_uri();
+    void set_uri([MarshalAs(UnmanagedType.LPWStr)] string value);
 
     [DispId(1610678274)]
     string Method

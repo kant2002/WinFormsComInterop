@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+    <TargetFrameworks>net4.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <FileVersion>1.0.1370.28</FileVersion>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <AssemblyVersion>1.0.1370.28</AssemblyVersion>
     <IsPackable>false</IsPackable>
+    <LangVersion>10</LangVersion>
   </PropertyGroup>
 
 </Project>

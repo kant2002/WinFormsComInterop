@@ -5,10 +5,8 @@ using System.Runtime.InteropServices;
 namespace Microsoft.Web.WebView2.Core.Raw;
 
 [ComImport]
-[CompilerGenerated]
 [Guid("E86CAC0E-5523-465C-B536-8FB9FC8C8C60")]
 [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-[TypeIdentifier]
 public interface ICoreWebView2HttpRequestHeaders
 {
     [MethodImpl(MethodImplOptions.InternalCall)]

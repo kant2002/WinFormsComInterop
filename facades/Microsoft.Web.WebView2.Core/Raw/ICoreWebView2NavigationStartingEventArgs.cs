@@ -5,19 +5,14 @@ using System.Runtime.InteropServices;
 namespace Microsoft.Web.WebView2.Core.Raw;
 
 [ComImport]
-[CompilerGenerated]
 [Guid("5B495469-E119-438A-9B18-7604F25F2E49")]
 [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-[TypeIdentifier]
 public interface ICoreWebView2NavigationStartingEventArgs
 {
     [DispId(1610678272)]
-    string Uri
-    {
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        [return: MarshalAs(UnmanagedType.LPWStr)]
-        get;
-    }
+    [return: MarshalAs(UnmanagedType.LPWStr)]
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    string get_uri();
 
     [DispId(1610678273)]
     int IsUserInitiated
