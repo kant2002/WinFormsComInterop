@@ -667,6 +667,9 @@ namespace {namespaceName}
                 slotNumber = IUnknownStartSlot;
             }
 
+            int inheritedMembersCount = interfaceTypeSymbol.AllInterfaces.Sum(_ => _.GetMembers().OfType<IMethodSymbol>().Count());
+            slotNumber += inheritedMembersCount;
+
             foreach (var member in interfaceTypeSymbol.GetMembers())
             {
                 switch (member)
@@ -674,7 +677,6 @@ namespace {namespaceName}
                     case IMethodSymbol methodSymbol:
                         {
                             var methodContext = context.CreateMethodGenerationContext(classSymbol, methodSymbol, ref slotNumber);
-
                             if (methodSymbol.MethodKind == MethodKind.PropertyGet || methodSymbol.MethodKind == MethodKind.PropertySet)
                             {
                                 continue;
