@@ -15,6 +15,7 @@ namespace WinFormsComInterop
         static ComWrappers.ComInterfaceEntry* coreWebView2CreateCoreWebView2EnvironmentCompletedHandlerEntry;
         static ComWrappers.ComInterfaceEntry* coreWebView2CreateCoreWebView2ControllerCompletedHandlerEntry;
 
+        internal static Guid IID_ICoreWebView2Controller = new Guid("4D00C0D1-9434-4EB6-8078-8697A560334F");
         internal static Guid IID_ICoreWebView2Environment = new Guid("B96D755E-0319-4E92-A296-23436F46A1FC");
         internal static Guid IID_ICoreWebView2EnvironmentOptions = new Guid("2FDE08A8-1E9A-4766-8C05-95A9CEB9D1C5");
         internal static Guid IID_ICoreWebView2EnvironmentOptions2 = new Guid("FF85C98A-1BA7-4A6B-90C8-2B752C89E9E2");
@@ -91,6 +92,12 @@ namespace WinFormsComInterop
             {
                 Marshal.Release(coreWebView2EnvironmentPtr);
                 return new ICoreWebView2EnvironmentWrapper(externalComObject);
+            }
+
+            if (Marshal.QueryInterface(externalComObject, ref IID_ICoreWebView2Controller, out var coreWebView2ControllerPtr) >= 0)
+            {
+                Marshal.Release(coreWebView2ControllerPtr);
+                return new ICoreWebView2ControllerWrapper(externalComObject);
             }
 
             return base.CreateObject(externalComObject, flags);
