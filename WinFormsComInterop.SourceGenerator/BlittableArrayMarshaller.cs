@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using System;
 
 namespace WinFormsComInterop.SourceGenerator
 {
@@ -19,7 +20,16 @@ namespace WinFormsComInterop.SourceGenerator
 
         public override void DeclareLocalParameter(IndentedStringBuilder builder)
         {
-            builder.AppendLine($"var {LocalVariable} = new System.Span<{ElementType.FormatType(TypeAlias)}>({Name}, 1).ToArray();");
+            var indexParameter = Context.GetParameterByIndex(ArrayIndex);
+            if (RefKind == RefKind.Out)
+            {
+                builder.AppendLine($"var {LocalVariable}_span = new System.Span<{ElementType.FormatType(TypeAlias)}>({Name}, 1).ToArray();");
+                builder.AppendLine($"var {LocalVariable} = {LocalVariable}_span.ToArray();");
+            }
+            else if (RefKind == RefKind.In || RefKind == RefKind.None)
+            {
+                builder.AppendLine($"var {LocalVariable} = new System.Span<{ElementType.FormatType(TypeAlias)}>({Name}, (int){indexParameter.Name}).ToArray();");
+            }
         }
 
         public override string GetParameterInvocation()

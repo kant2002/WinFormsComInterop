@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using static System.Runtime.InteropServices.ComWrappers;
 
 namespace WinFormsComInterop
 {
@@ -74,6 +75,8 @@ namespace WinFormsComInterop
         internal static Guid IID_ICoreWebView2SourceChangedEventArgs = new Guid("31E0E545-1DBA-4266-8914-F63848A1F7D7");
         internal static Guid IID_ICoreWebView2ContentLoadingEventArgs = new Guid("0C8A1275-9B6B-4901-87AD-70DF25BAFA6E");
         internal static Guid IID_ICoreWebView2NavigationCompletedEventArgs = new Guid("30D68B7D-20D9-4752-A9CA-EC8448FBB5C1");
+        internal static Guid IID_ICoreWebView2AcceleratorKeyPressedEventArgs = new Guid("9F760F8A-FB79-42BE-9990-7B56900FA9C7");
+        internal static Guid IID_ICoreWebView2WebMessageReceivedEventArgs = new Guid("0F99A40C-E962-4207-9E92-E3D542EFF849");
 
         static WebView2ComWrapper()
         {
@@ -264,7 +267,7 @@ namespace WinFormsComInterop
 
         private static ComInterfaceEntry* CreateManagedStreamEntry()
         {
-            CreateIStreamProxyVtbl(out var vtbl);
+            CreateIStreamProxyVtblFix(out var vtbl);
 
             var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 1);
             var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
@@ -449,7 +452,58 @@ namespace WinFormsComInterop
                 return new ICoreWebView2ContentLoadingEventArgsWrapper(externalComObject);
             }
 
+            if (Marshal.QueryInterface(externalComObject, ref IID_ICoreWebView2AcceleratorKeyPressedEventArgs, out var coreWebView2AcceleratorKeyPressedEventArgsPtr) >= 0)
+            {
+                Marshal.Release(coreWebView2AcceleratorKeyPressedEventArgsPtr);
+                return new ICoreWebView2AcceleratorKeyPressedEventArgsWrapper(externalComObject);
+            }
+
+            if (Marshal.QueryInterface(externalComObject, ref IID_ICoreWebView2WebMessageReceivedEventArgs, out var coreWebView2WebMessageReceivedEventArgsPtr) >= 0)
+            {
+                Marshal.Release(coreWebView2WebMessageReceivedEventArgsPtr);
+                return new ICoreWebView2WebMessageReceivedEventArgsWrapper(externalComObject);
+            }
+
             return base.CreateObject(externalComObject, flags);
+        }
+        internal static void CreateIStreamProxyVtblFix(out System.IntPtr vtbl)
+        {
+            var vtblRaw = (System.IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(global::WinFormsComInterop.WebView2ComWrapper), sizeof(System.IntPtr) * 14);
+            GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
+
+            vtblRaw[3] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, byte*, int, nint, int>)&IStreamProxy.ReadFix;
+            vtblRaw[4] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, byte*, int, nint, int>)&IStreamProxy.Write;
+            vtblRaw[5] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, long, int, nint, int>)&IStreamProxy.Seek;
+            vtblRaw[6] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, long, int>)&IStreamProxy.SetSize;
+            vtblRaw[7] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, System.IntPtr, long, nint, nint, int>)&IStreamProxy.CopyTo;
+            vtblRaw[8] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, int, int>)&IStreamProxy.Commit;
+            vtblRaw[9] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, int>)&IStreamProxy.Revert;
+            vtblRaw[10] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, long, long, int, int>)&IStreamProxy.LockRegion;
+            vtblRaw[11] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, long, long, int, int>)&IStreamProxy.UnlockRegion;
+            vtblRaw[12] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, STATSTG_native*, int, int>)&IStreamProxy.Stat;
+            vtblRaw[13] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, System.IntPtr*, int>)&IStreamProxy.Clone;
+
+            vtbl = (System.IntPtr)vtblRaw;
+        }
+    }
+    unsafe partial class IStreamProxy
+    {
+        [System.Runtime.InteropServices.UnmanagedCallersOnly]
+        public static int ReadFix(System.IntPtr thisPtr, byte* pv, int cb, nint pcbRead)
+        {
+            try
+            {
+                var inst = ComInterfaceDispatch.GetInstance<global::System.Runtime.InteropServices.ComTypes.IStream>((ComInterfaceDispatch*)thisPtr);
+                var local_0 = new byte[cb];
+                inst.Read(local_0, cb, pcbRead);
+                local_0.CopyTo(new Span<byte>(pv, cb));
+            }
+            catch (System.Exception __e)
+            {
+                return __e.HResult;
+            }
+
+            return 0; // S_OK;
         }
     }
 }

@@ -41,6 +41,7 @@ namespace WinFormsComInterop.SourceGenerator
         public string LocalVariable => $"{LocalVariablePrefix}_{Index}";
 
         public string LocalVariablePrefix { get; set; } = "local";
+        public short ArrayIndex { get; internal set; }
 
         public virtual string GetUnmanagedParameterDeclaration()
         {

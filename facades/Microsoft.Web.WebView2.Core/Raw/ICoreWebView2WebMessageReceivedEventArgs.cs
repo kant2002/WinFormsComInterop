@@ -17,12 +17,9 @@ public interface ICoreWebView2WebMessageReceivedEventArgs
     }
 
     [DispId(1610678273)]
-    string WebMessageAsJson
-    {
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        [return: MarshalAs(UnmanagedType.LPWStr)]
-        get;
-    }
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    [return: MarshalAs(UnmanagedType.LPWStr)]
+    string get_webMessageAsJson();
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     [return: MarshalAs(UnmanagedType.LPWStr)]

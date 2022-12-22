@@ -1,6 +1,7 @@
 ﻿namespace WinFormsComInterop.SourceGenerator
 {
     using Microsoft.CodeAnalysis;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.InteropServices;
@@ -56,24 +57,30 @@
             }
         }
 
-        private UnmanagedType? GetMarshalAs(System.Collections.Immutable.ImmutableArray<AttributeData> attributes)
+        private MarshalDescriptor GetMarshalAs(System.Collections.Immutable.ImmutableArray<AttributeData> attributes)
         {
             var marshalAsAttribute = attributes
                 .FirstOrDefault(_ => _.AttributeClass?.ToDisplayString() == "System.Runtime.InteropServices.MarshalAsAttribute"
                     || _.AttributeClass?.ToDisplayString() == "System.Runtime.InteropServices.CustomMarshalAsAttribute");
             UnmanagedType? unmanagedType = null;
+            short arrayIndex = 0;
             if (marshalAsAttribute != null)
             {
                 unmanagedType = (UnmanagedType)(int)marshalAsAttribute.ConstructorArguments[0].Value!;
+                var sizeParamIndex = marshalAsAttribute.NamedArguments.FirstOrDefault(_ => _.Key == "SizeParamIndex");
+                if (sizeParamIndex.Key != null)
+                {
+                    arrayIndex = (short)sizeParamIndex.Value.Value!;
+                }
             }
 
-            return unmanagedType;
+            return new MarshalDescriptor(unmanagedType, arrayIndex);
         }
 
         public Marshaller CreateMarshaller(IParameterSymbol parameterSymbol)
         {
-            var unmanagedType = GetMarshalAs(parameterSymbol.GetAttributes());
-            return CreateMarshaller(parameterSymbol, unmanagedType, this);
+            var descriptor = GetMarshalAs(parameterSymbol.GetAttributes());
+            return CreateMarshaller(parameterSymbol, descriptor, this);
         }
 
         public Marshaller CreateReturnMarshaller()
@@ -82,11 +89,18 @@
             return CreateReturnMarshaller(Method.ReturnType, unmanagedType, this);
         }
 
-        private Marshaller CreateMarshaller(IParameterSymbol parameterSymbol, UnmanagedType? unmanagedType, MethodGenerationContext context)
+        private string[] reservedWords = new[]
         {
-            Marshaller marshaller = CreateMarshaller(parameterSymbol.Type, unmanagedType);
-            marshaller.Name = parameterSymbol.Name == "string" ? "@string" : parameterSymbol.Name == "object" ? "@object" : parameterSymbol.Name;
+            "object",
+            "string",
+        };
+
+        private Marshaller CreateMarshaller(IParameterSymbol parameterSymbol, MarshalDescriptor descriptor, MethodGenerationContext context)
+        {
+            Marshaller marshaller = CreateMarshaller(parameterSymbol.Type, descriptor.UnmanagedType);
+            marshaller.Name = reservedWords.Contains(parameterSymbol.Name) ? "@" + parameterSymbol.Name : parameterSymbol.Name;
             marshaller.Type = parameterSymbol.Type;
+            marshaller.ArrayIndex = parameterSymbol.Ordinal == 0 && descriptor.ArrayIndex == 0 ? (short)1 : descriptor.ArrayIndex;
             marshaller.RefKind = parameterSymbol.RefKind;
             marshaller.Index = parameterSymbol.Ordinal;
             marshaller.TypeAlias = context.GetAlias(parameterSymbol.Type);
@@ -120,9 +134,9 @@
             return marshaller;
         }
 
-        private Marshaller CreateReturnMarshaller(ITypeSymbol parameterSymbol, UnmanagedType? unmanagedType, MethodGenerationContext context)
+        private Marshaller CreateReturnMarshaller(ITypeSymbol parameterSymbol, MarshalDescriptor descriptor, MethodGenerationContext context)
         {
-            Marshaller marshaller = CreateMarshaller(parameterSymbol, unmanagedType);
+            Marshaller marshaller = CreateMarshaller(parameterSymbol, descriptor.UnmanagedType);
             marshaller.Name = "retVal";
             marshaller.Type = parameterSymbol;
             marshaller.RefKind = RefKind.None;
@@ -252,6 +266,11 @@
             }
 
             return false;
+        }
+
+        internal IParameterSymbol GetParameterByIndex(short arrayIndex)
+        {
+            return Method.Parameters.ElementAt(arrayIndex);
         }
     }
 }

@@ -7,7 +7,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
 
-    <PublishAot>true</PublishAot>
+    <!--<PublishAot>true</PublishAot>-->
     <_SuppressWinFormsTrimError>true</_SuppressWinFormsTrimError>
     <CustomResourceTypesSupport>true</CustomResourceTypesSupport>
     <MetadataUpdaterSupport>false</MetadataUpdaterSupport>

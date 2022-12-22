@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 namespace WinFormsComInterop;
 
 [RuntimeCallableWrapper(typeof(webview2::Microsoft.Web.WebView2.Core.Raw.ICoreWebView2NavigationCompletedEventArgs))]
+[RuntimeCallableWrapper(typeof(webview2::Microsoft.Web.WebView2.Core.Raw.ICoreWebView2NavigationCompletedEventArgs2))]
 internal partial class ICoreWebView2NavigationCompletedEventArgsWrapper
 {
     public readonly IntPtr instance;

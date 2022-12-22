@@ -1,4 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
+using System;
+using System.Runtime.InteropServices;
 
 namespace WinFormsComInterop.SourceGenerator
 {
