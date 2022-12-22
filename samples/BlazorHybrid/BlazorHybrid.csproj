@@ -7,7 +7,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
 
-    <!--<PublishAot>true</PublishAot>-->
+    <PublishAot>true</PublishAot>
     <_SuppressWinFormsTrimError>true</_SuppressWinFormsTrimError>
     <CustomResourceTypesSupport>true</CustomResourceTypesSupport>
     <MetadataUpdaterSupport>false</MetadataUpdaterSupport>
@@ -16,6 +16,10 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebView.WindowsForms" Version="7.0.52" />
     <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="8.0.0-*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <RdXmlFile Include="rd.xml" />
   </ItemGroup>
 
   <ItemGroup>

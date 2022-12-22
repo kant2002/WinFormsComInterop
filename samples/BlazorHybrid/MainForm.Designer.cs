@@ -47,7 +47,7 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.blazorWebView1);
             this.Name = "MainForm";
-            this.Text = "Form1";
+            this.Text = "Blazor + NativeAOT";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
 

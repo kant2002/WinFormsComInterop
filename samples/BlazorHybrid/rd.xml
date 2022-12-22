@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Directives>
+  <Application>
+    <Assembly Name="System.Text.Json">
+      <Type Name="System.Text.Json.Serialization.Converters.ArrayConverter`2[[System.Text.Json.JsonElement[]],[System.Text.Json.JsonElement]]" Dynamic="Required All" />
+    </Assembly>
+    <Assembly Name="BlazorHybrid">
+      <Type Name="BlazorHybrid.Counter" Dynamic="Required All" />
+    </Assembly>
+    <Assembly Name="Microsoft.JSInterop">
+      <Type Name="Microsoft.JSInterop.Infrastructure.DotNetDispatcher" Dynamic="Required All" />
+    </Assembly>
+  </Application>
+</Directives>
