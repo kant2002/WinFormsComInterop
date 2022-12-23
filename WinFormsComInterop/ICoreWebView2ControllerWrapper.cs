@@ -6,6 +6,8 @@ namespace WinFormsComInterop;
 
 [RuntimeCallableWrapper(typeof(webview2::Microsoft.Web.WebView2.Core.Raw.ICoreWebView2Controller))]
 [RuntimeCallableWrapper(typeof(webview2::Microsoft.Web.WebView2.Core.Raw.ICoreWebView2Controller2))]
+[RuntimeCallableWrapper(typeof(webview2::Microsoft.Web.WebView2.Core.Raw.ICoreWebView2Controller3))]
+[RuntimeCallableWrapper(typeof(webview2::Microsoft.Web.WebView2.Core.Raw.ICoreWebView2Controller4))]
 internal partial class ICoreWebView2ControllerWrapper
 {
     public readonly IntPtr instance;
