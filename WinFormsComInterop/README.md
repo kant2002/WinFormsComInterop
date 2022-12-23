@@ -24,7 +24,7 @@ If you application will works with this ComWrappers implementation, then most li
 
 If you are using WebView2 using `Microsoft.Web.WebView2.Core` package, then use 
 
-	ComWrappers.RegisterForMarshalling(WinFormsComInterop.WebView2ComWrapper.Instance);
+	ComWrappers.RegisterForMarshalling(WinFormsComInterop.WebView2.WebView2ComWrapper.Instance);
 
 Also 
 1. Add RD.xml file from https://github.com/kant2002/RdXmlLibrary/blob/main/Microsoft.AspNetCore.Components.Web.rd.xml to project 
