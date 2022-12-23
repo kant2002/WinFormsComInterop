@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <RdXmlFile Include="rd.xml" />
+    <RdXmlFile Include="Microsoft.AspNetCore.Components.Web.rd.xml" />
   </ItemGroup>
 
   <ItemGroup>
