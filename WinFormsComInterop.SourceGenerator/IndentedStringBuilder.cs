@@ -57,6 +57,18 @@
             this.depthLevel++;
         }
 
+        public void OpenBraces()
+        {
+            AppendLine("{");
+            this.PushIndent();
+        }
+
+        public void CloseBraces()
+        {
+            this.PopIndent();
+            AppendLine("}");
+        }
+
         public void PopIndent()
         {
             if (this.depthLevel == 0)

@@ -202,6 +202,7 @@ internal unsafe struct IDispatchVtbl
             }
 
             var wrapperContext = new WrapperGenerationContext(context);
+            //wrapperContext.RegisterRCW(receiver.RCWDeclarations);
             GenerateSupportLibrary(context, receiver, wrapperContext);
             foreach (var classSymbol in receiver.CCWDeclarations)
             {
@@ -227,39 +228,40 @@ internal unsafe struct IDispatchVtbl
 #nullable enable
 ");
 
-            source.AppendLine();
-            source.AppendLine("partial class MarshalSupport");
-            source.AppendLine("{");
-            source.PushIndent();
-            source.AppendLine("public static System.IntPtr GetIUnknownForObject(object value)");
-            source.AppendLine("{");
-            source.PushIndent();
-            source.AppendLine("if (value == null)");
-            source.AppendLine("{");
-            source.PushIndent();
-            source.AppendLine("return System.IntPtr.Zero;");
-            source.PopIndent();
-            source.AppendLine("}");
-
-            foreach (var classSymbol in receiver.RCWDeclarations)
+            var rcwGroups = receiver.RCWDeclarations.GroupBy(_ => _.Type.ContainingNamespace.ToDisplayString());
+            foreach (var group in rcwGroups)
             {
-                source.AppendLine($"if (value is {classSymbol.Type.FormatType(wrapperContext.GetAlias(classSymbol.Type))})");
-                source.AppendLine("{");
-                source.PushIndent();
-                source.AppendLine($"var result = (({classSymbol.Type.FormatType(wrapperContext.GetAlias(classSymbol.Type))})value).instance;");
-                source.AppendLine("System.Runtime.InteropServices.Marshal.AddRef(result);");
-                source.AppendLine("return result;");
-                source.PopIndent();
-                source.AppendLine("}");
+                source.AppendLine();
+                source.AppendLine($"namespace {group.Key}");
+                source.OpenBraces();
+                source.AppendLine("partial class MarshalSupport");
+                source.OpenBraces();
+                source.AppendLine("public static System.IntPtr GetIUnknownForObject(object value)");
+                source.OpenBraces();
+                source.AppendLine("if (value == null)");
+                source.OpenBraces();
+                source.AppendLine("return System.IntPtr.Zero;");
+                source.CloseBraces();
+
+                foreach (var classSymbol in group)
+                {
+                    source.AppendLine($"if (value is {classSymbol.Type.FormatType(wrapperContext.GetAlias(classSymbol.Type))})");
+                    source.OpenBraces();
+                    source.AppendLine($"var result = (({classSymbol.Type.FormatType(wrapperContext.GetAlias(classSymbol.Type))})value).instance;");
+                    source.AppendLine("System.Runtime.InteropServices.Marshal.AddRef(result);");
+                    source.AppendLine("return result;");
+                    source.CloseBraces();
+                }
+
+                source.AppendLine("return System.Runtime.InteropServices.Marshal.GetIUnknownForObject(value);");
+                source.CloseBraces(); // GetIUnknownForObject
+
+                source.CloseBraces(); // MarshalSupport
+
+                source.CloseBraces(); // namespace
+                source.AppendLine();
             }
 
-            source.AppendLine("return System.Runtime.InteropServices.Marshal.GetIUnknownForObject(value);");
-            source.PopIndent();
-            source.AppendLine("}"); // GetIUnknownForObject
-
-            source.PopIndent();
-            source.AppendLine("}");
-            source.AppendLine();
             List<string> nativeStruct = new();
             void LocalGenerateNativeType(ITypeSymbol type)
             {

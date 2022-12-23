@@ -2,22 +2,21 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace WinFormsComInterop.WinForms;
+namespace WinFormsComInterop;
 
-[RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IPersistStream))]
-[RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IPicture))]
+[RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IConnectionPoint))]
 [System.Runtime.Versioning.SupportedOSPlatform("windows")]
-partial class IPictureWrapper
+partial class IConnectionPointWrapper
 {
     internal readonly IntPtr instance;
 
-    public IPictureWrapper(IntPtr instance)
+    public IConnectionPointWrapper(IntPtr instance)
     {
         this.instance = instance;
         Marshal.AddRef(instance);
     }
 
-    ~IPictureWrapper()
+    ~IConnectionPointWrapper()
     {
         Marshal.Release(this.instance);
     }

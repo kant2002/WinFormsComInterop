@@ -2,21 +2,22 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace WinFormsComInterop.WinForms;
+namespace WinFormsComInterop;
 
-[RuntimeCallableWrapper(typeof(primitives::Interop.Mshtml.IHTMLLocation))]
+[RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IPersistStream))]
+[RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IPicture))]
 [System.Runtime.Versioning.SupportedOSPlatform("windows")]
-partial class IHTMLLocationWrapper
+partial class IPictureWrapper
 {
     internal readonly IntPtr instance;
 
-    public IHTMLLocationWrapper(IntPtr instance)
+    public IPictureWrapper(IntPtr instance)
     {
         this.instance = instance;
         Marshal.AddRef(instance);
     }
 
-    ~IHTMLLocationWrapper()
+    ~IPictureWrapper()
     {
         Marshal.Release(this.instance);
     }

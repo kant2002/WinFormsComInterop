@@ -2,7 +2,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace WinFormsComInterop.WinForms;
+namespace WinFormsComInterop;
 
 [RuntimeCallableWrapper(typeof(primitives::Interop.Mshtml.IHTMLDocument4))]
 [RuntimeCallableWrapper(typeof(primitives::Interop.Mshtml.IHTMLDocument3))]

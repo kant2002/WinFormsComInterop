@@ -5,7 +5,7 @@ extern alias winbase;
 using System;
 using System.Runtime.InteropServices;
 
-namespace WinFormsComInterop.WinForms;
+namespace WinFormsComInterop;
 
 #if !NET7_0_OR_GREATER
 [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IOleWindow))]

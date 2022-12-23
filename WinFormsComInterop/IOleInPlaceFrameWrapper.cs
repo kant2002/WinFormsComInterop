@@ -2,7 +2,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace WinFormsComInterop.WinForms;
+namespace WinFormsComInterop;
 
 [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IOleInPlaceFrame))]
 [System.Runtime.Versioning.SupportedOSPlatform("windows")]

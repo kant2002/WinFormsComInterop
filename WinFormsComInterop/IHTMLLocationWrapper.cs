@@ -2,21 +2,21 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace WinFormsComInterop.WinForms;
+namespace WinFormsComInterop;
 
-[RuntimeCallableWrapper(typeof(primitives::Interop.Shell32.IFileOpenDialog))]
+[RuntimeCallableWrapper(typeof(primitives::Interop.Mshtml.IHTMLLocation))]
 [System.Runtime.Versioning.SupportedOSPlatform("windows")]
-partial class IFileOpenDialogWrapper
+partial class IHTMLLocationWrapper
 {
     internal readonly IntPtr instance;
 
-    public IFileOpenDialogWrapper(IntPtr instance)
+    public IHTMLLocationWrapper(IntPtr instance)
     {
         this.instance = instance;
         Marshal.AddRef(instance);
     }
 
-    ~IFileOpenDialogWrapper()
+    ~IHTMLLocationWrapper()
     {
         Marshal.Release(this.instance);
     }

@@ -757,7 +757,7 @@ namespace Foo
             try
             {
                 var inst = ComInterfaceDispatch.GetInstance<global::Foo.IStr>((ComInterfaceDispatch*)thisPtr);
-                *retVal = MarshalSupport.GetIUnknownForObject(inst.Clone());
+                *retVal = global::Foo.MarshalSupport.GetIUnknownForObject(inst.Clone());
             }
             catch (System.Exception __e)
             {
@@ -820,7 +820,7 @@ namespace Foo
                 var retValManaged = inst.Clone();
                 if (retValManaged != null)
                 {
-                    var retValLocal = MarshalSupport.GetIUnknownForObject(retValManaged);
+                    var retValLocal = global::Foo.MarshalSupport.GetIUnknownForObject(retValManaged);
                     var targetInterface = new System.Guid(""D6DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
                     try
                     {
@@ -898,7 +898,7 @@ namespace Foo
             try
             {
                 var inst = ComInterfaceDispatch.GetInstance<global::Foo.IStr>((ComInterfaceDispatch*)thisPtr);
-                *retVal = MarshalSupport.GetIUnknownForObject(inst.Parent);
+                *retVal = global::Foo.MarshalSupport.GetIUnknownForObject(inst.Parent);
             }
             catch (System.Exception __e)
             {
@@ -961,7 +961,7 @@ namespace Foo
                 var retValManaged = inst.Parent;
                 if (retValManaged != null)
                 {
-                    var retValLocal = MarshalSupport.GetIUnknownForObject(retValManaged);
+                    var retValLocal = global::Foo.MarshalSupport.GetIUnknownForObject(retValManaged);
                     var targetInterface = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
                     try
                     {
@@ -1602,7 +1602,7 @@ namespace Foo
                 var inst = ComInterfaceDispatch.GetInstance<global::Foo.IStr>((ComInterfaceDispatch*)thisPtr);
                 global::Foo.IStr local_0;
                 inst.CopyTo(out local_0, cb);
-                *pstm = local_0 == null ? System.IntPtr.Zero : MarshalSupport.GetIUnknownForObject(local_0);
+                *pstm = local_0 == null ? System.IntPtr.Zero : global::Foo.MarshalSupport.GetIUnknownForObject(local_0);
             }
             catch (System.Exception __e)
             {
@@ -1951,7 +1951,7 @@ namespace Foo
                 var inst = ComInterfaceDispatch.GetInstance<global::System.Runtime.InteropServices.ComTypes.IStream>((ComInterfaceDispatch*)thisPtr);
                 global::System.Runtime.InteropServices.ComTypes.IStream local_0;
                 inst.Clone(out local_0);
-                *ppstm = local_0 == null ? System.IntPtr.Zero : MarshalSupport.GetIUnknownForObject(local_0);
+                *ppstm = local_0 == null ? System.IntPtr.Zero : global::Foo.MarshalSupport.GetIUnknownForObject(local_0);
             }
             catch (System.Exception __e)
             {

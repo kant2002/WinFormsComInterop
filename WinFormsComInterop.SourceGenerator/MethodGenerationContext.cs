@@ -14,6 +14,7 @@
             WrapperClass = wrapperClass;
             Context = context;
         }
+        public string MarshalSupportClassName => $"global::{WrapperClass.ContainingNamespace.ToDisplayString()}.MarshalSupport";
 
         public IMethodSymbol Method { get; }
 

@@ -2,21 +2,21 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace WinFormsComInterop.WinForms;
+namespace WinFormsComInterop;
 
-[RuntimeCallableWrapper(typeof(primitives::Interop.Shell32.IFileSaveDialog))]
+[RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IDropTarget))]
 [System.Runtime.Versioning.SupportedOSPlatform("windows")]
-partial class IFileSaveDialogWrapper
+partial class IDropTargetWrapper
 {
     internal readonly IntPtr instance;
 
-    public IFileSaveDialogWrapper(IntPtr instance)
+    public IDropTargetWrapper(IntPtr instance)
     {
         this.instance = instance;
         Marshal.AddRef(instance);
     }
 
-    ~IFileSaveDialogWrapper()
+    ~IDropTargetWrapper()
     {
         Marshal.Release(this.instance);
     }

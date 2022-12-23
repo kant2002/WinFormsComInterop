@@ -2,24 +2,22 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace WinFormsComInterop.WinForms;
+namespace WinFormsComInterop;
 
-#if !NET7_0_OR_GREATER
-[RuntimeCallableWrapper(typeof(primitives::Interop.Shell32.IAutoComplete2))]
+[RuntimeCallableWrapper(typeof(primitives::Interop.Shell32.IFileSaveDialog))]
 [System.Runtime.Versioning.SupportedOSPlatform("windows")]
-partial class IAutoComplete2Wrapper
+partial class IFileSaveDialogWrapper
 {
     internal readonly IntPtr instance;
 
-    public IAutoComplete2Wrapper(IntPtr instance)
+    public IFileSaveDialogWrapper(IntPtr instance)
     {
         this.instance = instance;
         Marshal.AddRef(instance);
     }
 
-    ~IAutoComplete2Wrapper()
+    ~IFileSaveDialogWrapper()
     {
         Marshal.Release(this.instance);
     }
 }
-#endif

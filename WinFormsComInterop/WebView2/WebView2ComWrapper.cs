@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using WinFormsComInterop.WebView2;
 using static System.Runtime.InteropServices.ComWrappers;
 
-namespace WinFormsComInterop
+namespace WinFormsComInterop.WebView2
 {
     [ComCallableWrapper(typeof(webview2::Microsoft.Web.WebView2.Core.Raw.ICoreWebView2EnvironmentOptions))]
     [ComCallableWrapper(typeof(webview2::Microsoft.Web.WebView2.Core.Raw.ICoreWebView2EnvironmentOptions2))]
@@ -469,7 +469,7 @@ namespace WinFormsComInterop
         }
         internal static void CreateIStreamProxyVtblFix(out System.IntPtr vtbl)
         {
-            var vtblRaw = (System.IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(global::WinFormsComInterop.WebView2ComWrapper), sizeof(System.IntPtr) * 14);
+            var vtblRaw = (System.IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(global::WinFormsComInterop.WebView2.WebView2ComWrapper), sizeof(System.IntPtr) * 14);
             GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
 
             vtblRaw[3] = (System.IntPtr)(delegate* unmanaged<System.IntPtr, byte*, int, nint, int>)&IStreamProxy.ReadFix;

@@ -2,7 +2,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace WinFormsComInterop.WinForms;
+namespace WinFormsComInterop;
 
 [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IOleWindow))]
 [RuntimeCallableWrapper(typeof(primitives::Interop.Oleaut32.IEnumVariant))]

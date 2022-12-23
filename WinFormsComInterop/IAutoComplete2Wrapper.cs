@@ -2,22 +2,24 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace WinFormsComInterop.WinForms;
+namespace WinFormsComInterop;
 
-[RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IConnectionPoint))]
+#if !NET7_0_OR_GREATER
+[RuntimeCallableWrapper(typeof(primitives::Interop.Shell32.IAutoComplete2))]
 [System.Runtime.Versioning.SupportedOSPlatform("windows")]
-partial class IConnectionPointWrapper
+partial class IAutoComplete2Wrapper
 {
     internal readonly IntPtr instance;
 
-    public IConnectionPointWrapper(IntPtr instance)
+    public IAutoComplete2Wrapper(IntPtr instance)
     {
         this.instance = instance;
         Marshal.AddRef(instance);
     }
 
-    ~IConnectionPointWrapper()
+    ~IAutoComplete2Wrapper()
     {
         Marshal.Release(this.instance);
     }
 }
+#endif

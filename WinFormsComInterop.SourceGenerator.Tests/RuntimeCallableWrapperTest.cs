@@ -272,7 +272,7 @@ namespace Foo
                 }
                 else
                 {
-                    var local_0_unk = MarshalSupport.GetIUnknownForObject(pstm);
+                    var local_0_unk = global::Foo.MarshalSupport.GetIUnknownForObject(pstm);
                     var local_pstm_IID = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
                     result = Marshal.QueryInterface(local_0_unk, ref local_pstm_IID, out local_0);
                     if (result != 0)
@@ -312,7 +312,7 @@ namespace Foo
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
-        SeekOrigin CopyTo(IStr pstm, ulong cb, ulong* pcbRead, ulong* pcbWritten);
+        SeekOrigin CopyTo(ulong cb, ulong* pcbRead, ulong* pcbWritten);
     }
 
     [RuntimeCallableWrapper(typeof(IStr))]
@@ -337,7 +337,7 @@ namespace Foo
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
     unsafe partial class C : global::Foo.IStr
     {
-        global::Foo.SeekOrigin global::Foo.IStr.CopyTo(global::Foo.IStr pstm, ulong cb, ulong* pcbRead, ulong* pcbWritten)
+        global::Foo.SeekOrigin global::Foo.IStr.CopyTo(ulong cb, ulong* pcbRead, ulong* pcbWritten)
         {
             var targetInterface = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
             var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var thisPtr);
@@ -350,24 +350,8 @@ namespace Foo
             {
                 var comDispatch = (System.IntPtr*)thisPtr;
                 var vtbl = (System.IntPtr*)comDispatch[0];
-                System.IntPtr local_0;
-                if (pstm == null)
-                {
-                    local_0 = System.IntPtr.Zero;
-                }
-                else
-                {
-                    var local_0_unk = MarshalSupport.GetIUnknownForObject(pstm);
-                    var local_pstm_IID = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
-                    result = Marshal.QueryInterface(local_0_unk, ref local_pstm_IID, out local_0);
-                    if (result != 0)
-                    {
-                        Marshal.ThrowExceptionForHR(result);
-                    }
-                }
-
                 int retVal;
-                result = ((delegate* unmanaged<System.IntPtr, System.IntPtr, ulong, ulong*, ulong*, int*, int>)vtbl[3])(thisPtr, local_0, cb, pcbRead, pcbWritten, &retVal);
+                result = ((delegate* unmanaged<System.IntPtr, ulong, ulong*, ulong*, int*, int>)vtbl[3])(thisPtr, cb, pcbRead, pcbWritten, &retVal);
                 if (result != 0)
                 {
                     Marshal.ThrowExceptionForHR(result);
@@ -743,7 +727,7 @@ namespace Foo
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IStr
     {
-        long CopyTo(IStr pstm, ulong cb, ulong* pcbRead, ulong* pcbWritten);
+        long CopyTo(ulong cb, ulong* pcbRead, ulong* pcbWritten);
     }
 
     [RuntimeCallableWrapper(typeof(IStr))]
@@ -768,7 +752,7 @@ namespace Foo
     [System.Runtime.Versioning.SupportedOSPlatform(""windows"")]
     unsafe partial class C : global::Foo.IStr
     {
-        long global::Foo.IStr.CopyTo(global::Foo.IStr pstm, ulong cb, ulong* pcbRead, ulong* pcbWritten)
+        long global::Foo.IStr.CopyTo(ulong cb, ulong* pcbRead, ulong* pcbWritten)
         {
             var targetInterface = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
             var result = Marshal.QueryInterface(this.instance, ref targetInterface, out var thisPtr);
@@ -781,24 +765,8 @@ namespace Foo
             {
                 var comDispatch = (System.IntPtr*)thisPtr;
                 var vtbl = (System.IntPtr*)comDispatch[0];
-                System.IntPtr local_0;
-                if (pstm == null)
-                {
-                    local_0 = System.IntPtr.Zero;
-                }
-                else
-                {
-                    var local_0_unk = MarshalSupport.GetIUnknownForObject(pstm);
-                    var local_pstm_IID = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
-                    result = Marshal.QueryInterface(local_0_unk, ref local_pstm_IID, out local_0);
-                    if (result != 0)
-                    {
-                        Marshal.ThrowExceptionForHR(result);
-                    }
-                }
-
                 long retVal;
-                result = ((delegate* unmanaged<System.IntPtr, System.IntPtr, ulong, ulong*, ulong*, long*, int>)vtbl[3])(thisPtr, local_0, cb, pcbRead, pcbWritten, &retVal);
+                result = ((delegate* unmanaged<System.IntPtr, ulong, ulong*, ulong*, long*, int>)vtbl[3])(thisPtr, cb, pcbRead, pcbWritten, &retVal);
                 if (result != 0)
                 {
                     Marshal.ThrowExceptionForHR(result);
@@ -1255,7 +1223,7 @@ namespace Foo
             {
                 var comDispatch = (System.IntPtr*)thisPtr;
                 var vtbl = (System.IntPtr*)comDispatch[0];
-                var local_0 = pstm == null ? System.IntPtr.Zero : MarshalSupport.GetIUnknownForObject(pstm);
+                var local_0 = pstm == null ? System.IntPtr.Zero : global::Foo.MarshalSupport.GetIUnknownForObject(pstm);
                 result = ((delegate* unmanaged<System.IntPtr, System.IntPtr, ulong, ulong*, ulong*, int>)vtbl[3])(thisPtr, local_0, cb, pcbRead, pcbWritten);
                 if (result != 0)
                 {
@@ -1824,7 +1792,7 @@ namespace Foo
                     }
                     else
                     {
-                        var local_0_0_unk = MarshalSupport.GetIUnknownForObject(arrayItem);
+                        var local_0_0_unk = global::Foo.MarshalSupport.GetIUnknownForObject(arrayItem);
                         var local_arrayItem_IID = new System.Guid(""22DD68D1-86FD-4332-8666-9ABEDEA2D24C"");
                         result = Marshal.QueryInterface(local_0_0_unk, ref local_arrayItem_IID, out local_0_0);
                         if (result != 0)
@@ -1913,7 +1881,7 @@ namespace Foo
                     Marshal.ThrowExceptionForHR(result);
                 }
 
-                return MarshalSupport.GetObjectForNativeVariant((System.IntPtr)(WinFormsComInterop.InteropServices.Variant*)&retVal);
+                return global::MarshalSupport.GetObjectForNativeVariant((System.IntPtr)(WinFormsComInterop.InteropServices.Variant*)&retVal);
             }
             finally
             {
@@ -1984,7 +1952,7 @@ namespace Foo
                     Marshal.ThrowExceptionForHR(result);
                 }
 
-                param = MarshalSupport.GetObjectForNativeVariant((System.IntPtr)(WinFormsComInterop.InteropServices.Variant*)&local_0);
+                param = global::MarshalSupport.GetObjectForNativeVariant((System.IntPtr)(WinFormsComInterop.InteropServices.Variant*)&local_0);
             }
             finally
             {
@@ -2056,7 +2024,7 @@ namespace Foo
                     Marshal.ThrowExceptionForHR(result);
                 }
 
-                param = MarshalSupport.GetObjectForNativeVariant((System.IntPtr)(WinFormsComInterop.InteropServices.Variant*)&local_0);
+                param = global::MarshalSupport.GetObjectForNativeVariant((System.IntPtr)(WinFormsComInterop.InteropServices.Variant*)&local_0);
             }
             finally
             {

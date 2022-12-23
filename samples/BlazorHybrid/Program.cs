@@ -10,7 +10,7 @@ namespace BlazorHybrid
         [STAThread]
         static void Main()
         {
-            ComWrappers.RegisterForMarshalling(WinFormsComInterop.WebView2ComWrapper.Instance);
+            ComWrappers.RegisterForMarshalling(WinFormsComInterop.WebView2.WebView2ComWrapper.Instance);
 
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.

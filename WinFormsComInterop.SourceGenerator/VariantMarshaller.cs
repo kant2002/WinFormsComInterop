@@ -78,7 +78,7 @@ namespace WinFormsComInterop.SourceGenerator
         {
             if (RefKind == RefKind.Out || RefKind == RefKind.Ref)
             {
-                builder.AppendLine($"{Name} = MarshalSupport.GetObjectForNativeVariant((System.IntPtr)(WinFormsComInterop.InteropServices.Variant*)&{LocalVariable});");
+                builder.AppendLine($"{Name} = global::MarshalSupport.GetObjectForNativeVariant((System.IntPtr)(WinFormsComInterop.InteropServices.Variant*)&{LocalVariable});");
             }
         }
 
@@ -86,7 +86,7 @@ namespace WinFormsComInterop.SourceGenerator
         {
             if (Index == -1)
             {
-                return $"MarshalSupport.GetObjectForNativeVariant((System.IntPtr)(WinFormsComInterop.InteropServices.Variant*)&{Name})";
+                return $"global::MarshalSupport.GetObjectForNativeVariant((System.IntPtr)(WinFormsComInterop.InteropServices.Variant*)&{Name})";
             }
 
             return RefKind switch
