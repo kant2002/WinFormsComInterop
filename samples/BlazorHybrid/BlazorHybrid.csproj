@@ -14,8 +14,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Required because of https://github.com/dotnet/runtime/issues/79930 -->
+    <IlcArg Include="--nometadatablocking" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebView.WindowsForms" Version="7.0.52" />
-    <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="8.0.0-*" />
+    <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="8.0.0-*" Condition="'$(UseNet8)' == 'True'" />
   </ItemGroup>
 
   <ItemGroup>
