@@ -21,11 +21,11 @@
       <EmbedInteropTypes>false</EmbedInteropTypes>
       <PrivateAssets>All</PrivateAssets>
     </Reference>
-    <ProjectReference Include="..\System.Windows.Forms.Primitives\System.Windows.Forms.Primitives.csproj">
+    <ProjectReference Include="..\facades\System.Windows.Forms.Primitives\System.Windows.Forms.Primitives.csproj">
       <PrivateAssets>All</PrivateAssets>
       <Aliases>primitives</Aliases>
     </ProjectReference>
-    <ProjectReference Include="..\System.Windows.Forms\System.Windows.Forms.csproj">
+    <ProjectReference Include="..\facades\System.Windows.Forms\System.Windows.Forms.csproj">
       <PrivateAssets>All</PrivateAssets>
       <Aliases>forms</Aliases>
     </ProjectReference>
@@ -39,11 +39,11 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(GenerateWPF) == true">
-    <ProjectReference Include="..\WindowsBase\WindowsBase.csproj">
+    <ProjectReference Include="..\facades\WindowsBase\WindowsBase.csproj">
       <PrivateAssets>All</PrivateAssets>
       <Aliases>winbase</Aliases>
     </ProjectReference>
-    <ProjectReference Include="..\PresentationCore\PresentationCore.csproj">
+    <ProjectReference Include="..\facades\PresentationCore\PresentationCore.csproj">
       <PrivateAssets>All</PrivateAssets>
       <Aliases>presentation</Aliases>
     </ProjectReference>

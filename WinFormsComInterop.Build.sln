@@ -7,13 +7,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleWindowsForms", "sampl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinFormsComInterop", "WinFormsComInterop\WinFormsComInterop.csproj", "{A61968A4-0EEF-4A41-966B-78332F57E5BC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Windows.Forms.Primitives", "System.Windows.Forms.Primitives\System.Windows.Forms.Primitives.csproj", "{148A75CD-A816-4AAE-9F4F-7AF2A272585A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Windows.Forms.Primitives", "facades\System.Windows.Forms.Primitives\System.Windows.Forms.Primitives.csproj", "{148A75CD-A816-4AAE-9F4F-7AF2A272585A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{84110EEC-FD63-40B3-B97C-DBA1AFE8848B}"
 	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
 		Directory.Build.targets = Directory.Build.targets
 		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 		global.json = global.json
+		LICENSE.TXT = LICENSE.TXT
 		nuget.config = nuget.config
 		README.md = README.md
 	EndProjectSection
@@ -28,11 +30,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinFormsComInterop.SourceGe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinFormsComInterop.SourceGenerator.Tests", "WinFormsComInterop.SourceGenerator.Tests\WinFormsComInterop.SourceGenerator.Tests.csproj", "{CA39F66B-63D8-45FF-B754-F9A6E01AA6E9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsBase", "WindowsBase\WindowsBase.csproj", "{39A2D52B-A565-428C-B0F6-2EDBFA3EDAB7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsBase", "facades\WindowsBase\WindowsBase.csproj", "{39A2D52B-A565-428C-B0F6-2EDBFA3EDAB7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PresentationCore", "PresentationCore\PresentationCore.csproj", "{46A38622-1BD6-425C-A49C-16DF0534B7EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PresentationCore", "facades\PresentationCore\PresentationCore.csproj", "{46A38622-1BD6-425C-A49C-16DF0534B7EC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Windows.Forms", "System.Windows.Forms\System.Windows.Forms.csproj", "{83C0DC07-F23E-4193-B985-2426EE9AFF80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Windows.Forms", "facades\System.Windows.Forms\System.Windows.Forms.csproj", "{83C0DC07-F23E-4193-B985-2426EE9AFF80}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "facades", "facades", "{B446ED5F-1D77-4709-AFBB-F5CAE585B964}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Web.WebView2.Core", "facades\Microsoft.Web.WebView2.Core\Microsoft.Web.WebView2.Core.csproj", "{B6EFF1A5-63B5-4A05-9B9A-410BA94B92AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -174,13 +180,34 @@ Global
 		{83C0DC07-F23E-4193-B985-2426EE9AFF80}.Release|x64.Build.0 = Release|Any CPU
 		{83C0DC07-F23E-4193-B985-2426EE9AFF80}.Release|x86.ActiveCfg = Release|Any CPU
 		{83C0DC07-F23E-4193-B985-2426EE9AFF80}.Release|x86.Build.0 = Release|Any CPU
+		{B6EFF1A5-63B5-4A05-9B9A-410BA94B92AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6EFF1A5-63B5-4A05-9B9A-410BA94B92AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6EFF1A5-63B5-4A05-9B9A-410BA94B92AA}.Debug|arm64.ActiveCfg = Debug|Any CPU
+		{B6EFF1A5-63B5-4A05-9B9A-410BA94B92AA}.Debug|arm64.Build.0 = Debug|Any CPU
+		{B6EFF1A5-63B5-4A05-9B9A-410BA94B92AA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B6EFF1A5-63B5-4A05-9B9A-410BA94B92AA}.Debug|x64.Build.0 = Debug|Any CPU
+		{B6EFF1A5-63B5-4A05-9B9A-410BA94B92AA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B6EFF1A5-63B5-4A05-9B9A-410BA94B92AA}.Debug|x86.Build.0 = Debug|Any CPU
+		{B6EFF1A5-63B5-4A05-9B9A-410BA94B92AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6EFF1A5-63B5-4A05-9B9A-410BA94B92AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6EFF1A5-63B5-4A05-9B9A-410BA94B92AA}.Release|arm64.ActiveCfg = Release|Any CPU
+		{B6EFF1A5-63B5-4A05-9B9A-410BA94B92AA}.Release|arm64.Build.0 = Release|Any CPU
+		{B6EFF1A5-63B5-4A05-9B9A-410BA94B92AA}.Release|x64.ActiveCfg = Release|Any CPU
+		{B6EFF1A5-63B5-4A05-9B9A-410BA94B92AA}.Release|x64.Build.0 = Release|Any CPU
+		{B6EFF1A5-63B5-4A05-9B9A-410BA94B92AA}.Release|x86.ActiveCfg = Release|Any CPU
+		{B6EFF1A5-63B5-4A05-9B9A-410BA94B92AA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{AE64F765-CE4C-4093-8075-270C5CC614B5} = {B8E0DDAA-1A19-409C-AD36-7B32A997446A}
+		{148A75CD-A816-4AAE-9F4F-7AF2A272585A} = {B446ED5F-1D77-4709-AFBB-F5CAE585B964}
 		{2D80F90C-1E20-406C-ABAF-2824914F8C99} = {C141C36F-BB90-470F-991B-A4BD26202DE4}
+		{39A2D52B-A565-428C-B0F6-2EDBFA3EDAB7} = {B446ED5F-1D77-4709-AFBB-F5CAE585B964}
+		{46A38622-1BD6-425C-A49C-16DF0534B7EC} = {B446ED5F-1D77-4709-AFBB-F5CAE585B964}
+		{83C0DC07-F23E-4193-B985-2426EE9AFF80} = {B446ED5F-1D77-4709-AFBB-F5CAE585B964}
+		{B6EFF1A5-63B5-4A05-9B9A-410BA94B92AA} = {B446ED5F-1D77-4709-AFBB-F5CAE585B964}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E6AF9777-3A1E-4FF6-A531-49CD8D66A293}
