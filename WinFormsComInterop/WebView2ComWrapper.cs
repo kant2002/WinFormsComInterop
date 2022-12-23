@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using WinFormsComInterop.WebView2;
 using static System.Runtime.InteropServices.ComWrappers;
 
 namespace WinFormsComInterop

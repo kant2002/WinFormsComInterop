@@ -7,6 +7,7 @@ extern alias presentation;
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using WinFormsComInterop.WinForms;
 
 namespace WinFormsComInterop
 {

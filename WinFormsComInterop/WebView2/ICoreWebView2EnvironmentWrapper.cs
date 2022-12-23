@@ -2,7 +2,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace WinFormsComInterop;
+namespace WinFormsComInterop.WebView2;
 
 [RuntimeCallableWrapper(typeof(webview2::Microsoft.Web.WebView2.Core.Raw.ICoreWebView2Environment))]
 internal partial class ICoreWebView2EnvironmentWrapper

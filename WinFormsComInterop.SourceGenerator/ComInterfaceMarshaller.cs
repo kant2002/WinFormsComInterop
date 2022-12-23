@@ -1,14 +1,11 @@
 ﻿using Microsoft.CodeAnalysis;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace WinFormsComInterop.SourceGenerator
 {
     class ComInterfaceMarshaller : Marshaller
     {
-
+        public string MarshalSupportClassName = "MarshalSupport";
         public override string UnmanagedTypeName => "System.IntPtr";
 
         public override void DeclareLocalParameter(IndentedStringBuilder builder)
@@ -31,7 +28,7 @@ namespace WinFormsComInterop.SourceGenerator
         {
             if (RefKind == RefKind.Ref || RefKind == RefKind.Out)
             {
-                builder.AppendLine($"*{Name} = {LocalVariable} == null ? System.IntPtr.Zero : MarshalSupport.GetIUnknownForObject({LocalVariable});");
+                builder.AppendLine($"*{Name} = {LocalVariable} == null ? System.IntPtr.Zero : {MarshalSupportClassName}.GetIUnknownForObject({LocalVariable});");
             }
         }
 
@@ -61,7 +58,7 @@ namespace WinFormsComInterop.SourceGenerator
         {
             if (Type.SpecialType == SpecialType.System_Object)
             {
-                builder.AppendLine($"*retVal = MarshalSupport.GetIUnknownForObject({invocationExpression});");
+                builder.AppendLine($"*retVal = {MarshalSupportClassName}.GetIUnknownForObject({invocationExpression});");
                 return;
             }
 
@@ -76,7 +73,7 @@ namespace WinFormsComInterop.SourceGenerator
             builder.AppendLine($"if (retValManaged != null)");
             builder.AppendLine("{");
             builder.PushIndent();
-            builder.AppendLine($"var retValLocal = MarshalSupport.GetIUnknownForObject(retValManaged);");
+            builder.AppendLine($"var retValLocal = {MarshalSupportClassName}.GetIUnknownForObject(retValManaged);");
             builder.AppendLine($"var targetInterface = new System.Guid(\"{guidString}\");");
             builder.AppendLine("try");
             builder.AppendLine("{");
@@ -122,7 +119,7 @@ namespace WinFormsComInterop.SourceGenerator
 
             if (Type.SpecialType == SpecialType.System_Object)
             {
-                builder.AppendLine($"var {LocalVariable} = {Name} == null ? System.IntPtr.Zero : MarshalSupport.GetIUnknownForObject({Name});");
+                builder.AppendLine($"var {LocalVariable} = {Name} == null ? System.IntPtr.Zero : {MarshalSupportClassName}.GetIUnknownForObject({Name});");
                 return;
             }
 
@@ -144,7 +141,7 @@ namespace WinFormsComInterop.SourceGenerator
             builder.AppendLine("else");
             builder.AppendLine("{");
             builder.PushIndent();
-            builder.AppendLine($"var {LocalVariable}_unk = MarshalSupport.GetIUnknownForObject({Name});");
+            builder.AppendLine($"var {LocalVariable}_unk = {MarshalSupportClassName}.GetIUnknownForObject({Name});");
             builder.AppendLine($"var local_{Name}_IID = new System.Guid(\"{guidString}\");");
             builder.AppendLine($"result = Marshal.QueryInterface({LocalVariable}_unk, ref local_{Name}_IID, out {LocalVariable});");
             builder.AppendLine($"if (result != 0)");
