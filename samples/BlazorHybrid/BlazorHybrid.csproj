@@ -8,8 +8,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
 
     <PublishAot>true</PublishAot>
+    <!--<PublishReadyToRun>true</PublishReadyToRun>
+    <PublishTrimmed>true</PublishTrimmed>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>-->
     <_SuppressWinFormsTrimError>true</_SuppressWinFormsTrimError>
-    <CustomResourceTypesSupport>true</CustomResourceTypesSupport>
     <MetadataUpdaterSupport>false</MetadataUpdaterSupport>
   </PropertyGroup>
 
@@ -20,6 +22,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebView.WindowsForms" Version="7.0.52" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1462.37" />
     <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="8.0.0-*" Condition="'$(UseNet8)' == 'True'" />
   </ItemGroup>
 
