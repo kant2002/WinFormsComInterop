@@ -30,7 +30,7 @@ Also
 1. Add RD.xml file from https://github.com/kant2002/RdXmlLibrary/blob/main/Microsoft.AspNetCore.Components.Web.rd.xml to project 
 2. Add `<RdXmlFile Include="Microsoft.AspNetCore.Components.Web.rd.xml" />` to project file
 3. Make sure that RootComponets are added to you app-specific rd.xml
-```
+```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <Directives>
   <Application>
@@ -39,5 +39,4 @@ Also
     </Assembly>
   </Application>
 </Directives>
-
 ```
