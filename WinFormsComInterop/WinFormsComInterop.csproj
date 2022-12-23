@@ -9,6 +9,9 @@
     <Description>ComWrappers implementation for WinForms.</Description>
     <PackageProjectUrl>https://github.com/kant2002/winformscominterop</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>NativeAOT;WinForms</PackageTags>
+    <Authors>codevision</Authors>
     <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
   </PropertyGroup>
@@ -49,5 +52,10 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
+
 
 </Project>
