@@ -19,7 +19,7 @@
     <IlcArg Include="--nometadatablocking" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(PublishReadyToRun) == true">
+  <ItemGroup Condition="$(PublishReadyToRun) == true and $(PublishTrimmed) == true">
     <TrimmerRootDescriptor Include="ILLink.Descriptors.xml" />
   </ItemGroup>
 

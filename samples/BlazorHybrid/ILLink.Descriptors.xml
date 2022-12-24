@@ -2,4 +2,10 @@
   <assembly fullname="System.Private.CoreLib">
     <type fullname="System.StubHelpers.InterfaceMarshaler" />
   </assembly>
+  <assembly fullname="WinFormsComInterop">
+    <type fullname="WinFormsComInterop.WebView2.ICoreWebView2Wrapper" />
+  </assembly>
+  <assembly fullname="BlazorHybrid">
+    <type fullname="BlazorHybrid.Counter" />
+  </assembly>
 </linker>
