@@ -122,9 +122,15 @@
             return marshaller;
         }
 
-        public Marshaller CreateFieldMarshaller(IFieldSymbol fieldSymbol, string prefix, int index)
+        public Marshaller CreateFieldMarshaller(IFieldSymbol fieldSymbol, ITypeSymbol parentType, string prefix, int index)
         {
-            Marshaller marshaller = CreateMarshaller(fieldSymbol.Type, null);
+            UnmanagedType? unmanagedType = GetMarshalAs(fieldSymbol.GetAttributes()).UnmanagedType;
+            if (parentType.ToDisplayString() == "System.Runtime.InteropServices.ComTypes.STGMEDIUM" && fieldSymbol.Name == "pUnkForRelease")
+            {
+                unmanagedType = UnmanagedType.IUnknown;
+            }
+
+            Marshaller marshaller = CreateMarshaller(fieldSymbol.Type, unmanagedType);
             marshaller.Name = prefix + "_" + fieldSymbol.Name;
             marshaller.Type = fieldSymbol.Type;
             marshaller.RefKind = RefKind.Ref;

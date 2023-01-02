@@ -390,6 +390,20 @@ internal unsafe struct IDispatchVtbl
                 source.AppendLine("}");
                 return;
             }
+
+            if (type.ToDisplayString() == "System.Runtime.InteropServices.ComTypes.STGMEDIUM")
+            {
+                source.AppendLine($"struct {type.Name}_native");
+                source.AppendLine("{");
+                source.PushIndent();
+                source.AppendLine($"public System.Runtime.InteropServices.ComTypes.TYMED tymed;");
+                source.AppendLine($"public System.IntPtr unionmember;");
+                source.AppendLine($"public System.IntPtr pUnkForRelease;");
+                source.PopIndent();
+                source.AppendLine("}");
+                return;
+            }
+
             source.AppendLine($"struct {type.Name}_native");
             source.AppendLine("{");
             source.PushIndent();

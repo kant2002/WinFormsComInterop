@@ -25,7 +25,7 @@ namespace WinFormsComInterop.SourceGenerator
                         continue;
                     }
 
-                    var marshaller = Context.CreateFieldMarshaller(fieldSymbol, LocalVariable, i);
+                    var marshaller = Context.CreateFieldMarshaller(fieldSymbol, Type, LocalVariable, i);
                     builder.AppendLine($"var {marshaller.Name} = {Name}.{fieldSymbol.Name};");
                     marshaller.ConvertToUnmanagedParameter(builder);
                     builder.AppendLine($"{LocalVariable}.{fieldSymbol.Name} = {marshaller.LocalVariable};");
@@ -77,7 +77,7 @@ namespace WinFormsComInterop.SourceGenerator
                         continue;
                     }
 
-                    var marshaller = Context.CreateFieldMarshaller(fieldSymbol, LocalVariable, i);
+                    var marshaller = Context.CreateFieldMarshaller(fieldSymbol, Type, LocalVariable, i);
                     builder.AppendLine($"var {marshaller.Name} = {LocalVariable}.{fieldSymbol.Name};");
                     marshaller.ConvertToUnmanagedParameter(builder);
                     if (MethodGenerationContext.IsBlittableType(fieldSymbol.Type))
