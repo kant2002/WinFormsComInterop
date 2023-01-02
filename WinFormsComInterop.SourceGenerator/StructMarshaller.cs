@@ -52,7 +52,7 @@ namespace WinFormsComInterop.SourceGenerator
                         continue;
                     }
 
-                    var marshaller = Context.CreateFieldMarshaller(fieldSymbol, LocalVariable, i);
+                    var marshaller = Context.CreateFieldMarshaller(fieldSymbol, Type, LocalVariable, i);
                     builder.AppendLine($"var {marshaller.Name} = {Name}.{fieldSymbol.Name};");
                     marshaller.UnmarshalParameter(builder);
                     builder.AppendLine($"{LocalVariable}.{fieldSymbol.Name} = {marshaller.LocalVariable};");
