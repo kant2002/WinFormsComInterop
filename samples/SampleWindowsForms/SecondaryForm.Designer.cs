@@ -96,6 +96,8 @@
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.buttonLoadFromFile = new System.Windows.Forms.Button();
+            this.btnPutClipboard = new System.Windows.Forms.Button();
+            this.btnCheckClipboard = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -219,7 +221,7 @@
             this.xxxxToolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(940, 24);
             this.menuStrip1.TabIndex = 8;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -332,7 +334,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(589, 330);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 25;
-            this.dataGridView1.Size = new System.Drawing.Size(190, 89);
+            this.dataGridView1.Size = new System.Drawing.Size(339, 89);
             this.dataGridView1.TabIndex = 11;
             // 
             // accessibleDescriptionDataGridViewTextBoxColumn
@@ -562,11 +564,33 @@
             this.buttonLoadFromFile.UseVisualStyleBackColor = true;
             this.buttonLoadFromFile.Click += new System.EventHandler(this.buttonLoadFromFile_Click);
             // 
+            // btnPutClipboard
+            // 
+            this.btnPutClipboard.Location = new System.Drawing.Point(738, 217);
+            this.btnPutClipboard.Name = "btnPutClipboard";
+            this.btnPutClipboard.Size = new System.Drawing.Size(104, 23);
+            this.btnPutClipboard.TabIndex = 14;
+            this.btnPutClipboard.Text = "Put Clipboard";
+            this.btnPutClipboard.UseVisualStyleBackColor = true;
+            this.btnPutClipboard.Click += new System.EventHandler(this.btnPutClipboard_Click);
+            // 
+            // btnCheckClipboard
+            // 
+            this.btnCheckClipboard.Location = new System.Drawing.Point(739, 243);
+            this.btnCheckClipboard.Name = "btnCheckClipboard";
+            this.btnCheckClipboard.Size = new System.Drawing.Size(103, 23);
+            this.btnCheckClipboard.TabIndex = 15;
+            this.btnCheckClipboard.Text = "Check clipboard";
+            this.btnCheckClipboard.UseVisualStyleBackColor = true;
+            this.btnCheckClipboard.Click += new System.EventHandler(this.btnCheckClipboard_Click);
+            // 
             // SecondaryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(940, 450);
+            this.Controls.Add(this.btnCheckClipboard);
+            this.Controls.Add(this.btnPutClipboard);
             this.Controls.Add(this.buttonLoadFromFile);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.dataGridView1);
@@ -668,5 +692,7 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn visibleDataGridViewCheckBoxColumn;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.Button buttonLoadFromFile;
+        private Button btnPutClipboard;
+        private Button btnCheckClipboard;
     }
 }

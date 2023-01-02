@@ -30,5 +30,18 @@ namespace SampleWindowsForms
             pictureBox1.ImageLocation = Path.Combine(AppContext.BaseDirectory, "SimpleImage.bmp");
             pictureBox1.LoadAsync();
         }
+
+        private void btnPutClipboard_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText("Some text");
+        }
+
+        private void btnCheckClipboard_Click(object sender, EventArgs e)
+        {
+            if (Clipboard.ContainsText())
+            {
+                MessageBox.Show("Clipboard currently contains text");
+            }
+        }
     }
 }
