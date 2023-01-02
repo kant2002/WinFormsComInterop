@@ -28,6 +28,7 @@ namespace WinFormsComInterop
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.ISimpleFrameSite))]
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IPropertyNotifySink))]
     [ComCallableWrapper(typeof(primitives::Interop.Shell32.IFileDialogEvents))]
+    [ComCallableWrapper(typeof(System.Runtime.InteropServices.ComTypes.IDataObject))]
 #if !NET7_0_OR_GREATER
     [ComCallableWrapper(typeof(System.Runtime.InteropServices.ComTypes.IEnumString))]
 #endif
@@ -50,6 +51,7 @@ namespace WinFormsComInterop
         static ComWrappers.ComInterfaceEntry* formsWebBrowserContainerEntry;
         static ComWrappers.ComInterfaceEntry* formsWebBrowserEventEntry;
         static ComWrappers.ComInterfaceEntry* formsFileDialogEventsEntry;
+        static ComWrappers.ComInterfaceEntry* dataObjectEntry;
 #if !NET7_0_OR_GREATER
         static ComWrappers.ComInterfaceEntry* enumVariantEntry;
 #endif
@@ -89,6 +91,7 @@ namespace WinFormsComInterop
         internal static Guid IID_IFileSaveDialog = new Guid("84bccd23-5fde-4cdb-aea4-af64b83d78ab");
         internal static Guid IID_IFileDialogEvents = new Guid("973510DB-7D7F-452B-8975-74A85828D354");
         internal static Guid IID_IDropTarget = new Guid("00000122-0000-0000-C000-000000000046");
+        internal static Guid IID_IDataObject = new Guid("0000010E-0000-0000-C000-000000000046");
         internal static Guid IID_IOleInPlaceActiveObject = new Guid("00000117-0000-0000-C000-000000000046");
         internal static Guid IID_IHTMLDocument4 = new Guid("3050F69A-98B5-11CF-BB82-00AA00BDCE0B");
         internal static Guid IID_IHTMLLocation = new Guid("163BB1E0-6E00-11CF-837A-48DC04C10000");
@@ -103,6 +106,7 @@ namespace WinFormsComInterop
         {
             accessibleObjectEntry = CreateAccessibleObjectEntry();
             primitivesStreamEntry = CreatePrimitivesStreamEntry();
+            dataObjectEntry = CreateDataObjectEntry();
 #if !NET7_0_OR_GREATER
             enumVariantEntry = CreateEnumVariantEntry();
 #endif
@@ -159,7 +163,16 @@ namespace WinFormsComInterop
             return wrapperEntry;
         }
 #endif
+        private static ComInterfaceEntry* CreateDataObjectEntry()
+        {
+            CreateIDataObjectProxyVtbl(out var vtbl);
 
+            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 1);
+            var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
+            wrapperEntry->IID = IID_IDataObject;
+            wrapperEntry->Vtable = vtbl;
+            return wrapperEntry;
+        }
         private static ComInterfaceEntry* CreatePrimitivesDropTargetEntry()
         {
             CreatePrimitivesIDropTargetProxyVtbl(out var vtbl);
@@ -379,6 +392,12 @@ namespace WinFormsComInterop
             {
                 count = 1;
                 return formsFileDialogEventsEntry;
+            }
+
+            if (obj is forms::System.Windows.Forms.DataObject)
+            {
+                count = 1;
+                return dataObjectEntry;
             }
 
             throw new NotImplementedException();
