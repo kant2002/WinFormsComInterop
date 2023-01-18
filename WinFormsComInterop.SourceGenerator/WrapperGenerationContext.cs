@@ -93,6 +93,26 @@ namespace WinFormsComInterop.SourceGenerator
                 return existingContext;
             }
 
+            var originalMethod = method;
+            IMethodSymbol? previousMethod = null;
+            MethodGenerationContext? previousMethodContext = null;
+            if (method.ContainingType.AllInterfaces.Length != 0)
+            {
+                foreach (var parentInterface in method.ContainingType.AllInterfaces)
+                {
+                    var sameMembers = parentInterface.GetMembers(method.Name);
+                    
+                    // I do not distinguish between methods with same name and different parameters.
+                    var previousMember = sameMembers.SingleOrDefault();
+                    if (previousMember != null)
+                    {
+                        previousMethod = (IMethodSymbol)previousMember;
+                        previousMethodContext = CreateMethodGenerationContext(classSymbol, previousMethod, ref comSlotNumber);
+                        break;
+                    }
+                }
+            }
+
             var preserveSigAttribute = method.GetAttributes().FirstOrDefault(ad =>
             {
                 var attributeName = ad.AttributeClass?.ToDisplayString();
@@ -101,13 +121,17 @@ namespace WinFormsComInterop.SourceGenerator
             });
             var preserveSignature = preserveSigAttribute != null;
             preserveSignature |= (method.MethodImplementationFlags & System.Reflection.MethodImplAttributes.PreserveSig) == System.Reflection.MethodImplAttributes.PreserveSig;
-            var methodContext = new MethodGenerationContext(method, classSymbol.Type, this)
+            var methodContext = new MethodGenerationContext(originalMethod, classSymbol.Type, this)
             {
                 PreserveSignature = preserveSignature,
-                ComSlotNumber = comSlotNumber,
+                ComSlotNumber = previousMethodContext?.ComSlotNumber ?? comSlotNumber,
             };
             contextCache.Add(key, methodContext);
-            comSlotNumber++;
+            if (previousMethodContext is null)
+            {
+                comSlotNumber++;
+            }
+
             return methodContext;
         }
 
