@@ -13,13 +13,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Setup .NET 5 & 6 & 7
+    - name: Setup .NET 6 & 7
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: |
-            5.0.408
             6.0.404
-            7.0.101
+            7.0.102
     - name: Restore dependencies
       run: dotnet restore WinFormsComInterop.Build.sln
     - name: Build
