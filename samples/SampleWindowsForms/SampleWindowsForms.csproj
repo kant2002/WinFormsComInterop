@@ -21,7 +21,7 @@
     <CustomResourceTypesSupport>true</CustomResourceTypesSupport>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PublishTrimmed>true</PublishTrimmed>
-    <PublishAot>true</PublishAot>
+    <PublishAot Condition="'$(TargetFramework)' != 'net6.0-windows'">true</PublishAot>
     <TrimmerDefaultAction>link</TrimmerDefaultAction>
     <TrimmerSingleWarn>false</TrimmerSingleWarn>
   </PropertyGroup>
