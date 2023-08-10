@@ -85,7 +85,7 @@ experiments\WinUIUWP\WinUIUWP.csproj : error MSB4057: The target "Restore" does 
 
 Mostly notes for me, but maybe somebody would like to hack.
 
-Build (NativeAOT)[https://github.com/dotnet/runtimelab/tree/feature/NativeAOT].
+Build [NativeAOT](https://github.com/dotnet/runtimelab/tree/feature/NativeAOT).
 
 Modify nuget.config
 ```
