@@ -17,8 +17,8 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: |
-            6.0.404
-            7.0.102
+            6.0.413
+            7.0.110
     - name: Restore dependencies
       run: dotnet restore WinFormsComInterop.Build.sln
     - name: Build
