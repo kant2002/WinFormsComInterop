@@ -24,12 +24,14 @@
     <PublishAot Condition="'$(TargetFramework)' != 'net6.0-windows'">true</PublishAot>
     <TrimmerDefaultAction>link</TrimmerDefaultAction>
     <TrimmerSingleWarn>false</TrimmerSingleWarn>
+    <ApplicationIcon>zoom_zooming_detective_searching_engine_search_icon_256413.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <Content Include="SimpleImage.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="zoom_zooming_detective_searching_engine_search_icon_256413.ico" />
   </ItemGroup>
 
   <ItemGroup>
