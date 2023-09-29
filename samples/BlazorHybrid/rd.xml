@@ -2,7 +2,7 @@
 <Directives>
   <Application>
     <Assembly Name="BlazorHybrid" Dynamic="Required All">
-      <Type Name="BlazorHybrid.Counter" Dynamic="Required All" />
+      <Type Name="BlazorHybrid.Pages.Counter" Dynamic="Required All" />
     </Assembly>
   </Application>
 </Directives>
