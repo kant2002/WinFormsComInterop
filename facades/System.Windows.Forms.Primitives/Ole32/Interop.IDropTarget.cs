@@ -6,6 +6,7 @@ using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 
+#if !NET8_0_OR_GREATER
 public partial class Interop
 {
     public static partial class Ole32
@@ -42,3 +43,4 @@ public partial class Interop
         }
     }
 }
+#endif

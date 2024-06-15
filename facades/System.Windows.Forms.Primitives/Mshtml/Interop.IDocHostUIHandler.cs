@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 
+#if !NET8_0_OR_GREATER
 public partial class Interop
 {
     public partial class Mshtml
@@ -92,3 +93,4 @@ public partial class Interop
         }
     }
 }
+#endif

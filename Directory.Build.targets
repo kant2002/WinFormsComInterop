@@ -3,11 +3,14 @@
     <DotnetInstallLocation>C:\Program Files\dotnet</DotnetInstallLocation>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Update="Accessibility" Condition="$(TargetFramework) == 'net8.0'">
+      <HintPath>$(DotnetInstallLocation)\shared\Microsoft.WindowsDesktop.App\8.0.6\Accessibility.dll</HintPath>
+    </Reference>
     <Reference Update="Accessibility" Condition="$(TargetFramework) == 'net7.0'">
-      <HintPath>$(DotnetInstallLocation)\shared\Microsoft.WindowsDesktop.App\7.0.10\Accessibility.dll</HintPath>
+      <HintPath>$(DotnetInstallLocation)\shared\Microsoft.WindowsDesktop.App\7.0.20\Accessibility.dll</HintPath>
     </Reference>
     <Reference Update="Accessibility" Condition="$(TargetFramework) == 'net6.0'">
-      <HintPath>$(DotnetInstallLocation)\shared\Microsoft.WindowsDesktop.App\6.0.21\Accessibility.dll</HintPath>
+      <HintPath>$(DotnetInstallLocation)\shared\Microsoft.WindowsDesktop.App\6.0.27\Accessibility.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

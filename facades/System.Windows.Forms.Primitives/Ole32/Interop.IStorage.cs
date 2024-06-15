@@ -6,6 +6,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 
+#if !NET8_0_OR_GREATER
 public partial class Interop
 {
     public static partial class Ole32
@@ -83,3 +84,4 @@ public partial class Interop
         }
     }
 }
+#endif

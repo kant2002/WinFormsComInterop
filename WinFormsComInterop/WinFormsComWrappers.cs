@@ -15,15 +15,17 @@ namespace WinFormsComInterop
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IServiceProvider))]
     [ComCallableWrapper(typeof(primitives::Interop.UiaCore.IRawElementProviderSimple))]
     //[ComCallableWrapper(typeof(primitives::Interop.UiaCore.IAccessibleEx))]
+#if !NET8_0_OR_GREATER
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IDropTarget))]
+    [ComCallableWrapper(typeof(primitives::Interop.Mshtml.IDocHostUIHandler))]
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IStorage))]
     [ComCallableWrapper(typeof(primitives::Interop.Richedit.IRichEditOleCallback))]
+#endif
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IOleControlSite))]
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IOleInPlaceSite))]
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IOleContainer))]
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IOleClientSite))]
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IOleInPlaceFrame))]
-    [ComCallableWrapper(typeof(primitives::Interop.Mshtml.IDocHostUIHandler))]
     [ComCallableWrapper(typeof(primitives::Interop.SHDocVw.DWebBrowserEvents2))]
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.ISimpleFrameSite))]
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IPropertyNotifySink))]
@@ -43,9 +45,11 @@ namespace WinFormsComInterop
     {
         static ComWrappers.ComInterfaceEntry* accessibleObjectEntry;
         static ComWrappers.ComInterfaceEntry* primitivesStreamEntry;
-        static ComWrappers.ComInterfaceEntry* storageEntry;
-        static ComWrappers.ComInterfaceEntry* richEditOleCallbackEntry;
+#if !NET8_0_OR_GREATER
         static ComWrappers.ComInterfaceEntry* primitivesDropTargetEntry;
+        static ComWrappers.ComInterfaceEntry* storageEntry;
+#endif
+        static ComWrappers.ComInterfaceEntry* richEditOleCallbackEntry;
         static ComWrappers.ComInterfaceEntry* formsWebBrowserSiteEntry; 
         static ComWrappers.ComInterfaceEntry* formsWebBrowserContainerEntry;
         static ComWrappers.ComInterfaceEntry* formsWebBrowserEventEntry;
@@ -107,8 +111,10 @@ namespace WinFormsComInterop
             enumVariantEntry = CreateEnumVariantEntry();
 #endif
 
+#if !NET8_0_OR_GREATER
             primitivesDropTargetEntry = CreatePrimitivesDropTargetEntry();
             storageEntry = CreatePrimitivesIStorageEntry();
+#endif
             richEditOleCallbackEntry = CreatePrimitivesIRichEditOleCallbackEntry();
             formsWebBrowserSiteEntry = CreateWebBrowserSiteEntry();
             formsWebBrowserContainerEntry = CreateWebBrowserContainerEntry();
@@ -160,6 +166,7 @@ namespace WinFormsComInterop
         }
 #endif
 
+#if !NET8_0_OR_GREATER
         private static ComInterfaceEntry* CreatePrimitivesDropTargetEntry()
         {
             CreatePrimitivesIDropTargetProxyVtbl(out var vtbl);
@@ -192,6 +199,22 @@ namespace WinFormsComInterop
             wrapperEntry->Vtable = vtbl;
             return wrapperEntry;
         }
+#else
+
+        private static ComInterfaceEntry* CreatePrimitivesIRichEditOleCallbackEntry()
+        {
+            var vtblRaw = (System.IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(global::WinFormsComInterop.WinFormsComWrappers), sizeof(System.IntPtr) * 13);
+            GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
+            primitives::Windows.Win32.UI.Controls.RichEdit.IRichEditOleCallback.PopulateVTable((primitives::Windows.Win32.UI.Controls.RichEdit.IRichEditOleCallback.Vtbl*)vtblRaw);
+            var vtbl = (System.IntPtr)vtblRaw;
+
+            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 1);
+            var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
+            wrapperEntry->IID = IID_IRichEditOleCallback;
+            wrapperEntry->Vtable = vtbl;
+            return wrapperEntry;
+        }
+#endif
         private static ComInterfaceEntry* CreateAccessibleObjectEntry()
         {
             CreatePrimitivesIRawElementProviderSimpleProxyVtbl(out var rawElementProviderSimpleVtbl);
@@ -208,7 +231,9 @@ namespace WinFormsComInterop
         private static ComInterfaceEntry* CreateWebBrowserSiteEntry()
         {
             CreatePrimitivesIOleControlSiteProxyVtbl(out var oleControlSiteVtbl);
+#if !NET8_0_OR_GREATER
             CreatePrimitivesIDocHostUIHandlerProxyVtbl(out var docHostUIHandlerVtbl);
+#endif
             CreatePrimitivesIOleInPlaceSiteProxyVtbl(out var oleInPlaceSiteVtbl);
             CreatePrimitivesIOleClientSiteProxyVtbl(out var oleClientSiteVtbl);
             CreatePrimitivesISimpleFrameSiteProxyVtbl(out var simpleFrameSiteVtbl);
@@ -218,8 +243,10 @@ namespace WinFormsComInterop
             var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
             wrapperEntry[0].IID = IID_IOleControlSite;
             wrapperEntry[0].Vtable = oleControlSiteVtbl;
+#if !NET8_0_OR_GREATER
             wrapperEntry[1].IID = IID_IDocHostUIHandler;
             wrapperEntry[1].Vtable = docHostUIHandlerVtbl;
+#endif
             wrapperEntry[2].IID = IID_IOleInPlaceSite;
             wrapperEntry[2].Vtable = oleInPlaceSiteVtbl;
             wrapperEntry[3].IID = IID_IOleClientSite;
@@ -305,7 +332,7 @@ namespace WinFormsComInterop
                 return primitivesStreamEntry;
             }
 #endif
-
+#if !NET8_0_OR_GREATER
             if (obj is primitives::Interop.Ole32.IDropTarget)
             {
                 count = 1;
@@ -323,6 +350,13 @@ namespace WinFormsComInterop
                 count = 1;
                 return richEditOleCallbackEntry;
             }
+#else
+            if (obj is primitives::Windows.Win32.UI.Controls.RichEdit.IRichEditOleCallback.Interface)
+            {
+                count = 1;
+                return richEditOleCallbackEntry;
+            }
+#endif
 
 #if USE_WPF
             if (obj is winbase::MS.Win32.UnsafeNativeMethods.IOleDropTarget)

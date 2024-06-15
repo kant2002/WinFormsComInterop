@@ -3,7 +3,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <UseWindowsForms Condition="'$(WinFormsRepoRoot)' == ''">True</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <_SuppressWinFormsTrimError>true</_SuppressWinFormsTrimError>	  
@@ -75,7 +75,7 @@
   </Target>
 
    <ItemGroup>
-     <ProjectReference Include="..\..\WinFormsComInterop\WinFormsComInterop.csproj" Condition="'$(UseNet8)' != 'True'" />
+     <ProjectReference Include="..\..\WinFormsComInterop\WinFormsComInterop.csproj" />
    </ItemGroup>
 
   <ItemGroup>
