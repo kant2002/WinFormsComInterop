@@ -1,6 +1,7 @@
 <Project>
   <PropertyGroup>
-    <DotnetInstallLocation>C:\Program Files\dotnet</DotnetInstallLocation>
+    <DotnetInstallLocation Condition="$(NetCoreRoot) == ''">C:\Program Files\dotnet</DotnetInstallLocation>
+    <DotnetInstallLocation Condition="$(NetCoreRoot) != ''">$(NetCoreRoot)</DotnetInstallLocation>
     <AccessibilityLocation Condition="$(TargetFramework) == 'net8.0'">$(DotnetInstallLocation)\shared\Microsoft.WindowsDesktop.App\8.0.6\Accessibility.dll</AccessibilityLocation>
     <AccessibilityLocation Condition="$(TargetFramework) == 'net7.0'">$(DotnetInstallLocation)\shared\Microsoft.WindowsDesktop.App\7.0.20\Accessibility.dll</AccessibilityLocation>
     <AccessibilityLocation Condition="$(TargetFramework) == 'net6.0'">$(DotnetInstallLocation)\shared\Microsoft.WindowsDesktop.App\6.0.27\Accessibility.dll</AccessibilityLocation>
@@ -11,9 +12,9 @@
     </Reference>
   </ItemGroup>
   <Target Name="CustomClean" BeforeTargets="CoreBuild">
-    <Error Text="Accessibility does not exists" Condition="($(TargetFramework) == 'net8.0') and (!Exists('$(AccessibilityLocation)'))" />
-    <Error Text="Accessibility does not exists" Condition="($(TargetFramework) == 'net7.0') and (!Exists('$(AccessibilityLocation)'))" />
-    <Error Text="Accessibility does not exists" Condition="($(TargetFramework) == 'net6.0') and (!Exists('$(AccessibilityLocation)'))" />
+    <Error Text="Accessibility does not exists in location $(AccessibilityLocation)'" Condition="($(TargetFramework) == 'net8.0') and (!Exists('$(AccessibilityLocation)'))" />
+    <Error Text="Accessibility does not exists in location $(AccessibilityLocation)'" Condition="($(TargetFramework) == 'net7.0') and (!Exists('$(AccessibilityLocation)'))" />
+    <Error Text="Accessibility does not exists in location $(AccessibilityLocation)'" Condition="($(TargetFramework) == 'net6.0') and (!Exists('$(AccessibilityLocation)'))" />
   </Target>
 
 </Project>
