@@ -3,7 +3,7 @@
     <UseNet8 Condition="'$(UseNet8)' == ''">True</UseNet8>
     <GenerateWPF Condition="'$(GenerateWPF)' == ''">False</GenerateWPF>
     <DefineConstants Condition="'$(GenerateWPF)' == 'True'">$(DefineConstants);USE_WPF</DefineConstants>
-    <VersionPrefix>0.4.3</VersionPrefix>
+    <VersionPrefix>0.5.0</VersionPrefix>
 	<WinFormsRepoRoot></WinFormsRepoRoot>
 	<WpfRepoRoot></WpfRepoRoot>
   </PropertyGroup>
