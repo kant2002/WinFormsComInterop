@@ -21,6 +21,8 @@ jobs:
             7.0.120
             8.0.302
     - name: Restore dependencies
+      run: dir "C:\Program Files\dotnet\\shared\Microsoft.WindowsDesktop.App\"
+    - name: Restore dependencies
       run: dotnet restore WinFormsComInterop.Build.sln
     - name: Build
       run: dotnet build WinFormsComInterop.Build.sln --no-restore
