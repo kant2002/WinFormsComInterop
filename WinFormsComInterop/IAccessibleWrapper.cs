@@ -4,7 +4,9 @@ using System.Runtime.InteropServices;
 
 namespace WinFormsComInterop;
 
+#if !NET8_0_OR_GREATER
 [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IOleWindow))]
+#endif
 //[RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IOleWindow))]
 [System.Runtime.Versioning.SupportedOSPlatform("windows")]
 partial class IAccessibleWrapper

@@ -11,25 +11,29 @@ using WinFormsComInterop;
 
 namespace WinFormsComInterop
 {
-    [ComCallableWrapper(typeof(primitives::Interop.Ole32.IStream))]
-    [ComCallableWrapper(typeof(primitives::Interop.Ole32.IServiceProvider))]
     [ComCallableWrapper(typeof(primitives::Interop.UiaCore.IRawElementProviderSimple))]
     //[ComCallableWrapper(typeof(primitives::Interop.UiaCore.IAccessibleEx))]
 #if !NET8_0_OR_GREATER
+    [ComCallableWrapper(typeof(primitives::Interop.Ole32.IServiceProvider))]
+    [ComCallableWrapper(typeof(primitives::Interop.Ole32.IStream))]
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IDropTarget))]
     [ComCallableWrapper(typeof(primitives::Interop.Mshtml.IDocHostUIHandler))]
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IStorage))]
     [ComCallableWrapper(typeof(primitives::Interop.Richedit.IRichEditOleCallback))]
-#endif
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IOleControlSite))]
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IOleInPlaceSite))]
+#endif
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IOleContainer))]
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IOleClientSite))]
+#if !NET8_0_OR_GREATER
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IOleInPlaceFrame))]
+#endif
     [ComCallableWrapper(typeof(primitives::Interop.SHDocVw.DWebBrowserEvents2))]
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.ISimpleFrameSite))]
+#if !NET8_0_OR_GREATER
     [ComCallableWrapper(typeof(primitives::Interop.Ole32.IPropertyNotifySink))]
     [ComCallableWrapper(typeof(primitives::Interop.Shell32.IFileDialogEvents))]
+#endif
 #if !NET7_0_OR_GREATER
     [ComCallableWrapper(typeof(System.Runtime.InteropServices.ComTypes.IEnumString))]
 #endif
@@ -44,8 +48,8 @@ namespace WinFormsComInterop
     public unsafe partial class WinFormsComWrappers : ComWrappers
     {
         static ComWrappers.ComInterfaceEntry* accessibleObjectEntry;
-        static ComWrappers.ComInterfaceEntry* primitivesStreamEntry;
 #if !NET8_0_OR_GREATER
+        static ComWrappers.ComInterfaceEntry* primitivesStreamEntry;
         static ComWrappers.ComInterfaceEntry* primitivesDropTargetEntry;
         static ComWrappers.ComInterfaceEntry* storageEntry;
 #endif
@@ -53,7 +57,9 @@ namespace WinFormsComInterop
         static ComWrappers.ComInterfaceEntry* formsWebBrowserSiteEntry; 
         static ComWrappers.ComInterfaceEntry* formsWebBrowserContainerEntry;
         static ComWrappers.ComInterfaceEntry* formsWebBrowserEventEntry;
+#if !NET8_0_OR_GREATER
         static ComWrappers.ComInterfaceEntry* formsFileDialogEventsEntry;
+#endif
 #if !NET7_0_OR_GREATER
         static ComWrappers.ComInterfaceEntry* enumVariantEntry;
 #endif
@@ -106,20 +112,22 @@ namespace WinFormsComInterop
         static WinFormsComWrappers()
         {
             accessibleObjectEntry = CreateAccessibleObjectEntry();
-            primitivesStreamEntry = CreatePrimitivesStreamEntry();
 #if !NET7_0_OR_GREATER
             enumVariantEntry = CreateEnumVariantEntry();
 #endif
 
 #if !NET8_0_OR_GREATER
+            primitivesStreamEntry = CreatePrimitivesStreamEntry();
             primitivesDropTargetEntry = CreatePrimitivesDropTargetEntry();
             storageEntry = CreatePrimitivesIStorageEntry();
 #endif
             richEditOleCallbackEntry = CreatePrimitivesIRichEditOleCallbackEntry();
+#if !NET8_0_OR_GREATER
             formsWebBrowserSiteEntry = CreateWebBrowserSiteEntry();
             formsWebBrowserContainerEntry = CreateWebBrowserContainerEntry();
             formsWebBrowserEventEntry = CreateWebBrowserEventEntry();
             formsFileDialogEventsEntry = CreateFileDialogEventsEntry();
+#endif
 #if USE_WPF
             oleDropTargetEntry = CreateOleDropTargetEntry();
             winbaseTfContextEntry = CreateWinbaseITfContextEntry();
@@ -200,7 +208,6 @@ namespace WinFormsComInterop
             return wrapperEntry;
         }
 #else
-
         private static ComInterfaceEntry* CreatePrimitivesIRichEditOleCallbackEntry()
         {
             var vtblRaw = (System.IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(global::WinFormsComInterop.WinFormsComWrappers), sizeof(System.IntPtr) * 13);
@@ -213,6 +220,14 @@ namespace WinFormsComInterop
             wrapperEntry->IID = IID_IRichEditOleCallback;
             wrapperEntry->Vtable = vtbl;
             return wrapperEntry;
+        }
+
+        private static void CreatePrimitivesIServiceProviderProxyVtbl(out IntPtr vtbl)
+        {
+            var vtblRaw = (System.IntPtr*)RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(global::WinFormsComInterop.WinFormsComWrappers), sizeof(System.IntPtr) * 13);
+            GetIUnknownImpl(out vtblRaw[0], out vtblRaw[1], out vtblRaw[2]);
+            primitives::Windows.Win32.System.Com.IServiceProvider.PopulateVTable((primitives::Windows.Win32.System.Com.IServiceProvider.Vtbl*)vtblRaw);
+            vtbl = (System.IntPtr)vtblRaw;
         }
 #endif
         private static ComInterfaceEntry* CreateAccessibleObjectEntry()
@@ -228,25 +243,22 @@ namespace WinFormsComInterop
             wrapperEntry[1].Vtable = serviceProviderVtbl;
             return wrapperEntry;
         }
+#if !NET8_0_OR_GREATER
         private static ComInterfaceEntry* CreateWebBrowserSiteEntry()
         {
             CreatePrimitivesIOleControlSiteProxyVtbl(out var oleControlSiteVtbl);
-#if !NET8_0_OR_GREATER
             CreatePrimitivesIDocHostUIHandlerProxyVtbl(out var docHostUIHandlerVtbl);
-#endif
             CreatePrimitivesIOleInPlaceSiteProxyVtbl(out var oleInPlaceSiteVtbl);
+            CreatePrimitivesIPropertyNotifySinkProxyVtbl(out var propertyNotifySinkVtbl);
             CreatePrimitivesIOleClientSiteProxyVtbl(out var oleClientSiteVtbl);
             CreatePrimitivesISimpleFrameSiteProxyVtbl(out var simpleFrameSiteVtbl);
-            CreatePrimitivesIPropertyNotifySinkProxyVtbl(out var propertyNotifySinkVtbl);
 
             var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 6);
             var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
             wrapperEntry[0].IID = IID_IOleControlSite;
             wrapperEntry[0].Vtable = oleControlSiteVtbl;
-#if !NET8_0_OR_GREATER
             wrapperEntry[1].IID = IID_IDocHostUIHandler;
             wrapperEntry[1].Vtable = docHostUIHandlerVtbl;
-#endif
             wrapperEntry[2].IID = IID_IOleInPlaceSite;
             wrapperEntry[2].Vtable = oleInPlaceSiteVtbl;
             wrapperEntry[3].IID = IID_IOleClientSite;
@@ -301,6 +313,7 @@ namespace WinFormsComInterop
             wrapperEntry->Vtable = vtbl;
             return wrapperEntry;
         }
+#endif
 
 #if !NET7_0_OR_GREATER
         private static ComInterfaceEntry* CreateEnumVariantEntry()
@@ -409,11 +422,13 @@ namespace WinFormsComInterop
                 return formsWebBrowserEventEntry;
             }
 
+#if !NET8_0_OR_GREATER
             if (obj is forms::System.Windows.Forms.FileDialog.VistaDialogEvents)
             {
                 count = 1;
                 return formsFileDialogEventsEntry;
             }
+#endif
 
             throw new NotImplementedException();
         }
@@ -442,21 +457,34 @@ namespace WinFormsComInterop
             if (Marshal.QueryInterface(externalComObject, ref IID_IPicture, out var picturePtr) >= 0)
             {
                 Marshal.Release(picturePtr);
+#if NET8_0_OR_GREATER
+                throw new NotImplementedException();
+#else
                 return new IPictureWrapper(externalComObject);
+#endif
             }
 
             if (Marshal.QueryInterface(externalComObject, ref IID_IWebBrowser2, out var webBrowserPtr) >= 0)
             {
                 Marshal.Release(webBrowserPtr);
+#if NET8_0_OR_GREATER
+                throw new NotImplementedException();
+#else
                 return new IWebBrowserWrapper(externalComObject);
+#endif
             }
 
             if (Marshal.QueryInterface(externalComObject, ref IID_IConnectionPoint, out var connectionPointPtr) >= 0)
             {
                 Marshal.Release(connectionPointPtr);
+#if NET8_0_OR_GREATER
+                throw new NotImplementedException();
+#else
                 return new IConnectionPointWrapper(externalComObject);
+#endif
             }
 
+#if !NET8_0_OR_GREATER
             if (Marshal.QueryInterface(externalComObject, ref IID_IFileOpenDialog, out var fileOpenDialogPtr) >= 0)
             {
                 Marshal.Release(fileOpenDialogPtr);
@@ -468,6 +496,7 @@ namespace WinFormsComInterop
                 Marshal.Release(fileSaveDialogPtr);
                 return new IFileSaveDialogWrapper(externalComObject);
             }
+#endif
 
             if (Marshal.QueryInterface(externalComObject, ref IID_IDropTarget, out var dropTargetPtr) >= 0)
             {
@@ -490,13 +519,21 @@ namespace WinFormsComInterop
             if (Marshal.QueryInterface(externalComObject, ref IID_IOleInPlaceActiveObject, out var inplaceActiveObjectPtr) >= 0)
             {
                 Marshal.Release(inplaceActiveObjectPtr);
+#if NET8_0_OR_GREATER
+                throw new NotImplementedException();
+#else
                 return new IOleInPlaceActiveObjectWrapper(externalComObject);
+#endif
             }
 
             if (Marshal.QueryInterface(externalComObject, ref IID_IOleInPlaceFrame, out var inplaceFramePtr) >= 0)
             {
                 Marshal.Release(inplaceFramePtr);
+#if NET8_0_OR_GREATER
+                throw new NotImplementedException();
+#else
                 return new IOleInPlaceFrameWrapper(externalComObject);
+#endif
             }
 
             GetIUnknownImpl(out IntPtr fpQueryInteface, out IntPtr fpAddRef, out IntPtr fpRelease);

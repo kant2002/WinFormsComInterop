@@ -39,17 +39,17 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(IlcDisableReflection) != true">
-    <IlcCompileInput Include="--appcontextswitch:System.Resources.UseSystemResourceKeys=true" />
-    <IlcCompileInput Include="--appcontextswitch:Switch.System.Reflection.Assembly.SimulatedLocationInBaseDirectory=true" />
+    <RuntimeHostConfigurationOption Include="System.Resources.UseSystemResourceKeys" Value="true" />
+    <RuntimeHostConfigurationOption Include="Switch.System.Reflection.Assembly.SimulatedLocationInBaseDirectory" Value="true" Condition="'$(TargetFramework)' != 'net8.0-windows'" />
     <IlcCompileInput Include="--feature:System.Resources.UseSystemResourceKeys=true" />
     <IlcCompileInput Include="--feature:System.Collections.Generic.DefaultComparers=false" />
-    <IlcCompileInput Include="--appcontextswitch:Switch.System.Reflection.Disabled.DoNotThrowForNames=true" />
-    <IlcCompileInput Include="--appcontextswitch:Switch.System.Reflection.Disabled.DoNotThrowForAssembly=true" />
+    <RuntimeHostConfigurationOption Include="Switch.System.Reflection.Disabled.DoNotThrowForNames" Value="true" />
+    <RuntimeHostConfigurationOption Include="Switch.System.Reflection.Disabled.DoNotThrowForAssembly" Value="true" />
     <RuntimeHostConfigurationOption Include="System.Windows.Forms.PictureBox.UseWebRequest" Value="false" Trim="true" />
   </ItemGroup>
 
   <ItemGroup Condition="$(IlcDisableReflection) == true">
-    <RuntimeHostConfigurationOption Include="Switch.System.Reflection.Assembly.SimulatedLocationInBaseDirectory" Value="true" />
+    <RuntimeHostConfigurationOption Include="Switch.System.Reflection.Assembly.SimulatedLocationInBaseDirectory" Value="true" Condition="'$(TargetFramework)' != 'net8.0-windows'" />
     <RuntimeHostConfigurationOption Include="Switch.System.Reflection.Disabled.DoNotThrowForNames" Value="true" />
     <RuntimeHostConfigurationOption Include="Switch.System.Reflection.Disabled.DoNotThrowForAssembly" Value="true" />
     <RuntimeHostConfigurationOption Include="System.Windows.Forms.PictureBox.UseWebRequest" Value="false" Trim="true" />

@@ -1,7 +1,35 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
+#if NET8_0_OR_GREATER
 
+using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
+using Windows.Win32.Foundation;
+
+namespace Windows.Win32.System.Ole
+{
+    internal struct IOleInPlaceFrame //: IVTable<IOleInPlaceFrame, IOleInPlaceFrame.Vtbl>, IVTable, IComIID
+    {
+        internal struct Vtbl
+        {
+        }
+
+        [ComImport]
+        [Guid("00000116-0000-0000-C000-000000000046")]
+        [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        [SupportedOSPlatform("windows5.0")]
+        internal interface Interface //: IOleWindow.Interface, IOleInPlaceUIWindow.Interface
+        {
+        }
+        public unsafe void** lpVtbl;
+
+        public unsafe static void PopulateVTable(Vtbl* vtable)
+        {        }
+    }
+
+}
+#else
 using System;
 using System.Runtime.InteropServices;
 
@@ -69,3 +97,4 @@ public static partial class Interop
         }
     }
 }
+#endif

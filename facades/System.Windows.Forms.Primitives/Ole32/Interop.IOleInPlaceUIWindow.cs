@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#if NET8_0_OR_GREATER
+#else
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
@@ -42,3 +44,4 @@ public static partial class Interop
         }
     }
 }
+#endif

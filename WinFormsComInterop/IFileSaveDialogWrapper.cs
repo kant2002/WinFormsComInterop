@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace WinFormsComInterop;
 
+#if !NET8_0_OR_GREATER
 [RuntimeCallableWrapper(typeof(primitives::Interop.Shell32.IFileSaveDialog))]
 [System.Runtime.Versioning.SupportedOSPlatform("windows")]
 partial class IFileSaveDialogWrapper
@@ -21,3 +22,4 @@ partial class IFileSaveDialogWrapper
         Marshal.Release(this.instance);
     }
 }
+#endif

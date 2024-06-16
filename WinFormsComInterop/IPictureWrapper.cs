@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace WinFormsComInterop;
 
+#if !NET8_0_OR_GREATER
 [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IPersistStream))]
 [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IPicture))]
 [System.Runtime.Versioning.SupportedOSPlatform("windows")]
@@ -22,3 +23,4 @@ partial class IPictureWrapper
         Marshal.Release(this.instance);
     }
 }
+#endif

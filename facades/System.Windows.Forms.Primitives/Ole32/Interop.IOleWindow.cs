@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if NET8_0_OR_GREATER
+#else
+using System;
 using System.Runtime.InteropServices;
 
 public static partial class Interop
@@ -20,3 +22,4 @@ public static partial class Interop
         }
     }
 }
+#endif

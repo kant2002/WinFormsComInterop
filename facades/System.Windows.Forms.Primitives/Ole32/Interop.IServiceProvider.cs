@@ -2,6 +2,26 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#if NET8_0_OR_GREATER
+namespace Windows.Win32.System.Com;
+using global::System;
+using global::System.CodeDom.Compiler;
+using global::System.Runtime.InteropServices;
+
+[Guid("6D5140C1-7436-11CE-8034-00AA006009FA")]
+[GeneratedCode("Microsoft.Windows.CsWin32", "0.3.36-beta+6a5076f50a")]
+public struct IServiceProvider //: IVTable<Windows.Win32.System.Com.IServiceProvider, Windows.Win32.System.Com.IServiceProvider.Vtbl>, IVTable, IComIID
+{
+    public struct Vtbl
+    {
+    }
+
+    public unsafe static void PopulateVTable(Vtbl* vtable)
+    {
+    }
+}
+
+#else
 using System;
 using System.Runtime.InteropServices;
 
@@ -32,3 +52,4 @@ public static partial class Interop
         }
     }
 }
+#endif

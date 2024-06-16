@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace WinFormsComInterop;
 
+#if !NET8_0_OR_GREATER
 [RuntimeCallableWrapper(typeof(primitives::Interop.Shell32.IFileOpenDialog))]
 [System.Runtime.Versioning.SupportedOSPlatform("windows")]
 partial class IFileOpenDialogWrapper
@@ -21,3 +22,4 @@ partial class IFileOpenDialogWrapper
         Marshal.Release(this.instance);
     }
 }
+#endif

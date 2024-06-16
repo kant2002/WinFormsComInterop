@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace WinFormsComInterop;
 
+#if !NET8_0_OR_GREATER
 [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IOleInPlaceFrame))]
 [System.Runtime.Versioning.SupportedOSPlatform("windows")]
 partial class IOleInPlaceFrameWrapper
@@ -21,3 +22,4 @@ partial class IOleInPlaceFrameWrapper
         Marshal.Release(this.instance);
     }
 }
+#endif

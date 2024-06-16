@@ -4,8 +4,10 @@ using System.Runtime.InteropServices;
 
 namespace WinFormsComInterop;
 
+#if !NET8_0_OR_GREATER
 [RuntimeCallableWrapper(typeof(primitives::Interop.Ole32.IOleWindow))]
 [RuntimeCallableWrapper(typeof(primitives::Interop.Oleaut32.IEnumVariant))]
+#endif
 [System.Runtime.Versioning.SupportedOSPlatform("windows")]
 partial class IAccessibleEnumWrapper
     : global::Accessibility.IAccessible
