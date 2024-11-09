@@ -17,9 +17,9 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: |
-            6.0.423
+            6.0.427
             7.0.120
-            8.0.302
+            8.0.403
     - name: Restore dependencies
       run: dir "C:\Program Files\dotnet\\shared\Microsoft.WindowsDesktop.App\"
     - name: Restore dependencies
