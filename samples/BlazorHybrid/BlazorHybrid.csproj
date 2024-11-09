@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -12,7 +12,7 @@
     <PublishTrimmed>true</PublishTrimmed>-->
     <_SuppressWinFormsTrimError>true</_SuppressWinFormsTrimError>
     <MetadataUpdaterSupport>false</MetadataUpdaterSupport>
-  </PropertyGroup>
+  </PropertyGroup>  
 
   <ItemGroup>
     <!-- Required because of https://github.com/dotnet/runtime/issues/79930 -->
@@ -23,10 +23,14 @@
     <TrimmerRootDescriptor Include="ILLink.Descriptors.xml" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="$(TargetFramework) == 'net7.0-windows'">
     <PackageReference Include="Microsoft.AspNetCore.Components.WebView.WindowsForms" Version="7.0.52" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1462.37" />
-    <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="8.0.0-*" Condition="'$(UseNet8)' == 'True'" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1462.37"  />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(TargetFramework) == 'net8.0-windows'">
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebView.WindowsForms" Version="8.0.93" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2592.51"  />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,7 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\WinFormsComInterop\WinFormsComInterop.csproj" Condition="'$(UseNet8)' != 'True'" />
+    <ProjectReference Include="..\..\WinFormsComInterop\WinFormsComInterop.csproj" />
   </ItemGroup>
 
 </Project>

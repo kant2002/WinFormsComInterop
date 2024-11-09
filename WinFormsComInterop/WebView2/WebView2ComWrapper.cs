@@ -387,79 +387,157 @@ namespace WinFormsComInterop.WebView2
 
         protected override object CreateObject(IntPtr externalComObject, CreateObjectFlags flags)
         {
-            if (Marshal.QueryInterface(externalComObject, ref IID_ICoreWebView2Environment, out var coreWebView2EnvironmentPtr) >= 0)
+            if (Marshal.QueryInterface(externalComObject,
+#if NET8_0_OR_GREATER
+                in
+#else
+                ref
+#endif
+                IID_ICoreWebView2Environment, out var coreWebView2EnvironmentPtr) >= 0)
             {
                 Marshal.Release(coreWebView2EnvironmentPtr);
                 return new ICoreWebView2EnvironmentWrapper(externalComObject);
             }
 
-            if (Marshal.QueryInterface(externalComObject, ref IID_ICoreWebView2Controller, out var coreWebView2ControllerPtr) >= 0)
+            if (Marshal.QueryInterface(externalComObject,
+#if NET8_0_OR_GREATER
+                in
+#else
+                ref
+#endif
+                IID_ICoreWebView2Controller, out var coreWebView2ControllerPtr) >= 0)
             {
                 Marshal.Release(coreWebView2ControllerPtr);
                 return new ICoreWebView2ControllerWrapper(externalComObject);
             }
 
-            if (Marshal.QueryInterface(externalComObject, ref IID_ICoreWebView2, out var coreWebView2Ptr) >= 0)
+            if (Marshal.QueryInterface(externalComObject,
+#if NET8_0_OR_GREATER
+                in
+#else
+                ref
+#endif
+                IID_ICoreWebView2, out var coreWebView2Ptr) >= 0)
             {
                 Marshal.Release(coreWebView2Ptr);
                 return new ICoreWebView2Wrapper(externalComObject);
             }
 
-            if (Marshal.QueryInterface(externalComObject, ref IID_ICoreWebView2Settings, out var coreWebView2SettingsPtr) >= 0)
+            if (Marshal.QueryInterface(externalComObject,
+#if NET8_0_OR_GREATER
+                in
+#else
+                ref
+#endif
+                IID_ICoreWebView2Settings, out var coreWebView2SettingsPtr) >= 0)
             {
                 Marshal.Release(coreWebView2SettingsPtr);
                 return new ICoreWebView2SettingsWrapper(externalComObject);
             }
 
-            if (Marshal.QueryInterface(externalComObject, ref IID_ICoreWebView2NavigationStartingEventArgs, out var coreWebView2NavigationStartingEventArgsPtr) >= 0)
+            if (Marshal.QueryInterface(externalComObject,
+#if NET8_0_OR_GREATER
+                in
+#else
+                ref
+#endif
+                IID_ICoreWebView2NavigationStartingEventArgs, out var coreWebView2NavigationStartingEventArgsPtr) >= 0)
             {
                 Marshal.Release(coreWebView2NavigationStartingEventArgsPtr);
                 return new ICoreWebView2NavigationStartingEventArgsWrapper(externalComObject);
             }
 
-            if (Marshal.QueryInterface(externalComObject, ref IID_ICoreWebView2NavigationCompletedEventArgs, out var coreWebView2NavigationCompletedEventArgsPtr) >= 0)
+            if (Marshal.QueryInterface(externalComObject,
+#if NET8_0_OR_GREATER
+                in
+#else
+                ref
+#endif
+                IID_ICoreWebView2NavigationCompletedEventArgs, out var coreWebView2NavigationCompletedEventArgsPtr) >= 0)
             {
                 Marshal.Release(coreWebView2NavigationCompletedEventArgsPtr);
                 return new ICoreWebView2NavigationCompletedEventArgsWrapper(externalComObject);
             }
 
-            if (Marshal.QueryInterface(externalComObject, ref IID_ICoreWebView2WebResourceRequestedEventArgs, out var coreWebView2WebResourceRequestedEventArgsPtr) >= 0)
+            if (Marshal.QueryInterface(externalComObject,
+#if NET8_0_OR_GREATER
+                in
+#else
+                ref
+#endif
+                IID_ICoreWebView2WebResourceRequestedEventArgs, out var coreWebView2WebResourceRequestedEventArgsPtr) >= 0)
             {
                 Marshal.Release(coreWebView2WebResourceRequestedEventArgsPtr);
                 return new ICoreWebView2WebResourceRequestedEventArgsWrapper(externalComObject);
             }
 
-            if (Marshal.QueryInterface(externalComObject, ref IID_ICoreWebView2WebResourceRequest, out var coreWebView2WebResourceRequestPtr) >= 0)
+            if (Marshal.QueryInterface(externalComObject,
+#if NET8_0_OR_GREATER
+                in
+#else
+                ref
+#endif
+                IID_ICoreWebView2WebResourceRequest, out var coreWebView2WebResourceRequestPtr) >= 0)
             {
                 Marshal.Release(coreWebView2WebResourceRequestPtr);
                 return new ICoreWebView2WebResourceRequestWrapper(externalComObject);
             }
 
-            if (Marshal.QueryInterface(externalComObject, ref IID_ICoreWebView2WebResourceResponse, out var coreWebView2WebResourceResponsePtr) >= 0)
+            if (Marshal.QueryInterface(externalComObject,
+#if NET8_0_OR_GREATER
+                in
+#else
+                ref
+#endif
+                IID_ICoreWebView2WebResourceResponse, out var coreWebView2WebResourceResponsePtr) >= 0)
             {
                 Marshal.Release(coreWebView2WebResourceResponsePtr);
                 return new ICoreWebView2WebResourceResponseWrapper(externalComObject);
             }
 
-            if (Marshal.QueryInterface(externalComObject, ref IID_ICoreWebView2SourceChangedEventArgs, out var coreWebView2SourceChangedEventArgsPtr) >= 0)
+            if (Marshal.QueryInterface(externalComObject,
+#if NET8_0_OR_GREATER
+                in
+#else
+                ref
+#endif
+                IID_ICoreWebView2SourceChangedEventArgs, out var coreWebView2SourceChangedEventArgsPtr) >= 0)
             {
                 Marshal.Release(coreWebView2SourceChangedEventArgsPtr);
                 return new ICoreWebView2SourceChangedEventArgsWrapper(externalComObject);
             }
 
-            if (Marshal.QueryInterface(externalComObject, ref IID_ICoreWebView2ContentLoadingEventArgs, out var coreWebView2ContentLoadingEventArgsPtr) >= 0)
+            if (Marshal.QueryInterface(externalComObject,
+#if NET8_0_OR_GREATER
+                in
+#else
+                ref
+#endif
+                IID_ICoreWebView2ContentLoadingEventArgs, out var coreWebView2ContentLoadingEventArgsPtr) >= 0)
             {
                 Marshal.Release(coreWebView2ContentLoadingEventArgsPtr);
                 return new ICoreWebView2ContentLoadingEventArgsWrapper(externalComObject);
             }
 
-            if (Marshal.QueryInterface(externalComObject, ref IID_ICoreWebView2AcceleratorKeyPressedEventArgs, out var coreWebView2AcceleratorKeyPressedEventArgsPtr) >= 0)
+            if (Marshal.QueryInterface(externalComObject,
+#if NET8_0_OR_GREATER
+                in
+#else
+                ref
+#endif
+                IID_ICoreWebView2AcceleratorKeyPressedEventArgs, out var coreWebView2AcceleratorKeyPressedEventArgsPtr) >= 0)
             {
                 Marshal.Release(coreWebView2AcceleratorKeyPressedEventArgsPtr);
                 return new ICoreWebView2AcceleratorKeyPressedEventArgsWrapper(externalComObject);
             }
 
-            if (Marshal.QueryInterface(externalComObject, ref IID_ICoreWebView2WebMessageReceivedEventArgs, out var coreWebView2WebMessageReceivedEventArgsPtr) >= 0)
+            if (Marshal.QueryInterface(externalComObject,
+#if NET8_0_OR_GREATER
+                in
+#else
+                ref
+#endif
+                IID_ICoreWebView2WebMessageReceivedEventArgs, out var coreWebView2WebMessageReceivedEventArgsPtr) >= 0)
             {
                 Marshal.Release(coreWebView2WebMessageReceivedEventArgsPtr);
                 return new ICoreWebView2WebMessageReceivedEventArgsWrapper(externalComObject);
