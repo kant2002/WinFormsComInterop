@@ -7,12 +7,14 @@ In additional to that, it allow use WinForms and NativeAOT and R2R with trimming
 ## Getting started
 
 Just add `WinFormsComInterop` to your project.
-
-	dotnet add package WinFormsComInterop
+```
+dotnet add package WinFormsComInterop
+```
 
 Then to your Program.cs add following line
-
-	ComWrappers.RegisterForMarshalling(WinFormsComInterop.WinFormsComWrappers.Instance);
+```
+ComWrappers.RegisterForMarshalling(WinFormsComInterop.WinFormsComWrappers.Instance);
+```
 
 And modify project file to enable NativeAOT
 ```
@@ -23,8 +25,9 @@ And modify project file to enable NativeAOT
 If you application will works with this ComWrappers implementation, then most likely it would work with NativeAOT.
 
 If you are using WebView2 using `Microsoft.Web.WebView2.Core` package, then use 
-
-	ComWrappers.RegisterForMarshalling(WinFormsComInterop.WebView2.WebView2ComWrapper.Instance);
+```
+ComWrappers.RegisterForMarshalling(WinFormsComInterop.WebView2.WebView2ComWrapper.Instance);
+```
 
 Note, that it does not working for *new* WebView2 as of .NET 8, please file and issue if you need it, I'll prioritize.
 
@@ -47,38 +50,43 @@ Also
 ## Testing technology
 
 Test that normal CoreCLR works
-
-	dotnet run --project samples\SampleWindowsForms\SampleWindowsForms.csproj
-	dotnet run --project experiments\WpfTestBed\WpfTestBed.csproj
-	dotnet run --project experiments\WinUITestBed\WinUITestBed\WinUITestBed.csproj
-	dotnet run --project experiments\WinUIUWP\WinUIUWP.csproj
+```
+dotnet run --project samples\SampleWindowsForms\SampleWindowsForms.csproj
+dotnet run --project experiments\WpfTestBed\WpfTestBed.csproj
+dotnet run --project experiments\WinUITestBed\WinUITestBed\WinUITestBed.csproj
+dotnet run --project experiments\WinUIUWP\WinUIUWP.csproj
+```
 
 ## NativeAOT
 Test that NativeAOT works. 
 Run commands in x64 developer tools.
 
 ### WinForms
-
-	dotnet publish -r win-x64 samples\SampleWindowsForms\SampleWindowsForms.csproj
-	"samples\SampleWindowsForms\bin\x64\Debug\net6.0-windows\win-x64\publish\SampleWindowsForms.exe"
+```
+dotnet publish -r win-x64 samples\SampleWindowsForms\SampleWindowsForms.csproj
+"samples\SampleWindowsForms\bin\x64\Debug\net6.0-windows\win-x64\publish\SampleWindowsForms.exe"
+```
 
 Below are experimental projects. They are need additional work.
 
 ### WPF
-
-	dotnet publish -r win-x64 experiments\WpfTestBed\WpfTestBed.csproj -p:GenerateWPF=true
+```
+dotnet publish -r win-x64 experiments\WpfTestBed\WpfTestBed.csproj -p:GenerateWPF=true
+```
 
  blocked by https://github.com/kant2002/WinFormsComInterop/issues/30
 
  ### WinUI
-
-	dotnet publish -r win10-x64 experiments\WinUITestBed\WinUITestBed\WinUITestBed.csproj
+```
+dotnet publish -r win10-x64 experiments\WinUITestBed\WinUITestBed\WinUITestBed.csproj
+```
 
 ### Classic UWP project
+```
+dotnet publish -r win-x64 experiments\WinUIUWP\WinUIUWP.csproj
+```
 
-	dotnet publish -r win-x64 experiments\WinUIUWP\WinUIUWP.csproj
-
-does not working due to this error 
+does not work due to this error 
 ```
 experiments\WinUIUWP\WinUIUWP.csproj : error MSB4057: The target "Restore" does not exist in the project.
 ```
@@ -105,8 +113,9 @@ Modify nuget.config
 ```
 
 Restore packages to local folder to not pollute global Nuget cache. You will build NativAOT a lot.
-
-	dotnet restore -r win-x64 --packages packages
+```
+dotnet restore -r win-x64 --packages packages
+```
 
 Then publish applications using regular workflow described above.
 
