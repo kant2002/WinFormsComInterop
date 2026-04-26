@@ -61,7 +61,7 @@ namespace WinFormsComInterop
         static ComWrappers.ComInterfaceEntry* formsFileDialogEventsEntry;
 #endif
 #if NET10_0_OR_GREATER
-        static ComWrappers.ComInterfaceEntry* formsFileDialogEventsEntry;
+        static ComWrappers.ComInterfaceEntry* comObjectEntry;
 #endif
 #if !NET7_0_OR_GREATER
         static ComWrappers.ComInterfaceEntry* enumVariantEntry;
@@ -132,7 +132,7 @@ namespace WinFormsComInterop
             formsFileDialogEventsEntry = CreateFileDialogEventsEntry();
 #endif
 #if NET10_0_OR_GREATER
-            formsFileDialogEventsEntry = CreateFileDialogEventsEntry();
+            comObjectEntry = CreateComObjectEntry();
 #endif
 #if USE_WPF
             oleDropTargetEntry = CreateOleDropTargetEntry();
@@ -333,6 +333,19 @@ namespace WinFormsComInterop
         }
 #endif
 
+#if NET10_0_OR_GREATER
+        private static ComInterfaceEntry* CreateComObjectEntry()
+        {
+            CreatePrimitivesIOleClientSiteProxyVtbl(out var vtbl);
+
+            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 1);
+            var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
+            wrapperEntry->IID = IID_IOleClientSite;
+            wrapperEntry->Vtable = vtbl;
+            return wrapperEntry;
+        }
+#endif
+
 #if !NET7_0_OR_GREATER
         private static ComInterfaceEntry* CreateEnumVariantEntry()
         {
@@ -442,14 +455,6 @@ namespace WinFormsComInterop
 
 #if !NET8_0_OR_GREATER
             if (obj is forms::System.Windows.Forms.FileDialog.VistaDialogEvents)
-            {
-                count = 1;
-                return formsFileDialogEventsEntry;
-            }
-#endif
-
-#if NET10_0_OR_GREATER
-            if (obj is System.Runtime.InteropServices.Marshalling.ComObject)
             {
                 count = 1;
                 return formsFileDialogEventsEntry;
