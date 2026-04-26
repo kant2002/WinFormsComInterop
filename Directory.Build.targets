@@ -2,19 +2,21 @@
   <PropertyGroup>
     <DotnetInstallLocation Condition="$(NetCoreRoot) == ''">C:\Program Files\dotnet\</DotnetInstallLocation>
     <DotnetInstallLocation Condition="$(NetCoreRoot) != ''">$(NetCoreRoot)</DotnetInstallLocation>
-    <AccessibilityLocation Condition="$(TargetFramework) == 'net8.0'">$(DotnetInstallLocation)shared\Microsoft.WindowsDesktop.App\8.0.10\Accessibility.dll</AccessibilityLocation>
+    <AccessibilityLocation Condition="$(TargetFramework) == 'net10.0'">$(DotnetInstallLocation)shared\Microsoft.WindowsDesktop.App\10.0.7\Accessibility.dll</AccessibilityLocation>
+    <AccessibilityLocation Condition="$(TargetFramework) == 'net8.0'">$(DotnetInstallLocation)shared\Microsoft.WindowsDesktop.App\8.0.26\Accessibility.dll</AccessibilityLocation>
     <AccessibilityLocation Condition="$(TargetFramework) == 'net7.0'">$(DotnetInstallLocation)shared\Microsoft.WindowsDesktop.App\7.0.20\Accessibility.dll</AccessibilityLocation>
-    <AccessibilityLocation Condition="$(TargetFramework) == 'net6.0'">$(DotnetInstallLocation)shared\Microsoft.WindowsDesktop.App\6.0.35\Accessibility.dll</AccessibilityLocation>
+    <AccessibilityLocation Condition="$(TargetFramework) == 'net6.0'">$(DotnetInstallLocation)shared\Microsoft.WindowsDesktop.App\6.0.36\Accessibility.dll</AccessibilityLocation>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Update="Accessibility" Condition="($(TargetFramework) == 'net8.0') or ($(TargetFramework) == 'net7.0') or ($(TargetFramework) == 'net6.0')">
+    <Reference Update="Accessibility" Condition="($(TargetFramework) == 'net10.0' and $(UseNet10) == 'true') or ($(TargetFramework) == 'net8.0' and $(UseNet8) == 'true') or ($(TargetFramework) == 'net7.0' and $(UseNet7) == 'true') or ($(TargetFramework) == 'net6.0' and $(UseNet6) == 'true')">
       <HintPath>$(AccessibilityLocation)</HintPath>
     </Reference>
   </ItemGroup>
   <Target Name="CustomClean" BeforeTargets="CoreBuild">
-    <Error Text="Accessibility does not exists in location $(AccessibilityLocation)'" Condition="($(TargetFramework) == 'net8.0') and (!Exists('$(AccessibilityLocation)'))" />
-    <Error Text="Accessibility does not exists in location $(AccessibilityLocation)'" Condition="($(TargetFramework) == 'net7.0') and (!Exists('$(AccessibilityLocation)'))" />
-    <Error Text="Accessibility does not exists in location $(AccessibilityLocation)'" Condition="($(TargetFramework) == 'net6.0') and (!Exists('$(AccessibilityLocation)'))" />
+    <Error Text="Accessibility does not exists in location $(AccessibilityLocation)'" Condition="($(TargetFramework) == 'net10.0' and $(UseNet10) == 'true') and (!Exists('$(AccessibilityLocation)'))" />
+    <Error Text="Accessibility does not exists in location $(AccessibilityLocation)'" Condition="($(TargetFramework) == 'net8.0' and $(UseNet8) == 'true') and (!Exists('$(AccessibilityLocation)'))" />
+    <Error Text="Accessibility does not exists in location $(AccessibilityLocation)'" Condition="($(TargetFramework) == 'net7.0' and $(UseNet7) == 'true') and (!Exists('$(AccessibilityLocation)'))" />
+    <Error Text="Accessibility does not exists in location $(AccessibilityLocation)'" Condition="($(TargetFramework) == 'net6.0' and $(UseNet6) == 'true') and (!Exists('$(AccessibilityLocation)'))" />
   </Target>
 
 </Project>

@@ -221,6 +221,7 @@ namespace WinFormsComInterop
             wrapperEntry->Vtable = vtbl;
             return wrapperEntry;
         }
+#if !NET10_0_OR_GREATER
 
         private static void CreatePrimitivesIServiceProviderProxyVtbl(out IntPtr vtbl)
         {
@@ -230,17 +231,28 @@ namespace WinFormsComInterop
             vtbl = (System.IntPtr)vtblRaw;
         }
 #endif
+#endif
         private static ComInterfaceEntry* CreateAccessibleObjectEntry()
         {
             CreatePrimitivesIRawElementProviderSimpleProxyVtbl(out var rawElementProviderSimpleVtbl);
+#if !NET10_0_OR_GREATER
             CreatePrimitivesIServiceProviderProxyVtbl(out var serviceProviderVtbl);
+#endif
 
-            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(typeof(WinFormsComWrappers), sizeof(ComInterfaceEntry) * 2);
+            var comInterfaceEntryMemory = RuntimeHelpers.AllocateTypeAssociatedMemory(
+                typeof(WinFormsComWrappers), 
+                sizeof(ComInterfaceEntry)
+#if !NET10_0_OR_GREATER
+                * 2
+#endif
+                );
             var wrapperEntry = (ComInterfaceEntry*)comInterfaceEntryMemory.ToPointer();
             wrapperEntry[0].IID = IID_IRawElementProviderSimple;
             wrapperEntry[0].Vtable = rawElementProviderSimpleVtbl;
+#if !NET10_0_OR_GREATER
             wrapperEntry[1].IID = IID_IServiceProvider;
             wrapperEntry[1].Vtable = serviceProviderVtbl;
+#endif
             return wrapperEntry;
         }
 #if !NET8_0_OR_GREATER
@@ -424,6 +436,14 @@ namespace WinFormsComInterop
 
 #if !NET8_0_OR_GREATER
             if (obj is forms::System.Windows.Forms.FileDialog.VistaDialogEvents)
+            {
+                count = 1;
+                return formsFileDialogEventsEntry;
+            }
+#endif
+
+#if !NET10_0_OR_GREATER
+            if (obj is System.Runtime.InteropServices.Marshalling.ComObject)
             {
                 count = 1;
                 return formsFileDialogEventsEntry;
