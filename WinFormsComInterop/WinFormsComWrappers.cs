@@ -60,6 +60,9 @@ namespace WinFormsComInterop
 #if !NET8_0_OR_GREATER
         static ComWrappers.ComInterfaceEntry* formsFileDialogEventsEntry;
 #endif
+#if NET10_0_OR_GREATER
+        static ComWrappers.ComInterfaceEntry* formsFileDialogEventsEntry;
+#endif
 #if !NET7_0_OR_GREATER
         static ComWrappers.ComInterfaceEntry* enumVariantEntry;
 #endif
@@ -126,6 +129,9 @@ namespace WinFormsComInterop
             formsWebBrowserSiteEntry = CreateWebBrowserSiteEntry();
             formsWebBrowserContainerEntry = CreateWebBrowserContainerEntry();
             formsWebBrowserEventEntry = CreateWebBrowserEventEntry();
+            formsFileDialogEventsEntry = CreateFileDialogEventsEntry();
+#endif
+#if NET10_0_OR_GREATER
             formsFileDialogEventsEntry = CreateFileDialogEventsEntry();
 #endif
 #if USE_WPF
