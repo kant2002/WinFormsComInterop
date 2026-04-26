@@ -2,7 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-#if NET8_0_OR_GREATER
+#if NET10_0_OR_GREATER
+#elif NET8_0_OR_GREATER
 namespace Windows.Win32.System.Com;
 using global::System;
 using global::System.CodeDom.Compiler;

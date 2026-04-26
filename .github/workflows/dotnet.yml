@@ -13,13 +13,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Setup .NET 6 & 7 & 8
+    - name: Setup .NET 6 & 7 & 8 & 10
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: |
-            6.0.427
-            7.0.120
-            8.0.403
+            6.0.428
+            7.0.410
+            8.0.420
+            10.0.203
     - name: Restore dependencies
       run: dir "C:\Program Files\dotnet\\shared\Microsoft.WindowsDesktop.App\"
     - name: Restore dependencies
